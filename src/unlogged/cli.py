@@ -288,6 +288,13 @@ def agreement(
         r = agreement_score(sets[a], sets[b])
         typer.echo(f"| {a} vs {b} | {r.n} | {r.raw:.1%} | {r.kappa:.3f} | {r.ac1:.3f} |")
 
+    spans = {len(r) for r in sets.values()}
+    if len(spans) > 1:
+        typer.echo(
+            "\nRows cover different numbers of events — a set that labelled fewer of them is "
+            "scored only on those. Compare two rows only when the `events` column matches."
+        )
+
     names = list(sets)
     first = sets[names[0]]
     typer.echo("\nWhere the readers split, by call:")

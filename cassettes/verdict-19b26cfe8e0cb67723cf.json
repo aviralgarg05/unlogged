@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628925741",
+ "call": "noise",
+ "clause_id": "A2",
+ "quoted_span": "Do the above, then I will merge the pr",
+ "reason": "Merge coordination referring to earlier feedback. This event identifies no specific additional work and records no work performed.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.87
+}

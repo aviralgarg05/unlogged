@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3632851856",
+ "call": "included",
+ "clause_id": "S1",
+ "quoted_span": "I have fix the issue.",
+ "reason": "Reports completion of the scoped issue, with no evidence of work beyond the agreed documentation CI change.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.77
+}

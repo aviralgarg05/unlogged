@@ -163,3 +163,57 @@ def test_this_projects_own_two_passes_reproduce_the_published_figures():
     # completed out-of-scope work is noise or the billable work itself.
     same = [d for d in result.disagreements if d[1] == "noise" and d[2] == "billable_extra"]
     assert len(same) == 3
+
+
+def test_the_closure_clause_run_changes_only_the_agreement():
+    """The controlled run: same events, same humans, one synthetic clause added. If the events
+    ever drift apart the comparison stops isolating anything and silently becomes two
+    different experiments.
+    """
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1] / "fixtures"
+    for folder in sorted((root / "nexumdb-closure").iterdir()):
+        plain = root / "nexumdb" / folder.name
+        assert (folder / "events.jsonl").read_text() == (plain / "events.jsonl").read_text()
+
+        import json
+
+        before = json.loads((plain / "engagement.json").read_text())["clauses"]
+        after = json.loads((folder / "engagement.json").read_text())["clauses"]
+        assert after[: len(before)] == before
+        assert len(after) == len(before) + 1
+        added = after[-1]
+        assert added["kind"] == "exclusion"
+        assert added["text"] == "Work not listed in the tasks above is not part of this issue."
+
+
+def test_the_model_never_returns_scope_request_on_the_december_events():
+    """The finding that matters most, and the one an agreement percentage hides.
+
+    A request and the work answering it are two events; billing both charges the client twice
+    for one piece of work, which is why Call.SCOPE_REQUEST exists. Across the 21 events whose
+    agreements list no exclusion, both human readers use it five times. The model uses it zero
+    times, with and without a closure clause added — while handling the same distinction
+    correctly on the authored fixture, which was written in a way that let it succeed.
+
+    Scoped to those 21 deliberately: across all 31 the model does return it once, on a thread
+    whose agreement does carry exclusions, and claiming "never" of the whole set would be the
+    kind of overstatement this file exists to avoid.
+    """
+    import collections
+
+    # The closure run covers exactly the December events, so its keys define the span.
+    december = set(_published("model-with-closure"))
+    assert len(december) == 21
+
+    for arm in ("model", "model-with-closure"):
+        calls = collections.Counter(v for k, v in _published(arm).items() if k in december)
+        assert calls["scope_request"] == 0, arm
+
+    for human in ("round1", "round2"):
+        calls = collections.Counter(v for k, v in _published(human).items() if k in december)
+        assert calls["scope_request"] == 5, human
+
+    # And it does use it once across the wider set, which is why the claim is scoped.
+    assert collections.Counter(_published("model").values())["scope_request"] == 1

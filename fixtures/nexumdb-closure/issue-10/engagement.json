@@ -1,0 +1,36 @@
+{
+ "id": "nexumdb-issue-10-closure",
+ "client_name": "NexumDB maintainer",
+ "client_email": null,
+ "invoicer_name": "contributor",
+ "currency": "USD",
+ "cap": null,
+ "rate_card": {
+  "default_rate": "0.00",
+  "currency": "USD",
+  "by_category": {}
+ },
+ "clauses": [
+  {
+   "id": "S1",
+   "kind": "scope",
+   "text": "Add a `Cargo.lock` to version control for the workspace to ensure reproducible builds."
+  },
+  {
+   "id": "S2",
+   "kind": "scope",
+   "text": "Run `cargo generate-lockfile` and commit the resulting `Cargo.lock`."
+  },
+  {
+   "id": "A1",
+   "kind": "approval",
+   "text": "2. **Code review**: Address any feedback from reviewers"
+  },
+  {
+   "id": "X-closure",
+   "kind": "exclusion",
+   "text": "Work not listed in the tasks above is not part of this issue."
+  }
+ ],
+ "opening": []
+}

@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3633293209",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "/gemini review",
+ "reason": "Administrative command invoking code review, not substantive work or a request for an out-of-scope change.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.94
+}

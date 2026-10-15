@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628920440",
+ "call": "included",
+ "clause_id": "A1",
+ "quoted_span": "I've pushed a fix to the `fix-pyo3-deprecations` branch that: 1. Updates `pyo3` from `0.22` to `0.24` in `Cargo.toml` 2. Replaces all `import_bound()` calls with `import()` in `nexum_core/src/bridge/mod.rs`",
+ "reason": "The pushed changes address a stated CI failure and are covered by A1's requirement to ensure all automated checks pass. Although dependency and bridge changes could be read as outside the narrow audit task, the explicit CI approval clause supports the lower-revenue, included reading.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.9
+}

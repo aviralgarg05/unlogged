@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3635423731",
+ "call": "noise",
+ "clause_id": "S1",
+ "quoted_span": "I have solve the issue.",
+ "reason": "A status update about the issue, with no specific work described or requested.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.94
+}

@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3633693168",
+ "call": "included",
+ "clause_id": "S2",
+ "quoted_span": "❯ cargo generate-lockfile",
+ "reason": "The comment concerns the explicitly scoped lockfile-generation command and a planned local check, not additional out-of-scope work.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.95
+}

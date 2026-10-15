@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628750590",
+ "call": "included",
+ "clause_id": "A1",
+ "quoted_span": "Also fix the failing workflow",
+ "reason": "Fixing the failing workflow is reasonably covered by “Ensure all automated checks pass.” Although this could refer to an unrelated workflow, the event does not establish that; the lower-revenue reading is included.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.88
+}

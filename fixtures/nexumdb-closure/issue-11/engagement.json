@@ -1,0 +1,41 @@
+{
+ "id": "nexumdb-issue-11-closure",
+ "client_name": "NexumDB maintainer",
+ "client_email": null,
+ "invoicer_name": "contributor",
+ "currency": "USD",
+ "cap": null,
+ "rate_card": {
+  "default_rate": "0.00",
+  "currency": "USD",
+  "by_category": {}
+ },
+ "clauses": [
+  {
+   "id": "S1",
+   "kind": "scope",
+   "text": "Add a `cargo doc` step to CI to ensure documentation builds without warnings."
+  },
+  {
+   "id": "S2",
+   "kind": "scope",
+   "text": "- name: docs\n  run: cargo doc --workspace --no-deps\n  env:\n    RUSTDOCFLAGS: -D warnings"
+  },
+  {
+   "id": "A1",
+   "kind": "approval",
+   "text": "**Code review**: Address any feedback from reviewers"
+  },
+  {
+   "id": "A2",
+   "kind": "approval",
+   "text": "**CI checks**: Ensure all automated checks pass"
+  },
+  {
+   "id": "X-closure",
+   "kind": "exclusion",
+   "text": "Work not listed in the tasks above is not part of this issue."
+  }
+ ],
+ "opening": []
+}

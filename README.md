@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 119 tests, no credentials needed
+uv run pytest -q                       # 121 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -76,9 +76,13 @@ Both arms are scored, and both run with no key:
 > in another repository, alongside two human readers: the humans agree with each other 80.6%
 > of the time (κ=0.719), the model agrees with them 61.3% and 48.4%. It calls 18 of 31 events
 > `included` where the humans call 5 and 7 — it is not finding out-of-scope work at all.
-> `uv run unlogged agreement` reproduces that with no credentials, and
-> [`docs/CORPUS.md`](docs/CORPUS.md) is the whole account. **100% below is a fact about this
-> fixture, not a capability.**
+> Sharper still: on those 21 of the events where the agreement lists no exclusions, **the model
+> never once returns `scope_request`**, while both humans return it five times each. That is
+> the distinction between a client *asking* for out-of-scope work and the work being *done* —
+> the thing `Call.SCOPE_REQUEST` exists for, and the error that double-charges a client.
+> `uv run unlogged agreement` reproduces all of it with no credentials, and
+> [`docs/CORPUS.md`](docs/CORPUS.md) has the controlled run that isolates the cause.
+> **100% below is a fact about this fixture, not a capability.**
 
 The last two columns exist because the model does not get a clean sheet. It calls all eight
 events correctly and cites a clause for each, then estimates `e8` at 1.5 hours where the label
@@ -243,7 +247,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 119 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 121 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

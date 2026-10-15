@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3636413751",
+ "call": "noise",
+ "clause_id": "S1",
+ "quoted_span": "I have fix the issue.",
+ "reason": "Status-only update about the issue; this event does not identify or demonstrate separate work beyond the scoped CI documentation task.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.83
+}

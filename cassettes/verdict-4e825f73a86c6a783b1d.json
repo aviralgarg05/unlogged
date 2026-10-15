@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628917809",
+ "call": "noise",
+ "clause_id": "A2",
+ "quoted_span": "Yup got that, will add a commit in this pr itself to fix it",
+ "reason": "Acknowledges review feedback and promises a future fix; this event does not perform the review work covered by A2 or request additional work.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.93
+}

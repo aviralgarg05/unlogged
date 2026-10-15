@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628914463",
+ "call": "noise",
+ "clause_id": "X-closure",
+ "quoted_span": "this is the problematic file : > nexum_core/src/bridge/mod.rs",
+ "reason": "The comment only identifies a file; it neither requests a specific change nor demonstrates work performed.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.92
+}

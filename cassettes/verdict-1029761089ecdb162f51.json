@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628907319",
+ "call": "included",
+ "clause_id": "A2",
+ "quoted_span": "Still issues, fix it completely",
+ "reason": "This is feedback requesting correction of outstanding issues, covered by the requirement to address reviewer feedback. No additional out-of-scope work is identified or shown as performed.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.91
+}

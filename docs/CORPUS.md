@@ -143,28 +143,62 @@ The model calls more than half of everything `included`. On the ten events where
 agreed and the model did not, it answered `included` nine times. It is not guessing badly — it
 is failing to find anything outside the agreement, which is the one job it has.
 
-### A hypothesis the data is consistent with, and the reason not to trust it yet
+### The failure, isolated
 
-The fixture engagement has two written exclusion clauses. The December threads here have
-**none** — their agreements list what is in scope and nothing else, because nothing in
-`CONTRIBUTING.md` at that date excluded anything. The February threads do have two.
+The obvious suspect was the agreement itself. The fixture has two written exclusion clauses;
+the December threads have none, because nothing in `CONTRIBUTING.md` at that date excluded
+anything. So the same 21 December events were run twice, against the same two human readers,
+with exactly one thing changed: a single synthetic clause added to the agreement, reading
+*"Work not listed in the tasks above is not part of this issue."* Same events, same labels,
+same model, one variable.
 
-| agreement | events | human–human | model–human | model says `included` |
+| the model is shown | vs human 1 | vs human 2 | calls `included` |
+|---|---|---|---|
+| the agreement as it stands | 52% | 33% | 13 of 21 |
+| the agreement + a closure clause | 62% | 43% | 11 of 21 |
+| *(the two humans, on these same 21)* | *76%* | | |
+
+The closure clause helps, by about ten points in both directions, and it does not come close
+to the human ceiling. The synthetic clause is in `fixtures/nexumdb-closure/` and is clearly
+marked: it is an intervention to isolate a variable, and it is not in any repository anywhere.
+
+But the interesting number is in a column the agreement statistic hides:
+
+| call | human 1 | human 2 | model | model + closure |
 |---|---|---|---|---|
-| no written exclusion | 21 | 76% | 43% | 13 of 21 |
-| two written exclusions | 10 | 90% | 80% | 5 of 10 |
+| included | 4 | 2 | 13 | 11 |
+| **scope_request** | **5** | **5** | **0** | **0** |
+| billable_extra | 2 | 6 | 1 | 1 |
+| noise | 10 | 8 | 7 | 9 |
 
-The reading that suggests itself is that the model finds out-of-scope work by matching it
-against a sentence that forbids something, and that when the agreement only says what IS
-included it stops looking. If that is right it is a real limitation with a real fix, and it
-would explain the 100% on a fixture that has exclusions.
+**On these 21 events the model never once says `scope_request`.** Both humans say it five
+times. Adding the clause does not recover a single one. Across all 31 events it returns
+`scope_request` exactly once, on a thread whose agreement does carry exclusions — so the claim
+is scoped to the 21, not stretched to the set.
 
-It is not established. Ten events against twenty-one is far too few, the two groups are
-different threads written by different people four months apart, and nothing rules out the
-simpler explanation that the February threads are just easier. It is written down here as a
-hypothesis with its confound named, not as a result.
+On the authored fixture the model handles this distinction correctly — it marks the client
+asking for retry-on-decline as a request and the PR that implemented it as the billable work,
+which is the central worked example in this README. On a real thread it does not make the
+distinction at all.
 
-### The disagreements are not scattered
+That distinction is the product. `Call.SCOPE_REQUEST` exists because a request and the work
+answering it are two events, and billing both charges the client twice for one piece of work.
+An arm that never emits it has collapsed the only safeguard against the most expensive error
+in the domain — and it did so invisibly, because the fixture was written in a way that let it
+succeed.
+
+### Why this is not being fixed here
+
+The obvious next move is to rewrite the prompt until `scope_request` reappears. That would be
+tuning against the same 31 events the result is measured on, whose labels two readers already
+disagree about on six of them. The number would improve and would mean nothing.
+
+Fixing this honestly needs a held-out set that does not exist yet, which is the same problem
+this document opened with. So it is written down as a known failure with its mechanism
+identified, and the README says beside its own headline that the 100% is a fact about a
+fixture.
+
+### The disagreements are not scattered### The disagreements are not scattered
 
 | thread | event | first pass | second pass |
 |---|---|---|---|

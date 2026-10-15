@@ -1,0 +1,11 @@
+{
+ "event_id": "pr-35",
+ "call": "included",
+ "clause_id": "S2",
+ "quoted_span": "Committed Cargo.lock for reproducible builds.",
+ "reason": "The event reports committing Cargo.lock, which is explicitly covered by S2.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}
