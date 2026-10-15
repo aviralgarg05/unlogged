@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2596278635,
+   "body": "The import path is incorrect. `BaseAdapter` is located in `agentunit.adapters.base`, not `agentunit.core.adapters`. Change this import to: ```python from agentunit.adapters.base import BaseAdapter ``` ```suggestion from agentunit.adapters.base import BaseAdapter ```",
+   "created_at": "2025-12-07T12:34:17Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31#discussion_r2596278635",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596278636,
+   "body": "The `FakeAdapter` does not correctly implement the `BaseAdapter` interface. According to `src/agentunit/adapters/base.py`, adapters must implement: 1. `prepare()` method - for lazy setup 2. `execute(case: DatasetCase, trace: TraceLog) -> AdapterOutcome` - for running the agent The current `generate(prompt: str)` method does not match this interface. The adapter should be implemented like this: ```python from agentunit.adapters.base import BaseAdapter, AdapterOutcome from agentunit.datasets.base import DatasetCase from agentunit.core.trace import TraceLog class FakeAdapter(BaseAdapter): \"\"\" A simple mock adapter used only for demonstration. It returns a predictable output so evaluation is ea\u2026",
+   "created_at": "2025-12-07T12:34:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31#discussion_r2596278636",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596278640,
+   "body": "The evaluation flow is incorrect. AgentUnit does not use an `Evaluator` class. Instead, it uses `Runner` with `Scenario` objects. The correct approach is: ```python from agentunit.core import Scenario, Runner, DatasetCase def main(): # Step 1 \u2014 Prepare the adapter adapter = FakeAdapter() # Step 2 \u2014 Prepare test cases cases = [ DatasetCase( id=\"test_1\", query=\"Say hello!\", expected_output=\"Hello, this is a fake response!\" ) ] # Step 3 \u2014 Create a scenario scenario = Scenario( name=\"Basic Evaluation\", adapter=adapter, dataset=cases ) # Step 4 \u2014 Run the evaluation runner = Runner(scenarios=[scenario]) results = runner.run() # Step 5 \u2014 Print the output for scenario_result in results.scenarios: p\u2026",
+   "created_at": "2025-12-07T12:34:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31#discussion_r2596278640",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596278641,
+   "body": "The module `agentunit.core.evaluator` does not exist in the codebase. There is no `Evaluator` class. The correct approach is to use `Runner` from `agentunit.core.runner` or the convenience function `run_suite`. Change this import to: ```python from agentunit.core.runner import Runner ```",
+   "created_at": "2025-12-07T12:34:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31#discussion_r2596278641",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2598682120,
+   "body": "The import path `agentunit.core.evaluator` does not exist in the codebase. There is no `Evaluator` class in the `agentunit.core` module. The existing evaluator functionality appears to be in `agentunit.privacy.federation.FederatedEvaluator`, but that serves a different purpose. This import will cause an `ImportError` at runtime. ```suggestion # Removed invalid import: from agentunit.core.evaluator import Evaluator from agentunit.core.adapters import BaseAdapter class Result: def __init__(self, output, score): self.output = output self.score = score class Evaluator: \"\"\" Minimal Evaluator for demonstration purposes. \"\"\" def __init__(self, adapter): self.adapter = adapter def evaluate(self, pr\u2026",
+   "created_at": "2025-12-08T13:39:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2598682120",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2598682135,
+   "body": "The import path `agentunit.core.adapters` does not exist in the codebase. The `BaseAdapter` class is located at `agentunit.adapters.base`, not `agentunit.core.adapters`. This should be `from agentunit.adapters.base import BaseAdapter`. ```suggestion from agentunit.adapters.base import BaseAdapter ```",
+   "created_at": "2025-12-08T13:39:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2598682135",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2598682152,
+   "body": "The `FakeAdapter` class does not properly implement the `BaseAdapter` interface. `BaseAdapter` requires abstract methods `prepare()` and `execute(case: DatasetCase, trace: TraceLog) -> AdapterOutcome`, but this implementation only has a `generate(prompt: str) -> str` method. This will cause a `TypeError` when attempting to instantiate `FakeAdapter` because abstract methods are not implemented. ```suggestion from agentunit.core.schema import DatasetCase, TraceLog, AdapterOutcome class FakeAdapter(BaseAdapter): \"\"\" A simple mock adapter used only for demonstration. It returns a predictable output so evaluation is easy to understand. \"\"\" def prepare(self): # No preparation needed for the fake\u2026",
+   "created_at": "2025-12-08T13:39:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2598682152",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2598682168,
+   "body": "The `Evaluator` class and its `evaluate` method do not exist in the codebase. The example attempts to use an API that is not implemented, which will fail at runtime. The actual evaluation flow in AgentUnit uses `Scenario` objects with adapters and runners, not an `Evaluator` class.",
+   "created_at": "2025-12-08T13:39:45Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2598682168",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2598682182,
+   "body": "The `result` object is assumed to have `.output` and `.score` attributes, but since the `Evaluator` class doesn't exist, the expected return type and its interface are unknown. This code will fail at runtime.",
+   "created_at": "2025-12-08T13:39:45Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2598682182",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603476197,
+   "body": "The Evaluator API pattern used here doesn't match the actual AgentUnit API. The real API uses `Runner` with `Scenario` objects that wrap adapters. The `Evaluator` class doesn't exist, and `Runner.run()` returns a `SuiteResult`, not a result with `.output` and `.score` attributes as shown here.",
+   "created_at": "2025-12-09T16:48:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2603476197",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603476225,
+   "body": "`BaseAdapter` does not have a `generate` method. The abstract base class requires implementing `prepare()` and `execute(case: DatasetCase, trace: TraceLog) -> AdapterOutcome` methods. The `execute` method should accept a `DatasetCase` and `TraceLog`, not a simple string prompt. ```suggestion from agentunit.core.dataset import DatasetCase from agentunit.core.trace import TraceLog from agentunit.core.adapters import AdapterOutcome class FakeAdapter(BaseAdapter): \"\"\" A simple mock adapter used only for demonstration. It returns a predictable output so evaluation is easy to understand. \"\"\" def prepare(self): # No preparation needed for the fake adapter pass def execute(self, case: DatasetCase,\u2026",
+   "created_at": "2025-12-09T16:48:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#discussion_r2603476225",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2604231306,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The sentence on line 3 is redundant because the purpose of the file is already described in the 'Test Details' section on line 6. To improve conciseness, you can remove this introductory sentence and the subsequent blank line.",
+   "created_at": "2025-12-09T20:25:26Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/34#discussion_r2604231306",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2606621572,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix the incorrect indentation of the main guard.** The `if __name__ == \"__main__\":` guard is incorrectly placed inside the `main()` function. This prevents the script from executing when run directly, violating the acceptance criteria that requires the script to run without errors. Apply this diff to fix the indentation: ```diff print(f\"Passed: {result.passed}\") print(\"-\" * 30) - if __name__ == \"__main__\": - main() + + +if __name__ == \"__main__\": + main() ``` <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In src/agentunit/examples/basic_evaluation.py around lines 33 to 34, the if __name__ == \"__main__\": guard is indented inside the main() funct\u2026",
+   "created_at": "2025-12-10T13:14:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2606621572",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613896311,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `pytest --strict-config flag behavior and plugin compatibility` \ud83d\udca1 Result: Short answer - --strict-config (or the ini option strict_config) turns unknown/unsupported pytest INI keys from warnings into errors (UsageError) when enabled. [1][2] - You can enable it via CLI (--strict-config), in pytest.ini/pyproject.toml (strict_config = true), or enable the umbrella strict = true which enables strict_config plus other strict options. [1][2] What it actually does - During config parsing pytest computes unknown ini keys and, if strict_config is true, raises a UsageError instead of issuing a PytestConfigWarn\u2026",
+   "created_at": "2025-12-12T11:30:49Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613896311",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613896316,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cat -n tests/integration/ci-example.yml | head -70 ``` Repository: aviralgarg05/agentunit Length of output: 2233 --- \ud83c\udf10 Web query: `current recommended version actions/setup-python 2024 2025 latest` \ud83d\udca1 Result: Recommended: use actions/setup-python@v6 (current latest release v6.1.0). [1][2][3] Sources: - action repo README (examples use @v6). [1] - releases (v6.1.0). [2] - GitHub Marketplace docs / usage examples. [3] --- \ud83c\udf10 Web query: `codecov/codecov-action latest version recommended 2024 2025` \ud83d\udca1 Result: Recommendation: use codecov/codecov-action@v5 (the v5 line). The repository READM\u2026",
+   "created_at": "2025-12-12T11:30:49Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613896316",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613896324,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Doc claim about markers is likely too strong.** Basic integration tests (e.g., fallback behavior) shouldn\u2019t necessarily be `@pytest.mark.langgraph`. Consider rephrasing to: \u201cAll tests are marked `integration`; LangGraph-dependent tests are marked `langgraph`.\u201d <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In tests/integration/README.md around lines 64 to 67, the README overstates that all integration tests are marked with both `integration` and `langgraph`; change the wording to clarify that all integration tests use the `integration` marker and only tests that depend on LangGraph use the `langgraph` marker. Update the three bullet points to stat\u2026",
+   "created_at": "2025-12-12T11:30:49Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613896324",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613935336,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Update GitHub Actions to current recommended versions.** The workflow uses outdated action versions. Update to the current stable releases for security, feature parity, and future compatibility. Apply these diffs to modernize the action versions: ```diff - name: Set up Python ${{ matrix.python-version }} - uses: actions/setup-python@v4 + uses: actions/setup-python@v6 with: python-version: ${{ matrix.python-version }} ``` ```diff - name: Upload coverage to Codecov - uses: codecov/codecov-action@v3 + uses: codecov/codecov-action@v5 ``` ```diff - name: Set up Python - uses: actions/setup-python@v4 + uses: actions/setup-python@v6 with: python-version: \"3.11\" `\u2026",
+   "created_at": "2025-12-12T11:45:20Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613935336",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613935341,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add language specification to fenced code block.** The bash code block is missing a language identifier, which breaks syntax highlighting and violates Markdown best practices. Apply this diff to add the language tag: ```diff 1. **Scenario Creation**: Tests creating scenarios from callable agents and Python files 2. **Full Evaluation Cycle**: Tests running complete evaluation cycles with multiple test cases ``` Actually, looking more carefully, line 54 shows the start of the list. Let me check line 55 context again. The issue is on the code block around line 13-16 (bash block). Let me correct the line range: ```diff - ```bash + ``` ``` Wait, I need to look\u2026",
+   "created_at": "2025-12-12T11:45:20Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613935341",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613935348,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Ensure all fenced code blocks have explicit language specifications.** Per markdownlint (MD040), all fenced code blocks should declare their language. Review the code blocks in the Example Usage section and earlier to ensure they are properly specified (e.g., ```python, ```bash, ```yaml). <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ```` In tests/integration/README.md around lines 79 to 97 the fenced code block(s) under \"Example Usage\" are missing explicit language identifiers; update each triple-backtick fence to include the appropriate language (e.g., ```python for the Python snippet) and scan earlier sections for any other fenced blocks without l\u2026",
+   "created_at": "2025-12-12T11:45:21Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613935348",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613955504,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix YAML indentation for `steps` entries (workflow may not parse).** `steps:` must contain a properly-indented list; ensure the `- uses:` / `- name:` lines are indented under `steps:`. ```diff jobs: unit-tests: @@ steps: - - uses: actions/checkout@v4 + - uses: actions/checkout@v4 - name: Set up Python ${{ matrix.python-version }} uses: actions/setup-python@v5 @@ integration-tests: @@ steps: - - uses: actions/checkout@v4 + - uses: actions/checkout@v4 - name: Set up Python uses: actions/setup-python@v5 ``` Also applies to: 40-41 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In tests/integration/ci-example.yml around lines 15-16 (and similarly li\u2026",
+   "created_at": "2025-12-12T11:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613955504",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2613955509,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Guard `pull_request` context in the job `if:` to avoid push-event evaluation failures.** On `push`, `github.event.pull_request` isn\u2019t present; rewrite to avoid touching it unless `event_name == 'pull_request'`. ```diff - if: github.ref == 'refs/heads/main' || contains(github.event.pull_request.labels.*.name, 'run-integration-tests') + if: github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-integration-tests')) ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurat\u2026",
+   "created_at": "2025-12-12T11:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2613955509",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2616114470,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add type guard before string operation.** Line 88 calls `.lower()` on `outcome.output` without verifying it's a string. According to the AdapterOutcome structure, `output` can be `None`. Apply this diff to add a type guard: ```diff outcome = scenario.adapter.execute(test_case, trace) assert outcome.success is True assert outcome.output is not None + assert isinstance(outcome.output, str) assert \"quantum\" in outcome.output.lower() ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lin\u2026",
+   "created_at": "2025-12-13T06:02:54Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2616114470",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2616119090,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Fix cwd-dependent test path: build the agent file path relative to this test file.** `Path(\"tests/integration/simple_langgraph_agent.py\")` will fail if pytest is invoked from a different working directory (common in CI). ```diff - agent_file = Path(\"tests/integration/simple_langgraph_agent.py\") + agent_file = Path(__file__).resolve().parent / \"simple_langgraph_agent.py\" ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & ben\u2026",
+   "created_at": "2025-12-13T06:13:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2616119090",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2616119094,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Avoid flaky timing assertion: `duration_ms` can legitimately be 0ms.** ```diff for run in scenario_result.runs: assert run.success is True - assert run.duration_ms > 0 + assert run.duration_ms >= 0 assert run.error is None ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion for run in scenario_result.runs: assert run.success is True assert run.duration_ms\u2026",
+   "created_at": "2025-12-13T06:13:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2616119094",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2616119096,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Don\u2019t hardcode default `Scenario.retries` in test; assert \u201cunchanged\u201d instead.** `assert original.retries == 1` bakes in an implementation default and will break on harmless default changes. ```diff cloned = original.clone( name=\"cloned\", retries=3, timeout=120.0 ) assert cloned.name == \"cloned\" assert cloned.retries == 3 assert cloned.timeout == 120.0 assert original.name == \"original\" # Original unchanged - assert original.retries == 1 # Default value + assert original.retries != cloned.retries ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that\u2026",
+   "created_at": "2025-12-13T06:13:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2616119096",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2616119097,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Don\u2019t rely on `run_suite()` preserving scenario order; assert by name set.** If `run_suite()` parallelizes or sorts internally, ordering may change and this becomes flaky. ```diff result = run_suite(scenarios) assert len(result.scenarios) == 3 - for i, scenario_result in enumerate(result.scenarios): - assert scenario_result.name == f\"scenario-{i}\" - assert len(scenario_result.runs) == 3 # Each has 3 test cases + names = {sr.name for sr in result.scenarios} + assert names == {f\"scenario-{i}\" for i in range(3)} + for scenario_result in result.scenarios: + assert len(scenario_result.runs) == 3 # Each has 3 test cases ``` <!-- suggestion_start --> <details> <s\u2026",
+   "created_at": "2025-12-13T06:13:45Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#discussion_r2616119097",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2617184832,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Verify the actual module structure and available classes # Check where BaseAdapter is defined ast-grep --pattern 'class BaseAdapter' # Check if Evaluator exists ast-grep --pattern 'class Evaluator' # List the structure of agentunit.core fd -t f . src/agentunit/core/ # List the structure of agentunit.adapters fd -t f . src/agentunit/adapters/ ``` Repository: aviralgarg05/agentunit Length of output: 3726 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for Evaluator class definition anywhere in codebase ast-grep --pattern 'class Evaluator' # Also search with rg as fa\u2026",
+   "created_at": "2025-12-14T14:35:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37#discussion_r2617184832",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2617184837,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **FakeAdapter doesn't implement required abstract methods.** `FakeAdapter` extends `BaseAdapter` but fails to implement the required abstract methods `prepare()` and `execute()`. The `generate()` method is not part of the `BaseAdapter` interface. Based on the BaseAdapter definition in `src/agentunit/adapters/base.py`, the adapter must implement: - `prepare() -> None` - `execute(case: DatasetCase, trace: TraceLog) -> AdapterOutcome` Apply this diff to implement the required methods: ```diff class FakeAdapter(BaseAdapter): \"\"\" A simple mock adapter used only for demonstration. It returns a predictable output so evaluation is easy to understand. \"\"\" - def ge\u2026",
+   "created_at": "2025-12-14T14:35:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37#discussion_r2617184837",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2617184840,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for Evaluator class definition rg -n \"class Evaluator\" --type=py # Search for evaluate method definitions rg -n \"def evaluate\\(\" --type=py -A 2 ``` Repository: aviralgarg05/agentunit Length of output: 6099 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for Scenario class and Runner class rg -n \"class (Scenario|Runner)\" --type=py # Search for run_suite function rg -n \"def run_suite\\(\" --type=py -A 2 # Check what's imported in the example file head -30 examples/basic_evaluation.py ``` Repository: aviralgarg05/agentunit Length of output: 1553 --- \ud83c\udfc1 Script exe\u2026",
+   "created_at": "2025-12-14T14:35:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37#discussion_r2617184840",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2619246820,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Potential module name collision in `sys.modules`.** Using only `self.path.stem` as the module name can cause collisions if two scenario files share the same filename in different subdirectories (e.g., `tests/eval/scenarios.py` and `tests/eval/advanced/scenarios.py`). The second file would retrieve the cached module from the first import. Consider using a unique module name derived from the full path: ```diff def _import_module(self) -> Any: \"\"\"Import Python module from file path.\"\"\" try: import importlib.util import sys - spec = importlib.util.spec_from_file_location(self.path.stem, self.path) + # Use a unique module name to avoid collisions + module_name\u2026",
+   "created_at": "2025-12-15T12:36:13Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#discussion_r2619246820",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2619246829,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Example scenarios currently always fail due to agent/output mismatch** Given `SimpleTestAdapter` treats a case as passing only when `output == case.expected_output`, these definitions never succeed: - `SimpleTestDataset`\u2019s greeting case expects `\"Hello! I'm doing well, thank you for asking.\"`, but `simple_echo_agent` returns `\"Echo: <query>\"`. - `scenario_math_test` reuses `SimpleTestDataset`, yet its `math_agent` only understands math queries and returns `\"I don't know\"` for the greeting case. So both `basic_scenario` and `scenario_math_test` will fail if discovered and executed by the plugin, which is surprising for \u201cexample\u201d scenarios (you already have\u2026",
+   "created_at": "2025-12-15T12:36:13Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#discussion_r2619246829",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2619246830,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **`Scenario` is instantiated with deprecated `agent` arg, preventing this failing example from working** The current `Scenario` API takes an `adapter`, not `agent`. As written: ```python failing_scenario = Scenario( name=\"failing-test\", agent=always_wrong_agent, dataset=FailingDataset(), ) ``` will raise a `TypeError` at import time, so this scenario is never actually constructed or discovered by the pytest plugin. You can fix this by defining a simple adapter that wraps `always_wrong_agent` and wiring it via the `adapter` parameter: ```diff -from agentunit.datasets.base import DatasetCase, DatasetSource +from agentunit.adapters.base import AdapterOutcome\u2026",
+   "created_at": "2025-12-15T12:36:13Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#discussion_r2619246830",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2627766958,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **This example file is completely unrelated to PR objective.** Issue #3 is specifically about adding CI instructions to README.md. This example file is outside the scope of that issue. Additionally, the file contains multiple critical errors that will prevent it from running. Consider: 1. Removing this file from this PR 2. Creating a separate PR for example improvements after fixing the critical issues 3. Keeping this PR focused solely on the CI documentation changes <!-- fingerprinting:phantom:poseidon:puma --> <!-- This is an auto-generated comment by CodeRabbit --> \u2705 Addressed in commit fe9d27b",
+   "created_at": "2025-12-17T16:34:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#discussion_r2627766958",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2627766961,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Import paths are incorrect - example will fail.** These imports are incorrect and will cause `ImportError`: 1. Line 10: `BaseAdapter` is in `agentunit.adapters.base`, not `agentunit.core.adapters` 2. Line 11: There's no `Evaluator` class in `agentunit.core.evaluator` based on the provided codebase Apply this diff to fix the imports: ```diff -from agentunit.core.adapters import BaseAdapter -from agentunit.core.evaluator import Evaluator +from agentunit.adapters.base import BaseAdapter, AdapterOutcome +from agentunit.core.scenario import Scenario +from agentunit.datasets.base import DatasetCase +from agentunit.core.trace import TraceLog ``` <!--\u2026",
+   "created_at": "2025-12-17T16:34:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#discussion_r2627766961",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2627766971,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: FakeAdapter doesn't implement BaseAdapter interface.** The `FakeAdapter` doesn't properly implement the `BaseAdapter` abstract interface. According to `src/agentunit/adapters/base.py`, adapters must implement: - `prepare() -> None` - `execute(case: DatasetCase, trace: TraceLog) -> AdapterOutcome` - `cleanup() -> None` Your `generate(prompt: str) -> str` method doesn't match this interface. Apply this diff to fix the implementation: ```diff class FakeAdapter(BaseAdapter): \"\"\" A simple mock adapter used only for demonstration. It returns a predictable output so evaluation is easy to understand. \"\"\" - def generate(self, prompt: str) -> str: - # A\u2026",
+   "created_at": "2025-12-17T16:34:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#discussion_r2627766971",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2627766979,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Example uses non-existent Evaluator class.** The `main()` function uses an `Evaluator` class that doesn't exist in the AgentUnit codebase. Based on the actual API shown in other files, you should use `Scenario` and `Runner` instead. Apply this diff to fix the example workflow: ```diff def main(): - # Step 1 \u2014 Prepare the adapter + # Step 1 \u2014 Create test data + test_case = DatasetCase( + id=\"hello_1\", + query=\"Say hello!\", + expected_output=\"Hello, this is a fake response!\" + ) + + # Step 2 \u2014 Prepare the adapter adapter = FakeAdapter() - # Step 2 \u2014 Create the evaluator - evaluator = Evaluator(adapter=adapter) - - # Step 3 \u2014 Prepare an example p\u2026",
+   "created_at": "2025-12-17T16:34:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#discussion_r2627766979",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2627766985,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Section is incomplete - missing CI check commands.** This section addresses issue #3 but is incomplete. According to the acceptance criteria, you need to document how to run: - `poetry check` - verify Poetry config - `poetry run ruff check .` - run linting - `poetry run ruff format --check .` - verify formatting - `poetry run pytest` - run tests Currently, only the setup (`poetry install --with dev`) is shown. Additionally, the AI summary mentions this content \"appears twice in the diff\" - please verify there's no duplication in the README. Apply this diff to complete the section: ```diff #### Setup Install dependencies (including dev tools):\u2026",
+   "created_at": "2025-12-17T16:34:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#discussion_r2627766985",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630911104,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add language identifier to fenced code block.** The directory structure example should specify a language identifier for proper rendering. <details> <summary>\ud83d\udd0e Apply this diff to add the language identifier:</summary> ```diff -``` +```text project/ \u251c\u2500\u2500 tests/ \u2502 \u251c\u2500\u2500 eval/ # AgentUnit scenarios ``` </details> <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.18.1)</summary> 154-154: Fenced code blocks should have a language specified (MD040, fenced-code-language) </details> </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ```` In docs/pytest-plugin.md around lines 154 to 166, the fenced directory-structure code bloc\u2026",
+   "created_at": "2025-12-18T12:41:08Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#discussion_r2630911104",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630911109,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add language identifier to fenced code block.** The pytest output example should specify a language identifier for proper rendering. <details> <summary>\ud83d\udd0e Apply this diff to add the language identifier:</summary> ```diff -``` +```text tests/eval/basic_scenarios.py::agentunit::greeting-test PASSED tests/eval/basic_scenarios.py::agentunit::math-test FAILED ``` ``` </details> <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.18.1)</summary> 196-196: Fenced code blocks should have a language specified (MD040, fenced-code-language) </details> </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ```` In docs/pytest-plugin.md\u2026",
+   "created_at": "2025-12-18T12:41:09Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#discussion_r2630911109",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631025753,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Agent logic causes scenario to pass instead of fail.** The agent returns `\"42\"` when \"meaning of life\" is in the query (line 56), which matches the expected output in `FailingDataset` (line 44). This causes the scenario to **pass** rather than fail, defeating its purpose as a negative test case. The filename, module docstring, and line 62 comment all indicate this should be a **failing** scenario for pytest plugin testing. <details> <summary>\ud83d\udd0e Apply this diff to make the agent always return wrong answers:</summary> ```diff def always_wrong_agent(payload): - \"\"\"Agent that can answer the meaning of life question.\"\"\" - query = payload.get(\"query\"\u2026",
+   "created_at": "2025-12-18T13:07:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#discussion_r2631025753",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631535684,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Verify the correct import path and class definitions echo \"=== Searching for reporting module locations ===\" fd -t f \"reporting\" --full-path echo -e \"\\n=== Searching for RunResult class definition ===\" rg -n \"class RunResult\" echo -e \"\\n=== Searching for SuiteResult class definition and constructor ===\" rg -n \"class SuiteResult\" -A 10 echo -e \"\\n=== Checking imports of reporting classes in existing code ===\" rg -n \"from.*reporting.*import\" ``` Repository: aviralgarg05/agentunit Length of output: 3075 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check the actual class\u2026",
+   "created_at": "2025-12-18T15:25:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2631535684",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631535690,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cd /tmp && find . -type f -name \"*.py\" | head -20 ``` Repository: aviralgarg05/agentunit Length of output: 48 --- \ud83c\udfc1 Script executed: ```shell rg \"class RunResult\" -A 10 ``` Repository: aviralgarg05/agentunit Length of output: 875 --- \ud83c\udfc1 Script executed: ```shell rg \"class ScenarioRun\" -A 10 ``` Repository: aviralgarg05/agentunit Length of output: 1663 --- \ud83c\udfc1 Script executed: ```shell rg \"class SuiteResult\" -A 10 ``` Repository: aviralgarg05/agentunit Length of output: 818 --- \ud83c\udfc1 Script executed: ```shell cat -n tests/test_reporting.py | head -30 ``` Repository: aviralgarg05/agentunit L\u2026",
+   "created_at": "2025-12-18T15:25:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2631535690",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631535695,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # Find the SuiteResult class definition find . -type f -name \"*.py\" | head -20 && \\ rg -n \"class SuiteResult\" --type py ``` Repository: aviralgarg05/agentunit Length of output: 886 --- \ud83c\udfc1 Script executed: ```shell # Read the SuiteResult class definition sed -n '70,150p' src/agentunit/reporting/results.py ``` Repository: aviralgarg05/agentunit Length of output: 3425 --- \ud83c\udfc1 Script executed: ```shell # Check if SuiteResult is a dataclass and see the decorator sed -n '60,75p' src/agentunit/reporting/results.py ``` Repository: aviralgarg05/agentunit Length of output: 463 --- \ud83c\udfc1 Script execu\u2026",
+   "created_at": "2025-12-18T15:25:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2631535695",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2635521178,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Section appears incomplete.** The \"Running CI Checks Locally\" section includes setup instructions but doesn't actually show how to run the CI checks. Consider adding the commands for running linting, type checking, and tests, e.g.: ```markdown #### Usage Run all checks: ```bash poetry run ruff check . poetry run mypy src poetry run pytest tests -v ``` ``` <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In README.md around lines 206 to 219 the \"Running CI Checks Locally\" section stops at dependency installation and lacks concrete commands to run the same checks as CI; add a \"Usage\" subsection showing the exact commands to run linting, type checking,\u2026",
+   "created_at": "2025-12-19T15:52:32Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#discussion_r2635521178",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2635521182,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find reporting-related files in the agentunit codebase echo \"=== Finding reporting files ===\" fd -t f \"reporting\" src/agentunit --type f echo -e \"\\n=== Finding RunResult and SuiteResult definitions ===\" rg -n \"class RunResult|class SuiteResult\" src/agentunit --type py echo -e \"\\n=== Checking to_markdown method signature ===\" rg -n \"def to_markdown\" src/agentunit --type py -A 2 ``` Repository: aviralgarg05/agentunit Length of output: 1027 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check test imports and see what it's importing echo \"=== Test file imports (first 30 li\u2026",
+   "created_at": "2025-12-19T15:52:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#discussion_r2635521182",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2636691397,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Remove commented-out code.** The commented-out `platform` property should either be removed or uncommented with proper implementation. Dead code reduces maintainability. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff - # def platform(self) -> MonitoringPlatform: - # \"\"\"Return the monitoring platform type.\"\"\" - # return MonitoringPlatform.AGENTOPS - ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & bench\u2026",
+   "created_at": "2025-12-20T01:54:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2636691397",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2636691399,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # First, find the file and examine context around line 249 if [ -f \"src/agentunit/adapters/agentops_adapter.py\" ]; then echo \"=== File context around line 249 ===\" sed -n '240,260p' src/agentunit/adapters/agentops_adapter.py echo \"\" fi # Search for AgentInteraction class definition echo \"=== Searching for AgentInteraction class definition ===\" rg -n \"class AgentInteraction\" --type py # Search for to_agent field in AgentInteraction echo \"\" echo \"=== Searching for to_agent field in AgentInteraction ===\" rg -n \"to_agent\" src/agentunit/adapters/agentops_adapter.py -A 2 -B 2\u2026",
+   "created_at": "2025-12-20T01:54:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2636691399",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2636691400,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find the agentops_adapter.py file find . -type f -name \"agentops_adapter.py\" | head -20 # Check the file structure fd \"agentunit\" --type d | head -10 ``` Repository: aviralgarg05/agentunit Length of output: 125 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # First, let's check if the file exists and get basic info if [ -f \"src/agentunit/adapters/agentops_adapter.py\" ]; then echo \"File found. Checking lines 240-260 for AgentInteraction definition...\" sed -n '240,260p' src/agentunit/adapters/agentops_adapter.py echo \"\" echo \"Checking lines 342-350 for the code in review...\" s\u2026",
+   "created_at": "2025-12-20T01:54:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2636691400",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2636691401,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Remove large blocks of commented-out code.** Lines 494-507 and 543-552 contain substantial blocks of commented code (old LangSmith client.update_run calls). If this code is kept for reference during migration, add a TODO with a timeline for removal. Otherwise, remove it to improve maintainability. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff - # self.client.update_run( - # run_id=scenario_run_id, - # outputs={ - # \"result\": result.success_rate, - # \"execution_time\": execution_time, - # \"details\": result.to_dict(), - # }, - # end_time=datetime.now(timezone.utc), - # ) ``` Apply similar cleanup to lines 543-552. </details> Also applies to: 543-552\u2026",
+   "created_at": "2025-12-20T01:54:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2636691401",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637609218,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Consider collision risk with truncated hash.** The cache key uses only the first 16 hex characters (64 bits) of the SHA256 hash. While this reduces file name length, it increases collision probability following the birthday paradox. With approximately 2^32 scenarios, collisions become likely, which could cause incorrect cache hits where one scenario uses another's cached result. <details> <summary>\ud83d\udd0e Suggested fix: Use full hash or longer prefix</summary> ```diff # Create deterministic JSON string and hash it json_str = json.dumps(hash_data, sort_keys=True, default=str) - return hashlib.sha256(json_str.encode()).hexdigest()[:16] + return hashlib.sha256(json\u2026",
+   "created_at": "2025-12-21T06:21:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#discussion_r2637609218",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637609219,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **\"Next steps\" output uses hardcoded path instead of the user-provided directory.** When a user specifies a custom `--directory`, the output still says `pytest tests/eval/` instead of using the actual directory. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff click.echo(f\"\\nEvaluation directory initialized at {eval_dir}\") click.echo(\"\\nNext steps:\") click.echo(f\"1. Add scenario files to {eval_dir}/\") - click.echo(\"2. Run: pytest tests/eval/\") + click.echo(f\"2. Run: pytest {eval_dir}/\") click.echo(\"3. See docs/pytest-plugin.md for more information\") ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPOR\u2026",
+   "created_at": "2025-12-21T06:21:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#discussion_r2637609219",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637609221,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Path check is too permissive and may collect unintended files.** The `_is_eval_directory` function checks if both \"tests\" and \"eval\" appear anywhere in the path parts, which could match unintended directories like `mytests/foo/eval`, `tests/integration/eval`, or even `eval/tests`. This may lead to discovering scenarios from unexpected locations. <details> <summary>\ud83d\udd0e Suggested fix: Check for consecutive \"tests/eval\" pattern</summary> ```diff def _is_eval_directory(file_path: Path) -> bool: \"\"\"Check if file is in tests/eval/ directory.\"\"\" parts = file_path.parts - return \"tests\" in parts and \"eval\" in parts + # Check for consecutive \"tests\" followed by \"eval\u2026",
+   "created_at": "2025-12-21T06:21:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#discussion_r2637609221",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637609222,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Silent exception handling hides configuration errors.** Lines 158-159 catch all exceptions when loading config files and silently return an empty list. If a YAML/JSON file has syntax errors or invalid scenario configuration, users won't see any error message, making debugging difficult. <details> <summary>\ud83d\udd0e Suggested fix: Log configuration errors</summary> ```diff def _discover_config_scenarios(self) -> list[Scenario]: \"\"\"Discover scenarios from config files.\"\"\" try: from agentunit.nocode import ScenarioBuilder builder = ScenarioBuilder.from_file(self.path) scenario = builder.to_scenario() return [scenario] except ImportError: + logger.debug(\"nocode mo\u2026",
+   "created_at": "2025-12-21T06:21:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#discussion_r2637609222",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637609224,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Module name conflicts could occur with same-named files.** Line 172 adds the module to `sys.modules` using only the file stem (e.g., `\"example_scenarios\"`). If multiple test files have the same name in different directories (e.g., `tests/eval/foo/scenarios.py` and `tests/eval/bar/scenarios.py`), they will conflict in `sys.modules`, causing the later import to overwrite the earlier one. <details> <summary>\ud83d\udd0e Suggested fix: Use unique module names</summary> ```diff def _import_module(self) -> Any: \"\"\"Import Python module from file path.\"\"\" try: import importlib.util import sys + # Create unique module name to avoid conflicts + module_name = f\"agentunit.eval.{\u2026",
+   "created_at": "2025-12-21T06:21:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#discussion_r2637609224",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637615265,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove duplicate Configuration and Example Directory Structure sections.** These sections (lines 236-247 and 249-262) are duplicates of earlier sections in the file (lines 148-175), creating redundancy and confusion for readers. Keep only the first occurrence and remove the duplicates. <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.18.1)</summary> 251-251: Fenced code blocks should have a language specified (MD040, fenced-code-language) </details> </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In docs/pytest-plugin.md around lines 236 to 262, the \"Configuration\" and \"Example Directory Structure\" blocks ar\u2026",
+   "created_at": "2025-12-21T06:25:45Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#discussion_r2637615265",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637871566,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Missing `timezone` import required by PR objectives.** The PR objective states: \"Add necessary imports: from datetime import datetime, timezone where needed.\" The `timezone` module is needed to create timezone-aware datetime objects. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff -from datetime import datetime +from datetime import datetime, timezone ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benc\u2026",
+   "created_at": "2025-12-21T14:49:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2637871566",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637871568,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Use timezone-aware datetime per PR objectives.** Lines 39-40 use `datetime.now()` which creates timezone-naive datetime objects. According to the PR objectives, all datetime usage should be timezone-aware using `datetime.now(timezone.utc)`. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff suite = SuiteResult( scenarios=[scenario], - started_at=datetime.now(), - finished_at=datetime.now(), + started_at=datetime.now(timezone.utc), + finished_at=datetime.now(timezone.utc), ) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accur\u2026",
+   "created_at": "2025-12-21T14:49:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2637871568",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637877937,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find TraceLog class or type definition echo \"=== Searching for TraceLog definition ===\" ast-grep --pattern 'class TraceLog' echo -e \"\\n=== Searching for TraceLog type alias ===\" rg -n --type=py 'TraceLog\\s*=' -A 2 echo -e \"\\n=== Searching for ScenarioRun dataclass definition ===\" ast-grep --pattern 'class ScenarioRun' echo -e \"\\n=== Broader search for TraceLog in codebase ===\" rg -n --type=py 'TraceLog' -B 2 -A 2 | head -50 ``` Repository: aviralgarg05/agentunit Length of output: 6506 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check the actual test_reporting.py file to\u2026",
+   "created_at": "2025-12-21T14:59:58Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2637877937",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2644821393,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Bar chart width calculation creates UX issues with larger test suites.** The fixed-pixel width calculation (`passed_runs * 20px`) causes horizontal scrolling when test suites have many runs. For example, a suite with 100 test runs produces 2000px-wide bars, making the report difficult to view. Consider using percentage-based widths or a capped maximum width with proportional scaling. <details> <summary>\ud83d\udd0e Proposed fix using percentage-based widths</summary> Modify the CSS and HTML to use a container with proportional bars: ```diff .bar {{ - height: 18px; + display: inline-block; + height: 20px; margin: 6px 0; + color: white; + padding: 2px 8px; + font-size:\u2026",
+   "created_at": "2025-12-24T05:17:34Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#discussion_r2644821393",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2644855346,
+   "body": "@anshiky73-svg pls fix this issue",
+   "created_at": "2025-12-24T05:45:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#discussion_r2644855346",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2644855452,
+   "body": "> Seems like the humans are having a chat. I'll hop back into my burrow for now. If you need me again, just tag @coderabbitai in a new comment, and I'll come hopping out! <!-- This is an auto-generated mute comment by CodeRabbit -->",
+   "created_at": "2025-12-24T05:45:09Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#discussion_r2644855452",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2644883108,
+   "body": "ok i will fix this issue @aviralgarg05",
+   "created_at": "2025-12-24T06:06:22Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#discussion_r2644883108",
+   "user": {
+    "login": "anshiky73-svg"
+   }
+  },
+  {
+   "id": 2646155386,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove duplicate SimpleAdapter definition.** The `SimpleAdapter` class is defined twice in the same code example: - Lines 41-50: First definition (incomplete) - Lines 50-67: Second definition (complete) This duplication makes the documentation confusing and harder to maintain. <details> <summary>\ud83d\udd0e Proposed fix to remove duplication</summary> ```diff class SimpleAdapter(BaseAdapter): + \"\"\"Simple adapter for function-based agents.\"\"\" + name = \"simple\" - + def __init__(self, agent_func): self.agent_func = agent_func - + def prepare(self): pass - - \"\"\"Simple adapter for function-based agents.\"\"\" - - name = \"simple\" - - def __init__(self, agent_func): - self.ag\u2026",
+   "created_at": "2025-12-24T18:48:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155386",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646155387,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove duplicate sections.** The \"Configuration\" and \"Example Directory Structure\" sections (lines 236-262) are duplicated from earlier in the document (lines 148-175). Additionally, there's an incomplete code block at the end (lines 264-266) that appears to be a fragment from another section. <details> <summary>\ud83d\udd0e Proposed fix</summary> Remove lines 236-266 entirely, as these sections are already covered earlier in the documentation. </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In docs/pytest-plugin.md around lines 236 to 266, the \"Configuration\" and \"Example Directory Structure\" sections are duplicates of earlier content and the trai\u2026",
+   "created_at": "2025-12-24T18:48:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155387",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646155389,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **FakeAdapter does not implement the BaseAdapter interface correctly.** `FakeAdapter` must implement the abstract methods required by `BaseAdapter`: 1. `prepare(self) -> None` - for lazy setup 2. `execute(self, case: DatasetCase, trace: TraceLog) -> AdapterOutcome` - to process dataset cases 3. `cleanup(self) -> None` - for resource cleanup (optional, has default no-op) The current implementation only defines a `generate(prompt: str)` method, which is not part of the BaseAdapter interface. This will cause a `TypeError` at instantiation since abstract methods are not implemented. <details> <summary>\ud83d\udd0e Proposed fix: Implement required BaseAdapter methods</su\u2026",
+   "created_at": "2025-12-24T18:48:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155389",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646155392,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # Search for Evaluator class definition rg -nP --type=py 'class Evaluator' -A 5 # Search for Runner class definition rg -nP --type=py 'class Runner' -A 5 # Search for Scenario class definition rg -nP --type=py 'class Scenario' -A 5 ``` Repository: aviralgarg05/agentunit Length of output: 3487 --- \ud83c\udfc1 Script executed: ```shell # Check the current state of the example file cat -n examples/basic_evaluation.py ``` Repository: aviralgarg05/agentunit Length of output: 1547 --- \ud83c\udfc1 Script executed: ```shell # Search for imports of these classes rg -nP --type=py 'from.*Evaluator|import.*Evaluat\u2026",
+   "created_at": "2025-12-24T18:48:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155392",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646155393,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Module name collision risk when importing multiple files with the same stem.** Using `self.path.stem` as the module name in `sys.modules` could cause collisions if two files have the same filename in different directories (e.g., `tests/eval/foo/scenarios.py` and `tests/eval/bar/scenarios.py`). <details> <summary>\ud83d\udd0e Proposed fix using unique module names</summary> ```diff def _import_module(self) -> Any: \"\"\"Import Python module from file path.\"\"\" try: import importlib.util import sys - spec = importlib.util.spec_from_file_location(self.path.stem, self.path) + # Use full path as module name to avoid collisions + module_name = f\"agentunit_eval.{self.path.stem}\u2026",
+   "created_at": "2025-12-24T18:48:38Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155393",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646155394,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical logic error: scenario will pass, not fail.** The function name, file purpose, dataset name, and scenario name all indicate this should be a failing scenario for testing. However, the agent returns `\"42\"` when the query contains \"meaning of life\" (line 56), which exactly matches the expected output `\"42\"` (line 44). This will cause the scenario to PASS, not fail. To create a proper failing scenario, the agent should return an incorrect answer for this test case. <details> <summary>\ud83d\udd0e Proposed fix to make the scenario actually fail</summary> ```diff def always_wrong_agent(payload): - \"\"\"Agent that can answer the meaning of life question.\"\"\" + \"\"\"A\u2026",
+   "created_at": "2025-12-24T18:48:38Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155394",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646155396,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove or enhance placeholder test.** This test contains no assertions and the comment admits it can't validate anything programmatically. A test that doesn't assert anything provides no value and can give false confidence in test coverage. Either remove it or add actual validation logic. <details> <summary>\ud83d\udca1 Suggestion</summary> Consider removing this test entirely, or enhance it to programmatically check for marker presence: ```python @pytest.mark.integration def test_pytest_markers_configured(): \"\"\"Test that pytest markers are properly configured.\"\"\" import inspect # Get the current test function current_test = inspect.currentframe() # This test should\u2026",
+   "created_at": "2025-12-24T18:48:38Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646155396",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646929548,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **FakeAdapter does not implement the required BaseAdapter interface.** The `FakeAdapter` implements a `run()` method, but the `Runner` expects adapters to implement `prepare()`, `execute(case, trace_log)`, and `cleanup()` methods. Line 57 of `src/agentunit/core/runner.py` shows the runner calls `scenario.adapter.execute(case, trace_log)`, and lines 51, 63 show calls to `prepare()` and `cleanup()`. Additionally, `execute()` must return an outcome object with `success` and `error` attributes, not a string. This will cause an `AttributeError` at runtime, preventing the script from executing. <details> <summary>\ud83d\udd0e Proposed fix to implement the BaseAdapter inte\u2026",
+   "created_at": "2025-12-25T12:11:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646929548",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646929554,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, explore the repository structure git ls-files --cached | head -20 ``` Repository: aviralgarg05/agentunit Length of output: 575 --- \ud83c\udfc1 Script executed: ```shell # Search for DatasetSource definition rg -n \"class DatasetSource|DatasetSource\\s*=\" --type=py | head -20 ``` Repository: aviralgarg05/agentunit Length of output: 120 --- \ud83c\udfc1 Script executed: ```shell # Search for SuiteResult definition and its attributes rg -n \"class SuiteResult\" --type=py -A 30 ``` Repository: aviralgarg05/agentunit Length of output: 2388 --- \ud83c\udfc1 Script executed: ```shell # Search for success_rate attrib\u2026",
+   "created_at": "2025-12-25T12:11:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646929554",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2646929556,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix Runner initialization and invocation to match the API.** The `Runner` constructor expects an iterable of scenarios as the first argument (see line 37 of `src/agentunit/core/runner.py`), but line 29 passes no arguments. Additionally, the `run()` method takes no arguments (line 43 of the same file), but line 30 incorrectly passes `scenario` as an argument. This will cause `TypeError` exceptions at runtime. <details> <summary>\ud83d\udd0e Proposed fix to correct Runner usage</summary> ```diff # run evaluation - runner = Runner() - result = runner.run(scenario) + runner = Runner(scenarios=[scenario]) + result = runner.run() ``` </details> <!-- suggestion_start -->\u2026",
+   "created_at": "2025-12-25T12:11:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2646929556",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2649173654,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Move the module docstring to the correct position.** Module docstrings must be the first statement in a file (immediately after `from __future__` imports). When placed after regular imports, the string becomes a discarded literal and won't be accessible via `help(agentunit)` or `agentunit.__doc__`. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff from __future__ import annotations +\"\"\"AgentUnit - pytest-style evaluation harness for agentic AI and RAG workflows.\"\"\" + from .core.runner import Runner, run_suite from .core.scenario import Scenario from .datasets.base import DatasetCase, DatasetSource from .reporting.results import ScenarioResult, SuiteResul\u2026",
+   "created_at": "2025-12-27T14:51:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#discussion_r2649173654",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2649192592,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # Search for jsonschema imports and usage in all Python files rg -n --type=py 'import jsonschema|from jsonschema' -C 3 ``` Repository: aviralgarg05/agentunit Length of output: 531 --- \ud83c\udfc1 Script executed: ```shell # Check if jsonschema is used in test files rg -n --type=py 'jsonschema' tests/ -C 3 ``` Repository: aviralgarg05/agentunit Length of output: 48 --- \ud83c\udfc1 Script executed: ```shell # View the relevant section of pyproject.toml to understand dependency structure cat -n pyproject.toml | sed -n '1,60p' ``` Repository: aviralgarg05/agentunit Length of output: 2407 --- \ud83c\udfc1 Script executed\u2026",
+   "created_at": "2025-12-27T15:35:27Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2649192592",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2651954693,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for list_runs usage in the codebase echo \"=== Searching for list_runs usage ===\" rg -n \"\\.list_runs\\(\" --type py -C 3 echo \"\" echo \"=== Searching for self.client usage in agentops_adapter.py ===\" rg -n \"self\\.client\\.\" src/agentunit/adapters/agentops_adapter.py -C 2 echo \"\" echo \"=== Check lines 551, 637 specifically ===\" sed -n '549,553p; 635,639p' src/agentunit/adapters/agentops_adapter.py echo \"\" echo \"=== Check if AgentOps client is instantiated ===\" rg -n \"agentops\\.(Client|init|get_session)\" --type py -C 2 ``` Repository: aviralgarg05/agentunit Length of o\u2026",
+   "created_at": "2025-12-29T23:51:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2651954693",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2651954696,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `AgentOps Python SDK start_trace update_trace_metadata end_trace API documentation` \ud83d\udca1 Result: Here are the AgentOps Python SDK docs and the key details for start_trace, update_trace_metadata, and end_trace. - start_trace(trace_name: str = None, tags: Union[Dict, List] = None) \u2014 manually start a trace; returns a TraceContext (can be used as a context manager with with). Use when auto-start is disabled or you need separate traces. [1][2] - update_trace_metadata(metadata: Dict[str, Any], prefix: str = \"trace.metadata\") -> bool \u2014 update running-trace metadata (strings/numbers/booleans/lists), maps com\u2026",
+   "created_at": "2025-12-29T23:51:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2651954696",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2653201030,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Add thread safety for global state mutation.** The `register_metric` function mutates the module-level `DEFAULT_METRICS` dictionary without synchronization. In concurrent environments, this check-then-set pattern could lead to race conditions where multiple threads register metrics simultaneously. Consider one of these approaches: - Add a `threading.Lock` to guard the check and assignment - Document that metric registration should only occur during application startup, before concurrent execution begins - Make `DEFAULT_METRICS` immutable after initial setup <details> <summary>\ud83d\udd0e Proposed fix adding thread safety</summary> ```diff +import threading + +_regis\u2026",
+   "created_at": "2025-12-30T15:07:08Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#discussion_r2653201030",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2653201042,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Inconsistent error messages between get_metric and resolve_metrics.** The error message format differs from `resolve_metrics` (line 38), which uses `\"Unknown metric '{name}'\"`. Consider using consistent wording across both functions for better user experience. <details> <summary>\ud83d\udd0e Proposed fix for consistency</summary> ```diff def get_metric(name: str) -> Metric: metric = DEFAULT_METRICS.get(name) if metric is None: - msg = f\"Metric '{name}' not found\" + msg = f\"Unknown metric '{name}'\" raise KeyError(msg) return metric ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the c\u2026",
+   "created_at": "2025-12-30T15:07:09Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#discussion_r2653201042",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2653201044,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Avoid hardcoding the metric count.** The assertion `assert len(metrics) == 5` will break whenever a default metric is added or removed. Consider checking for the presence of expected metrics instead, or at minimum, compute the length from `DEFAULT_METRICS` dynamically. <details> <summary>\ud83d\udd0e Proposed fix for more robust test</summary> ```diff def test_resolve_default_metrics(): - # When names is None, it should return all default metrics + from agentunit.metrics.registry import DEFAULT_METRICS + metrics = resolve_metrics(None) - assert len(metrics) == 5 # There are 5 metrics in your DEFAULT_METRICS dict + assert len(metrics) == len(DEFAULT_METRICS) + # Or ve\u2026",
+   "created_at": "2025-12-30T15:07:09Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#discussion_r2653201044",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2658265350,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check where DatasetCase and DatasetSource are defined echo \"=== Searching for class definitions ===\" rg -n \"^class DatasetCase|^class DatasetSource\" --type=py # Check if agentunit/dataset.py or agentunit/dataset/__init__.py exists and what it exports echo -e \"\\n=== Checking agentunit/__init__.py for re-exports ===\" if [ -f \"agentunit/__init__.py\" ]; then cat agentunit/__init__.py fi echo -e \"\\n=== Checking agentunit/dataset.py ===\" if [ -f \"agentunit/dataset.py\" ]; then cat agentunit/dataset.py fi echo -e \"\\n=== Checking agentunit/dataset/__init__.py ===\" if [ -f \"agen\u2026",
+   "created_at": "2026-01-02T19:14:29Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2658265350",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2658265354,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find the Outcome class definition rg -n \"class Outcome\" --type=py -A 10 ``` Repository: aviralgarg05/agentunit Length of output: 48 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Also search for dataclass decorator on Outcome or __init__ method rg -n \"@dataclass|class Outcome\" --type=py -B 2 -A 15 ``` Repository: aviralgarg05/agentunit Length of output: 50378 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Look for imports of Outcome to understand what it is rg -n \"from.*Outcome|import.*Outcome\" --type=py | head -20 ``` Repository: aviralgarg05/agentunit Length of output:\u2026",
+   "created_at": "2026-01-02T19:14:29Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2658265354",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2658265357,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix DatasetCase field names to match the API.** The `DatasetCase` constructor arguments don't match the actual field names defined in the class. From the relevant code snippets, `DatasetCase` has: - `id: str` (required) - `query: str` (required, not `input`) - `expected_output: str | None` (optional, not `expected`) This will cause a `TypeError` at runtime, violating the acceptance criteria that the script must run without errors. <details> <summary>\ud83d\udd0e Proposed fix for DatasetCase construction</summary> ```diff cases = [ DatasetCase( - input=\"hello\", - expected=\"hello\", + id=\"case_1\", + query=\"hello\", + expected_output=\"hello\", ) ] ``` </details> <detail\u2026",
+   "created_at": "2026-01-02T19:14:29Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2658265357",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2658901409,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix the incorrect import path for TraceLog.** The import references `agentunit.core.tracelog`, but based on the codebase structure, TraceLog is defined in `agentunit.core.trace` (not `tracelog`). This will cause an `ImportError` at runtime, preventing the script from executing. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff -from agentunit.core.tracelog import TraceLog +from agentunit.core.trace import TraceLog ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In src/agentunit/examples/basic_evaluation.py around line 2, the import path is incorrect: it imports TraceLog from agentunit.core.tracelog but TraceLog is defined in age\u2026",
+   "created_at": "2026-01-03T12:36:11Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2658901409",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2658901411,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Add explanatory comments and type hints for newcomers.** The acceptance criteria require that the code be \"well-commented and understandable for newcomers.\" The `FakeAdapter` class lacks explanatory comments describing its purpose and how it implements the adapter pattern. Additionally, the `case` parameter in `execute()` is missing its type hint. <details> <summary>\ud83d\udd0e Proposed improvements</summary> ```diff class FakeAdapter(BaseAdapter): + \"\"\" + A minimal adapter that returns a fixed response for any input. + Used for demonstration purposes in this example. + \"\"\" + def __init__(self, response: str): self.response = response def prepare(self): + \"\"\"Set\u2026",
+   "created_at": "2026-01-03T12:36:11Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#discussion_r2658901411",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2661460576,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash cd /repo ruff check tests/test_reporting.py --output-format=text echo \"Exit code: $?\" ``` Repository: aviralgarg05/agentunit Length of output: 369 --- \ud83c\udfc1 Script executed: ```shell ruff check tests/test_reporting.py --output-format concise echo \"Exit code: $?\" ``` Repository: aviralgarg05/agentunit Length of output: 406 --- \ud83c\udfc1 Script executed: ```shell head -70 tests/test_reporting.py | tail -50 ``` Repository: aviralgarg05/agentunit Length of output: 1134 --- \ud83c\udfc1 Script executed: ```shell head -10 tests/test_reporting.py ``` Repository: aviralgarg05/agentunit Length of output:\u2026",
+   "created_at": "2026-01-05T13:14:14Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2661460576",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667594521,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix `case_id` type mismatch.** Lines 15 and 25 pass integers (`1`, `2`) for `case_id`, but `ScenarioRun` expects `case_id: str` per the dataclass definition. This type mismatch will cause runtime errors or type-checking failures. <details> <summary>\ud83d\udd27 Proposed fix</summary> ```diff passing_run = ScenarioRun( scenario_name=\"test_pass\", - case_id=1, + case_id=\"1\", success=True, metrics={}, duration_ms=10, ``` ```diff failing_run = ScenarioRun( scenario_name=\"test_fail\", - case_id=2, + case_id=\"2\", success=False, metrics={}, duration_ms=10, ``` </details> Also applies to: 25-25 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @tests/test_reporting\u2026",
+   "created_at": "2026-01-07T09:00:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2667594521",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667594523,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix `trace` type mismatch (regression from past fix).** Lines 19 and 29 still pass `trace=[]` (empty list), but `ScenarioRun` expects `trace: TraceLog` (a dataclass instance). A past review comment indicated this was addressed in commit c2df52d, but the fix is not present in the current code. This appears to be a regression. <details> <summary>\ud83d\udd27 Proposed fix</summary> Add the import at the top of the file: ```diff from agentunit.reporting.results import ( ScenarioResult, ScenarioRun, SuiteResult, ) +from agentunit.core.trace import TraceLog ``` Then update both ScenarioRun constructions: ```diff passing_run = ScenarioRun( scenario_name=\"test_pass\", case\u2026",
+   "created_at": "2026-01-07T09:00:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2667594523",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667594527,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove unused encoding call.** Line 53 calls `markdown.encode(\"utf-8\")` but discards the result. Since `output_path.read_text(encoding=\"utf-8\")` at line 48 already validates UTF-8 decoding, this line serves no purpose. Remove it or replace with an explicit assertion if UTF-8 encoding verification is intended. <details> <summary>\ud83e\uddf9 Suggested cleanup</summary> ```diff assert \"\u2705\" in markdown assert \"\u274c\" in markdown - markdown.encode(\"utf-8\") ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, conta\u2026",
+   "created_at": "2026-01-07T09:00:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2667594527",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667605392,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Regenerate poetry.lock file.** The CI pipeline is failing because `poetry.lock` is out of sync with the changes to `pyproject.toml`. Run the following command to fix this: ```shell poetry lock ``` Then commit the updated `poetry.lock` file. --- **Note:** This issue is directly caused by adding the `jsonschema` dependency on Line 37. Once you verify whether this dependency is needed (see previous comment), regenerate the lock file accordingly. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @pyproject.toml at line 37, pyproject.toml was updated to add the jsonschema dependency but poetry.lock is out of sync; run \"poetry lock\" to rege\u2026",
+   "created_at": "2026-01-07T09:03:51Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2667605392",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667680398,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Fix `trace` parameter type mismatch (regression).** Lines 22 and 32 pass `trace=[]` (empty list), but `ScenarioRun` expects `trace: TraceLog` (a dataclass instance). This type mismatch will cause runtime errors. This issue was flagged in previous reviews and marked as addressed, but appears to have regressed. <details> <summary>\ud83d\udd27 Proposed fix</summary> ```diff passing_run = ScenarioRun( scenario_name=\"test_pass\", case_id=\"1\", success=True, metrics={}, duration_ms=10, - trace=[], + trace=TraceLog(), error=None, ) ``` Apply the same fix to `failing_run` at line 32: ```diff failing_run = ScenarioRun( scenario_name=\"test_fail\", case_id=\"2\", succes\u2026",
+   "created_at": "2026-01-07T09:28:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#discussion_r2667680398",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667853078,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Regenerate poetry.lock to fix pipeline failure.** The CI pipeline is failing because `pyproject.toml` has changed but `poetry.lock` is out of sync. Run `poetry lock` to update the lock file and commit the changes. ```shell #!/bin/bash # Command to regenerate the lock file poetry lock --no-update ``` <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @pyproject.toml at line 37, The CI fails because pyproject.toml was changed (jsonschema optional version updated) but poetry.lock is stale; run the lock regeneration command (poetry lock --no-update) to regenerate poetry.lock, verify the updated poetry.lock is added to git, commit the updated poetry.\u2026",
+   "created_at": "2026-01-07T10:18:12Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2667853078",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667931245,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, check the current state of pyproject.toml around lines 35-45 head -50 pyproject.toml | tail -20 ``` Repository: aviralgarg05/agentunit Length of output: 465 --- \ud83c\udfc1 Script executed: ```shell # Search for any imports of scipy or jsonschema in test files rg -r 'import (scipy|jsonschema)|from (scipy|jsonschema)' tests/ --type py ``` Repository: aviralgarg05/agentunit Length of output: 1432 --- \ud83c\udfc1 Script executed: ```shell # Find all test files to understand the structure fd 'test.*\\.py$' tests/ --type f ``` Repository: aviralgarg05/agentunit Length of output: 658 --- \ud83c\udfc1 Script execut\u2026",
+   "created_at": "2026-01-07T10:42:35Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2667931245",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2667931249,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Remove merge conflict markers before merging.** Git merge conflict markers are still present in the file. These will cause Poetry to fail when parsing `pyproject.toml`, preventing package installation and breaking CI/CD pipelines. <details> <summary>\ud83d\udd27 Resolution required</summary> Remove the conflict markers and keep only one version of the conflicting section. Based on the intended changes, the resolution should be: ```diff - -<<<<<<< HEAD -======= -jsonschema = \"^4.25.1\" ->>>>>>> 0bb4b78 (Fix missing required dependencies (jsonschema, scipy)) ``` Note: After removing the markers, address the duplicate `jsonschema` declaration (see next comment). </det\u2026",
+   "created_at": "2026-01-07T10:42:35Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#discussion_r2667931249",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2669418950,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: `execute` signature doesn't match `BaseAdapter` interface.** The `execute` method signature is incompatible with `BaseAdapter`. According to the base class definition, `execute` must accept `(self, case: DatasetCase, trace: TraceLog) -> AdapterOutcome`, but this implementation only takes `input_data: FAQItem`. This adapter won't work with the agentunit framework and violates the Liskov Substitution Principle. Additionally, Line 44 has a minor formatting issue (missing space after comma). <details> <summary>\ud83d\udd27 Proposed fix</summary> ```diff - def execute(self, input_data: FAQItem) -> AdapterOutcome: + def execute(self, case: FAQItem, trace: Any)\u2026",
+   "created_at": "2026-01-07T17:33:32Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/51#discussion_r2669418950",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2669418956,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find test files using Scenario class rg -n -B 2 -A 5 'Scenario' --type=py -g 'test_*.py' -g '*_test.py' ``` Repository: aviralgarg05/agentunit Length of output: 35601 --- \ud83c\udfc1 Script executed: ```shell # Also check for Scenario class definition fd -e py -x rg -l 'class Scenario' ``` Repository: aviralgarg05/agentunit Length of output: 314 --- \ud83c\udfc1 Script executed: ```shell # Check the BaseAdapter class and its execute method signature rg -n -A 10 'class BaseAdapter' --type=py ``` Repository: aviralgarg05/agentunit Length of output: 751 --- \ud83c\udfc1 Script executed: ```shell # Check th\u2026",
+   "created_at": "2026-01-07T17:33:32Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/51#discussion_r2669418956",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2669499519,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Fix formatting to resolve pipeline failure.** The code has formatting issues causing the Ruff format check to fail: - Line 44: Missing space after comma in `AdapterOutcome(success=success,output=response)` - Missing blank lines between method definitions (lines 33-35, 36-37) <details> <summary>\ud83d\udd27 Proposed formatting fix</summary> ```diff def __init__(self): self.agent = MockAgent() + def prepare(self) -> None: self.agent.connect() + def execute(self, input_data: FAQItem) -> AdapterOutcome: # The core logic we want to test response = self.agent.answer(input_data.question) # Simple exact match check success = (response == input_data.answer) - return AdapterOu\u2026",
+   "created_at": "2026-01-07T17:50:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/52#discussion_r2669499519",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2669515352,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Signature mismatch violates BaseAdapter contract.** The `execute()` method signature does not match the abstract method defined in `BaseAdapter`. According to the base class (src/agentunit/adapters/base.py), the signature should be: ```python def execute(self, case: DatasetCase, trace: TraceLog) -> AdapterOutcome ``` Your implementation is missing the required `trace: TraceLog` parameter and uses a different parameter name/type (`input_data: FAQItem` instead of `case: DatasetCase`). This violates the abstract base class contract and prevents the adapter from being used polymorphically. <details> <summary>\ud83d\udd27 Proposed fix to match BaseAdapter sig\u2026",
+   "created_at": "2026-01-07T17:54:55Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/52#discussion_r2669515352",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2680861437,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Inconsistent behavior: empty suite doesn't create file.** When there are no runs, this returns early without writing any file. Other export methods (`to_json`, `to_markdown`, `to_junit`) always create the output file even when empty. This inconsistency could surprise callers who expect the file to exist after a successful call. <details> <summary>Proposed fix: create empty CSV with headers or at minimum an empty file</summary> ```diff if not rows: + target.touch() return target ``` Or, to maintain header consistency for empty results, define a fixed set of base fieldnames. </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</su\u2026",
+   "created_at": "2026-01-12T04:48:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/62#discussion_r2680861437",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2680873021,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical bug: `row.keys` should be `row.keys()`.** `row.keys` returns the method object itself, not the dictionary keys. This will raise a `TypeError` at runtime when attempting to iterate. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff - fieldnames = sorted({key for row in rows for key in row.keys}) + fieldnames = sorted({key for row in rows for key in row.keys()}) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thorou\u2026",
+   "created_at": "2026-01-12T04:58:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/62#discussion_r2680873021",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2681247243,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Empty file not created when no rows exist.** When `rows` is empty, the method returns `target` without writing anything. The parent directory is created, but the file itself does not exist. This could confuse callers who expect the file to always exist after a successful call. Consider creating an empty file or a file with just headers to maintain consistency. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff if not rows: + # Create empty file with no content + target.touch() return target ``` Or alternatively, write headers only: ```python if not rows: target.write_text(\"\", encoding=\"utf-8\") return target ``` </details> <!-- suggestion_start --> <detail\u2026",
+   "created_at": "2026-01-12T08:21:56Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/63#discussion_r2681247243",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

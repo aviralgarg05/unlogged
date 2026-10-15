@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 63,
+  "changed_files": 2,
+  "additions": 44,
+  "deletions": 23,
+  "title": "Fix ScenarioRun Duration Tracking in SwarmAdapter",
+  "body": "Currently, ScenarioRun duration is hardcoded to 0.0 in SwarmAdapter, which does not reflect the actual runtime of the scenario. This PR updates SwarmAdapter.end_session to: Use the already-calculated duration_seconds metric. Convert it to milliseconds. Populate the duration_ms field in ScenarioRun. This ensures that scenario durations are accurately recorded, improving metrics tracking and reporting consistency. Closes #54 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit ## Release Notes * **New Features** * Added optional dependency availability checking with warnings when integrations are unavailable. * **Bug Fixes** * Fixed session durat\u2026",
+  "created_at": "2026-01-12T08:18:16Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/63",
+  "state": "closed",
+  "merged_at": "2026-01-12T10:07:49Z",
+  "user": {
+   "login": "Jagriti-student"
+  }
+ }
+}

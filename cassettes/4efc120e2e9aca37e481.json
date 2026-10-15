@@ -1,0 +1,113 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2685754346,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Empty delimiter causes `ValueError` at runtime.** If `delimiter` is an empty string, `value.split(delimiter)` raises `ValueError: empty separator`. Consider validating the delimiter or handling this edge case. <details> <summary>\ud83d\udee0\ufe0f Suggested fix</summary> ```diff def _parse_list_field(value: str | None, delimiter: str) -> list[str] | None: \"\"\"Safely parse a delimited list field from CSV.\"\"\" - if not value or not isinstance(value, str): + if not value or not isinstance(value, str) or not delimiter: return None parts = [item.strip() for item in value.split(delimiter)] cleaned = [p for p in parts if p] return cleaned or None ``` </details> <!-- suggestion_sta\u2026",
+   "created_at": "2026-01-13T10:19:21Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/64#discussion_r2685754346",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2690275307,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cd src/agentunit/adapters && wc -l autogen_ag2.py ``` Repository: aviralgarg05/agentunit Length of output: 84 --- \ud83c\udfc1 Script executed: ```shell # First, let's find the AgentInteraction class definition grep -n \"class AgentInteraction\" src/agentunit/adapters/autogen_ag2.py ``` Repository: aviralgarg05/agentunit Length of output: 48 --- \ud83c\udfc1 Script executed: ```shell # Read the relevant sections: AgentInteraction class definition and the usage sed -n '1,100p' src/agentunit/adapters/autogen_ag2.py | head -80 ``` Repository: aviralgarg05/agentunit Length of output: 2349 --- \ud83c\udfc1 Script executed\u2026",
+   "created_at": "2026-01-14T12:39:57Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/66#discussion_r2690275307",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2690275320,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Indentation error causes code to run outside the `if selected_run:` block.** The DataFrame creation and chart rendering (lines 379-404) are dedented and will execute even when `selected_run` is falsy. This will cause a `NameError` because `report_metrics` is only defined inside the `if selected_run:` block (lines 371-377). <details> <summary>\ud83d\udc1b Proposed fix - indent the visualization code</summary> ```diff report_metrics = { \"Success Rate (%)\": ( run_data.get(\"passed\", 0) / max(run_data.get(\"total\", 1), 1) * 100 ), \"Avg Latency (s)\": run_data.get(\"avg_latency\", 0), \"Total Cost ($)\": run_data.get(\"cost\", 0), } - df = pd.DataFrame( - { - \"Metric\"\u2026",
+   "created_at": "2026-01-14T12:39:57Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/66#discussion_r2690275320",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2704681030,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Fix mislabeled error message in Llama JSON parsing.** Log message currently references OpenAI, which is misleading during triage. <details> <summary>\ud83d\udee0\ufe0f Proposed fix</summary> ```diff - logger.error( - \"Failed to parse OpenAI response JSON. Raw response:\\n%s\", - response, - exc_info=True, - ) + logger.error( + \"Failed to parse Llama response JSON. Raw response:\\n%s\", + response, + exc_info=True, + ) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues\u2026",
+   "created_at": "2026-01-19T12:58:42Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#discussion_r2704681030",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2704681033,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Re-raise inside except and fix OpenAI log label.** `raise` is currently aligned outside the except block, which results in `RuntimeError: No active exception to reraise` and loses the original JSONDecodeError. Also the label says \u201cLlama\u201d. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff - except json.JSONDecodeError: - logger.error( - \"Failed to parse Llama response JSON. Raw response:\\n%s\", - response_text, - exc_info=True, - ) - raise + except json.JSONDecodeError: + logger.error( + \"Failed to parse OpenAI response JSON. Raw response:\\n%s\", + response_text, + exc_info=True, + ) + raise ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Comm\u2026",
+   "created_at": "2026-01-19T12:58:42Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#discussion_r2704681033",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2704694732,
+   "body": "This logging added for the debugging purpose only, so sensitive data leakage is not the scenario here in my opinion.",
+   "created_at": "2026-01-19T13:02:58Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#discussion_r2704694732",
+   "user": {
+    "login": "web4akash"
+   }
+  },
+  {
+   "id": 2704696315,
+   "body": "`@web4akash`, I appreciate your consideration of sensitive data! However, that wasn't the concern here. The issue is simply that the error message says **\"Failed to parse OpenAI response JSON\"** when it's actually in the `LlamaDatasetGenerator` class, not the OpenAI generator. This mislabeling could be confusing during debugging when someone sees an error from Llama but the log says \"OpenAI\". The fix is just changing \"OpenAI\" to \"Llama\" in this specific error message on line 166 to match the correct generator context. Would you like to update the label to avoid confusion during troubleshooting? <!-- This is an auto-generated reply by CodeRabbit -->",
+   "created_at": "2026-01-19T13:03:31Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#discussion_r2704696315",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2707967148,
+   "body": "@web4akash change \"OpenAI\" to \"Llama\" in this specific error message on line 166 to match the correct generator context.",
+   "created_at": "2026-01-20T11:34:07Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#discussion_r2707967148",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2707967436,
+   "body": "> Seems like the humans are having a chat. I'll hop back into my burrow for now. If you need me again, just tag @coderabbitai in a new comment, and I'll come hopping out! <!-- This is an auto-generated mute comment by CodeRabbit -->",
+   "created_at": "2026-01-20T11:34:12Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#discussion_r2707967436",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2710601001,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Remove commented-out code block.** This LangSmith-related commented code is dead code that reduces maintainability. The active initialization code already handles the same attributes (lines 68-74). <details> <summary>\ud83d\udd27 Proposed fix</summary> ```diff self.enable_tracing: bool = kwargs.get(\"enable_tracing\", True) self.client: Any = None self.platform = MonitoringPlatform.AGENTOPS - # \"\"\" - # Initialize LangSmith adapter. - - # Args: - # api_key: LangSmith API key - # project_id: Langsmith project ID - # endpoint: Optional custom LangSmith endpoint - # enable_tracing: Whether to enable automatic tracing - # enable_feedback: Whether to collect feedback dat\u2026",
+   "created_at": "2026-01-21T01:09:07Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2710601001",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2710601006,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Bug: Incorrect success value in error trace metadata.** In the exception handler, `trace_metadata` sets `\"success\": True` but this code path only executes when the scenario fails. This should be `False`. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff # Update AgentOps run with error trace_metadata = { \"scenario_name\": scenario.name, \"metrics\": session_summary.get(\"metrics\", {}), - \"success\": True, + \"success\": False, } ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missin\u2026",
+   "created_at": "2026-01-21T01:09:07Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2710601006",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2719066450,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Guard against uninitialized `session_summary` in the error path.** If an exception occurs before `session_summary` is set, Line 525 triggers `UnboundLocalError`, masking the original failure. Also, the constructed `trace_metadata` is not used. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff - try: + session_summary: dict[str, Any] = {} + try: # Simulate scenario execution with multi-agent coordination session_id = f\"scenario_{scenario.name}_{uuid4().hex[:8]}\" @@ - session_summary = self.end_session(session_id, final_state) + session_summary = self.end_session(session_id, final_state) @@ - trace_metadata = { + trace_metadata = { \"scenario_name\": scenari\u2026",
+   "created_at": "2026-01-22T23:47:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#discussion_r2719066450",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

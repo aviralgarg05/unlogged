@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 65,
+  "changed_files": 2,
+  "additions": 57,
+  "deletions": 15,
+  "title": "Implement duration and response time tracking in AG2Adapter",
+  "body": "## Description This PR replaces hardcoded duration and average_response_time metrics in AG2Adapter with real-time measurements. ## Changes - Track ScenarioRun duration using monotonic timestamps - Compute average response time from message timestamps - Remove hardcoded metric values Fixes #55 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Bug Fixes** * Session duration now accurately computed from actual session times. * Metrics now correctly include calculated average response times. * Improved error handling for malformed CSV rows with detailed error messages. * **New Features** * CSV data loading now supports configurable delimiter\u2026",
+  "created_at": "2026-01-14T10:55:41Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/65",
+  "state": "closed",
+  "merged_at": "2026-01-14T17:51:59Z",
+  "user": {
+   "login": "Jagriti-student"
+  }
+ }
+}

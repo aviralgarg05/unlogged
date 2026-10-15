@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 52,
+  "changed_files": 1,
+  "additions": 74,
+  "deletions": 0,
+  "title": "Test/verify suite template ",
+  "body": "## Description This PR adds a unit test (`tests/test_suite_template.py`) that implements the `FAQAdapter` pattern described in `docs/templates/suite_template.py`. It verifies that the documentation example correctly implements the `BaseAdapter` interface and produces valid `AdapterOutcome` objects. Closes #4 ## Type of Change - [x] Test coverage improvement ## Changes Made - Created `tests/test_suite_template.py` which: - Mocks a simple dataset and agent. - Implements `FAQAdapter` inheriting from `BaseAdapter`. - Asserts that the adapter flow functions correctly. ## Testing - [x] New test passes locally <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by\u2026",
+  "created_at": "2026-01-07T17:47:48Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/52",
+  "state": "closed",
+  "merged_at": "2026-01-09T11:53:02Z",
+  "user": {
+   "login": "thejesshwar"
+  }
+ }
+}

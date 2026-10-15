@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 75,
+  "changed_files": 1,
+  "additions": 28,
+  "deletions": 18,
+  "title": "\ud83d\udcdd Add docstrings to `fix/type-annotations-llm-generator`",
+  "body": "Docstrings generation was requested by @aviralgarg05. * https://github.com/aviralgarg05/agentunit/pull/74#issuecomment-3843312437 The following files were modified: * `src/agentunit/generators/llm_generator.py` <details> <summary>\u2139\ufe0f Note</summary><blockquote> CodeRabbit cannot perform edits on its own pull requests yet. </blockquote></details>",
+  "created_at": "2026-02-03T19:54:10Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/75",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "coderabbitai[bot]"
+  }
+ }
+}

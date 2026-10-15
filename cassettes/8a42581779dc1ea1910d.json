@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3615934903,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F1) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-05T09:12:15Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/1#issuecomment-3615934903",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3617730087,
+   "body": "@thejesshwar Thank you for this contribution! **Code Review:** The fix is correct and well-done. Adding `encoding=\"utf-8\"` to `write_text()` ensures consistent behavior across all platforms, especially Windows where the default encoding (cp1252) can't handle emoji characters used in the markdown reports. **About the CI failures:** The workflow failures you saw were due to the \"AgentUnit CI Example\" workflow, which was an example template incorrectly configured to run on PRs. I've just pushed a fix that: 1. Creates a proper CI workflow (`ci.yml`) for testing 2. Disables the example workflow from auto-triggering Once your PR is rebased on main, the new CI should run and pass. **Suggested impr\u2026",
+   "created_at": "2025-12-05T17:00:32Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/1#issuecomment-3617730087",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3621367056,
+   "body": "Hello, I'd like to work on this issue. Can you please assign it to me?",
+   "created_at": "2025-12-06T23:34:27Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/13#issuecomment-3621367056",
+   "user": {
+    "login": "evanjhoward11"
+   }
+  },
+  {
+   "id": 3621608978,
+   "body": "Please assign me this issue.",
+   "created_at": "2025-12-07T04:56:46Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/9#issuecomment-3621608978",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 3621817625,
+   "body": "Assigned! Go through the codebase, if any issues let me know here",
+   "created_at": "2025-12-07T08:31:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/13#issuecomment-3621817625",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3621818280,
+   "body": "Assigned! Go through the codebase, if any issues let me know here",
+   "created_at": "2025-12-07T08:32:09Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/9#issuecomment-3621818280",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3621846597,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F31) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-07T09:14:45Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31#issuecomment-3621846597",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3626101266,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F32) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-08T10:11:46Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#issuecomment-3626101266",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3626999059,
+   "body": "Already assigned the issue to someone else, first get the issue assigned then do a PR",
+   "created_at": "2025-12-08T13:39:58Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31#issuecomment-3626999059",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3631627642,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F33) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T11:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/33#issuecomment-3631627642",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3632328402,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-09T13:41:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#issuecomment-3632328402",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3633222408,
+   "body": "Mention which issue this solves",
+   "created_at": "2025-12-09T16:44:45Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/33#issuecomment-3633222408",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3633224395,
+   "body": "I would like to work on Add smoke test for suite_template FAQAdapter #7 this issue",
+   "created_at": "2025-12-09T16:45:12Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/7#issuecomment-3633224395",
+   "user": {
+    "login": "Vansh-Lohia"
+   }
+  },
+  {
+   "id": 3633866678,
+   "body": "It looks like [base.py](https://github.com/aviralgarg05/agentunit/blob/main/src/agentunit/datasets/base.py) (and everything within its folder) already has complete and accurate type hints, and passes the formatting and linting tests. However, when running mypy on [src/agentunit](https://github.com/aviralgarg05/agentunit/tree/main/src/agentunit), issues for the other folders/files come up. Besides missing type hints, there are import-related errors, such as [import-not-found] and [import-untyped]. Can you confirm that there are in fact missing dependencies and it's not just an issue with my machine? Should I work on the other files that mypy shows are missing type hints? TIA!",
+   "created_at": "2025-12-09T19:11:37Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/13#issuecomment-3633866678",
+   "user": {
+    "login": "evanjhoward11"
+   }
+  },
+  {
+   "id": 3634125880,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F34) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T20:24:20Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/34#issuecomment-3634125880",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3634126343,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough Adds a new test documentation file (`TEST_CODERABBIT.md`) containing verification instructions for CodeRabbit's auto-review functionality. The file describes the test purpose, expected behavior with automated review comments, and incremental review behavior acr\u2026",
+   "created_at": "2025-12-09T20:24:27Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/34#issuecomment-3634126343",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3634126640,
+   "body": "## Summary of Changes Hello @aviralgarg05, I'm Gemini Code Assist[^1]! I'm currently reviewing this pull request and will post my feedback shortly. In the meantime, here's a summary to help you and other reviewers quickly get up to speed! This pull request serves as a dedicated test case to confirm the operational status and behavior of the CodeRabbit automated review system. Its primary goal is to ensure that CodeRabbit correctly initiates reviews on new pull requests and effectively handles subsequent incremental changes introduced through additional commits, with the understanding that the PR will be closed upon successful verification. ### Highlights * **CodeRabbit Verification**: This\u2026",
+   "created_at": "2025-12-09T20:24:29Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/34#issuecomment-3634126640",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 3634146987,
+   "body": "Closing test PR. CodeRabbit configuration has been added to main. CodeRabbit review activity was not detected within the test period - please verify CodeRabbit app installation.",
+   "created_at": "2025-12-09T20:28:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/34#issuecomment-3634146987",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3637016142,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F35) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-10T13:08:09Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#issuecomment-3637016142",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3637016662,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a new example script at `src/agentunit/examples/basic_evaluation.py` that implements a minimal end-to-end evaluation: defines `FakeAdapter` (with `prepare`, `execute`, `cleanup`), builds a single-case dataset, constructs a `Scenario` and `Runner`, runs the suite, and prints a summary via `main()`. ## Changes | Cohort / File(s) | Summary | |---|---| | **Example script** <br> `src/agentunit/examples/basic_evaluation.py` | New file: introduces `FakeAdapter(BaseAdapter)` with `__init__(response: str)`, `prepare()`, `execute(case, trace_log) -> AdapterOutcome`, and `cleanup()`. A\u2026",
+   "created_at": "2025-12-10T13:08:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#issuecomment-3637016662",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3641630149,
+   "body": "Can i work on this issue?",
+   "created_at": "2025-12-11T12:10:59Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/24#issuecomment-3641630149",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3641754208,
+   "body": "Sure, assigned!",
+   "created_at": "2025-12-11T12:45:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/24#issuecomment-3641754208",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3646093376,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F36) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-12T11:26:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3646093376",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3646093786,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a LangGraph-focused integration test suite: pytest markers and hooks, a simple LangGraph agent with runtime fallback, comprehensive integration tests and docs (README, IMPLEMENTATION_SUMMARY), pyproject test/config updates, and a CI workflow example. No production APIs or exported-public declarations changed. ## Changes | Cohort / File(s) | Summary | |---|---| | **Documentation** <br> `README.md`, `tests/integration/README.md`, `tests/integration/IMPLEMENTATION_SUMMARY.md` | Update test-run instructions (heading -> \u201cRun the test suite\u201d), add Integration Tests narrative and v\u2026",
+   "created_at": "2025-12-12T11:26:26Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3646093786",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3648956457,
+   "body": "@aviralgarg05 I have fix the issue",
+   "created_at": "2025-12-13T05:37:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3648956457",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3649023722,
+   "body": "@aviralgarg05 Could you please again run the tests/workflows for this PR? Thank you.",
+   "created_at": "2025-12-13T06:05:26Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3649023722",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3649184526,
+   "body": "@aviralgarg05 If possible, could you please re-run the tests/workflows for this PR? Thank you for your time and support.",
+   "created_at": "2025-12-13T10:16:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3649184526",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3649190854,
+   "body": "@aviralgarg05 I have the issue of lint & format, could you please re-run the tests/workflows for this PR? Thank you for your time and support.",
+   "created_at": "2025-12-13T10:27:07Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3649190854",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3649193268,
+   "body": "All required checks are passing. Kindly proceed with merging this pull request when you have time. Thank you for your support.",
+   "created_at": "2025-12-13T10:31:11Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3649193268",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3649408745,
+   "body": "## Welcome to [Codecov](https://codecov.io?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) :tada: Once you merge this PR into your default branch, you're all set! Codecov will compare coverage reports and display results in all future pull requests. :information_source: You can also turn on [project coverage checks](https://docs.codecov.com/docs/common-recipe-list#set-project-coverage-checks-on-a-pull-request) and [project coverage reporting on Pull Request comment](https://docs.codecov.com/docs/common-recipe-list#show-project-coverage-changes-on-the-pull-request-comment) Thanks for integrating Codecov - We've got you covered :open_u\u2026",
+   "created_at": "2025-12-13T13:20:28Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36#issuecomment-3649408745",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3649411264,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/33?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-13T13:23:20Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/33#issuecomment-3649411264",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3651220345,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F37) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-14T14:32:08Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37#issuecomment-3651220345",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3651220861,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> <details> <summary>\ud83d\udcdd Walkthrough</summary> ## Walkthrough Adds a new example script showing a minimal evaluation with a FakeAdapter, and updates multiple core files by expanding and reformatting docstrings (no signature or behavior changes). ## Changes | Cohort / File(s) | Summary | |---|---| | **New example** <br> `examples/basic_evaluation.py` | Adds `FakeAdapter(BaseAdapter)` with `generate(self, prompt: str) -> str`, plus a `main()` routine that constructs the adapter and an Evaluator, evaluates a sample prompt, and prints result. | | **Adapter docstrings** <br> `src/agentunit/adapters/base\u2026",
+   "created_at": "2025-12-14T14:32:15Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37#issuecomment-3651220861",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3651561542,
+   "body": "Can You assign this issue to me?",
+   "created_at": "2025-12-14T16:00:20Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/22#issuecomment-3651561542",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3651725563,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/37?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-14T17:29:34Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37#issuecomment-3651725563",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3655321781,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F38) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-15T12:20:26Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/38#issuecomment-3655321781",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3655322727,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: failure by coderabbit.ai --> > [!CAUTION] > ## Review failed > > The pull request is closed. <!-- end of auto-generated comment: failure by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough This PR implements a comprehensive pytest plugin for AgentUnit that enables pytest-based scenario discovery and execution. It adds pytest hooks for collecting AgentUnit scenarios from Python files and YAML/JSON configs in a tests/eval/ directory, CLI tooling for scenario initialization, LangGraph integration tests, and updated documentation. ## Changes | Cohort / File(s) | Summary | |-\u2026",
+   "created_at": "2025-12-15T12:20:35Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/38#issuecomment-3655322727",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3655365910,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F39) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-15T12:30:15Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#issuecomment-3655365910",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3655366191,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > @sshekhar563 has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **1 minutes and 5 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <det\u2026",
+   "created_at": "2025-12-15T12:30:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#issuecomment-3655366191",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3656776539,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F40) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-15T17:19:57Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/40#issuecomment-3656776539",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3656776978,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a new pytest smoke test that mocks an agent and an adapter, runs one DatasetCase through a Scenario via Runner, and asserts a single successful run for case id \"faq_1\" with answer_correctness == 1.0. ## Changes | Cohort / File(s) | Change Summary | |---|---| | **New smoke test for suite_template FAQ adapter** <br> `tests/test_suite_template_smoke.py` | Adds a test implementing `MockAgent` and `MockAdapter` (implementing `BaseAdapter`), builds a `DatasetSource` with one `DatasetCase`, wraps it in a `Scenario`, executes it via `Runner`, and asserts results contain one successf\u2026",
+   "created_at": "2025-12-15T17:20:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/40#issuecomment-3656776978",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3656897912,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/40?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-15T17:53:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/40#issuecomment-3656897912",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3666165100,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F41) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-17T16:31:05Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#issuecomment-3666165100",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3666165683,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> <details> <summary>\ud83d\udcdd Walkthrough</summary> ## Walkthrough This PR enhances documentation across the project by adding a new example script demonstrating basic evaluation workflow and expanding docstrings throughout core modules with clarified parameter descriptions and behaviors, without altering any runtime logic or control flow. ## Changes | Cohort / File(s) | Change Summary | |---|---| | **Documentation and Examples** <br> `README.md`, `examples/basic_evaluation.py` | README updated with \"Running CI Checks Locally\" section covering prerequisites and setup instructions. New example script `ba\u2026",
+   "created_at": "2025-12-17T16:31:14Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#issuecomment-3666165683",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3666170120,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/41?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-17T16:32:27Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41#issuecomment-3666170120",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3666201629,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough A new `FakeAdapter` class is added to the examples module, extending `BaseAdapter` with a simple `generate` method that returns a fixed response for demonstration purposes. ## Changes | Cohort / File(s) | Summary | |---|---| | **New adapter class** <br> `exampl\u2026",
+   "created_at": "2025-12-17T16:41:00Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#issuecomment-3666201629",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3666207227,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/32?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-17T16:42:26Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#issuecomment-3666207227",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3666237059,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-17T16:49:35Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32#issuecomment-3666237059",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3669825316,
+   "body": "Please assign me this issue.",
+   "created_at": "2025-12-18T11:24:59Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/12#issuecomment-3669825316",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 3669842467,
+   "body": "@aviralgarg05 I have fix the issue",
+   "created_at": "2025-12-18T11:29:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#issuecomment-3669842467",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3669960683,
+   "body": "Assigned!",
+   "created_at": "2025-12-18T12:04:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/12#issuecomment-3669960683",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3669963149,
+   "body": "Resolve the conflicts pls @sshekhar563",
+   "created_at": "2025-12-18T12:04:49Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#issuecomment-3669963149",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3670209478,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/39?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :x: Patch coverage is `43.70370%` with `76 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/39?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_cont\u2026",
+   "created_at": "2025-12-18T13:06:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#issuecomment-3670209478",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3670244828,
+   "body": "@aviralgarg05 I have fix the issue It is ready to merge Thank You",
+   "created_at": "2025-12-18T13:14:12Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39#issuecomment-3670244828",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3670756656,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F42) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-18T15:04:58Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/42#issuecomment-3670756656",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3670757338,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> <details> <summary>\ud83d\udcdd Walkthrough</summary> ## Walkthrough This pull request performs a documentation and formatting pass across the codebase. It adds a CI verification guide to the README, converts multiple single-line module and class docstrings to multi-line triple-quoted format throughout the core modules, and removes type-checking marker comments from the py.typed marker file. ## Changes | Cohort / File(s) | Summary | |---|---| | **Documentation & Setup** <br> `README.md` | Added new \"Running CI Checks Locally\" section with prerequisites (Python 3.10+, Poetry) and setup instructions (poetry\u2026",
+   "created_at": "2025-12-18T15:05:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/42#issuecomment-3670757338",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3670761183,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/42?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-18T15:06:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/42#issuecomment-3670761183",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3670811832,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F43) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-18T15:18:27Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#issuecomment-3670811832",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3670812250,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > @Jagriti-student has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **2 minutes and 24 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <details\u2026",
+   "created_at": "2025-12-18T15:18:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#issuecomment-3670812250",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3675560379,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F44) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-19T15:48:58Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#issuecomment-3675560379",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3675560723,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds local CI instructions to README, extends public exports in `src/agentunit/__init__.py`, adds a reporting unit test that asserts emoji presence and UTF\u20118 encoding, and adds a sample `report.md`. ## Changes | Cohort / File(s) | Summary | |---|---| | **Documentation** <br> `README.md` | Added \"Running CI Checks Locally\" subsection with commands to run `ruff` and `pytest` locally (mirrors CI steps). | | **Public API / Package init** <br> `src/agentunit/__init__.py` | Extended `__all__` to re-export `Runner`, `Scenario`, `ScenarioResult`, `SuiteResult`, and `run_suite`; moved mod\u2026",
+   "created_at": "2025-12-19T15:49:05Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#issuecomment-3675560723",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3675983328,
+   "body": "You're right - base.py already has proper type hints. The mypy errors you're seeing are real issues, not your machine. Import errors (import-not-found, import-untyped) - These happen because some dependencies might not be installed or don't have type stubs. This is normal for third-party packages. Other files needing type hints - Yes, if mypy shows other files with missing type hints, those are real issues that could be fixed.",
+   "created_at": "2025-12-19T17:50:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/13#issuecomment-3675983328",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3677201795,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F45) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-20T01:46:05Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#issuecomment-3677201795",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3677201891,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Replaces LangSmith-specific flows with AgentOps tracing and session handling in the adapter; makes run_scenario async; broadens factory method option typings to Any; introduces a DatasetRow TypedDict; adds defensive metadata access and an explicit baseline_stats type annotation. ## Changes | Cohort / File(s) | Change Summary | |---|---| | **AgentOps integration & tracing refactor** <br> `src/agentunit/adapters/agentops_adapter.py` | Adds `_LANGSMITH_UNSUPPORTED`, `enable_tracing`, and public `client`; unconditionally initializes AgentOps session; converts `run_scenario` to async;\u2026",
+   "created_at": "2025-12-20T01:46:11Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#issuecomment-3677201891",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3677204127,
+   "body": "Hi @aviralgarg05, I submitted PR #45 for this issue. I does not resolve it, but I hope a made a small dent in all the mypy errors. Let me know if my changes are appropriate and didn't break anything.",
+   "created_at": "2025-12-20T01:48:36Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/13#issuecomment-3677204127",
+   "user": {
+    "login": "evanjhoward11"
+   }
+  },
+  {
+   "id": 3677798722,
+   "body": "Can i work on this issue ?",
+   "created_at": "2025-12-20T12:47:43Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/26#issuecomment-3677798722",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3677859159,
+   "body": "hey @aviralgarg05 please assign me this issue i can work on it",
+   "created_at": "2025-12-20T14:24:54Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/4#issuecomment-3677859159",
+   "user": {
+    "login": "Sudhanshugochar"
+   }
+  },
+  {
+   "id": 3678504742,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F46) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-21T06:15:55Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#issuecomment-3678504742",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3678504801,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a file-based ScenarioCache and CLI init command, integrates caching and cache-related pytest options into the AgentUnit pytest plugin, supplies example scenarios and documentation updates, and adds tests for the new cache behavior. ## Changes | Cohort / File(s) | Summary | |---|---| | **Documentation** <br> `docs/pytest-plugin.md` | Adds a \"Result Caching\" section, expands pytest integration notes, and updates the example SimpleAdapter (adds `name = \"simple\"`, `__init__(self, agent_func)`, and `prepare(self)`). | | **Pytest package export** <br> `src/agentunit/pytest/__init_\u2026",
+   "created_at": "2025-12-21T06:16:00Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#issuecomment-3678504801",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3678509596,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/46?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :x: Patch coverage is `51.00671%` with `73 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/46?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_cont\u2026",
+   "created_at": "2025-12-21T06:24:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#issuecomment-3678509596",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3678527127,
+   "body": "Hello @aviralgarg05 , I\u2019ve opened a new PR in the correct repository with the same changes. When you have a moment, could you please review it? Thank you for your time and guidance.",
+   "created_at": "2025-12-21T06:54:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46#issuecomment-3678527127",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3678859384,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F47) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-21T14:46:36Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#issuecomment-3678859384",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3678859546,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Replaces timezone-naive datetime usage with timezone-aware `datetime.now(timezone.utc)` in trace and leaderboard code, adds `jsonschema = \"^4.25.1\"` to `pyproject.toml`, and updates tests to use a temporary directory for Markdown write/read and timezone-aware timestamps. ## Changes | Cohort / File(s) | Summary | |---|---| | **Timezone-aware datetime changes** <br> `src/agentunit/core/trace.py`, `src/agentunit/benchmarks/leaderboard.py` | Replaced `datetime.utcnow()` with `datetime.now(timezone.utc)`, added `timezone` imports, and updated default factories/formatting to produce ti\u2026",
+   "created_at": "2025-12-21T14:46:51Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#issuecomment-3678859546",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3685274115,
+   "body": "Hi, I\u2019d like to work on this issue. Please assign it to me",
+   "created_at": "2025-12-23T06:10:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/8#issuecomment-3685274115",
+   "user": {
+    "login": "anshiky73-svg"
+   }
+  },
+  {
+   "id": 3686349588,
+   "body": "> Hi, I\u2019d like to work on this issue. Please assign it to me There is already a PR related to this issue, please choose another issue",
+   "created_at": "2025-12-23T11:42:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/8#issuecomment-3686349588",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3686572469,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/35?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-23T13:03:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#issuecomment-3686572469",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3687249917,
+   "body": "Hi, I\u2019d like to work on this issue. Please assign it to me @aviralgarg05",
+   "created_at": "2025-12-23T16:31:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/29#issuecomment-3687249917",
+   "user": {
+    "login": "anshiky73-svg"
+   }
+  },
+  {
+   "id": 3688706271,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F48) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-24T05:13:43Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#issuecomment-3688706271",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3688706524,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough A new HTML reporting module is introduced with a `render_html_report()` function that generates complete HTML documents with inline CSS and scenario metrics tables from SuiteResult data. The SuiteResult class gains a `to_html()` method that renders and writes HTML reports to disk. ## Changes | Cohort / File(s) | Summary | |---|---| | **HTML Report Generation** <br> `src/agentunit/reporting/html.py` | New module with `render_html_report()` function that computes suite metrics (total/passed/failed runs, duration), iterates over scenarios to build table rows with escaped names, and\u2026",
+   "created_at": "2025-12-24T05:13:56Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#issuecomment-3688706524",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3688715482,
+   "body": "Hi @aviralgarg05 , i have created this please review it and merge it or recommend changes if required . I am a participating in kwoc so please add it as a kwoc contributer.",
+   "created_at": "2025-12-24T05:20:23Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#issuecomment-3688715482",
+   "user": {
+    "login": "anshiky73-svg"
+   }
+  },
+  {
+   "id": 3688754831,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/48?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :x: Patch coverage is `0%` with `20 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/48?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=com\u2026",
+   "created_at": "2025-12-24T05:46:17Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#issuecomment-3688754831",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3690396975,
+   "body": "> Fix the issues pls I had so many commits redirected to this branch, which I hard reset, now only my commit is visible, this happened during git fetch upstream.",
+   "created_at": "2025-12-24T19:12:46Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35#issuecomment-3690396975",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 3693772633,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/45?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `4.83871%` with `59 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/45?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_conten\u2026",
+   "created_at": "2025-12-27T07:00:21Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45#issuecomment-3693772633",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3693798962,
+   "body": "hi @aviralgarg05 thanks for merging this PR , but my KWOC student profile still says 0 commits and 0 PR , what can be done about this to solve this issue as 31 dec is the time for mid evaluation",
+   "created_at": "2025-12-27T07:38:17Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#issuecomment-3693798962",
+   "user": {
+    "login": "anshiky73-svg"
+   }
+  },
+  {
+   "id": 3693806214,
+   "body": "> hi @aviralgarg05 thanks for merging this PR , but my KWOC student profile still says 0 commits and 0 PR , what can be done about this to solve this issue as 31 dec is the time for mid evaluation I think that would get shown in a few minutes, because I had already merged pr's for kwoc for this project and it shows for them",
+   "created_at": "2025-12-27T07:44:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48#issuecomment-3693806214",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3693989822,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/47?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `33.33333%` with `2 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/47?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_conten\u2026",
+   "created_at": "2025-12-27T13:50:35Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#issuecomment-3693989822",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3693995811,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-27T14:01:42Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#issuecomment-3693995811",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3694022900,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/44?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :x: Patch coverage is `0%` with `1 line` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/44?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comme\u2026",
+   "created_at": "2025-12-27T14:50:00Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#issuecomment-3694022900",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3694043384,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/43?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2025-12-27T15:27:46Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#issuecomment-3694043384",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3695352970,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-29T03:39:04Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44#issuecomment-3695352970",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3699629409,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F49) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-30T15:03:49Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#issuecomment-3699629409",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3699629935,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds thread-safe mutation APIs to the metrics registry: `register_metric(name, metric)` and `get_metric(name)`, plus tests covering default resolution, unknown metric, duplicate registration, successful get, and successful register (with cleanup). ## Changes | Cohort / File(s) | Change Summary | |---|---| | **Metrics registry module** <br> `src/agentunit/metrics/registry.py` | Added module-level `_registry_lock` (imports `threading`) and two public functions: `register_metric(name: str, metric: Metric)` (registers a metric; raises `ValueError` if name already exists) and `get_met\u2026",
+   "created_at": "2025-12-30T15:03:56Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#issuecomment-3699629935",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3701486094,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/49?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :x: Patch coverage is `60.00000%` with `4 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/49?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_conte\u2026",
+   "created_at": "2025-12-31T05:32:39Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#issuecomment-3701486094",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3702265928,
+   "body": "All requested changes have been implemented and verified: Thread Safety: Added threading.Lock to register_metric to guard global state mutation. Deduplication: Refactored get_metric to use resolve_metrics, ensuring consistent error messages across the registry. Test Robustness: Updated test_resolve_default_metrics with dynamic length checks and added test_register_metric_success with proper state cleanup. CI Status: Local poetry build and ruff format are successful, and all GitHub CI checks are now Green. The PR is ready for final review and merging. Thank you so much @aviralgarg05 for the guidance \ud83d\ude4f\ud83d\ude4f",
+   "created_at": "2025-12-31T14:04:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49#issuecomment-3702265928",
+   "user": {
+    "login": "Sunil-saini1818"
+   }
+  },
+  {
+   "id": 3708306912,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F50) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-04T18:16:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/50#issuecomment-3708306912",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3708306990,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: failure by coderabbit.ai --> > [!CAUTION] > ## Review failed > > The pull request is closed. <!-- end of auto-generated comment: failure by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Updates SECURITY.md with new security contact email addresses, removes emoji icons from documentation headings, and introduces HTML report export functionality by adding a new render_html_report function and corresponding to_html method to the SuiteResult class. ## Changes | Cohort / File(s) | Summary | |---|---| | **Security Configuration** <br> `SECURITY.md` | Updated security contac\u2026",
+   "created_at": "2026-01-04T18:16:13Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/50#issuecomment-3708306990",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3718036681,
+   "body": "I have solve the issue.",
+   "created_at": "2026-01-07T09:37:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47#issuecomment-3718036681",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3718341083,
+   "body": "I have solve the issue.",
+   "created_at": "2026-01-07T10:59:21Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43#issuecomment-3718341083",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3719834746,
+   "body": "This issue is already resolved",
+   "created_at": "2026-01-07T17:00:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/2#issuecomment-3719834746",
+   "user": {
+    "login": "thejesshwar"
+   }
+  },
+  {
+   "id": 3719954186,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F51) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-07T17:29:56Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/51#issuecomment-3719954186",
+   "user": {
+    "login": "continue[bot]"
+   }
+  }
+ ]
+}

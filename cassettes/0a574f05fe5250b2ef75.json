@@ -1,0 +1,329 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3719954642,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a new test module implementing a mock FAQ-adapter workflow: data carrier, iterable mock dataset, mock agent, adapter with prepare/execute, and a test that runs the flow asserting successful outcomes and expected outputs. ## Changes | Cohort / File(s) | Summary | |---|---| | **Test module: FAQ adapter smoke test** <br> `tests/test_suite_template.py` | New test file adding `FAQItem` dataclass, `MockDataset` iterator, `MockAgent` (`connect()`, `answer()`), `FAQAdapter` (`__init__`, `prepare()`, `execute()` returning `AdapterOutcome`) and `test_suite_template_flow()` that prepar\u2026",
+   "created_at": "2026-01-07T17:30:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/51#issuecomment-3719954642",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3719991367,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/51?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2026-01-07T17:38:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/51#issuecomment-3719991367",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3720031914,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F52) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-07T17:47:50Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/52#issuecomment-3720031914",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3720032504,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a new test module implementing an FAQItem dataclass, a MockDataset iterator, a MockAgent with connect/answer, and a FAQAdapter subclass of BaseAdapter; includes a test that runs prepare/execute over the dataset and asserts AdapterOutcome.success and expected output. ## Changes | Cohort / File(s) | Summary | |---|---| | **New Test Module** <br> `tests/test_suite_template.py` | Adds `FAQItem` dataclass; `MockDataset` (`__iter__`); `MockAgent` (`connect()`, `answer()`); `FAQAdapter` (subclass of `BaseAdapter` with `prepare()` and `execute(case: FAQItem, trace: TraceLog | None)\u2026",
+   "created_at": "2026-01-07T17:47:56Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/52#issuecomment-3720032504",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3720060610,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/52?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :white_check_mark: All modified and coverable lines are covered by tests. :loudspeaker: Thoughts on this report? [Let us know!](https://github.com/codecov/feedback/issues/255)",
+   "created_at": "2026-01-07T17:55:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/52#issuecomment-3720060610",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3720107521,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F53) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-07T18:07:25Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/53#issuecomment-3720107521",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3720107925,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough This pull request introduces a retry decorator with exponential backoff to handle transient failures in flaky operations. The decorator is implemented in the core utilities, exposed as a public API, accompanied by comprehensive tests, and demonstrated through practical examples across various scenarios. ## Changes | Cohort / File(s) | Summary | |---|---| | **Core Retry Decorator Implementation** <br> `src/agentunit/core/utils.py` | New `retry` decorator supporting configurable `max_retries`, `base_delay`, `max_delay`, `exponential_base`, and selective exception handling. Computes\u2026",
+   "created_at": "2026-01-07T18:07:32Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/53#issuecomment-3720107925",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3736858827,
+   "body": "@aviralgarg05 Can you assign this to me?",
+   "created_at": "2026-01-12T04:40:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/58#issuecomment-3736858827",
+   "user": {
+    "login": "shihabhasan0161"
+   }
+  },
+  {
+   "id": 3736866039,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F62) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-12T04:45:32Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/62#issuecomment-3736866039",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3736866084,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > @Jagriti-student has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **14 minutes and 16 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <detail\u2026",
+   "created_at": "2026-01-12T04:45:34Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/62#issuecomment-3736866084",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3736868345,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/62?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `11.76471%` with `30 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/62?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_conte\u2026",
+   "created_at": "2026-01-12T04:47:10Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/62#issuecomment-3736868345",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3737352975,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F63) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-12T08:18:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/63#issuecomment-3737352975",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3737353980,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough The changes implement duration tracking in the SwarmAdapter by computing `duration_ms` from start and end timestamps for scenario runs, adds optional Swarm import guarding, and fixes empty result set handling in CSV export by removing an early return condition. ## Changes | Cohort / File(s) | Summary | |---|---| | **SwarmAdapter Duration & Import Updates** <br> `src/agentunit/adapters/swarm_adapter.py` | Added HAS_SWARM guard with warning for missing Swarm dependency; updated `end_session` to compute `duration_ms` from start/end timestamps and apply to both `ScenarioRun` and `Sce\u2026",
+   "created_at": "2026-01-12T08:18:39Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/63#issuecomment-3737353980",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3737356287,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/63?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `38.46154%` with `8 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/63?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_conten\u2026",
+   "created_at": "2026-01-12T08:19:30Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/63#issuecomment-3737356287",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3737648136,
+   "body": "I have solve the issue.",
+   "created_at": "2026-01-12T09:37:52Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/63#issuecomment-3737648136",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3743483493,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F64) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-13T10:15:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/64#issuecomment-3743483493",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3743484227,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > @Jagriti-student has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **18 minutes and 4 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <details\u2026",
+   "created_at": "2026-01-13T10:15:14Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/64#issuecomment-3743484227",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3743493391,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/64?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `0%` with `13 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/64?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comm\u2026",
+   "created_at": "2026-01-13T10:17:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/64#issuecomment-3743493391",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3748959223,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F65) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-14T10:55:44Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/65#issuecomment-3748959223",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3748959822,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough The pull request implements proper duration and response time tracking in the AG2 adapter by computing values from actual message timestamps instead of hardcoded placeholders, and enhances CSV dataset loading with configurable field delimiters and per-row error handling. ## Changes | Cohort / File(s) | Summary | |---|---| | **Metrics Computation Improvements** <br> `src/agentunit/adapters/autogen_ag2.py` | Computes session duration from `end_time - start_time` instead of hardcoded 0.0; implements per-message response time calculation and derives `average_response_time` from compu\u2026",
+   "created_at": "2026-01-14T10:55:52Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/65#issuecomment-3748959822",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3748967536,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/65?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `0%` with `20 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/65?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comm\u2026",
+   "created_at": "2026-01-14T10:57:12Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/65#issuecomment-3748967536",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3749371120,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2Fagentunit%2Fpull%2F66) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-14T12:36:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/66#issuecomment-3749371120",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3749371912,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Session metrics now compute real durations and average response times from timestamps; the dashboard adds Plotly-powered charts and a summary table for reports; CSV loader gains configurable delimiters for tools/context, a parsing helper, and stronger row-level error reporting. ## Changes | Cohort / File(s) | Summary | |---|---| | **Session Metrics Calculation** <br> `src/agentunit/adapters/autogen_ag2.py` | `end_session` sets `duration_ms` from timestamp difference; `_calculate_session_metrics` computes `response_times` and `average_response_time` by iterating session interactio\u2026",
+   "created_at": "2026-01-14T12:36:29Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/66#issuecomment-3749371912",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3749423395,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/66?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=Aviral+Garg) Report :x: Patch coverage is `6.89655%` with `27 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/66?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_conten\u2026",
+   "created_at": "2026-01-14T12:50:07Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/66#issuecomment-3749423395",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3765094566,
+   "body": "Hi, I\u2019d like to work on this issue. Please assign it to me.",
+   "created_at": "2026-01-18T09:22:33Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/7#issuecomment-3765094566",
+   "user": {
+    "login": "deepali-kumari-iitp"
+   }
+  },
+  {
+   "id": 3765096247,
+   "body": "> Hi, I\u2019d like to work on this issue. Please assign it to me. You can work and create a pr without assignment",
+   "created_at": "2026-01-18T09:25:02Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/7#issuecomment-3765096247",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3767907449,
+   "body": "Hi @aviralgarg05 , I\u2019m working on this issue, expected to submit PR soon.",
+   "created_at": "2026-01-19T11:41:43Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/71#issuecomment-3767907449",
+   "user": {
+    "login": "web4akash"
+   }
+  },
+  {
+   "id": 3768203267,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Added module-level logging to the LLM generator module; debug logs now record constructed prompts and raw responses for both Llama and OpenAI flows, and JSON decode failures are logged at error level before being re-raised. ## Changes | Cohort / File(s) | Summary | |---|---| | **Logging instrumentation in LLM generators** <br> `src/agentunit/generators/llm_generator.py` | Added `logging` import and `logger = logging.getLogger(__name__)`; instrumented synchronous and asynchronous Llama and OpenAI generation flows to log prompts and raw responses at debug level; JSON decode failure\u2026",
+   "created_at": "2026-01-19T12:53:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#issuecomment-3768203267",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3772425568,
+   "body": ":warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov. ## [Codecov](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/73?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=aviralgarg05) Report :x: Patch coverage is `16.66667%` with `10 lines` in your changes missing coverage. Please review. | [Files with missing lines](https://app.codecov.io/gh/aviralgarg05/agentunit/pull/73?dropdown=coverage&src=pr&el=tree&utm_medium=referral&utm_source=github&utm_cont\u2026",
+   "created_at": "2026-01-20T11:34:12Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#issuecomment-3772425568",
+   "user": {
+    "login": "codecov-commenter"
+   }
+  },
+  {
+   "id": 3772788239,
+   "body": "> LGTM!, Thanks for your contribution Thank you for the review and for merging the PR!",
+   "created_at": "2026-01-20T13:03:55Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73#issuecomment-3772788239",
+   "user": {
+    "login": "web4akash"
+   }
+  },
+  {
+   "id": 3843019453,
+   "body": "i would like to work on this issue please assign me this",
+   "created_at": "2026-02-03T18:40:56Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/issues/67#issuecomment-3843019453",
+   "user": {
+    "login": "hargunsiingh"
+   }
+  },
+  {
+   "id": 3843312437,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Added explicit `list[DatasetCase]` type annotations to two local `cases` variables in `src/agentunit/generators/llm_generator.py` to address mypy warnings; no runtime logic or behavior changed. ## Changes |Cohort / File(s)|Summary| |---|---| |**Type Annotations** <br> `src/agentunit/generators/llm_generator.py`|Annotated two local `cases` variables as `list[DatasetCase]` where previously assigned with `cases = []`, resolving mypy \"need type annotation\" warnings.| ## Estimated code review effort \ud83c\udfaf 1 (Trivial) | \u23f1\ufe0f ~3 minutes <!-- walkthrough_end --> <!-- pre_merge_checks_walkthrou\u2026",
+   "created_at": "2026-02-03T19:48:00Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/74#issuecomment-3843312437",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3843329437,
+   "body": "@coderabbitai full review",
+   "created_at": "2026-02-03T19:51:52Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/74#issuecomment-3843329437",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3843329938,
+   "body": "<!-- This is an auto-generated reply by CodeRabbit --> <details> <summary>\u2705 Actions performed</summary> Full review triggered. </details>",
+   "created_at": "2026-02-03T19:51:59Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/74#issuecomment-3843329938",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3843337776,
+   "body": "> [!NOTE] > Docstrings generation - SUCCESS > Generated docstrings for this pull request at https://github.com/aviralgarg05/agentunit/pull/75 <!--DOCSTRING_INTERNAL_START_STATE>N4Igxg9gtlCWAuBJAJiAXCADAUwKzYE4AzAZiNwEZtkD8AWakvCgNmwCZ28SGDNlcYZAENcJEABoQAJ2wA3WNgDuAfQDO8YfACua9OGgAHADbZ41SSEPSAMrAB2Aa30ALePENq0Aem8BzBBdtACMAOkgob2EFaWFjP2FpP0xcKL9sex17BG9DbWNjbwB2XBAAXyA <!--DOCSTRING_INTERNAL_END_STATE>",
+   "created_at": "2026-02-03T19:53:31Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/74#issuecomment-3843337776",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3843341539,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > This PR was authored by the user configured for CodeRabbit reviews. By default, CodeRabbit skips reviewing PRs authored by this user. It's recommended to use a dedicated user account to post CodeRabbit review feedback. > > To trigger a single review, invoke the `@coderabbitai review` command. > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file. - [ ] <!-- {\"checkboxId\": \"fdf320d5-c1c1-4cbc-8d68-43fb5055f35f\"} --> \ud83d\udd0d Trigger a full review\u2026",
+   "created_at": "2026-02-03T19:54:19Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/75#issuecomment-3843341539",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

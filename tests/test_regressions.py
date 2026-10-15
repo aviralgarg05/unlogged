@@ -11,7 +11,7 @@ import os
 from decimal import Decimal
 from pathlib import Path
 
-from unlogged import dotenv
+from unlogged import cassette, dotenv
 from unlogged.eval.harness import Gold, Result, money, score
 from unlogged.paypal import client as ppclient
 from unlogged.scope.models import Call, Engagement, Verdict, WorkEvent
@@ -200,13 +200,39 @@ def test_repeated_reads_of_one_key_replay_in_recorded_order(tmp_path, monkeypatc
         assert c.request("GET", "/v2/invoicing/invoices/INV2-X")["total"] == "902.50"
 
 
-def test_takes_are_ordered_numerically_not_lexically(tmp_path, monkeypatch):
+def test_takes_are_ordered_numerically_not_lexically(tmp_path):
     """`.10` sorts before `.2` as text, which would replay a later state too early."""
-    monkeypatch.setattr(ppclient, "CASSETTES", tmp_path)
-    key = "abc"
+    from unlogged import cassette
+
     for n in ["", ".2", ".10"]:
-        (tmp_path / f"{key}{n}.json").write_text("{}")
-    assert [p.name for p in ppclient._takes(key)] == ["abc.json", "abc.2.json", "abc.10.json"]
+        (tmp_path / f"abc{n}.json").write_text("{}")
+    assert [p.name for p in cassette.takes("abc", tmp_path)] == [
+        "abc.json",
+        "abc.2.json",
+        "abc.10.json",
+    ]
+
+
+def test_re_recording_replaces_a_keys_whole_sequence(tmp_path):
+    """Otherwise a shorter second run leaves a longer first run's tail behind it, and replay
+    walks off the end of this run into the last one."""
+    from unlogged import cassette
+
+    tape = cassette.Tape(tmp_path)
+    for i in range(3):
+        tape.record("k", {"n": i})
+    assert len(cassette.takes("k", tmp_path)) == 3
+
+    again = cassette.Tape(tmp_path)
+    again.record("k", {"n": 99})
+    assert len(cassette.takes("k", tmp_path)) == 1
+    assert cassette.Tape(tmp_path).replay("k") == {"n": 99}
+
+
+def test_replaying_a_key_that_was_never_recorded_returns_nothing(tmp_path):
+    from unlogged import cassette
+
+    assert cassette.Tape(tmp_path).replay("never") is None
 
 
 # -- 4. the clause a billed line cites has to reach the client ------------------------------
@@ -236,3 +262,69 @@ def test_payer_terms_stay_within_paypals_field_limit():
     eng = _engagement()
     eng.clauses = [ScopeClause(id=f"S{i}", kind="scope", text="x" * 500) for i in range(20)]
     assert len(eng.payer_terms()) == 4000
+
+
+# -- 5. the committed recordings have to stay reachable ------------------------------------
+
+
+def test_the_paypal_cassette_key_is_the_one_the_committed_recordings_were_written_under():
+    """Moving the cassette code into a shared module changed `key(*parts)` to hash a tuple,
+    which wrapped the payload in a list, changed every digest, and orphaned all 47 committed
+    PayPal recordings at once. The whole suite stayed green, because no test replayed one.
+    """
+    from unlogged.paypal.client import _cassette_key
+
+    # Pinned to the digest the recordings in cassettes/ were written under. If this changes,
+    # the recordings are unreachable and the keyless path is gone, whatever the tests say.
+    assert _cassette_key("GET", "/v2/invoicing/invoices/INV2-X", None) == (
+        cassette.key({"m": "GET", "p": "/v2/invoicing/invoices/INV2-X", "b": None})
+    )
+    assert len(_cassette_key("GET", "/x", None)) == 20
+
+
+def test_the_documented_command_replays_to_the_figure_the_readme_prints(tmp_path, monkeypatch):
+    """The judge path, run the way the README writes it: no PayPal account, no OpenAI key,
+    no GitHub token. If this stops printing 902.50 the images, the README and the invoice
+    have stopped agreeing with the code."""
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "discover",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
+            "--invoice-id",
+            invoice_id,
+            "--apply",
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "902.50" in result.output
+    # And it is the model arm that got there, not the ablation.
+    assert "Unspecified work" not in result.output
+
+
+def test_the_recorded_opening_state_is_the_one_the_before_image_shows():
+    from unlogged.config import Settings
+    from unlogged.paypal import Invoices, PayPalClient
+    from unlogged.paypal.invoices import total_of
+
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+    s = Settings(client_id="", client_secret="", base_url="x", openai_api_key=None, replay=True)
+    with PayPalClient(s) as c:
+        opening = Invoices(c).get(invoice_id)
+
+    assert total_of(opening) == Decimal("520.00")
+    assert len(opening["items"]) == 1

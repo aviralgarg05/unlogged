@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 53,
+  "changed_files": 4,
+  "additions": 461,
+  "deletions": 1,
+  "title": "Add retry decorator with exponential backoff",
+  "body": "## Summary This PR implements a retry decorator with exponential backoff to handle flaky API calls and network operations, addressing issue #27. ## Changes ### Core Implementation - **New file**: `src/agentunit/core/utils.py` - Implements the `@retry` decorator with: - Configurable max retries (default: 3) - Exponential backoff with configurable base delay (default: 1.0s) - Maximum delay cap (default: 60.0s) - Customizable exponential base (default: 2.0) - Selective exception catching - Comprehensive logging for debugging ### Module Updates - **Updated**: `src/agentunit/core/__init__.py` - Exports the `retry` decorator for easy access ### Testing - **New file**: `tests/test_retry_decorator.\u2026",
+  "created_at": "2026-01-07T18:07:22Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/53",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "1234-ad"
+  }
+ }
+}

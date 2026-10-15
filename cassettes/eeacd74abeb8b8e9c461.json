@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 62,
+  "changed_files": 4,
+  "additions": 3668,
+  "deletions": 2876,
+  "title": "Add CSV export support for SuiteResultAdd csv reports",
+  "body": "### Summary This PR adds a `to_csv()` method to `SuiteResult` in `src/agentunit/reporting/results.py`. It allows exporting all test results to a CSV file, flattening nested metrics into separate columns (e.g., metric_ExactMatch, metric_Latency) for easy analysis in spreadsheets. ### Changes - Added `_flatten_metrics()` helper (already existing but improved if needed) - Added `SuiteResult.to_csv(path: str | Path)` method - CSV writes one row per scenario run ### Testing Verified manually using: ```python from datetime import datetime from agentunit.reporting.results import SuiteResult, ScenarioResult, ScenarioRun run = ScenarioRun( scenario_name=\"DemoScenario\", case_id=\"case_1\", success=True\u2026",
+  "created_at": "2026-01-12T04:45:24Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/62",
+  "state": "closed",
+  "merged_at": "2026-01-12T05:14:10Z",
+  "user": {
+   "login": "Jagriti-student"
+  }
+ }
+}

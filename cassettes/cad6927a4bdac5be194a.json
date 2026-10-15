@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 64,
+  "changed_files": 1,
+  "additions": 42,
+  "deletions": 13,
+  "title": "Improve robustness of CSV dataset loader",
+  "body": "## Description Improves CSV parsing in `load_local_csv` by removing hardcoded string splitting and introducing configurable delimiters. ## Changes - Added safe parsing helper for list fields - Made tools and context delimiters configurable - Improved robustness against malformed CSV rows - Preserved backward compatibility Fixes #60 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * CSV loading supports configurable delimiters for tools and context fields and safer parsing that preserves empty/missing list values. * **Bug Fixes** * Improved robustness when processing CSV rows with enhanced error reporting for malformed row\u2026",
+  "created_at": "2026-01-13T10:15:03Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/64",
+  "state": "closed",
+  "merged_at": "2026-01-14T10:19:01Z",
+  "user": {
+   "login": "Jagriti-student"
+  }
+ }
+}

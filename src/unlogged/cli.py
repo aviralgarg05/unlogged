@@ -207,5 +207,45 @@ def show(engagement: Path = typer.Option(...)) -> None:
     typer.echo(json.dumps(Ledger(DATA / f"{eng.id}.jsonl").summary(), indent=2))
 
 
+@app.command()
+def pull_github(
+    repo: str = typer.Option(..., help="owner/name"),
+    out: Path = typer.Option(..., help="Where to write the events JSONL"),
+    pr_detail: int = typer.Option(40, help="How many pull requests to fetch diff stats for"),
+    include_bots: bool = typer.Option(False, help="Keep review bots and coverage reporters"),
+) -> None:
+    """Pull a real work thread from GitHub into the event format this project adjudicates.
+
+    The evaluation shipped here runs on eight events written by the author of the arm being
+    evaluated, which proves nothing. This is how that gets replaced with work that actually
+    happened. Read-only; nothing is written to the repository.
+    """
+    from unlogged.sources import GitHub
+
+    s = Settings.from_env()
+    with GitHub(repo, token=s.github_token, replay=s.replay) as gh:
+        events = gh.events(pr_detail=pr_detail, include_bots=include_bots)
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("".join(e.model_dump_json() + "\n" for e in events))
+
+    authors = sorted({e.author for e in events})
+    span = (
+        f"{events[0].occurred_at:%d %b %Y} to {events[-1].occurred_at:%d %b %Y}" if events else "—"
+    )
+    typer.echo(
+        json.dumps(
+            {
+                "repo": repo,
+                "events": len(events),
+                "authors": authors,
+                "span": span,
+                "written_to": str(out),
+            },
+            indent=2,
+        )
+    )
+
+
 if __name__ == "__main__":
     app()

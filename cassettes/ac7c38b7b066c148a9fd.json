@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 66,
+  "changed_files": 5,
+  "additions": 331,
+  "deletions": 38,
+  "title": "Add Plotly charts to Reports dashboard",
+  "body": "### Summary Added interactive Plotly visualizations to the Reports section. ### Changes - Added bar chart for metric breakdown - Added pie chart for metric contribution - Replaced plain text metrics with visual reports Closes #57 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * Summary Report dashboard now shows interactive bar and pie charts plus a metric table for Success Rate, Avg Latency, and Total Cost. * CSV loader accepts customizable delimiters for list fields to better parse tools and context. * **Bug Fixes** * Session metrics now compute real durations and per-message response times from timestamps. * Improved\u2026",
+  "created_at": "2026-01-14T12:36:15Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/66",
+  "state": "closed",
+  "merged_at": "2026-01-14T17:51:03Z",
+  "user": {
+   "login": "Jagriti-student"
+  }
+ }
+}

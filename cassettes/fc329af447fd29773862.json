@@ -1,0 +1,389 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "number": 75,
+   "title": "\ud83d\udcdd Add docstrings to `fix/type-annotations-llm-generator`",
+   "body": "Docstrings generation was requested by @aviralgarg05. * https://github.com/aviralgarg05/agentunit/pull/74#issuecomment-3843312437 The following files were modified: * `src/agentunit/generators/llm_generator.py` <details> <summary>\u2139\ufe0f Note</summary><blockquote> CodeRabbit cannot perform edits on its own pull requests yet. </blockquote></details>",
+   "created_at": "2026-02-03T19:54:10Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/75",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "number": 74,
+   "title": "Fix type annotation errors in llm_generator.py",
+   "body": "Added explicit list[DatasetCase] type annotations to the cases variable in both LlamaDatasetGenerator.generate() and OpenAIDatasetGenerator.generate() methods to satisfy Mypy type checking. Closes #67 ## Description Please include a summary of the changes and the related issue. Include relevant motivation and context. Fixes # (issue) ## Type of Change Please delete options that are not relevant: - [ ] Bug fix (non-breaking change which fixes an issue) - [ ] New feature (non-breaking change which adds functionality) - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected) - [ ] Documentation update - [ ] Performance improvement - [ ] Code refacto\u2026",
+   "created_at": "2026-02-03T19:47:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/74",
+   "state": "closed",
+   "merged_at": "2026-02-03T19:53:49Z",
+   "user": {
+    "login": "hargunsiingh"
+   }
+  },
+  {
+   "number": 73,
+   "title": "Logging added for prompts, raw responses and parsing errors",
+   "body": "## Description This PR improves the observability by adding the logging at different levels (debug and error) Fixes #71 ## Type of Change - [ ] Bug fix (non-breaking change which fixes an issue) ## Changes Made - Added debug-level logging for generated prompts in Llama and OpenAI generators - Logged raw LLM responses before JSON parsing - Logged JSON parsing errors with traceback information for easier debugging ## Testing - [ ] Manual testing performed ### Test Configuration - Python version: 3.11 - Operating System: Linux (Fedora) - Relevant adapters tested: - LlamaDatasetGenerator - OpenAIDatasetGenerator (error path) ### Test Results DEBUG | agentunit.generators.llm_generator | Generate\u2026",
+   "created_at": "2026-01-19T12:53:28Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/73",
+   "state": "closed",
+   "merged_at": "2026-01-20T12:56:23Z",
+   "user": {
+    "login": "web4akash"
+   }
+  },
+  {
+   "number": 66,
+   "title": "Add Plotly charts to Reports dashboard",
+   "body": "### Summary Added interactive Plotly visualizations to the Reports section. ### Changes - Added bar chart for metric breakdown - Added pie chart for metric contribution - Replaced plain text metrics with visual reports Closes #57 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * Summary Report dashboard now shows interactive bar and pie charts plus a metric table for Success Rate, Avg Latency, and Total Cost. * CSV loader accepts customizable delimiters for list fields to better parse tools and context. * **Bug Fixes** * Session metrics now compute real durations and per-message response times from timestamps. * Improved\u2026",
+   "created_at": "2026-01-14T12:36:15Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/66",
+   "state": "closed",
+   "merged_at": "2026-01-14T17:51:03Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 65,
+   "title": "Implement duration and response time tracking in AG2Adapter",
+   "body": "## Description This PR replaces hardcoded duration and average_response_time metrics in AG2Adapter with real-time measurements. ## Changes - Track ScenarioRun duration using monotonic timestamps - Compute average response time from message timestamps - Remove hardcoded metric values Fixes #55 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Bug Fixes** * Session duration now accurately computed from actual session times. * Metrics now correctly include calculated average response times. * Improved error handling for malformed CSV rows with detailed error messages. * **New Features** * CSV data loading now supports configurable delimiter\u2026",
+   "created_at": "2026-01-14T10:55:41Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/65",
+   "state": "closed",
+   "merged_at": "2026-01-14T17:51:59Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 64,
+   "title": "Improve robustness of CSV dataset loader",
+   "body": "## Description Improves CSV parsing in `load_local_csv` by removing hardcoded string splitting and introducing configurable delimiters. ## Changes - Added safe parsing helper for list fields - Made tools and context delimiters configurable - Improved robustness against malformed CSV rows - Preserved backward compatibility Fixes #60 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * CSV loading supports configurable delimiters for tools and context fields and safer parsing that preserves empty/missing list values. * **Bug Fixes** * Improved robustness when processing CSV rows with enhanced error reporting for malformed row\u2026",
+   "created_at": "2026-01-13T10:15:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/64",
+   "state": "closed",
+   "merged_at": "2026-01-14T10:19:01Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 63,
+   "title": "Fix ScenarioRun Duration Tracking in SwarmAdapter",
+   "body": "Currently, ScenarioRun duration is hardcoded to 0.0 in SwarmAdapter, which does not reflect the actual runtime of the scenario. This PR updates SwarmAdapter.end_session to: Use the already-calculated duration_seconds metric. Convert it to milliseconds. Populate the duration_ms field in ScenarioRun. This ensures that scenario durations are accurately recorded, improving metrics tracking and reporting consistency. Closes #54 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit ## Release Notes * **New Features** * Added optional dependency availability checking with warnings when integrations are unavailable. * **Bug Fixes** * Fixed session durat\u2026",
+   "created_at": "2026-01-12T08:18:16Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/63",
+   "state": "closed",
+   "merged_at": "2026-01-12T10:07:49Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 62,
+   "title": "Add CSV export support for SuiteResultAdd csv reports",
+   "body": "### Summary This PR adds a `to_csv()` method to `SuiteResult` in `src/agentunit/reporting/results.py`. It allows exporting all test results to a CSV file, flattening nested metrics into separate columns (e.g., metric_ExactMatch, metric_Latency) for easy analysis in spreadsheets. ### Changes - Added `_flatten_metrics()` helper (already existing but improved if needed) - Added `SuiteResult.to_csv(path: str | Path)` method - CSV writes one row per scenario run ### Testing Verified manually using: ```python from datetime import datetime from agentunit.reporting.results import SuiteResult, ScenarioResult, ScenarioRun run = ScenarioRun( scenario_name=\"DemoScenario\", case_id=\"case_1\", success=True\u2026",
+   "created_at": "2026-01-12T04:45:24Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/62",
+   "state": "closed",
+   "merged_at": "2026-01-12T05:14:10Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 53,
+   "title": "Add retry decorator with exponential backoff",
+   "body": "## Summary This PR implements a retry decorator with exponential backoff to handle flaky API calls and network operations, addressing issue #27. ## Changes ### Core Implementation - **New file**: `src/agentunit/core/utils.py` - Implements the `@retry` decorator with: - Configurable max retries (default: 3) - Exponential backoff with configurable base delay (default: 1.0s) - Maximum delay cap (default: 60.0s) - Customizable exponential base (default: 2.0) - Selective exception catching - Comprehensive logging for debugging ### Module Updates - **Updated**: `src/agentunit/core/__init__.py` - Exports the `retry` decorator for easy access ### Testing - **New file**: `tests/test_retry_decorator.\u2026",
+   "created_at": "2026-01-07T18:07:22Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/53",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "1234-ad"
+   }
+  },
+  {
+   "number": 52,
+   "title": "Test/verify suite template ",
+   "body": "## Description This PR adds a unit test (`tests/test_suite_template.py`) that implements the `FAQAdapter` pattern described in `docs/templates/suite_template.py`. It verifies that the documentation example correctly implements the `BaseAdapter` interface and produces valid `AdapterOutcome` objects. Closes #4 ## Type of Change - [x] Test coverage improvement ## Changes Made - Created `tests/test_suite_template.py` which: - Mocks a simple dataset and agent. - Implements `FAQAdapter` inheriting from `BaseAdapter`. - Asserts that the adapter flow functions correctly. ## Testing - [x] New test passes locally <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by\u2026",
+   "created_at": "2026-01-07T17:47:48Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/52",
+   "state": "closed",
+   "merged_at": "2026-01-09T11:53:02Z",
+   "user": {
+    "login": "thejesshwar"
+   }
+  },
+  {
+   "number": 51,
+   "title": "Test/verify suite template",
+   "body": "## Description This PR adds a unit test (`tests/test_suite_template.py`) that implements the `FAQAdapter` pattern described in `docs/templates/suite_template.py`. It verifies that the documentation example correctly implements the `BaseAdapter` interface (using `prepare` and `execute`) and produces valid `AdapterOutcome` objects. ## Type of Change - [x] Test coverage improvement ## Changes Made - Created `tests/test_suite_template.py` which: - Mocks a simple dataset and agent. - Implements `FAQAdapter` inheriting from `BaseAdapter`. - Asserts that the adapter flow functions correctly. ## Testing - [x] New test passes locally (`poetry run pytest tests/test_suite_template.py`) <!-- This is an\u2026",
+   "created_at": "2026-01-07T17:29:53Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/51",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "thejesshwar"
+   }
+  },
+  {
+   "number": 50,
+   "title": "Feature/html report exporter",
+   "body": "## Description Please include a summary of the changes and the related issue. Include relevant motivation and context. Fixes # (issue) ## Type of Change Please delete options that are not relevant: - [ ] Bug fix (non-breaking change which fixes an issue) - [ ] New feature (non-breaking change which adds functionality) - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected) - [ ] Documentation update - [ ] Performance improvement - [ ] Code refactoring - [ ] Test coverage improvement - [ ] Build/CI improvement ## Changes Made Please provide a detailed list of changes: - - - ## Testing Please describe the tests you ran to verify your changes: - [\u2026",
+   "created_at": "2026-01-04T18:16:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/50",
+   "state": "closed",
+   "merged_at": "2026-01-04T18:16:15Z",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "number": 49,
+   "title": "implement registry functions and fix linting (#12)",
+   "body": "## Description This PR addresses the missing functionality in the metrics registry by implementing the registration and retrieval logic. This allows for dynamic expansion of the metrics suite and ensures better reliability through comprehensive unit tests. Fixes #12 ## Type of Change Please delete options that are not relevant: - [ ] New feature (non-breaking change which adds functionality) - [ ] Test coverage improvement ## Changes Made - Implemented register_metric() in src/agentunit/metrics/registry.py to allow adding new metrics at runtime. - Implemented get_metric() in src/agentunit/metrics/registry.py to safely retrieve metrics by their string names. - Created tests/test_metrics_regi\u2026",
+   "created_at": "2025-12-30T15:03:47Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/49",
+   "state": "closed",
+   "merged_at": "2026-01-01T05:53:42Z",
+   "user": {
+    "login": "Sunil-saini1818"
+   }
+  },
+  {
+   "number": 48,
+   "title": "feat: add HTML report exporter for SuiteResult",
+   "body": "## Description This PR introduces a self-contained HTML report exporter for SuiteResult, allowing users to generate a browser-viewable report of AgentUnit runs. The HTML report complements existing JSON, Markdown, and JUnit exporters and provides a human-friendly summary of results, including scenario success rates and overall execution details. Fixes #29 ## Type of Change Please delete options that are not relevant: - [x] New feature (non-breaking change which adds functionality) ## Changes Made Added an HTML exporter under agentunit.reporting Introduced SuiteResult.to_html(path) API for generating reports Generated self-contained HTML with: Execution summary (duration, total runs) Scenari\u2026",
+   "created_at": "2025-12-24T05:13:40Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/48",
+   "state": "closed",
+   "merged_at": "2025-12-27T06:58:44Z",
+   "user": {
+    "login": "anshiky73-svg"
+   }
+  },
+  {
+   "number": 47,
+   "title": "Replace datetime.utcnow with timezone-aware datetime",
+   "body": "- Replaced datetime.utcnow() with datetime.now(timezone.utc) - Kept existing timestamp formatting unchanged - Tests passing closes #5 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Bug Fixes** * Timestamps are now consistently timezone-aware (UTC), improving cross-system compatibility and formatting of saved submissions and traces. * **Chores** * Added a new project dependency: jsonschema. * Markdown output now accepts an explicit output path parameter. * **Tests** * Tests updated to use temporary directories, timezone-aware datetimes, and verify UTF-8/emoji content and pass/fail indicators. <sub>\u270f\ufe0f Tip: You can customize this high-le\u2026",
+   "created_at": "2025-12-21T14:46:34Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/47",
+   "state": "closed",
+   "merged_at": "2026-01-07T09:46:11Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 46,
+   "title": "feat: Add pytest plugin with result caching for unchanged scenarios",
+   "body": "## Summary #26 Implements the pytest plugin with result caching to skip re-running unchanged scenarios, as requested in #26. ## Changes - **New: `src/agentunit/pytest/`** - Complete pytest plugin module - `plugin.py` - Scenario discovery and execution - `cache.py` - Result caching with hash-based keys - `cli.py` - CLI for initializing eval directories - **New: `tests/eval/`** - Example scenarios directory - **New: `tests/test_pytest_plugin.py`** - 12 tests for plugin + caching - **New: `docs/pytest-plugin.md`** - Documentation ## Features - `--no-cache` flag to bypass cache and force fresh runs - `--clear-cache` flag to clear cache before running - Cache invalidation when source files chang\u2026",
+   "created_at": "2025-12-21T06:15:53Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/46",
+   "state": "closed",
+   "merged_at": "2025-12-23T13:02:15Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 45,
+   "title": "Fix miscellaneous type hints",
+   "body": "## Description Please include a summary of the changes and the related issue. Include relevant motivation and context. I fixed the type hints for the following files: src/agentunit/adapters/agentops_adapter.py src/agentunit/core/scenario.py src/agentunit/datasets/builtins.py src/agentunit/metrics/builtin.py src/agentunit/production/integrations.py Note: /metrics/builtin.py has one import-untyped error Fixes [#13](https://github.com/aviralgarg05/agentunit/issues/13) ## Type of Change Please delete options that are not relevant: - [x] Code refactoring - [x] Test coverage improvement ## Changes Made Please provide a detailed list of changes: - Miscellaneous changes to all the files ## Testing\u2026",
+   "created_at": "2025-12-20T01:46:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/45",
+   "state": "closed",
+   "merged_at": "2026-01-23T07:52:50Z",
+   "user": {
+    "login": "evanjhoward11"
+   }
+  },
+  {
+   "number": 44,
+   "title": "Expose __version__ in agentunit package",
+   "body": "Added __version__ attribute to agentunit package. Version matches pyproject.toml. closes #11 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Documentation** * Added guidance for running CI checks locally using ruff and pytest. * **New Features** * Expanded public API to expose Runner, Scenario, ScenarioResult, SuiteResult and run_suite. * **Tests** * Added tests validating Markdown report generation and UTF-8 encoding. * **Chores** * Included a sample generated report demonstrating pass/fail output. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by\u2026",
+   "created_at": "2025-12-19T15:48:55Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/44",
+   "state": "closed",
+   "merged_at": "2026-01-04T11:22:54Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 43,
+   "title": "Add test for markdown emoji encoding",
+   "body": "- Added test for SuiteResult.to_markdown() - Verifies \u2705 and \u274c emoji rendering - Ensures UTF-8 encoding compatibility - Test passes on all platforms closes #15 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Tests** * Minor test formatting and structure adjustments; behavior unchanged. Report-generation tests still construct results, write/read Markdown, and assert content (including emojis/UTF\u20118). * **Chores** * Dependency updates: removed numpy, added scipy and jsonschema (jsonschema marked optional); merge-conflict markers present in dependency list. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub\u2026",
+   "created_at": "2025-12-18T15:18:24Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/43",
+   "state": "closed",
+   "merged_at": "2026-01-09T11:53:44Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 42,
+   "title": "Add py.typed marker for type checker support",
+   "body": "Adds py.typed marker file to indicate type checker support. Packaging uses src layout, so the marker will be included in the build. closes #14 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Documentation** * Added CI check verification guide in README covering local setup and requirements. * Enhanced docstrings across core modules with detailed multi-line documentation for improved code clarity. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2025-12-18T15:04:55Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/42",
+   "state": "closed",
+   "merged_at": "2025-12-19T16:52:12Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 41,
+   "title": "Add quickstart instructions for running CI checks locally",
+   "body": "This PR adds a new section to README.md explaining how contributors can run the same lint, format, and test checks locally as CI. This helps beginners validate changes before opening a PR. closes #3 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * Added a new example script demonstrating basic evaluation workflow with AgentUnit. * **Documentation** * Added \"Running CI Checks Locally\" section to README with setup prerequisites and instructions. * Enhanced docstrings across core modules for improved clarity and API documentation. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- en\u2026",
+   "created_at": "2025-12-17T16:31:03Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/41",
+   "state": "closed",
+   "merged_at": "2025-12-19T16:52:53Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 40,
+   "title": "test(suite): add smoke test for docs/templates/suite_template.py",
+   "body": "Mock a simple agent and verify the FAQAdapter template pattern records a response and passes a metric ## Description Adds a minimal smoke test for the sample [FAQAdapter](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-browser/workbench/workbench.html) pattern in [suite_template.py](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-browser/workbench/workbench.html). The test mocks an agent with [.connect()](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-browser/workbench/workbench.html) and [.answer()](vscode-fi\u2026",
+   "created_at": "2025-12-15T17:19:54Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/40",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "Vansh-Lohia"
+   }
+  },
+  {
+   "number": 39,
+   "title": "feat: implement pytest plugin for AgentUnit scenario discovery (resolves #22)",
+   "body": "## \ud83c\udfaf Overview #22 This PR implements a comprehensive pytest plugin that enables automatic discovery and execution of AgentUnit scenarios as pytest tests, resolving issue #22. ## \u2728 Features Added ### \ud83d\udd0d Core Plugin Functionality - **Automatic scenario discovery** from `tests/eval/` directory - **Python file support** with `Scenario` objects and `scenario_*` functions - **Config file support** for YAML/JSON (with nocode module integration) - **Pytest markers** (`@pytest.mark.agentunit`, `@pytest.mark.scenario`) - **Native test execution** using AgentUnit's `run_suite` function - **Robust error handling** for failed scenario loading ### \ud83d\udee0\ufe0f CLI Tool - `agentunit-init-eval` command for quick setu\u2026",
+   "created_at": "2025-12-15T12:30:08Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/39",
+   "state": "closed",
+   "merged_at": "2025-12-18T13:20:10Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 38,
+   "title": "feat: implement pytest plugin for AgentUnit scenario discovery (resolves #22)",
+   "body": "## \ud83c\udfaf Overview #22 This PR implements a comprehensive pytest plugin that enables automatic discovery and execution of AgentUnit scenarios as pytest tests, resolving issue #22. ## \u2728 Features Added ### \ud83d\udd0d Core Plugin Functionality - **Automatic scenario discovery** from `tests/eval/` directory - **Python file support** with `Scenario` objects and `scenario_*` functions - **Config file support** for YAML/JSON (with nocode module integration) - **Pytest markers** (`@pytest.mark.agentunit`, `@pytest.mark.scenario`) - **Native test execution** using AgentUnit's `run_suite` function - **Robust error handling** for failed scenario loading ### \ud83d\udee0\ufe0f CLI Tool - `agentunit-init-eval` command for quick setu\u2026",
+   "created_at": "2025-12-15T12:20:23Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/38",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 37,
+   "title": "Add Google-style docstrings to BaseAdapter methods",
+   "body": "### Summary Added Google-style docstrings to the public methods of `BaseAdapter`. ### Changes - Added detailed docstrings to `prepare`, `execute`, and `cleanup` methods - Included parameter and return value descriptions - Ensured code passes `ruff` checks ### Related Issue closes #10 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * Added a basic evaluation example demonstrating a minimal evaluation workflow with a mock adapter and a sample run that prints prompt, model output, and evaluation score. * **Documentation** * Reformatted and expanded docstrings across core modules and exceptions for clearer, multi-line descri\u2026",
+   "created_at": "2025-12-14T14:32:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/37",
+   "state": "closed",
+   "merged_at": "2025-12-16T17:29:45Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 36,
+   "title": "Add LangGraph integration tests (#24)",
+   "body": "## \ud83c\udfaf Overview #24 This PR implements comprehensive integration tests for LangGraph with AgentUnit, addressing issue #24. ## \u2705 Tasks Completed - [x] Create a simple LangGraph agent in `tests/integration/` - [x] Write integration test that runs a full evaluation cycle - [x] Use pytest markers to skip if LangGraph not installed - [x] Document how to run integration tests ## \ud83e\uddea What's Added ### New Files - `tests/integration/` - New integration test directory - `simple_langgraph_agent.py` - Mock LangGraph agent for testing - `test_langgraph_integration.py` - Comprehensive integration tests - `test_integration_basic.py` - Basic structure validation tests - `conftest.py` - Pytest configuration and\u2026",
+   "created_at": "2025-12-12T11:26:16Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/36",
+   "state": "closed",
+   "merged_at": "2025-12-13T10:32:52Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 35,
+   "title": "feat: add basic evaluation example using FakeAdapter",
+   "body": "## Description Please include a summary of the changes and the related issue. Include relevant motivation and context. This PR adds a new basic evaluation example using FakeAdapter to run simple evaluations using AgentUnit. Fixes #9 (issue) ## Type of Change Please delete options that are not relevant: - [ ] Bug fix (non-breaking change which fixes an issue) - [x] New feature (non-breaking change which adds functionality) - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected) - [x] Documentation update - [ ] Performance improvement - [ ] Code refactoring - [ ] Test coverage improvement - [x] Build/CI improvement ## Changes Made Please provide\u2026",
+   "created_at": "2025-12-10T13:08:06Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/35",
+   "state": "closed",
+   "merged_at": "2026-01-06T07:32:32Z",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "number": 34,
+   "title": "test: Verify CodeRabbit auto-review configuration",
+   "body": "This PR is created to verify CodeRabbit auto PR review functionality. ## Purpose - Verify CodeRabbit automatically reviews this PR - Test incremental reviews with additional commits - Close after verification --- **Note**: This PR should be closed after verification is complete. <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Added test verification documentation for internal review automation functionality. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2025-12-09T20:24:18Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/34",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "number": 33,
+   "title": "Add Run CI locally section to README.md ",
+   "body": "This adds a RUN CI locally section to README.md.Includes prerequisites,poetry commands. Closes #6",
+   "created_at": "2025-12-09T11:03:35Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/33",
+   "state": "closed",
+   "merged_at": "2025-12-13T13:37:40Z",
+   "user": {
+    "login": "nisha-mahendran"
+   }
+  },
+  {
+   "number": 32,
+   "title": "Fix typos in docstrings",
+   "body": "This PR fixes typos and improves clarity in docstrings across the project. - Corrected spelling mistakes in docstrings (e.g., funciton \u2192 function, recieve \u2192 receive) - Improved readability of docstrings for functions and classes closes #8 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Documentation** * Added example code demonstrating adapter implementation and usage patterns. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2025-12-08T10:11:43Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/32",
+   "state": "closed",
+   "merged_at": "2026-01-04T11:23:57Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 31,
+   "title": "Add basic evaluation example script",
+   "body": "Summary - Added a minimal evaluation example at examples/basic_evaluation.py - Uses a simple FakeAdapter mock - Included clear comments for beginners - Script runs using: python examples/basic_evaluation.py - No new dependencies required Fixes #9",
+   "created_at": "2025-12-07T09:14:43Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/31",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 1,
+   "title": "fix: add explicit utf-8 encoding for Windows compatibility",
+   "body": "## Description This PR fixes a `UnicodeEncodeError` that occurs on Windows systems when generating Markdown reports. The issue arises because `pathlib.Path.write_text()` defaults to the system's locale encoding if not specified. When the report generator attempts to write emojis to the report file the operation fails on Windows. This change explicitly sets `encoding=\"utf-8\"` when writing the report ensuring cross platform compatibility. Fixes # (Bug discovered during local setup, no existing issue ID) ## Type of Change - [x] Bug fix (non-breaking change which fixes an issue) ## Changes Made - Modified `src/agentunit/reporting/results.py`: Added `encoding=\"utf-8\"` argument to the `write_text\u2026",
+   "created_at": "2025-12-05T09:12:13Z",
+   "html_url": "https://github.com/aviralgarg05/agentunit/pull/1",
+   "state": "closed",
+   "merged_at": "2025-12-05T19:01:58Z",
+   "user": {
+    "login": "thejesshwar"
+   }
+  }
+ ]
+}

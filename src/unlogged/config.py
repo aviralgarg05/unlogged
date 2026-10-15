@@ -18,6 +18,8 @@ class Settings:
     base_url: str
     openai_api_key: str | None
     replay: bool
+    github_token: str | None = None
+    github_repo: str | None = None
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -32,7 +34,15 @@ class Settings:
             openai_api_key=os.environ.get("OPENAI_API_KEY") or None,
             # Replay is the default so the project runs for anyone with no credentials.
             replay=os.environ.get("UNLOGGED_REPLAY", "1") not in ("0", "false", "False", ""),
+            # Read-only, and optional: a public repository answers unauthenticated, and the
+            # recorded thread replays with nothing set at all.
+            github_token=os.environ.get("GITHUB_TOKEN") or None,
+            github_repo=os.environ.get("GITHUB_REPO") or None,
         )
+
+    @property
+    def has_github(self) -> bool:
+        return bool(self.github_token)
 
     @property
     def has_paypal(self) -> bool:

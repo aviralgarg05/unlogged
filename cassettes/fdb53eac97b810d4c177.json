@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 73,
+  "changed_files": 1,
+  "additions": 23,
+  "deletions": 6,
+  "title": "Logging added for prompts, raw responses and parsing errors",
+  "body": "## Description This PR improves the observability by adding the logging at different levels (debug and error) Fixes #71 ## Type of Change - [ ] Bug fix (non-breaking change which fixes an issue) ## Changes Made - Added debug-level logging for generated prompts in Llama and OpenAI generators - Logged raw LLM responses before JSON parsing - Logged JSON parsing errors with traceback information for easier debugging ## Testing - [ ] Manual testing performed ### Test Configuration - Python version: 3.11 - Operating System: Linux (Fedora) - Relevant adapters tested: - LlamaDatasetGenerator - OpenAIDatasetGenerator (error path) ### Test Results DEBUG | agentunit.generators.llm_generator | Generate\u2026",
+  "created_at": "2026-01-19T12:53:28Z",
+  "html_url": "https://github.com/aviralgarg05/agentunit/pull/73",
+  "state": "closed",
+  "merged_at": "2026-01-20T12:56:23Z",
+  "user": {
+   "login": "web4akash"
+  }
+ }
+}
