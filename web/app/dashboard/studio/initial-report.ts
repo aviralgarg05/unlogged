@@ -97,13 +97,13 @@ const bill: AgPageState<UnloggedRegistry> = {
     // total_after is a RUNNING total, so the latest row is the answer and summing it
     // double-counts every earlier write.
     'kpi-total': kpi('Invoice total now', { id: 'ledger.total_after', aggregation: 'max' }),
-    'kpi-added': kpi('Added after sending', sum('ledger.unit_price')),
+    'kpi-added': kpi('Added after sending', sum('ledger.line_total')),
     'kpi-lines': kpi('Lines discovered', countd('ledger.event_id')),
     growth: {
       type: 'column-chart-grouped',
       dataMapping: {
         categoryKey: [{ id: 'ledger.line_name' }],
-        valueKey: [sum('ledger.unit_price')],
+        valueKey: [sum('ledger.line_total')],
       },
       format: {
         ...title('What each discovered line added to the bill'),
@@ -119,6 +119,7 @@ const bill: AgPageState<UnloggedRegistry> = {
           { id: 'ledger.clause_id' },
           { id: 'ledger.hours' },
           { id: 'ledger.unit_price' },
+          { id: 'ledger.line_total' },
           { id: 'ledger.total_after' },
           { id: 'ledger.adjudicator' },
         ],

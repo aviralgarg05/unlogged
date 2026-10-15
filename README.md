@@ -50,7 +50,7 @@ payer URL so you can open it yourself. A date in a README is worth less than a c
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 77 tests, no credentials needed
+uv run pytest -q                       # 80 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -155,7 +155,7 @@ strictly worse than none, because a trial can expire and nothing here can.
 <tr>
 <td width="33%"><img src="docs/img/dashboard-thread.jpg" alt="The thread: every message, commit and call on the engagement"></td>
 <td width="33%"><img src="docs/img/dashboard-decisions.jpg" alt="Each event placed against the agreed scope, beside the evidence card"></td>
-<td width="33%"><img src="docs/img/dashboard-bill.jpg" alt="What reached the bill: totals, a per-line chart, and the append-only ledger"></td>
+<td width="33%"><img src="docs/img/dashboard-bill.jpg" alt="What reached the bill: the invoice total, what each discovered line added, and the append-only ledger across two billing periods"></td>
 </tr>
 <tr>
 <td><em>The thread, paged from the server.</em></td>
@@ -203,7 +203,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 77 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 80 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

@@ -15,7 +15,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, computed_field
 
 
 class Entry(BaseModel):
@@ -29,6 +29,17 @@ class Entry(BaseModel):
     total_after: Decimal
     adjudicator: str
     confidence: float
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def line_total(self) -> Decimal:
+        """What this line actually added. Derived, so a stored row can never disagree with it.
+
+        Its absence is why the dashboard's "Added after sending" tile and the chart titled
+        "What each discovered line added to the bill" both summed `unit_price` — the hourly
+        rate — and drew four identical bars at $85.
+        """
+        return (self.hours * self.unit_price).quantize(Decimal("0.01"))
 
     def line(self) -> str:
         return json.dumps(self.model_dump(mode="json"), sort_keys=True)
@@ -53,6 +64,11 @@ class Ledger:
         return self.seed if self.seed.exists() else None
 
     def append(self, entry: Entry) -> None:
+        # Carry the seed forward on the first local write. Reading it only as a fallback meant
+        # the earlier periods vanished the moment anyone used the product — an append-only
+        # record that silently drops its history the first time it is appended to.
+        if not self.path.exists() and self.seed.exists():
+            self.path.write_text(self.seed.read_text(), encoding="utf-8")
         with self.path.open("a", encoding="utf-8") as fh:
             fh.write(entry.line() + "\n")
 

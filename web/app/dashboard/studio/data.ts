@@ -46,6 +46,7 @@ const LEDGER_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'clause_id', name: 'Clause', format: 'textFormat' },
   { id: 'hours', name: 'Hours', format: 'decimalFormat' },
   { id: 'unit_price', name: 'Rate', format: 'currencyFormat' },
+  { id: 'line_total', name: 'Added by this line', format: 'currencyFormat' },
   { id: 'total_after', name: 'Invoice total after', format: 'currencyFormat' },
   { id: 'adjudicator', name: 'Decided by', format: 'textFormat' },
 ];

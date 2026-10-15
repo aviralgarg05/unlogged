@@ -33,6 +33,12 @@ Written so a judge does not have to find any of this out by reading the source.
   a clause and quotes the span it relied on, and that it separates the request (`e1`) from the
   work that answered it (`e3`) — the distinction the baseline cannot make and the one that
   causes double-billing. A real engagement of 40-60 events is what would make this a result.
+- **The seeded ledger is fixture data.** `data/seed/eng-checkout-001.jsonl` holds two lines
+  from an invented earlier billing period, so the page titled "Every line this system added to
+  the live PayPal invoice" is not blank on a fresh clone. They are labelled with a
+  `INV2-PRIOR-PERIOD-0001` invoice id that does not exist at PayPal. Everything dated
+  2026-10-15 in that table is a real write to a real sandbox invoice.
+
 - **The fixture engagement is authored, and that limits the 100% above more than its size does.**
   `fixtures/events.jsonl` and `fixtures/gold.jsonl` were written for this repo. They are a reasonable thread, but they are not evidence, and a labelled
   set written by the same person who writes the adjudicator is worth very little. The intended
