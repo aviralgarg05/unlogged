@@ -34,6 +34,10 @@ function unqualify(rows: Record<string, unknown>[]): Row[] {
   });
 }
 
+// The engagement's live sandbox invoice. One per engagement is the whole point, so it is a
+// constant rather than something the reader has to find and paste.
+const DEMO_INVOICE = 'INV2-AD9X-DDY8-AUNL-L9ZD';
+
 const LABEL: Record<string, string> = {
   billable_extra: 'Billable extra',
   scope_request: 'Asked for, not yet done',
@@ -46,6 +50,10 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
   const [error, setError] = useState<string | null>(null);
   // Whether these rows came through the page's filters, or straight from the backend.
   const [filtered, setFiltered] = useState(false);
+  const [picked, setPicked] = useState<Set<string>>(new Set());
+  const [applying, setApplying] = useState(false);
+  const [applied, setApplied] = useState<{ total: string; added: string[] } | null>(null);
+  const [failure, setFailure] = useState<string | null>(null);
 
   const mapped = params.dataMapping?.rows;
   // Studio rebuilds `dataMapping` on every render, so depending on the array itself makes the
@@ -107,8 +115,60 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
     return <div className="ic-evidence ic-evidence--empty">Nothing outside the agreed scope.</div>;
   }
 
+  const billable = outside.filter((r) => r.call === 'billable_extra' && r.event_id);
+
+  async function apply() {
+    setApplying(true);
+    setFailure(null);
+    try {
+      const res = await fetch('/api/backend/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          invoice_id: DEMO_INVOICE,
+          event_ids: [...picked],
+          notify: true,
+        }),
+      });
+      const body = await res.json();
+      // A refusal is information, not an error to swallow: the backend rejects anything that
+      // is not a billable extra, and anything already billed to this invoice.
+      if (!res.ok) throw new Error(body?.detail ?? `apply failed (${res.status})`);
+      setApplied({ total: body.total, added: body.added ?? [] });
+      setPicked(new Set());
+    } catch (e: unknown) {
+      setFailure(e instanceof Error ? e.message : 'apply failed');
+    } finally {
+      setApplying(false);
+    }
+  }
+
   return (
     <div className="ic-evidence">
+      {billable.length > 0 ? (
+        <div className="ic-apply">
+          <p className="ic-apply__lead">
+            {picked.size === 0
+              ? 'Select what to put on the invoice.'
+              : `${picked.size} selected.`}
+          </p>
+          <button
+            type="button"
+            className="ic-apply__btn"
+            disabled={picked.size === 0 || applying}
+            onClick={apply}
+          >
+            {applying ? 'Writing to PayPal…' : 'Add to the live invoice'}
+          </button>
+          {applied ? (
+            <p className="ic-apply__ok">
+              Invoice now <strong>${applied.total}</strong>. PayPal emailed the client.
+              {applied.added.length ? ` Added: ${applied.added.join('; ')}` : ''}
+            </p>
+          ) : null}
+          {failure ? <p className="ic-apply__err">{failure}</p> : null}
+        </div>
+      ) : null}
       {!filtered ? (
         <p className="ic-evidence__note">
           Showing every adjudication. Page filters do not apply to this card.
@@ -124,7 +184,25 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
             className={`ic-evidence__item${uncited ? ' ic-evidence__item--uncited' : ''}`}
           >
             <header>
-              <span className="ic-evidence__call">{LABEL[r.call ?? ''] ?? r.call}</span>
+              {r.call === 'billable_extra' && r.event_id ? (
+                <label className="ic-evidence__pick">
+                  <input
+                    type="checkbox"
+                    checked={picked.has(r.event_id)}
+                    onChange={(e) =>
+                      setPicked((prev) => {
+                        const next = new Set(prev);
+                        if (e.target.checked) next.add(r.event_id as string);
+                        else next.delete(r.event_id as string);
+                        return next;
+                      })
+                    }
+                  />
+                  <span className="ic-evidence__call">{LABEL[r.call] ?? r.call}</span>
+                </label>
+              ) : (
+                <span className="ic-evidence__call">{LABEL[r.call ?? ''] ?? r.call}</span>
+              )}
               {r.hours ? <span className="ic-evidence__hours">{r.hours}h</span> : null}
             </header>
             {r.quoted_span ? (

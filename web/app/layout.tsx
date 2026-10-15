@@ -9,10 +9,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s · PayPal × AG Grid",
-    default: "PayPal × AG Grid",
+    template: "%s · unlogged",
+    default: "unlogged — the work you never wrote down",
   },
-  description: "PayPal sandbox data in AG Grid and AG Studio",
+  description:
+    "A contracting engagement has one PayPal invoice. As work turns up in Slack threads and " +
+    "PR reviews, the billable parts are itemised onto that same invoice — same id, same link, " +
+    "same QR.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

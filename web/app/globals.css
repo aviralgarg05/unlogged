@@ -134,3 +134,30 @@ body {
   font-size: 0.6875rem;
   opacity: 0.55;
 }
+
+/* The one control that moves money. Deliberately plain and deliberately present: without it
+   the product's verb lives only in a CLI flag. */
+.ic-apply {
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  border-radius: 10px;
+  padding: 0.75rem 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.ic-apply__lead { margin: 0; font-size: 0.8125rem; opacity: 0.75; }
+.ic-apply__btn {
+  align-self: flex-start;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 1.125rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: #0070ba;
+  cursor: pointer;
+}
+.ic-apply__btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.ic-apply__ok { margin: 0; font-size: 0.8125rem; color: #1a7f37; line-height: 1.4; }
+.ic-apply__err { margin: 0; font-size: 0.8125rem; color: #b23c17; line-height: 1.4; }
+.ic-evidence__pick { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; }
