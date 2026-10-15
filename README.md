@@ -24,7 +24,7 @@ from, rendered by PayPal on PayPal's own page.
 ```bash
 git clone https://github.com/aviralgarg05/unlogged && cd unlogged
 uv sync --extra dev
-uv run pytest -q                       # 34 tests, no credentials needed
+uv run pytest -q                       # 55 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -182,7 +182,7 @@ src/unlogged/
 | AI harness: custom agent, server tool, telemetry | ✅ built, unexercised without a key |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 34 Python, 4 TypeScript |
+| Tests | ✅ 55 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ⏳ awaiting API key |
 | Evaluation against a real past engagement | ⏳ needs a real thread |
 
