@@ -274,3 +274,29 @@ def test_the_confusion_table_renders_square():
     header, rule, *rows = rendered
     assert len(rows) == len(result.marginals)
     assert header.count("|") == rule.count("|") == rows[0].count("|")
+
+
+def test_alpha_generalises_to_a_panel_without_changing_the_two_rater_answer():
+    """The two-rater form has to stay the special case, or every published figure moves."""
+    from unlogged.eval.agreement import alpha_over_units, krippendorff_alpha
+
+    pairs = [("A", "A")] * 20 + [("A", "B")] * 5 + [("B", "A")] * 10 + [("B", "B")] * 15
+
+    assert round(krippendorff_alpha(pairs), 4) == 0.40
+    assert round(alpha_over_units([[a, b] for a, b in pairs]), 4) == 0.40
+
+
+def test_alpha_over_a_four_reader_panel():
+    from unlogged.eval.agreement import alpha_over_units
+
+    assert alpha_over_units([["A"] * 4, ["B"] * 4]) == 1.0
+    # One dissenter in four costs real agreement but is not chance.
+    assert 0.4 < alpha_over_units([["A", "A", "A", "B"], ["B", "B", "B", "B"]]) < 0.7
+
+
+def test_a_unit_only_one_reader_saw_carries_no_agreement_and_is_dropped():
+    """Alpha's own convention, and the reason it is the right coefficient for a panel where
+    not everyone reads everything."""
+    from unlogged.eval.agreement import alpha_over_units
+
+    assert alpha_over_units([["A", "A"], ["B"]]) == alpha_over_units([["A", "A"]])

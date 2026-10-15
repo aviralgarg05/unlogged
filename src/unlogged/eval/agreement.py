@@ -70,6 +70,40 @@ class Agreement:
         return "\n".join(lines)
 
 
+def alpha_over_units(units: list[list[str]]) -> float:
+    """Nominal Krippendorff's alpha for any number of ratings per unit.
+
+    The two-rater form is the special case. This one is what the corpus actually needs: a
+    panel of readers where not everyone reads everything, which is the normal shape of an
+    annotation effort and the reason alpha is preferred to kappa in the first place.
+
+    Units rated fewer than twice carry no information about agreement and are dropped, which
+    is alpha's own convention rather than a choice made here.
+    """
+    coincidence: Counter[tuple[str, str]] = Counter()
+    for ratings in units:
+        m = len(ratings)
+        if m < 2:
+            continue
+        for i, a in enumerate(ratings):
+            for j, b in enumerate(ratings):
+                if i != j:
+                    coincidence[(a, b)] += 1 / (m - 1)
+
+    totals: Counter[str] = Counter()
+    for (a, _), weight in coincidence.items():
+        totals[a] += weight
+    n = sum(totals.values())
+    if n < 2:
+        return 1.0
+
+    disagreeing = sum(v for (a, b), v in coincidence.items() if a != b)
+    expected = sum(totals[a] * totals[b] for a in totals for b in totals if a != b)
+    if expected == 0:
+        return 1.0
+    return 1.0 - (n - 1) * disagreeing / expected
+
+
 def krippendorff_alpha(pairs: list[tuple[str, str]]) -> float:
     """Nominal alpha for two ratings per unit.
 
@@ -78,21 +112,7 @@ def krippendorff_alpha(pairs: list[tuple[str, str]]) -> float:
     With two raters and complete data it coincides with kappa on a two-category problem — the
     textbook 2x2 example gives 0.40 for both — and the two come apart as categories multiply.
     """
-    o: Counter[tuple[str, str]] = Counter()
-    for a, b in pairs:
-        o[(a, b)] += 1
-        o[(b, a)] += 1
-    totals: Counter[str] = Counter()
-    for (a, _), count in o.items():
-        totals[a] += count
-    n = sum(totals.values())
-    if n < 2:
-        return 1.0
-    disagreeing = sum(v for (a, b), v in o.items() if a != b)
-    expected = sum(totals[a] * totals[b] for a in totals for b in totals if a != b)
-    if expected == 0:
-        return 1.0
-    return 1.0 - (n - 1) * disagreeing / expected
+    return alpha_over_units([[a, b] for a, b in pairs])
 
 
 def score(first: dict[str, str], second: dict[str, str], *, bootstrap: int = 2000) -> Agreement:
