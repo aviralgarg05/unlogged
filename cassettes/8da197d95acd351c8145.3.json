@@ -1,0 +1,134 @@
+{
+ "status": 200,
+ "body": {
+  "id": "INV2-EN6J-WLYF-87GD-CVH5",
+  "status": "PARTIALLY_PAID",
+  "detail": {
+   "reference": "verify-2026-10-15",
+   "currency_code": "USD",
+   "note": "Agreed scope: checkout page. Cap USD 1,200.00.",
+   "category_code": "SHIPPABLE",
+   "invoice_number": "0037",
+   "invoice_date": "2026-10-15",
+   "payment_term": {
+    "term_type": "NET_15",
+    "due_date": "2026-10-30"
+   },
+   "viewed_by_recipient": false,
+   "group_draft": false,
+   "metadata": {
+    "create_time": "2026-10-15T16:48:59Z",
+    "last_update_time": "2026-10-15T16:49:06Z",
+    "created_by_flow": "REGULAR_SINGLE",
+    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#EN6JWLYF87GDCVH5",
+    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-EN6J-WLYF-87GD-CVH5",
+    "caller_type": "API_V2_INVOICE",
+    "spam_info": {}
+   },
+   "archived": false
+  },
+  "invoicer": {
+   "business_name": "Aviral Garg"
+  },
+  "items": [
+   {
+    "id": "ITEM-3WG02385011181133",
+    "name": "Agreed scope",
+    "quantity": "8",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "65.00"
+    },
+    "unit_of_measure": "HOURS"
+   },
+   {
+    "id": "ITEM-3S214895KG5216357",
+    "name": "Retry logic (github 03 Oct)",
+    "quantity": "2",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "85.00"
+    },
+    "unit_of_measure": "HOURS"
+   }
+  ],
+  "configuration": {
+   "tax_calculated_after_discount": false,
+   "tax_inclusive": false,
+   "allow_tip": false,
+   "allow_only_pay_by_bank": false,
+   "allow_vba_payments": false,
+   "save_item_for_future": true,
+   "template_id": "TEMP-7181852024373634C"
+  },
+  "amount": {
+   "breakdown": {
+    "item_total": {
+     "currency_code": "USD",
+     "value": "690.00"
+    },
+    "discount": {
+     "invoice_discount": {
+      "amount": {
+       "currency_code": "USD",
+       "value": "0.00"
+      }
+     },
+     "item_discount": {
+      "currency_code": "USD",
+      "value": "0.00"
+     }
+    },
+    "tax_total": {
+     "currency_code": "USD",
+     "value": "0.00"
+    }
+   },
+   "currency_code": "USD",
+   "value": "690.00"
+  },
+  "due_amount": {
+   "currency_code": "USD",
+   "value": "590.00"
+  },
+  "payments": {
+   "paid_amount": {
+    "currency_code": "USD",
+    "value": "100.00"
+   },
+   "transactions": [
+    {
+     "type": "EXTERNAL",
+     "payment_id": "EXTR-6BF63639A88918021",
+     "payment_date": "2026-10-15",
+     "payment_date_time": "2026-10-15T00:00:00Z",
+     "method": "BANK_TRANSFER",
+     "note": "Bank transfer, reference NW-0042",
+     "amount": {
+      "currency_code": "USD",
+      "value": "100.00"
+     }
+    }
+   ]
+  },
+  "links": [
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-EN6J-WLYF-87GD-CVH5",
+    "rel": "self",
+    "method": "GET"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-EN6J-WLYF-87GD-CVH5/payments",
+    "rel": "record-payment",
+    "method": "POST"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-EN6J-WLYF-87GD-CVH5/refunds",
+    "rel": "record-refund",
+    "method": "POST"
+   }
+  ],
+  "unilateral": false,
+  "settings": {}
+ }
+}

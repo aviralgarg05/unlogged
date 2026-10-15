@@ -1,14 +1,14 @@
 {
  "status": 201,
  "body": {
-  "id": "INV2-E5RF-22GP-6M3E-QMN8",
+  "id": "INV2-Z7R8-5G62-X2GB-JL2W",
   "status": "DRAFT",
   "detail": {
    "reference": "verify-2026-10-15",
    "currency_code": "USD",
    "note": "Agreed scope: checkout page. Cap USD 1,200.00.",
    "category_code": "SHIPPABLE",
-   "invoice_number": "0019",
+   "invoice_number": "0039",
    "invoice_date": "2026-10-15",
    "payment_term": {
     "term_type": "NET_15",
@@ -17,11 +17,11 @@
    "viewed_by_recipient": false,
    "group_draft": false,
    "metadata": {
-    "create_time": "2026-10-15T14:22:51Z",
-    "last_update_time": "2026-10-15T14:22:51Z",
+    "create_time": "2026-10-15T16:50:41Z",
+    "last_update_time": "2026-10-15T16:50:41Z",
     "created_by_flow": "REGULAR_SINGLE",
-    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#E5RF22GP6M3EQMN8",
-    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-E5RF-22GP-6M3E-QMN8",
+    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#Z7R85G62X2GBJL2W",
+    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-Z7R8-5G62-X2GB-JL2W",
     "caller_type": "API_V2_INVOICE",
     "spam_info": {}
    },
@@ -32,7 +32,7 @@
   },
   "items": [
    {
-    "id": "ITEM-4Y877527AM449072T",
+    "id": "ITEM-5M058722TF2611359",
     "name": "Agreed scope",
     "quantity": "8",
     "unit_amount": {
@@ -83,27 +83,27 @@
   },
   "links": [
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-E5RF-22GP-6M3E-QMN8",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-Z7R8-5G62-X2GB-JL2W",
     "rel": "self",
     "method": "GET"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-E5RF-22GP-6M3E-QMN8/send",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-Z7R8-5G62-X2GB-JL2W/send",
     "rel": "send",
     "method": "POST"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-E5RF-22GP-6M3E-QMN8",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-Z7R8-5G62-X2GB-JL2W",
     "rel": "replace",
     "method": "PUT"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-E5RF-22GP-6M3E-QMN8",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-Z7R8-5G62-X2GB-JL2W",
     "rel": "delete",
     "method": "DELETE"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-E5RF-22GP-6M3E-QMN8/payments",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-Z7R8-5G62-X2GB-JL2W/payments",
     "rel": "record-payment",
     "method": "POST"
    }

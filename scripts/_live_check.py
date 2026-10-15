@@ -72,6 +72,37 @@ def main() -> int:
                 "PASS" if png[:4] == b"\x89PNG" else "FAIL",
                 f"{len(png)} byte PNG",
             )
+            # Money that arrived by bank transfer, recorded so the invoice stops asking for
+            # it — and then a further discovered line written on top of it. If the write
+            # dropped the payment, the client would be asked twice for money they had sent.
+            paid = inv.record_payment(
+                iid,
+                amount=Decimal("100.00"),
+                when=date.today().isoformat(),
+                note="Bank transfer, reference NW-0042",
+            )
+            after_pay = inv.get(iid)
+            due_before = after_pay["due_amount"]["value"]
+            inv.add_items(
+                iid,
+                [LineItem("Late discovery", Decimal("1"), Decimal("85.00"))],
+                notify=False,
+            )
+            final = inv.get(iid)
+            kept = Decimal(final["payments"]["paid_amount"]["value"]) >= Decimal("100.00")
+
+            emit(
+                "an out-of-band payment is recorded against the invoice",
+                "PASS" if paid.get("payment_id") else "FAIL",
+                f"{after_pay['status']}, {due_before} due",
+            )
+            emit(
+                "a later line does not discard the recorded payment",
+                "PASS" if kept else "FAIL",
+                f"paid {final['payments']['paid_amount']['value']}, "
+                f"due {final['due_amount']['value']}",
+            )
+
             print(f"PAYER\t{inv.payer_url(iid)}")
     except Exception as e:  # a live failure is a result, not a crash
         emit("live mechanism", "FAIL", str(e)[:60])

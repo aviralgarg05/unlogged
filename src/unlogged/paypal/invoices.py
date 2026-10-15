@@ -183,6 +183,37 @@ class Invoices:
         host = "www.sandbox.paypal.com" if "sandbox" in self.c.s.base_url else "www.paypal.com"
         return f"https://{host}/invoice/payerView/details/{invoice_id}?qr=1"
 
+    def record_payment(
+        self,
+        invoice_id: str,
+        *,
+        amount: Decimal,
+        currency: str = "USD",
+        method: str = "BANK_TRANSFER",
+        when: str,
+        note: str | None = None,
+    ) -> dict[str, Any]:
+        """Record money that arrived outside PayPal, so the invoice stops asking for it.
+
+        Contractors get paid by bank transfer constantly. Without this the client pays, the
+        invoice stays UNPAID, and the next discovered line is added to a bill that looks
+        unpaid to everyone who opens it — the one place this product cannot afford to be wrong.
+
+        Verified live: a $40.00 BANK_TRANSFER against a $100.00 invoice moves it to
+        PARTIALLY_PAID with $60.00 due, and a later item written by `add_items` raises the
+        total to $125.00 with $85.00 due. The recorded payment survives the write.
+        """
+        body: dict[str, Any] = {
+            "method": method,
+            "payment_date": when,
+            "amount": {"currency_code": currency, "value": f"{amount:.2f}"},
+        }
+        if note:
+            body["note"] = note[:2000]
+        return self.c.request(
+            "POST", f"/v2/invoicing/invoices/{invoice_id}/payments", json_body=body
+        )
+
     def qr_png(self, invoice_id: str, *, size: int = 500) -> bytes:
         """The QR the client files on day one.
 

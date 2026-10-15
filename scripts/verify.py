@@ -194,15 +194,29 @@ def offline() -> None:
     # Counted rather than written down, because this sentence has been wrong twice and a
     # README that miscounts its own checks is the first thing a careful reader stops trusting.
     keyless = len(results) + 1
-    claim = f"{keyless} checks keyless, {keyless + 6} with sandbox credentials"
-    check("README quotes the number of checks it runs", PASS if claim in readme else FAIL, claim)
+    check(
+        "README quotes the number of checks it runs",
+        PASS if f"{keyless} checks keyless," in readme else FAIL,
+        f"{keyless} keyless",
+    )
+
+
+DOTENV_PROBE = (
+    "from unlogged.config import Settings; "
+    "print('ready' if Settings.from_env().has_paypal else 'no')"
+)
 
 
 def live() -> None:
     section("Live against PayPal sandbox — the central claim, re-proved today")
 
-    if not (os.environ.get("PAYPAL_CLIENT_ID") and os.environ.get("PAYPAL_CLIENT_SECRET")):
-        check("live mechanism", SKIP, "set PAYPAL_CLIENT_ID / PAYPAL_CLIENT_SECRET")
+    # Credentials reach the project through `.env`, which is where the README tells the
+    # reader to put them. Reading only the process environment meant `--live` skipped itself
+    # for anyone who followed those instructions, and reported the skip as though they had
+    # simply not set anything.
+    code, out = run("uv", "run", "python", "-c", DOTENV_PROBE)
+    if out.strip() != "ready":
+        check("live mechanism", SKIP, "no PayPal credentials in the environment or .env")
         return
 
     # Run through the project's own environment rather than this script's. Everything else
@@ -218,11 +232,27 @@ def live() -> None:
         check("live mechanism", FAIL, out.splitlines()[-1][:60] if out else "no output")
 
 
+def live_total() -> None:
+    """The second half of that sentence, checked where the live checks have actually run.
+
+    Asserting it keylessly meant hardcoding how many checks the live script emits, which is
+    the same guess the sentence itself was making.
+    """
+    readme = (ROOT / "README.md").read_text()
+    total = len(results) + 1
+    check(
+        "README quotes the number of checks with credentials",
+        PASS if f"{total} with sandbox credentials" in readme else FAIL,
+        f"{total} with credentials",
+    )
+
+
 def main() -> int:
     print(f"unlogged — verification run, {date.today().isoformat()}")
     offline()
     if "--live" in sys.argv:
         live()
+        live_total()
 
     failed = [r for r in results if r[1] == FAIL]
     skipped = [r for r in results if r[1] == SKIP]
