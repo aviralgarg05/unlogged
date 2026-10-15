@@ -29,6 +29,12 @@ from unlogged.paypal.client import PayPalClient
 # properties carry readOnly. `status`, `due_amount` and `gratuity` do NOT,
 # contrary to folklore.
 READONLY = ("id", "parent_id", "links")
+# PayPal's own documented bounds. Both are load-bearing for an invoice that grows over the
+# life of an engagement, and both fail in ways the caller would otherwise discover late: the
+# clause list disappears off the end of the payer's page, or the hundred-and-first discovered
+# line is rejected after the work is already done.
+TERMS_LIMIT = 4000
+MAX_ITEMS = 100
 # Writable per the schema, but server-computed; echoing them back on a PUT invites a 422.
 COMPUTED = (
     "status",
@@ -112,7 +118,16 @@ class Invoices:
         if terms:
             # Payer-visible and separate from `note`: PayPal renders it under its own heading,
             # so the full clause list does not have to be squeezed into a one-line summary.
-            body["detail"]["terms_and_conditions"] = terms[:4000]
+            if len(terms) > TERMS_LIMIT:
+                # Silently clipping here would take the clause a billed line cites off the
+                # client's page, with no error anywhere. An engagement with enough scope to
+                # overflow 4000 characters is exactly the kind that gets disputed.
+                raise ValueError(
+                    f"terms_and_conditions is {len(terms)} characters; PayPal accepts "
+                    f"{TERMS_LIMIT}. Shorten the clause list rather than letting the payer "
+                    f"lose the end of it."
+                )
+            body["detail"]["terms_and_conditions"] = terms
         if recipient_email:
             body["primary_recipients"] = [{"billing_info": {"email_address": recipient_email}}]
         return self.c.request(
@@ -153,6 +168,11 @@ class Invoices:
         new = list(new_items)
         current = self.get(invoice_id)
         items = list(current.get("items", [])) + [i.to_paypal() for i in new]
+        if len(items) > MAX_ITEMS:
+            raise ValueError(
+                f"{len(items)} line items; PayPal accepts {MAX_ITEMS}. A long engagement has "
+                f"to consolidate billed extras rather than discovering this at the hundredth."
+            )
 
         upd = {k: v for k, v in current.items() if k not in READONLY + COMPUTED}
         upd["items"] = items

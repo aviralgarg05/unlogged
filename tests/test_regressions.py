@@ -569,3 +569,44 @@ def test_the_documented_apply_command_refuses_to_bill_the_same_work_twice(tmp_pa
     assert "Already billed" in second.output
     # And it names what it refused, rather than failing silently.
     assert "e3" in second.output and "e8" in second.output
+
+
+def test_an_overlong_clause_list_is_refused_rather_than_clipped():
+    """PayPal caps detail.terms_and_conditions at 4000 characters. Clipping silently takes the
+    clause a billed line cites off the client's page, with no error anywhere — and an
+    engagement with enough scope to overflow it is exactly the kind that gets disputed.
+    """
+    import pytest
+
+    from unlogged.config import Settings
+    from unlogged.paypal import Invoices, LineItem, PayPalClient
+
+    s = Settings(client_id="", client_secret="", base_url="x", openai_api_key=None, replay=True)
+    with PayPalClient(s) as c, pytest.raises(ValueError, match="4000"):
+        Invoices(c).create(
+            items=[LineItem("Scope", Decimal("1"), Decimal("1.00"))],
+            invoicer_name="x",
+            recipient_email=None,
+            reference="r",
+            note="n",
+            terms="x" * 4001,
+            invoice_date="2026-10-15",
+        )
+
+
+def test_the_hundred_and_first_line_is_refused_before_the_write():
+    """PayPal accepts 100 items. Finding that out on the hundred-and-first discovered extra
+    means the work is already done and the bill cannot carry it."""
+    import pytest
+
+    from unlogged.config import Settings
+    from unlogged.paypal import Invoices, LineItem, PayPalClient
+    from unlogged.paypal import invoices as inv_mod
+
+    s = Settings(client_id="", client_secret="", base_url="x", openai_api_key=None, replay=True)
+    with PayPalClient(s) as c:
+        inv = Invoices(c)
+        monkey = [{"name": f"line {i}"} for i in range(inv_mod.MAX_ITEMS)]
+        inv.get = lambda _id: {"items": monkey, "detail": {"currency_code": "USD"}}
+        with pytest.raises(ValueError, match="101 line items"):
+            inv.add_items("INV2-X", [LineItem("one more", Decimal("1"), Decimal("1.00"))])
