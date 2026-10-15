@@ -2,6 +2,7 @@
 // than a wall of charts. Field ids are 'tableId.fieldId' against ./data.ts.
 
 import type { AgPageState, AgReportState, AgWidgetLayoutState } from 'ag-studio';
+import type { UnloggedRegistry } from './widgets/types';
 
 // Canvas grid position, in tracks: 24 columns wide.
 const at = (xTrack: number, yTrack: number, xSpan: number, ySpan: number): AgWidgetLayoutState => ({
@@ -19,7 +20,7 @@ export const PAGE_TITLES: Record<string, string> = {
 };
 
 // Everything that happened, unjudged. This is the raw material.
-const thread: AgPageState = {
+const thread: AgPageState<UnloggedRegistry> = {
   id: 'thread',
   widgets: {
     events: {
@@ -39,8 +40,10 @@ const thread: AgPageState = {
   widgetLayout: { events: at(0, 0, 24, 30) },
 };
 
-// The judgement, with its evidence. A row with no clause is not auditable.
-const calls: AgPageState = {
+// The judgement, with its evidence. The grid is the whole set; the evidence card beside it
+// shows only what falls outside the agreement, at a size where the quoted sentence can be read.
+// A verdict that would bill without citing one is drawn as a defect there.
+const calls: AgPageState<UnloggedRegistry> = {
   id: 'calls',
   widgets: {
     verdicts: {
@@ -57,12 +60,26 @@ const calls: AgPageState = {
       },
       format: title('Each event placed against the agreed scope, and the clause it relied on'),
     },
+    evidence: {
+      type: 'evidence-card',
+      dataMapping: {
+        rows: [
+          { id: 'verdicts.event_id' },
+          { id: 'verdicts.call' },
+          { id: 'verdicts.clause_id' },
+          { id: 'verdicts.quoted_span' },
+          { id: 'verdicts.reason' },
+          { id: 'verdicts.hours' },
+        ],
+      },
+      format: title('Why each of these is outside the agreement'),
+    },
   },
-  widgetLayout: { verdicts: at(0, 0, 24, 30) },
+  widgetLayout: { verdicts: at(0, 0, 14, 30), evidence: at(14, 0, 10, 30) },
 };
 
 // What actually moved money, append-only.
-const bill: AgPageState = {
+const bill: AgPageState<UnloggedRegistry> = {
   id: 'bill',
   widgets: {
     ledger: {
@@ -85,7 +102,7 @@ const bill: AgPageState = {
   widgetLayout: { ledger: at(0, 0, 24, 30) },
 };
 
-export const dashboardReport: AgReportState = {
+export const dashboardReport: AgReportState<UnloggedRegistry> = {
   selectedPageId: thread.id,
   pages: [thread, calls, bill],
 };

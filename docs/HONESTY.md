@@ -47,6 +47,14 @@ Written so a judge does not have to find any of this out by reading the source.
 - **Telemetry has been round-tripped but not scored.** `/api/telemetry` accepts and summarises
   batches, and the observer is registered on the harness. No AgentUnit evaluation consumes it
   yet, because there are no runs to consume.
+- **The evidence widget does not respect page filters.** It reads through `widgetApi.getData`
+  when the saved report's field mapping resolves, and falls back to reading the backend directly
+  when it does not. The card says which path it used rather than hiding it. The fallback exists
+  because a card that silently shows nothing is worse than one that shows the right rows without
+  a filter applied.
+- **The widget declares no `formatShape`,** so the assistant can place and data-map it but not
+  configure its format. That is not a choice — the public API makes a shape impossible to
+  construct. Evidence and a suggested fix are in `docs/UPSTREAM.md`.
 - **Accuracy of hour estimates is unmeasured.** The adjudicator estimates hours for billable
   extras. Nothing yet checks those estimates against anything.
 

@@ -61,3 +61,76 @@ body {
   --color-pp-danger: var(--pp-danger);
   --font-paypal: var(--pp-font);
 }
+
+/* The evidence card. Deliberately typographic rather than chart-like: the thing being shown is
+   a sentence, and a sentence needs to be readable, not plotted. */
+.ic-evidence {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+  height: 100%;
+  font-family: var(--pp-font, system-ui, sans-serif);
+}
+.ic-evidence--empty {
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, currentColor 55%, transparent);
+  font-size: 0.875rem;
+}
+.ic-evidence__item {
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  border-radius: 10px;
+  padding: 0.75rem 0.875rem;
+}
+/* A verdict that would bill someone without citing its evidence is a defect, not a style. */
+.ic-evidence__item--uncited {
+  border-color: #b23c17;
+  background: color-mix(in srgb, #b23c17 6%, transparent);
+}
+.ic-evidence__item header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.ic-evidence__call {
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.7;
+}
+.ic-evidence__hours {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+.ic-evidence__span {
+  margin: 0 0 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid color-mix(in srgb, currentColor 25%, transparent);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.ic-evidence__reason {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+.ic-evidence__clause {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+.ic-evidence__warning {
+  font-size: 0.75rem;
+  color: #b23c17;
+  font-weight: 600;
+}
+.ic-evidence__note {
+  margin: 0;
+  font-size: 0.6875rem;
+  opacity: 0.55;
+}

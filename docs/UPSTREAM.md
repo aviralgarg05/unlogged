@@ -106,3 +106,34 @@ plugin's getting-started skill so an agent knows the boundary before it writes a
 a cross-border contractor actually ends on: not "did they pay" but "how much reached me".
 
 That division is the honest one, and it is stated in the README rather than blurred.
+
+---
+
+# Third report: a public custom widget cannot declare `formatShape`
+
+For [AG Grid](https://www.ag-grid.com/), on `ag-studio@3.0.0`.
+
+`AgBaseWidgetDefinition.formatShape` is documented as *"If using AI, the shape is required, as it
+uses the schema."* A custom widget therefore wants one. It cannot have one.
+
+- The callback's parameter type is `AgFormatShapeParams`, which is an empty interface extending
+  `AgStudioCommon` — i.e. `{ api, context }`. No shape builder.
+- `ag-studio` exports no builder either. `Object.keys(require('ag-studio'))` returns 50 entries
+  and none is shape-related; `AgShapeBuilder` is exported as a *type* only.
+- Returning a plain object instead is not a graceful degradation. The engine calls
+  `formatShape.parse(...)` during `hydrateWidget`, so it throws
+  `TypeError: s?.formatShape?.parse is not a function` and the whole dashboard fails to render
+  with `State property 'widgets' is malformed`.
+- Probed at runtime, the params object does carry a `Symbol(ag.internal)` which presumably holds
+  the builder — but reaching into that is not an integration, it is a dependency on a private
+  field.
+
+So the public path is: omit `formatShape`, and accept that the assistant can place and data-map
+the widget but not configure its format.
+
+**Suggested:** pass the shape builder into `AgFormatShapeParams` as `params.shape`, the way
+`AgAiExecuteToolConfig.params(s)` already does for AI tools — that pattern exists and works.
+Failing that, export a standalone builder, or say in the docs that `formatShape` is for built-ins.
+
+Reproduced in `web/app/dashboard/studio/widgets/index.ts`, where the omission is commented rather
+than quietly worked around.

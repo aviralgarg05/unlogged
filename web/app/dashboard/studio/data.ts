@@ -17,10 +17,11 @@ import type {
   AgFieldDefinition,
   AgRowDataSourceResponse,
 } from 'ag-studio';
+import type { UnloggedRegistry } from './widgets/types';
 
 const PAGE_SIZE = 50;
 
-const EVENT_FIELDS: AgFieldDefinition[] = [
+const EVENT_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'id', name: 'Event', format: 'textFormat' },
   { id: 'source', name: 'Where', format: 'textFormat' },
   { id: 'author', name: 'Who', format: 'textFormat' },
@@ -28,7 +29,7 @@ const EVENT_FIELDS: AgFieldDefinition[] = [
   { id: 'text', name: 'What was said', format: 'textFormat' },
 ];
 
-const VERDICT_FIELDS: AgFieldDefinition[] = [
+const VERDICT_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'event_id', name: 'Event', format: 'textFormat' },
   { id: 'call', name: 'Call', format: 'textFormat' },
   { id: 'clause_id', name: 'Clause relied on', format: 'textFormat' },
@@ -38,7 +39,7 @@ const VERDICT_FIELDS: AgFieldDefinition[] = [
   { id: 'confidence', name: 'Confidence', format: 'decimalFormat' },
 ];
 
-const LEDGER_FIELDS: AgFieldDefinition[] = [
+const LEDGER_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'at', name: 'Written at', format: 'dateTimeFormat' },
   { id: 'line_name', name: 'Line added to the invoice', format: 'textFormat' },
   { id: 'clause_id', name: 'Clause', format: 'textFormat' },
@@ -74,7 +75,7 @@ function filterToQuery(filter: AgDataSourceGetOptions['filter']): string {
   return parts.length ? `&${parts.join('&')}` : '';
 }
 
-export function unloggedDataSource(): AgDataSourceDefinition<'row'> {
+export function unloggedDataSource(): AgDataSourceDefinition<'row', UnloggedRegistry> {
   return {
     id: 'unlogged',
     name: 'Engagement',

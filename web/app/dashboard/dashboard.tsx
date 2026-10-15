@@ -46,6 +46,8 @@ import { DashboardSkeleton } from './components/skeleton';
 import * as reportState from './report-state';
 import { buildAi } from './studio/ai';
 import { hasData, unloggedDataSource } from './studio/data';
+import { unloggedWidgets } from './studio/widgets';
+import type { UnloggedRegistry } from './studio/widgets/types';
 import { agStudioPayPalTheme } from './studio/theme';
 import { useReports } from './use-reports';
 
@@ -95,6 +97,8 @@ function ReportsDashboard({ licenseKey, aiModels }: DashboardProps) {
   const state = studioState ?? initialState;
   // One async source, declared once. The rows are fetched a page at a time by the engine
   // and never materialised in the browser. The description is what the assistant reads.
+  // AG's defaults plus our evidence card, registered once.
+  const widgets = useMemo(() => unloggedWidgets(), []);
   const studioData = useMemo(
     () => ({
       sources: [unloggedDataSource()],
@@ -268,11 +272,12 @@ function ReportsDashboard({ licenseKey, aiModels }: DashboardProps) {
       <div className="min-h-0 flex-1">
         {hasData() ? (
           <AgStudioProvider licenseKey={licenseKey} modules={ai ? [AgStudioAiModule] : undefined}>
-            <AgStudio
+            <AgStudio<UnloggedRegistry>
               style={{ height: '100%', width: '100%' }}
               theme={agStudioPayPalTheme}
               layout={{ widgetBorderEnabled: true }}
               data={studioData}
+              widgets={widgets}
               ai={ai}
               initialState={initialState}
               mode={mode}

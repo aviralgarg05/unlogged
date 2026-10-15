@@ -109,6 +109,35 @@ def read_ledger() -> dict[str, Any]:
     return {"summary": led.summary(), "rows": [e.model_dump(mode="json") for e in led]}
 
 
+@app.get("/api/settlement/{capture_id}")
+def settlement(capture_id: str) -> dict[str, Any]:
+    """What actually reached the contractor, through the APIMatic-generated SDK.
+
+    Needs live credentials: the SDK has its own transport and does not go through the cassette
+    layer, so there is nothing to replay. Says so plainly rather than returning a plausible
+    number, because a made-up settlement figure is worse than none.
+    """
+    s = settings()
+    if not s.has_paypal or s.replay:
+        return {
+            "available": False,
+            "reason": (
+                "Settlement reads go through the APIMatic PayPal Server SDK, which has its own "
+                "transport and is not covered by cassette replay. Set PAYPAL_CLIENT_ID, "
+                "PAYPAL_CLIENT_SECRET and UNLOGGED_REPLAY=0."
+            ),
+        }
+    from unlogged.paypal.settlement import read_settlement
+
+    found = read_settlement(s, capture_id)
+    if found is None:
+        return {
+            "available": False,
+            "reason": "PayPal returned no seller_receivable_breakdown for this capture.",
+        }
+    return {"available": True, **found.to_dict()}
+
+
 class TelemetryBatch(BaseModel):
     events: list[dict[str, Any]]
 

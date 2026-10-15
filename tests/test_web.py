@@ -79,3 +79,10 @@ def test_telemetry_round_trips_and_summarises(tmp_path, monkeypatch):
     assert body["summary"]["events"] == 2
     assert body["summary"]["tool_calls"] == 1
     assert body["summary"]["tools_used"] == ["read_verdicts"]
+
+
+def test_settlement_says_why_it_is_unavailable_rather_than_inventing_a_number():
+    body = client.get("/api/settlement/CAP-1").json()
+    assert body["available"] is False
+    # The reason has to be actionable, not just a refusal.
+    assert "UNLOGGED_REPLAY=0" in body["reason"]
