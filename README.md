@@ -142,6 +142,47 @@ strictly worse than none, because a trial can expire and nothing here can.
 
 ---
 
+## How this is judged, and where to check each claim
+
+Five equally weighted criteria. For each one, a command that runs with **no credentials**, and
+the file that implements it — so nothing has to be taken on trust.
+
+| Criterion | Run this | Implemented in |
+|---|---|---|
+| **Technological Implementation** | `uv run scripts/verify.py` — ten checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
+| **Design** | `docker compose up` → `/dashboard` — rows fetched a page at a time and never materialised in the browser, a custom widget, and the one button that moves money | [`studio/data.ts`](web/app/dashboard/studio/data.ts), [`evidence-card.tsx`](web/app/dashboard/studio/widgets/evidence-card.tsx) |
+| **Potential Impact** | `uv run unlogged evaluate …` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
+| **Innovation** | The same invoice id and QR at $520.00 and at $945.00, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
+| **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page | — |
+
+**Read [`docs/HONESTY.md`](docs/HONESTY.md) before the rest.** It says what is verified, what is
+simulated, and what is not yet true — including that eight events is a smoke test rather than a
+benchmark, and that the fixture engagement was written for this repo.
+
+Three findings are filed upstream rather than kept as talking points, in
+[`docs/UPSTREAM.md`](docs/UPSTREAM.md): PayPal's documented discount path is accepted and not
+stored, the generated Server SDK ships no Invoicing controller, and a public AG Studio custom
+widget cannot declare `formatShape` at all.
+
+## Status
+
+| | |
+|---|---|
+| Mechanism verified live | ✅ 2026-10-15, `$520 → $690`, reproducible from `cassettes/` |
+| Invoice engine | ✅ live sandbox, end to end |
+| Webhooks + signature verification | ✅ |
+| HTTP API + `/health` | ✅ |
+| Keyword baseline (the ablation arm) | ✅ scores 0% precision, 0% recall |
+| Evaluation harness + JUnit | ✅ |
+| AG Studio dashboard | ✅ async data source, server-side paging |
+| Keyless replay path | ✅ full flow runs with no credentials |
+| AI harness: custom agent, server tool, telemetry | ✅ built |
+| APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
+| Docker Compose, Render blueprint | ✅ API image built and verified |
+| Tests | ✅ 55 Python (incl. a property test on the money path), 4 TypeScript |
+| Model adjudication | ✅ `gpt-6.1-sol`, 8/8 on the fixture, recorded so it replays keyless |
+| Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
+
 ## The mechanism
 
 An invoice that has already been sent can **grow line items**. The invoice id, and therefore
@@ -195,23 +236,6 @@ and then **silently dropped** — tested with `DUE_ON_RECEIPT`, `NET_30` and
 request schema is `readOnly`. The official agent toolkit's `PROMPTS.md` documents only that
 dead path. Reproduction script and an upstream report are in `docs/`.
 
-## APIMatic, and the division of labour it forced
-
-The APIMatic-generated [`paypal-server-sdk`](https://pypi.org/project/paypal-server-sdk/) ships
-six controllers — oauth, orders, payments, subscriptions, transaction search, vault — and **none
-of them is Invoicing**. Everything this product does to an invoice therefore goes through
-`paypal/invoices.py` on `httpx`, because there is no alternative.
-
-The SDK is used for the one part it genuinely serves, and it closes the loop the product opens.
-A contractor's question does not end at *did the client pay*; for cross-border work it ends at
-*how much reached me*, and the difference is PayPal's cross-border and conversion cut.
-`payments.get_captured_payment` returns `seller_receivable_breakdown` — gross, fee, net, and the
-exchange rate PayPal used — which is PayPal stating its own arithmetic rather than us estimating it.
-
-The missing controller is reported in [`docs/UPSTREAM.md`](docs/UPSTREAM.md) rather than worked
-around quietly, because the Context Plugin's premise is that an agent gets a grounded answer about
-what the SDK can do — and for anything invoicing-shaped, the grounded answer is that it cannot.
-
 ## Why the model is not optional
 
 Deciding whether *"can you also just add the retry"* sits inside *"build the checkout page"*
@@ -233,6 +257,23 @@ It also answers the obvious question directly: a static UPI QR is payee-only and
 types any amount — no itemisation, no agreed ceiling, no record of what was agreed, and no
 cross-border reach. This is the inverse.
 
+## APIMatic, and the division of labour it forced
+
+The APIMatic-generated [`paypal-server-sdk`](https://pypi.org/project/paypal-server-sdk/) ships
+six controllers — oauth, orders, payments, subscriptions, transaction search, vault — and **none
+of them is Invoicing**. Everything this product does to an invoice therefore goes through
+`paypal/invoices.py` on `httpx`, because there is no alternative.
+
+The SDK is used for the one part it genuinely serves, and it closes the loop the product opens.
+A contractor's question does not end at *did the client pay*; for cross-border work it ends at
+*how much reached me*, and the difference is PayPal's cross-border and conversion cut.
+`payments.get_captured_payment` returns `seller_receivable_breakdown` — gross, fee, net, and the
+exchange rate PayPal used — which is PayPal stating its own arithmetic rather than us estimating it.
+
+The missing controller is reported in [`docs/UPSTREAM.md`](docs/UPSTREAM.md) rather than worked
+around quietly, because the Context Plugin's premise is that an agent gets a grounded answer about
+what the SDK can do — and for anything invoicing-shaped, the grounded answer is that it cannot.
+
 ## Layout
 
 ```
@@ -246,42 +287,6 @@ src/unlogged/
   ledger.py              append-only record of every change to a live invoice
   cli.py                 open-engagement / discover / show
 ```
-
-## Status
-
-| | |
-|---|---|
-| Mechanism verified live | ✅ 2026-10-15, `$520 → $690`, reproducible from `cassettes/` |
-| Invoice engine | ✅ live sandbox, end to end |
-| Webhooks + signature verification | ✅ |
-| HTTP API + `/health` | ✅ |
-| Keyword baseline (the ablation arm) | ✅ scores 0% precision, 0% recall |
-| Evaluation harness + JUnit | ✅ |
-| AG Studio dashboard | ✅ async data source, server-side paging |
-| Keyless replay path | ✅ full flow runs with no credentials |
-| AI harness: custom agent, server tool, telemetry | ✅ built |
-| APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
-| Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 55 Python (incl. a property test on the money path), 4 TypeScript |
-| Model adjudication | ✅ `gpt-6.1-sol`, 8/8 on the fixture, recorded so it replays keyless |
-| Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
-
-## How this is judged, and where to check each claim
-
-Five equally weighted criteria. For each one, the screen that shows it and the file that
-implements it, so nothing has to be taken on trust.
-
-| Criterion | See it here | Implemented in |
-|---|---|---|
-| **Technological Implementation** | `uv run scripts/repro_discount_defect.py` — PayPal's documented discount path accepted with 201 and silently dropped, four ways | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
-| **Design** | `/dashboard` — three pages, rows fetched a page at a time, never materialised in the browser | [`studio/data.ts`](web/app/dashboard/studio/data.ts) |
-| **Potential Impact** | `uv run unlogged evaluate …` — $425 of real work the naive pass leaves off the bill | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
-| **Innovation** | The client's bookmarked PayPal page gaining named line items, same invoice id, same QR | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
-| **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page | — |
-
-**What is real, what is simulated, and what is not yet true:** [`docs/HONESTY.md`](docs/HONESTY.md).
-Read that before the rest. It says plainly that no model number has been published yet, that the
-fixture thread was authored for this repo, and why that matters.
 
 ## Licence
 
