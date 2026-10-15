@@ -8,8 +8,8 @@ for a message containing no work, and **missed** means real work never reached t
 
 | arm | accuracy | precision | recall | overbilled | missed | uncited | $ overbilled | $ missed | hours wrong | $ hour error |
 |---|---|---|---|---|---|---|---|---|---|---|
-| keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 | 0 | +0.00 |
-| gpt-6.1-sol | 100% | 100% | 100% | 0 | 0 | 0 | $0.00 | $0.00 | 1 | -42.50 |
+| keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 | 0 | $0.00 |
+| gpt-6.1-sol | 100% | 100% | 100% | 0 | 0 | 0 | $0.00 | $0.00 | 1 | -$42.50 |
 
 ## Where each arm went wrong
 
@@ -23,4 +23,4 @@ for a message containing no work, and **missed** means real work never reached t
 - overbilled: none
 - missed: none
 - billed without citing a clause: none
-- right call, wrong hours: e8 ($-42.50 to the client)
+- right call, wrong hours: e8 (-$42.50 to the client)

@@ -32,7 +32,7 @@ boilerplate, and an evaluation harness that scores the adjudicator against hand 
 
 The mechanism took a day to find and is not in the documentation: **an invoice that has already
 been sent can grow line items**, and its id, payer URL and QR survive. Verified live —
-`$520.00 → $690.00`, every added line rendered by name on PayPal's own hosted page, and
+`$520.00 → $902.50`, every added line rendered by name on PayPal's own hosted page, and
 reproducible from committed cassettes without a PayPal account.
 
 Three undocumented behaviours cost a day each and are written up in `docs/VERIFIED.md`:

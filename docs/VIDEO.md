@@ -43,8 +43,8 @@ is reproducible rather than narrated.
 **1:35–2:05 — money moves, on PayPal's page.**
 One continuous take, no cut, because a cut is where a judge assumes a trick. Click apply. The
 right window — **the same bookmarked page, never reopened, never reissued** — is refreshed. The
-total is now `$690.00` and new lines have appeared, each naming where it came from:
-`Retry logic on checkout (github 03 Oct)`. *"Same invoice. Same link. Same QR. PayPal added
+total is now `$902.50` and new lines have appeared, each naming where it came from:
+`PSP timeout handling and 3DS re-challenge (github 03 Oct)`. *"Same invoice. Same link. Same QR. PayPal added
 those lines, and PayPal emailed the client that it changed."*
 
 **2:05–2:20 — the client pays.**

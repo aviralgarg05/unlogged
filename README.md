@@ -8,7 +8,7 @@
 <table>
 <tr>
 <td width="50%"><img src="docs/img/payer-before.jpg" alt="The client's PayPal invoice at $520.00, one line: the agreed scope"></td>
-<td width="50%"><img src="docs/img/payer-after.jpg" alt="The same invoice, same URL, now $945.00 with two discovered lines added, each naming where the work came from"></td>
+<td width="50%"><img src="docs/img/payer-after.jpg" alt="The same invoice, same URL, now $902.50 with two discovered lines added, each naming the work and the day it came from"></td>
 </tr>
 <tr>
 <td><em>The invoice the client has had since day one. $520.00.</em></td>
@@ -41,7 +41,7 @@ uv run scripts/verify.py               # checks every claim in this README
 That script is the short version of everything below: it runs the tests, reproduces the
 evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
 the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
-Nine checks keyless, thirteen with sandbox credentials, about twenty seconds.
+13 checks keyless, 19 with sandbox credentials, about twenty seconds.
 
 With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
 against PayPal on the day you run it — it creates a real invoice, grows it, and prints the
@@ -50,7 +50,7 @@ payer URL so you can open it yourself. A date in a README is worth less than a c
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 55 tests, no credentials needed
+uv run pytest -q                       # 72 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -58,15 +58,24 @@ uv run unlogged discover \
 ```
 
 No PayPal account, no OpenAI key, no licence key. Recorded PayPal exchanges replay from
-`cassettes/`, and with no `OPENAI_API_KEY` the project falls back to the keyword baseline —
-which is not a stub but **the evaluation's ablation arm**, the thing the model has to beat.
+`cassettes/`, and the model's own verdicts replay from the same directory as `verdict-*.json` — so the arm the
+README argues for is the arm you see, with no key. Blank the key *and* delete the recordings and
+it falls back to the keyword baseline, which is not a stub but **the evaluation's ablation arm**,
+the thing the model has to beat.
 
 Both arms are scored, and both run with no key:
 
-| arm | accuracy | precision | recall | overbilled | missed | $ overbilled | $ missed |
-|---|---|---|---|---|---|---|---|
-| keyword-baseline | 12% | 0% | 0% | 2 | 2 | $170.00 | $425.00 |
-| **gpt-6.1-sol** | **100%** | **100%** | **100%** | **0** | **0** | **$0.00** | **$0.00** |
+| arm | accuracy | precision | recall | overbilled | missed | uncited | $ overbilled | $ missed | hours wrong | $ hour error |
+|---|---|---|---|---|---|---|---|---|---|---|
+| keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 | 0 | $0.00 |
+| **gpt-6.1-sol** | **100%** | **100%** | **100%** | **0** | **0** | **0** | **$0.00** | **$0.00** | **1** | **-$42.50** |
+
+The last two columns exist because the model does not get a clean sheet. It calls all eight
+events correctly and cites a clause for each, then estimates `e8` at 1.5 hours where the label
+says 2.0 — $42.50 of real work the client is never asked to pay for. Scoring used to return as
+soon as the predicted class matched the label, so that error was invisible and this table read
+as perfect. It is reported in the client's favour, which is the safer direction to be wrong in,
+and it is still wrong.
 
 The baseline bills a request for *a copy of last month's invoice*, bills the ask rather than
 the work that answered it, and misses both pieces of real out-of-scope engineering — including
@@ -163,10 +172,10 @@ the file that implements it — so nothing has to be taken on trust.
 
 | Criterion | Run this | Implemented in |
 |---|---|---|
-| **Technological Implementation** | `uv run scripts/verify.py` — ten checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
+| **Technological Implementation** | `uv run scripts/verify.py` — 13 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
 | **Design** | `docker compose up` → `/dashboard` — rows fetched a page at a time and never materialised in the browser, a custom widget, and the one button that moves money | [`studio/data.ts`](web/app/dashboard/studio/data.ts), [`evidence-card.tsx`](web/app/dashboard/studio/widgets/evidence-card.tsx) |
 | **Potential Impact** | `uv run unlogged evaluate …` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
-| **Innovation** | The same invoice id and QR at $520.00 and at $945.00, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
+| **Innovation** | The same invoice id and QR at $520.00 and at $902.50, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
 | **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page | — |
 
 **Read [`docs/HONESTY.md`](docs/HONESTY.md) before the rest.** It says what is verified, what is
@@ -183,7 +192,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 
 | | |
 |---|---|
-| Mechanism verified live | ✅ 2026-10-15, `$520 → $690`, reproducible from `cassettes/` |
+| Mechanism verified live | ✅ 2026-10-15, `$520 → $902.50`, reproducible from `cassettes/` |
 | Invoice engine | ✅ live sandbox, end to end |
 | Webhooks + signature verification | ✅ |
 | HTTP API + `/health` | ✅ |
@@ -194,8 +203,8 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 55 Python (incl. a property test on the money path), 4 TypeScript |
-| Model adjudication | ✅ `gpt-6.1-sol`, 8/8 on the fixture, recorded so it replays keyless |
+| Tests | ✅ 72 Python (incl. a property test on the money path), 4 TypeScript |
+| Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 
 ## The mechanism
@@ -203,8 +212,11 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 An invoice that has already been sent can **grow line items**. The invoice id, and therefore
 the payer-view URL and the QR the client filed, stay valid.
 
-Verified live against the PayPal sandbox on 2026-10-15 — `$520.00 → $690.00`, invoice id stable,
-every added item named on the client's own page:
+Verified live against the PayPal sandbox on 2026-10-15, once per arm, on two real invoices.
+Both runs are recorded, so both replay to the cent with no credentials.
+
+The **keyword baseline** — keyword triage over the thread, which is what people fall back on
+today — reaches `$520.00 → $690.00` and puts this in front of the client:
 
 ```
 Checkout page — agreed scope                              $520.00   8hrs x $65.00
@@ -214,18 +226,37 @@ Unspecified work (no description produced) (slack 04 Oct) $ 85.00   1hr  x $85.0
                                                    Total  $690.00
 ```
 
-That is the **keyword baseline** billing, and it is wrong in three visible ways: it bills a
-request rather than the work that answered it, it bills a plea for a copy of an old invoice, and
-it cannot describe either of them. `fixtures/gold.jsonl` says the two billable extras are `e3`
-(3hrs, the PSP-timeout PR) and `e8` (2hrs, the idempotency PR) — neither of which the baseline
-found. A correct run therefore reaches **$945.00**, and that number is not claimed anywhere in
-this repo because the model arm has never been executed. See [`docs/HONESTY.md`](docs/HONESTY.md).
+It is wrong in four visible ways: it bills a request rather than the work that answered it, it
+bills a plea for a copy of an old invoice, it cannot describe either of them, and it misses both
+pieces of real out-of-scope engineering. A client reading that line has nothing to agree or
+object to.
 
-The mechanism itself — that a sent invoice grows line items while its id, payer URL and QR stay
-valid — is verified and reproducible from the committed cassettes:
+The **model arm** reaches `$520.00 → $902.50` on the same events and the same rate card:
 
 ```
-$520.00 → $690.00   invoice id unchanged   QR unchanged
+Checkout page — agreed scope                              $520.00   8hrs   x $65.00
+PSP timeout handling and 3DS re-challenge (github 03 Oct) $255.00   3hrs   x $85.00
+Prevent double-charges on checkout double-click (github 09 Oct) $127.50   1.5hrs x $85.00
+                                                Subtotal  $902.50
+                                                   Total  $902.50
+```
+
+Each line names the work, cites the clause that put it outside scope, and carries where it came
+from. `fixtures/gold.jsonl` labels the two billable extras `e3` (3hrs, the PSP-timeout PR) and
+`e8` (2hrs, the idempotency PR), so a fully correct run reaches **$945.00**. The model finds both
+and prices the second at 1.5hrs rather than 2.0 — **$42.50 of real work the client is never
+billed for**. That gap is in the table above and in the eval report; it is not rounded away.
+
+The mechanism itself — that a sent invoice grows line items while its id, payer URL and QR stay
+valid — holds in both runs and is reproducible from the committed cassettes:
+
+```
+$520.00 → $902.50   invoice id unchanged   QR unchanged
+```
+
+```bash
+uv run unlogged discover --engagement fixtures/engagement.json \
+  --events fixtures/events.jsonl --invoice-id $(cat fixtures/demo-invoice-id) --apply
 ```
 
 The client is notified by PayPal itself on every change — `send_to_recipient=true` on the

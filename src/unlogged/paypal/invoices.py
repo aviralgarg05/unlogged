@@ -3,7 +3,7 @@
 An invoice that has already been sent can grow line items. The invoice id, and
 therefore the payer-view URL and the QR the client filed, stay valid, and PayPal
 renders every new line on its own hosted page. Verified live on 2026-10-15:
-$520.00 -> $690.00, id stable, each discovered item
+$520.00 -> $902.50, id stable, each discovered item
 named on the payer page. See docs/VERIFIED.md.
 
 Deliberately NOT used: `detail.payment_term.conditional_rules.early_payment_discount`,

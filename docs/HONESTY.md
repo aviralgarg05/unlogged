@@ -6,8 +6,8 @@ Written so a judge does not have to find any of this out by reading the source.
 
 | Claim | Evidence |
 |---|---|
-| An already-sent invoice can grow line items while its id, payer URL and QR stay valid | `$520.00 → $690.00` on 2026-10-15, reproducible offline from `cassettes/`. Re-run it live with `uv run scripts/verify.py --live` |
-| Each added line appears by name on PayPal's hosted payer page | `docs/img/payer-before.jpg` and `payer-after.jpg` — the same invoice id and URL at $520.00 and at $945.00. Reproduce with `scripts/verify.py --live` |
+| An already-sent invoice can grow line items while its id, payer URL and QR stay valid | `$520.00 → $902.50` on 2026-10-15, reproducible offline from `cassettes/`. Re-run it live with `uv run scripts/verify.py --live` |
+| Each added line appears by name on PayPal's hosted payer page | `docs/img/payer-before.jpg` and `payer-after.jpg` — invoice #0035 at $520.00 and at $902.50, same id, same URL, shot minutes apart. Reproduce with `scripts/verify.py --live` |
 | A recipient-less invoice is legal | `invoice.required` is `["detail"]` only, confirmed against the published schema |
 | Silent send lands on `UNPAID` with no email | `POST /{id}/send` with both notify flags false |
 | `early_payment_discount` is accepted with 201 and silently dropped | `scripts/repro_discount_defect.py`, four term/date combinations |
@@ -46,8 +46,8 @@ Written so a judge does not have to find any of this out by reading the source.
   four cases — unknown tool refused, malformed arguments refused before anything reaches the
   money path, a well-formed call forwarded, a backend refusal surfaced rather than swallowed.
   What has *not* happened is a real model emitting that call and the result flowing back into a
-  conversation, because that needs an API key this project does not have yet. The declaration
-  and the handler are both real; the join between them is untested.
+  conversation, which has not been run. The declaration and the handler are both real; the
+  join between them is untested.
 - **Telemetry has been round-tripped but not scored.** `/api/telemetry` accepts and summarises
   batches, and the observer is registered on the harness. No AgentUnit evaluation consumes it
   yet, because there are no runs to consume.

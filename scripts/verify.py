@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import date
@@ -107,7 +108,9 @@ def offline() -> None:
         for line in out.splitlines()
         if line.startswith("| keyword") or line.startswith("| gpt-")
     }
-    expected = "| keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 |"
+    # Pinned whole rather than by substring: a column added to the report used to slip past
+    # this check, which is how a $42.50 hour error stayed invisible for as long as it did.
+    expected = "| keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 | 0 | $0.00 |"
     check(
         "baseline reproduces exactly",
         PASS if rows.get("keyword-baseline") == expected else FAIL,
@@ -143,6 +146,27 @@ def offline() -> None:
         total.strip()[:60] or _why(code, out),
     )
 
+    # Every number in the README that a reader could check against a command. This project's
+    # whole argument is that its claims are runnable, so a stale figure is not a typo — it is
+    # the one kind of error that discredits everything beside it. Six of them had drifted.
+    readme = (ROOT / "README.md").read_text()
+    flat = " ".join(readme.replace("*", "").split())
+    stale = [r for r in rows.values() if " ".join(r.replace("*", "").split()) not in flat]
+    check(
+        "README quotes the eval table it generates",
+        PASS if not stale else FAIL,
+        "both arms match" if not stale else f"{len(stale)} row(s) differ",
+    )
+
+    code, tout = run("uv", "run", "pytest", "-q", keyless=True)
+    m = re.search(r"(\d+) passed", tout)
+    ran = m.group(1) if m else "?"
+    check(
+        "README quotes the test count it has",
+        PASS if f"# {ran} tests" in readme else FAIL,
+        f"{ran} passing",
+    )
+
     section("Submission requirements")
 
     lic = ROOT / "LICENSE"
@@ -166,6 +190,12 @@ def offline() -> None:
         PASS if cassettes else FAIL,
         f"{len(cassettes)} recorded exchanges",
     )
+
+    # Counted rather than written down, because this sentence has been wrong twice and a
+    # README that miscounts its own checks is the first thing a careful reader stops trusting.
+    keyless = len(results) + 1
+    claim = f"{keyless} checks keyless, {keyless + 6} with sandbox credentials"
+    check("README quotes the number of checks it runs", PASS if claim in readme else FAIL, claim)
 
 
 def live() -> None:
