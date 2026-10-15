@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2790159299,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Use single quotes for SQL string literals to maintain consistency.** These examples use double quotes (`\"`) for string literals, which is inconsistent with the correct single-quote usage in lines 150-152 of the same file. SQL standard requires single quotes for string literals; double quotes are typically reserved for identifiers. <details> <summary>\ud83d\udd27 Proposed fix to use single quotes consistently</summary> ```diff -- LIKE patterns -SELECT * FROM users WHERE name LIKE \"%e\"; -- ends with e -SELECT * FROM users WHERE name LIKE \"_l%\"; -- second letter l -SELECT * FROM products WHERE name NOT LIKE \"%z%\"; -- no z in name +SELECT * FROM users WHERE name LIKE '%e\u2026",
+   "created_at": "2026-02-10T20:36:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2790159299",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2790159300,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider consistent spacing in comma-separated lists.** Line 204 uses no spaces after commas `(30,40,50)` while line 205 uses no spaces `('Alice','Bob')`, but line 152 in the file uses spaces `('Alice', 'Bob')`. Consider adding spaces after commas for consistency throughout the file. <details> <summary>\u2728 Suggested improvement for consistency</summary> ```diff -- IN operator -SELECT * FROM users WHERE age IN (30,40,50); -- specific ages -SELECT * FROM products WHERE name NOT IN ('Alice','Bob'); -- exclude names +SELECT * FROM users WHERE age IN (30, 40, 50); -- specific ages +SELECT * FROM products WHERE name NOT IN ('Alice', 'Bob'); -- exclude names ``` </details\u2026",
+   "created_at": "2026-02-10T20:36:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2790159300",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2790159304,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add blank line before code fence for markdown formatting.** Similar to the previous code block, this fence should be preceded by a blank line for proper markdown formatting. <details> <summary>\ud83d\udcdd Proposed formatting fix</summary> ```diff **Query Modifiers:** + ```sql ``` </details> As per coding guidelines, documentation should follow proper formatting standards. <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the c\u2026",
+   "created_at": "2026-02-10T20:36:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2790159304",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817428,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Incorrect PR number reference.** Line 8 references `**PR:** `#124`` but this feature is delivered in PR `#131` per the PR title. This will confuse readers tracing the feature's provenance. <details> <summary>Proposed fix</summary> ```diff -**PR:** `#124` (Related: Configurable AI Embedding Model) +**PR:** `#131` (feat: Add EXPLAIN query plan command) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark th\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817428",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817438,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Markdownlint violations: headings not followed by blank lines, code blocks missing language specifiers.** Static analysis flagged multiple issues. Sub-headings at lines 16, 34 (and many others throughout the file) are missing the required blank line after the preceding content. Additionally, the fenced code blocks at lines 104 and 174 are missing a language specifier. <details> <summary>Example fix for lines 14\u201334</summary> ```diff The EXPLAIN feature is implemented across multiple layers: + #### 1. Rust Layer (nexum_cli & nexum_bridges) ``` For line 104, add a language identifier (e.g., `` ```text ``). Apply similar spacing fixes to all flagged headings.\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817438",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817444,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Test count discrepancy: \"18\" vs 17 actual tests.** Lines 218 and 279 state \"18 comprehensive integration tests,\" but the actual test file (`test_explain_integration.py`) contains 17 `test_*` methods. This will become stale as tests are added or removed \u2014 consider removing the exact count or updating it to 17. <details> <summary>Proposed fix (line 218 and 279)</summary> ```diff -- **Coverage:** 18 comprehensive integration tests +- **Coverage:** 17 comprehensive integration tests ``` </details> <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.20.0)</summary> [warning] 216-216: Headings should be surrounded by blank lines Expect\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817444",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817448,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Minor style: add comma after the year in the date.** Per common style guides, dates in month-day-year format should have a comma after the year when followed by more text. Also, this date will become stale \u2014 consider a \"last updated\" that references the commit or version instead. <details> <summary>Proposed fix</summary> ```diff -**Last Updated:** February 11, 2026 +**Last Updated:** February 11, 2026, ``` Or remove the hard-coded date entirely and rely on git history. </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the h\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817448",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817454,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Creating a default `SemanticCache()` per call when `cache is None` triggers model initialization and disk I/O.** Line 562 creates a new `SemanticCache()` every time `explain_query_plan` is called without a cache argument. The constructor creates a `cache/` directory, attempts to load from disk, and may lazily initialize the embedding model. For repeated EXPLAIN calls (e.g., from a REPL loop), this adds unnecessary overhead. Consider documenting this behavior or caching the default instance at the module level. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 560 - 575, The code in explain_query_plan currently constr\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817454",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817456,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Hardcoded fallback `epsilon: 0.2` differs from `QueryOptimizer` default of `0.1`.** In the RL agent error fallback (line 590), `epsilon` is hardcoded to `0.2`, but `QueryOptimizer.__init__` sets `self.epsilon = 0.1` (line 377). This inconsistency could confuse users inspecting EXPLAIN output during error conditions, as the reported epsilon won't match the actual default. <details> <summary>Proposed fix</summary> ```diff result['rl_agent'] = { 'state': 'unknown', 'q_values': {a: 0.0 for a in available_actions}, 'best_action': 'full_scan', - 'epsilon': 0.2, + 'epsilon': optimizer.epsilon if hasattr(optimizer, 'epsilon') else 0.1, 'would_explore': False, 'exp\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817456",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817466,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Raising `ValueError` on missing keys may conflict with the error-fallback philosophy.** `format_explain_output` validates required keys and raises `ValueError` (lines 640\u2013643), but `explain_query_plan` always returns all five keys (even in error paths). If a caller constructs a partial dict and passes it directly, they get an exception rather than a degraded output. This is a valid design choice, but note the asymmetry: all other defensive patterns in this PR prefer graceful fallback over raising. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 636 - 643, format_explain_output should not raise ValueError on a missi\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817466",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817469,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Good defensive formatting with outer try/except \u2014 one minor gap in error path.** The error fallback at lines 751\u2013757 includes `f\"Error: {str(e)}\"` without truncation. While this is the exceptional path, a very long exception message could produce output wider than the 75-char constraint enforced by tests (line 167 in `test_explain_integration.py`). Consider truncating `str(e)` in the fallback as well. <details> <summary>Proposed fix</summary> ```diff return ( \"=\" * 70 + \"\\n\" \"QUERY EXECUTION PLAN (Error Formatting)\\n\" \"=\" * 70 + \"\\n\" - f\"Error: {str(e)}\\n\" + f\"Error: {truncate(str(e), 60)}\\n\" f\"Query: {truncate(explain_result.get('query', 'Unknown'), 60)}\\\u2026",
+   "created_at": "2026-02-11T07:33:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817469",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817475,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Tests create `SemanticCache` instances without cleanup \u2014 may leave artifacts on disk.** `SemanticCache.__init__` creates a `cache/` directory and calls `load_cache()`. Tests like `test_explain_cache_hit_scenario` (line 106), `test_explain_cache_miss_scenario` (line 129), and `test_explain_cache_stats_consistency` (line 266) create caches that may persist across test runs, causing non-deterministic results. Consider using `tempfile.TemporaryDirectory` (already imported at line 9) for test cache paths, and adding cleanup in a teardown or context manager. <details> <summary>Example using tempfile for isolation</summary> ```diff def test_explain_cache_hit_scen\u2026",
+   "created_at": "2026-02-11T07:33:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817475",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817477,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Good test for complexity estimation \u2014 consider adding a boundary case.** The tests cover low, mid, and higher complexity values well. The formula is `min(len(query) // 20, 10)`, but there's no test for the upper-bound clamp at 10. A query with 200+ characters would exercise that boundary. <details> <summary>Proposed addition</summary> ```diff (\"SELECT a, b, c FROM users_table WHERE condition_a = 1 AND condition_b = 2 AND condition_c = 3\", \"SELECT\", 4), # 97 chars \u2192 4 + (\"SELECT \" + \"x, \" * 100 + \"y FROM very_long_table WHERE \" + \"a = 1 AND \" * 20, \"SELECT\", 10), # >200 chars \u2192 clamped at 10 ] ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ```\u2026",
+   "created_at": "2026-02-11T07:33:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817477",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817484,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **LGTM \u2014 Good coverage of SELECT query variants.** The test structure is sound, iterating over multiple SELECT queries and verifying all required sections. Two minor notes: 1. `super::QueryExplainer::new()` at line 354 \u2014 the `super::` prefix is unnecessary since `use super::*` is already imported at line 239. Same applies to lines 402, 437, 454. This is inconsistent with tests like `test_nl_translator` (line 315) that reference types directly. 2. The `if query.to_uppercase().starts_with(\"SELECT\")` guard at line 389 is always true since all entries in `test_queries` are `SELECT` statements \u2014 the conditional is redundant here. <details> <summary>\ud83e\udd16 Prompt for AI Agent\u2026",
+   "created_at": "2026-02-11T07:33:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817484",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817489,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Mutation queries test doesn't assert `RL AGENT` section.** The SELECT query test (line 377\u2013381) asserts `RL AGENT` is present, but this test omits it. Since `explain_query_plan` in `optimizer.py` unconditionally populates `rl_agent` for all query types, the section should always appear in the formatted output. Either add the assertion, or document why it's intentionally excluded for mutations. <details> <summary>Proposed fix</summary> ```diff // All sections should be present assert!(plan.contains(\"PARSING\")); assert!(plan.contains(\"CACHE LOOKUP\")); + assert!(plan.contains(\"RL AGENT\")); assert!(plan.contains(\"EXECUTION STRATEGY\")); ``` </details> <!-- sugg\u2026",
+   "created_at": "2026-02-11T07:33:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817489",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791817493,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Weak assertion for raw output validity.** The check `raw_plan.contains('{') || raw_plan.contains(\"[\")` on line 443 only confirms that at least one brace-like character exists \u2014 it doesn't validate structural correctness. Since `explain_raw` returns `result.str()?.extract()` (the Python `__str__` representation of a dict), consider also checking that the output contains expected keys like `\"parsing\"` or `\"query\"` to catch regressions in the returned structure. <details> <summary>Proposed improvement</summary> ```diff // Raw output should be valid Python dict format (contains {}) assert!(raw_plan.contains('{') || raw_plan.contains(\"[\")); + // Verify key structural\u2026",
+   "created_at": "2026-02-11T07:33:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791817493",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791970344,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Action name truncation width documented as 20 chars, but `format_explain_output` truncates to 15.** Line 202 states \"Action names truncated to 20 characters,\" which matches `explain_action()` (Line 488 in optimizer.py), but `format_explain_output()` truncates action display names to 15 characters (Line 750 in optimizer.py: `truncate(action, 15)`). This discrepancy could confuse readers who inspect the formatted output and see tighter truncation than documented. Consider either aligning the doc to mention both limits or standardizing on one value. <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.20.0)</summary> [warning] 199-19\u2026",
+   "created_at": "2026-02-11T08:20:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791970344",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791970353,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`available_actions` validation rejects tuples and other iterables.** `not isinstance(available_actions, list)` will raise `ValueError` for tuples or other sequences. If callers might pass a tuple, consider `isinstance(available_actions, (list, tuple))` or converting to list internally. <details> <summary>Suggested fix</summary> ```diff - if not available_actions or not isinstance(available_actions, list): - raise ValueError(\"available_actions must be a non-empty list\") + if not available_actions or not isinstance(available_actions, (list, tuple)): + raise ValueError(\"available_actions must be a non-empty list or tuple\") + available_actions = list(available_action\u2026",
+   "created_at": "2026-02-11T08:20:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791970353",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791970356,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Fallback `epsilon` default of `0.2` in `format_explain_output` is inconsistent with `QueryOptimizer` default of `0.1`.** Line 740: `epsilon = r.get('epsilon', 0.2)` \u2014 when the `rl_agent` dict is present but missing the `epsilon` key, the displayed value will be `0.2`, whereas `QueryOptimizer.__init__` defaults to `0.1`. This is the same class of mismatch previously flagged for the RL-agent error fallback, now occurring in the formatter. <details> <summary>Suggested fix</summary> ```diff - epsilon = r.get('epsilon', 0.2) + epsilon = r.get('epsilon', 0.1) ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` aroun\u2026",
+   "created_at": "2026-02-11T08:20:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791970356",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2791970367,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`run_all_tests()` never calls `setup_method()` / `teardown_method()`, breaking test isolation.** The manual runner instantiates `TestExplainIntegration()` and calls test methods directly, but skips the `setup_method` / `teardown_method` lifecycle that pytest manages automatically. This means: 1. `self.temp_dir` is never created \u2192 `AttributeError` if any test references it (though currently tests create their own `SemanticCache` instances). 2. The `NEXUMDB_CACHE_FILE` env var is never set \u2192 tests run against the real cache directory, potentially leaving artifacts. <details> <summary>Suggested fix</summary> ```diff for method_name in test_methods: try: + tes\u2026",
+   "created_at": "2026-02-11T08:20:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2791970367",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792054353,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Module-level `_default_cache` singleton has no reset mechanism, which can cause stale references in tests.** The singleton is created once and persists for the module's lifetime. If the `NEXUMDB_CACHE_FILE` env var changes between calls (as it does in test `setup_method`/`teardown_method`), the cached instance still points to the original path. This doesn't actively break tests today (since the in-memory cache works regardless of disk state), but it silently defeats the per-test isolation the test suite sets up. Consider exposing a reset helper: <details> <summary>Proposed fix</summary> ```diff +def _reset_default_cache() -> None: + \"\"\"Reset the module-level defa\u2026",
+   "created_at": "2026-02-11T08:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792054353",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792054364,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`complexity` value from the dict is not clamped before formatting.** While `explain_query_plan` guarantees `complexity_estimate` \u2208 [0, 10], `format_explain_output` is a public function that accepts arbitrary dicts. A caller-supplied value like `999999` would overflow the fixed-width layout. Consider clamping for consistency with the other defensive measures (e.g., `entries_checked` capped at 99999). <details> <summary>Proposed fix</summary> ```diff query_type = truncate(p.get('query_type', 'UNKNOWN'), 15) - complexity = p.get('complexity_estimate', 0) + complexity = min(p.get('complexity_estimate', 0), 10) ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI\u2026",
+   "created_at": "2026-02-11T08:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792054364",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792054368,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Action name truncation in Q-values display uses 15 chars, while `explain_action` truncates to 20.** `explain_action` (line 488) truncates `best_action` to 20 characters, but here each action name in the Q-values table is truncated to 15 characters. This means the Q-values table could display a truncated version of an action that appears untruncated as `best_action` above it (line 743, which uses `truncate(..., 20)`). Consider aligning both to the same limit. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 746 - 757, The Q-values table truncates action names to 15 chars while explain_action/truncate for best_\u2026",
+   "created_at": "2026-02-11T08:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792054368",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792054373,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Cache-hit test assertion on `top_matches` type is overly permissive.** Line 137 checks `isinstance(cache_analysis['top_matches'], (list, type(None)))`, but `explain_query` always returns a list for `top_matches` (never `None`). The `type(None)` branch is dead code. Consider tightening to `isinstance(..., list)` so a regression that returns `None` would be caught. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_explain_integration.py` around lines 120 - 142, The test test_explain_cache_hit_scenario currently allows cache_analysis['top_matches'] to be either a list or None, but explain_query_plan always returns a list for top_matche\u2026",
+   "created_at": "2026-02-11T08:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792054373",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792054377,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Line width assertion (`<= 75`) may be brittle under certain Q-value or field combinations.** The `format_explain_output` function doesn't strictly guarantee a max line width \u2014 it uses format specifiers with minimum widths (e.g., `:<15`, `:>8.4f`) but large values in unclamped fields could exceed 75 chars. This test is valuable but could produce false failures if the formatting layout changes slightly. Consider either documenting this as a loose bound or adding explicit comments in `format_explain_output` about the 75-char contract. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_explain_integration.py` around lines 159 - 184, The\u2026",
+   "created_at": "2026-02-11T08:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792054377",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792054380,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`teardown_method()` in except handlers is not guarded \u2014 can mask errors or crash if `setup_method()` failed.** If `setup_method()` (line 376) raises before `self.temp_dir` is assigned, the `teardown_method()` call in the except blocks (lines 385, 390) will raise `AttributeError`, masking the original failure and crashing the manual runner. <details> <summary>Proposed fix \u2014 wrap teardown in try/finally for safety</summary> ```diff for method_name in test_methods: + setup_ok = False try: test_class.setup_method() + setup_ok = True method = getattr(test_class, method_name) method() - test_class.teardown_method() print(f\"\u2713 {method_name}\") passed += 1 except As\u2026",
+   "created_at": "2026-02-11T08:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792054380",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792265812,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Prefer lazy `%`-style formatting with `logger` calls on changed lines.** Lines 612, 630, and 807 use f-strings inside `logger.warning`/`logger.error`. When the log level is disabled, the f-string is still interpolated, wasting cycles. Use `%`-style formatting to defer interpolation. <details> <summary>Example fix for line 612</summary> ```diff - logger.warning(f\"Cache analysis failed: {e}\") + logger.warning(\"Cache analysis failed: %s\", e) ``` </details> Also applies to: 630-631, 807-807 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` at line 612, Replace eager f-string interpolation in logger calls with lazy %-style formatting:\u2026",
+   "created_at": "2026-02-11T09:35:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792265812",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792265820,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Box-drawing content lines may not align perfectly at column 70.** The `\"\u2502\"` closing character on formatted lines (e.g., lines 746-747) relies on manual padding. If `threshold` or `best_sim` produce wider-than-expected strings (e.g., threshold > 1.0 from a malformed input), the right border will shift. This is mitigated by the outer try/except fallback, so it's a cosmetic concern only. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 746 - 747, The box-drawing lines built with lines.append currently rely on manual spacing and can shift if values like threshold or best_sim are wider than expected; update the two lines\u2026",
+   "created_at": "2026-02-11T09:35:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792265820",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792265822,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Raw output structural validation improved \u2014 consider tightening further.** The assertion now checks for `\"parsing\"` or `\"cache_analysis\"`, which is a meaningful improvement. However, since `explain_query_plan` always returns both keys, asserting both independently (with `&&` instead of `||`) would catch more regressions. <details> <summary>Proposed fix</summary> ```diff - assert!( - raw_plan.contains(\"parsing\") || raw_plan.contains(\"cache_analysis\"), - \"Raw output should contain structural keys like 'parsing' or 'cache_analysis'\" - ); + assert!(raw_plan.contains(\"parsing\"), + \"Raw output should contain 'parsing' key\"); + assert!(raw_plan.contains(\"cache_analysis\"\u2026",
+   "created_at": "2026-02-11T09:35:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#discussion_r2792265822",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792631469,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Add a companion test for `DROP TABLE IF EXISTS` on a non-existent table.** This test correctly validates the error path, but there's no test verifying that `if_exists: true` on a non-existent table returns `Ok(Deleted { rows: 0 })` (the success path at lines 231-235 of the executor). That's an important behavioral contract worth covering. Also, the comment on line 821 is missing a space after `//` and just restates the test name \u2014 consider removing it or converting to a proper `//` comment with a space. <details> <summary>Suggested companion test</summary> ```rust #[test] fn test_drop_non_existent_table_if_exists_succeeds() { let storage = StorageEngine::memory()\u2026",
+   "created_at": "2026-02-11T10:56:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2792631469",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792631480,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Improve the comment \u2014 `//second test` is not descriptive.** Replace with something meaningful or remove it entirely; the `#[test]` attribute and function name already communicate intent. Also, add a space after `//`. ```diff - //second test - #[test] + /// Verifies that DROP TABLE physically removes row data from the underlying sled storage. + #[test] ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure\u2026",
+   "created_at": "2026-02-11T10:56:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2792631480",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792695196,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, check the file exists and get basic structure wc -l nexum_core/src/sql/parser.rs git ls-files nexum_core/src/sql/parser.rs ``` Repository: aviralgarg05/NexumDB Length of output: 125 --- \ud83c\udfc1 Script executed: ```shell # Read the main functions mentioned: parse_management_statement, convert_statement, and lines around 200-220 cat -n nexum_core/src/sql/parser.rs | sed -n '10,40p' ``` Repository: aviralgarg05/NexumDB Length of output: 1356 --- \ud83c\udfc1 Script executed: ```shell # Check lines 200-220 for the Drop handling cat -n nexum_core/src/sql/parser.rs | sed -n '195,225p' ``` Repository: avira\u2026",
+   "created_at": "2026-02-11T11:11:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/133#discussion_r2792695196",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792695205,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Duplicate test \u2014 identical to `test_parse_drop_table`.** `test_parse_drop_table_sqlparser_syntax` uses the exact same SQL input (`\"DROP TABLE users\"`) and assertions as `test_parse_drop_table` on line 540. Both hit the management-parser path, so neither test exercises the sqlparser `Drop` arm added at line 200. Either remove this duplicate, or change it to test input that actually reaches the sqlparser path (e.g., `\"DROP TABLE users CASCADE\"` or multi-part names like `\"DROP TABLE schema.users\"` \u2014 whichever the engine supports). <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/sql/parser.rs` around lines 581 - 594, The test test_p\u2026",
+   "created_at": "2026-02-11T11:11:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/133#discussion_r2792695205",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792921985,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, let's locate and examine README.md fd -name \"README.md\" -type f ``` Repository: aviralgarg05/NexumDB Length of output: 294 --- \ud83c\udfc1 Script executed: ```shell # Once located, check the lines 223-226 head -226 README.md | tail -10 ``` Repository: aviralgarg05/NexumDB Length of output: 409 --- \ud83c\udf10 Web query: `SQL operator precedence AND OR parentheses best practice` \ud83d\udca1 Result: ### Operator precedence (common across major SQL dialects) When you mix logical operators in a `WHERE` clause, they\u2019re evaluated in this order (highest \u2192 lowest): 1. `NOT` 2. `AND` 3. `OR` PostgreSQL documents `N\u2026",
+   "created_at": "2026-02-11T12:07:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2792921985",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2792980553,
+   "body": "`@kunalhemnani1`, great! Thanks for confirming. The blank line will improve markdown rendering consistency across different parsers. <!-- This is an auto-generated reply by CodeRabbit -->",
+   "created_at": "2026-02-11T12:19:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2792980553",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793001473,
+   "body": "fixed in commit [24863c2](https://github.com/aviralgarg05/NexumDB/commit/24863c22101340d85540bc37d6908ef0213a6dfd)",
+   "created_at": "2026-02-11T12:24:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2793001473",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "id": 2793004591,
+   "body": "`@kunalhemnani1`, perfect! Thank you for fixing the markdown formatting issue. The blank line will ensure consistent rendering across all markdown parsers. \ud83c\udf89 <!-- <review_comment_addressed> --> /)/) (^.^) ( >\ud83c\udf89 --- <!-- This is an auto-generated comment: tweet message by coderabbit.ai --> If you found this review helpful, would you consider giving us a shout-out on [X](https://twitter.com/intent/tweet?related=CodeRabbitAI&text=Add%20a%20blank%20line%20before%2Fafter%20fenced%20code%20blocks%20to%20satisfy%20markdownlint%20(MD031)%20and%20ensure%20consistent%20rendering%20across%20parsers.%20Quick%20fix%20saved%20repo%20formatting%20%E2%80%94%20try%20%40coderabbitai%20%F0%9F%9A%80%E2%9C%85&ur\u2026",
+   "created_at": "2026-02-11T12:24:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2793004591",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793022176,
+   "body": "Noticed the same pattern is present earlier in the README https://github.com/aviralgarg05/NexumDB/blob/33e60941f0c1ef051d29532f4401fae4e47daec4/README.md?plain=1#L159-L164 I can update that section as well to keep the formatting consistent across the document, if preferred.",
+   "created_at": "2026-02-11T12:28:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2793022176",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "id": 2793025655,
+   "body": "<details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ``` #!/bin/bash # Check lines 159-164 of README.md to see the pattern mentioned sed -n '159,164p' README.md ``` Length of output: 157 --- </details> `@kunalhemnani1`, good catch checking for consistency! However, lines 159-164 are actually fine as-is. That example uses only `AND` operators: ```sql WHERE price BETWEEN 100 AND 500 AND category IN ('electronics', 'accessories') AND name LIKE 'L%' ``` When you chain multiple `AND` operators (or multiple `OR` operators), there's no precedence ambiguity\u2014they all evaluate at the same level, left to right. The concern at lines 223-226 is specifically about **mixing `OR` and `AND`** in\u2026",
+   "created_at": "2026-02-11T12:29:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2793025655",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249124,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **`NamedTempFile` is dropped at function exit, deleting the backing file while the `Connection` is still live.** `db_file` is a local `NamedTempFile` that is dropped when `setup_sqlite` returns. On drop, the file is deleted. The returned `Connection` then points at a deleted path. This may work on Unix (open fd survives unlink) but is fragile and will cause issues on Windows \u2014 which is the stated test platform. Return the `NamedTempFile` alongside the `Connection` to keep it alive, or use `tempdir()` and construct a path inside it. <details> <summary>\ud83d\udc1b Proposed fix: keep temp file alive</summary> ```diff -fn setup_sqlite() -> Connection { +fn setup_sqlite\u2026",
+   "created_at": "2026-02-11T13:17:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249124",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249136,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **`TempDir` is dropped at function exit, deleting the storage directory while `StorageEngine`/`Executor` is still live.** Same lifetime issue as `setup_sqlite`: `db_path` (a `TempDir`) is dropped when `setup_nexum` returns, removing the directory that `sled` writes to. This can cause silent data corruption or panics during benchmarks. Return the `TempDir` to keep it alive for the duration of the benchmark. <details> <summary>\ud83d\udc1b Proposed fix: keep tempdir alive</summary> ```diff -fn setup_nexum() -> Executor { +fn setup_nexum() -> (Executor, tempfile::TempDir) { let db_path = tempdir().unwrap(); let storage = StorageEngine::new(db_path.path()).unwrap(); let\u2026",
+   "created_at": "2026-02-11T13:17:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249136",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249150,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **NexumDB insert benchmark re-inserts the same row (id=1) every iteration \u2014 not equivalent to SQLite's auto-incrementing INSERT.** SQLite inserts new unique rows via `ROWID` auto-increment, while NexumDB clones and re-executes `INSERT INTO bench (id, val) VALUES (1, 'test_data')` each time. This introduces two problems: 1. The operations are not comparable \u2014 SQLite writes new unique keys; NexumDB writes duplicate data under different internal keys. 2. The `statement` is parsed once and cloned, while SQLite parses the SQL each iteration (via `conn.execute`). This skews timing further. Generate a unique id per iteration to make the comparison fair. <details> <\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249150",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249153,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **SELECT benchmark data is completely mismatched: NexumDB has 1000 rows with id=1, but the query filters `WHERE id = 500`.** All NexumDB rows are inserted with `VALUES (1, 'data')`, so `WHERE id = 500` matches zero rows. SQLite rows have ids 0\u2013999, so `WHERE id = 500` matches exactly one row. This means the benchmark is comparing \"return one row\" (SQLite) versus \"scan and return nothing\" (NexumDB) \u2014 an apples-to-oranges comparison that invalidates the SELECT results reported in the PR. Insert rows with distinct, incrementing ids for NexumDB, mirroring the SQLite setup. <details> <summary>\ud83d\udc1b Sketch: use incrementing ids for NexumDB</summary> ```diff - let i\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249153",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249167,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **SQLite `prepare()` is called inside the benchmark loop, inflating measured latency.** `sqlite_conn.prepare(...)` compiles the SQL statement and is called on every iteration. A fairer comparison would prepare once outside the loop and only call `query_row` inside. <details> <summary>\u267b\ufe0f Prepare once, benchmark query execution only</summary> ```diff group.bench_function(\"SQLite_Point_Lookup\", |b| { + let mut stmt = sqlite_conn.prepare(\"SELECT val FROM bench WHERE id = 500\").unwrap(); b.iter(|| { - let mut stmt = sqlite_conn.prepare(\"SELECT val FROM bench WHERE id = 500\").unwrap(); let _ = stmt.query_row([], |r| r.get::<_, String>(0)).unwrap(); }); }); ``` </d\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249167",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249178,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **\"Cold\" vs \"Cached\" distinction is meaningless \u2014 no semantic cache is enabled.** `setup_nexum()` creates an `Executor` without calling `.with_cache()`, so the semantic caching layer is `None`. The \"cached\" benchmark (line 84) merely executes one extra warmup query, but with no cache enabled it behaves identically to the \"cold\" benchmark. This explains why the PR reports nearly identical timings (1.86ms vs 1.87ms). Either enable the cache via `executor.with_cache()` to make the distinction meaningful, or remove the \"cold vs cached\" split and note that caching is not yet benchmarked. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benc\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249178",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249182,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Orphaned heading: \"Benchmark Categories\" has no content before the next heading.** Line 5 (`## Benchmark Categories`) is immediately followed by line 6 (`## Performance & Benchmarks (Feb 2026)`). This looks like a merge artifact \u2014 the old heading should be removed, or the new heading should replace it. This also triggers the markdownlint MD022 warning about missing blank lines around headings. <details> <summary>\ud83e\uddf9 Proposed fix</summary> ```diff -## Benchmark Categories ## Performance & Benchmarks (Feb 2026) + To maintain the high performance expected of a Rust-based engine, NexumDB is continuously benchmarked against SQLite using the `criterion` suite. ```\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249182",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249188,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Fix markdown formatting issues flagged by markdownlint.** Multiple headings lack required surrounding blank lines, the table (lines 10-14) needs surrounding blank lines, and there's a trailing space on line 22. These are all flagged by markdownlint (MD022, MD058, MD009). As per coding guidelines, \"Check documentation clarity, spelling, grammar, and formatting.\" <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.20.0)</summary> [warning] 6-6: Headings should be surrounded by blank lines Expected: 1; Actual: 0; Above (MD022, blanks-around-headings) --- [warning] 6-6: Headings should be surrounded by blank lines Expected: 1; Actual\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249188",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249191,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Benchmark results are based on flawed comparison benchmarks.** The SELECT results in this table are invalid because the underlying benchmark (`db_comparison.rs`) inserts all NexumDB rows with `id=1` and then queries `WHERE id = 500`, which matches zero rows vs. one row in SQLite. The \"Cold\" vs \"Cached\" distinction is also meaningless since no cache is enabled. These numbers should be updated once the benchmark bugs are fixed. <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.20.0)</summary> [warning] 10-10: Tables should be surrounded by blank lines (MD058, blanks-around-tables) </details> </details> <details> <summary>\ud83e\udd16 Prompt\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249191",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249194,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Broken image path \u2014 relative reference is wrong.** This README lives at `nexum_core/benches/README.md`, so the image path `./nexum_core/benches/bench_results.png` resolves to `nexum_core/benches/nexum_core/benches/bench_results.png`, which doesn't exist. It should be `./bench_results.png`. ```diff -![Benchmark Visualization](./nexum_core/benches/bench_results.png) +![Benchmark Visualization](./bench_results.png) ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no iss\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249194",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249201,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Claims about PyO3 bridge overhead are unsupported by the benchmark.** The benchmark executor is created without `.with_cache()`, so the PyO3 bridge and semantic caching layers are never invoked during the benchmarked operations. The ~1.8ms latency comes from SQL parsing + sled scan, not from Python interop. This section should be corrected after the benchmarks are fixed. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/README.md` around lines 29 - 32, The README's claim that PyO3 bridge and semantic caching contribute to the ~1.8ms latency is incorrect because the benchmark executor is created without .with_cache(), so those\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249201",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249205,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Unnecessary blank lines added.** Lines 3, 8, and 9 introduce extra blank lines that don't improve readability. Consider removing them to keep formatting consistent. <details> <summary>\ud83e\uddf9 Remove superfluous blank lines</summary> ```diff use std::time::Duration; - use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion, Throughput}; use nexum_core::StorageEngine; - - fn storage_write_throughput(c: &mut Criterion) { ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains n\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249205",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249213,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Missing `__main__` guard and type hints.** Wrap the script body in `if __name__ == \"__main__\":` to prevent side effects on import, and add basic type annotations for PEP 8 compliance. As per coding guidelines, \"Check Python code quality, type hints usage, and PEP 8 compliance.\" <details> <summary>\u267b\ufe0f Proposed structure</summary> ```diff import matplotlib.pyplot as plt import numpy as np -# Data from our bench run -labels = ['INSERT', 'SELECT (Cold)', 'SELECT (Cached)'] -sqlite_times = [15.18, 0.143, 0.143] # converted to ms -nexum_times = [7.48, 1.86, 1.87] # in ms - -x = np.arange(len(labels)) -width = 0.35 - -fig, ax = plt.subplots(figsize=(10, 6)) -rects1 = ax.\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249213",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249223,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Hard-coded benchmark data will go stale immediately.** These values are from a single run and will silently become outdated as the engine evolves. Consider parsing Criterion's JSON output (`target/criterion/**/new/estimates.json`) to generate the chart dynamically, or at minimum accept the values as CLI arguments. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/visualize.py` around lines 4 - 7, The benchmark visualization currently uses hard-coded arrays (labels, sqlite_times, nexum_times) in nexum_core/benches/visualize.py which will become stale; update visualize.py to load benchmark data dynamically by either parsing Criterion's\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249223",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249228,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Trailing whitespace on line 23.** `ax.set_yscale('log') ` has a trailing space. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/visualize.py` at line 23, The line containing ax.set_yscale('log') in visualize.py has a trailing whitespace; remove the extra space after the closing parenthesis so the call is exactly ax.set_yscale('log') to clean up the trailing whitespace. ``` </details> <!-- fingerprinting:phantom:medusa:phoenix --> <!-- This is an auto-generated comment by CodeRabbit --> \u2705 Addressed in commit 786f1ff",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249228",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249230,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `rusqlite crate latest version crates.io` \ud83d\udca1 Result: The latest **`rusqlite`** version on crates.io is **`0.38.0`**. [1][2] **Cargo.toml:** ```toml rusqlite = \"0.38.0\" ``` **Sources:** [1][2] --- \ud83c\udf10 Web query: `rusqlite 0.31.0 security advisory vulnerability` \ud83d\udca1 Result: No specific security advisory appears to target **rusqlite 0.31.0**. The two main RustSec advisories for **rusqlite** list affected versions **older than 0.31.0**, meaning **0.31.0 is not in their vulnerable ranges**: - **RUSTSEC-2020-0014 (various memory safety issues):** affects **rusqlite < 0.23.0**, patched in **>= 0.23.0**. [1] - **\u2026",
+   "created_at": "2026-02-11T13:17:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249230",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249234,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Comment style nit: missing space after `//`.** `//added a test` should be `// Added a test` for idiomatic Rust comment style. ```diff - //added a test that checks if dropping a non-existent table without IF EXISTS fails correctly. + // Test that dropping a non-existent table without IF EXISTS fails correctly. ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion //\u2026",
+   "created_at": "2026-02-11T13:17:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249234",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249242,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Non-descriptive comment `// second test`.** This comment doesn't add value. Either remove it or replace it with something meaningful (e.g., `// Verify that DROP TABLE physically removes row data from storage`). ```diff - // second test + // Verify that DROP TABLE physically removes row data from storage. ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion // Veri\u2026",
+   "created_at": "2026-02-11T13:17:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249242",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2793249247,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check if anything accesses nexum_core::storage::engine:: directly rg -n 'storage::engine::' --type rust ``` Repository: aviralgarg05/NexumDB Length of output: 46 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Also check what public items are in engine.rs fd engine.rs --type f --exec head -50 {} \\; ``` Repository: aviralgarg05/NexumDB Length of output: 1380 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check the current mod.rs file to see the full context cat nexum_core/src/storage/mod.rs ``` Repository: aviralgarg05/NexumDB Length of output: 288 --- </details> **`pub mod engine`\u2026",
+   "created_at": "2026-02-11T13:17:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2793249247",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2794142662,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`execute_aggregate` \u2014 overall structure is sound, with a few notes.** The aggregate computation logic is correct for the supported types. Good handling of NULL values (skipping them in SUM/AVG/COUNT(column)). AVG correctly returns `Value::Null` for empty input. The column-name lookup pattern is repeated for each aggregate type \u2014 consider extracting a helper to reduce duplication. <details> <summary>\u267b\ufe0f Example: extract column index resolution</summary> ```rust fn resolve_column_index( schema: &crate::sql::types::TableSchema, col_name: &str, ) -> Result<usize> { schema.columns.iter().position(|c| c.name == col_name) .ok_or_else(|| StorageError::ReadError(format!(\"C\u2026",
+   "created_at": "2026-02-11T16:08:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2794142662",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2794142667,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Mixed `Integer`/`Float` comparisons silently ignored in MIN/MAX.** Lines 988-992: if a column contains both `Integer` and `Float` values, the `(Value::Integer, Value::Float)` case falls through to `_ => false`, silently keeping the current value. This is inconsistent with `SUM`, which properly handles mixed numeric types. A column with values `Integer(1)` and `Float(0.5)` would return `MIN` = `Integer(1)` instead of `Float(0.5)`. <details> <summary>\ud83d\udc1b Proposed fix: handle cross-type numeric comparisons</summary> ```diff let should_replace = match (curr_val, val) { (Value::Integer(c), Value::Integer(v)) => if is_min { v < c } else { v > c }, (Value::Float(c)\u2026",
+   "created_at": "2026-02-11T16:08:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2794142667",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2794142675,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check where ExecutionResult is defined echo \"=== Definition of ExecutionResult ===\" rg -n 'pub enum ExecutionResult|pub struct ExecutionResult' --type rust echo \"\" echo \"=== Re-exports in lib.rs ===\" rg -n 'ExecutionResult' --type rust -g 'lib.rs' echo \"\" echo \"=== Re-exports in sql/types.rs or sql/mod.rs ===\" rg -n 'ExecutionResult' --type rust -g '*/sql/*.rs' echo \"\" echo \"=== Re-exports in executor/mod.rs ===\" rg -n 'pub.*ExecutionResult' --type rust -g '*/executor/mod.rs' ``` Repository: aviralgarg05/NexumDB Length of output: 598 --- \ud83c\udfc1 Script executed: ```shell #!/\u2026",
+   "created_at": "2026-02-11T16:08:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2794142675",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2794142682,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Syntax error: semicolons used instead of commas in match arms.** Throughout this file (Lines 69, 83, 97, 125, 139, 179), match arms end with `;` instead of `,`. In Rust, match arms must be separated by commas \u2014 semicolons are invalid here and will cause compilation failures. <details> <summary>\ud83d\udc1b Fix all occurrences (showing Line 69 as example; apply the same to Lines 83, 97, 125, 139, 179)</summary> ```diff - _ => panic!(\"Expected Selected result\"); + _ => panic!(\"Expected Selected result\"), ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ens\u2026",
+   "created_at": "2026-02-11T16:08:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2794142682",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2794142688,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Good multi-aggregate test, but consider adding edge-case coverage.** The multi-aggregate test exercises `COUNT(*)`, `SUM(val)`, and `MAX(val)` together. Consider adding tests for: - Aggregates on an empty table (zero rows). - `SUM`/`AVG` on columns with all `NULL` values. - `MIN`/`MAX` on `Float` and `Text` columns. These would exercise the `Value::Null` return paths and type-specific comparisons in `calculate_min_max`. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@tests/aggregate_test.rs` around lines 143 - 181, Add new unit tests alongside test_mixed_aggregates that cover the edge cases: create tests that (1) run COUNT/SUM/AVG/MIN/MAX against an\u2026",
+   "created_at": "2026-02-11T16:08:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2794142688",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675721,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`PRIMARY KEY` constraint may be silently ignored by NexumDB's parser.** The SQL `CREATE TABLE bench (id INTEGER PRIMARY KEY, val TEXT)` uses `PRIMARY KEY`, but `convert_column` in `parser.rs` only extracts `name` and `data_type` \u2014 constraints are discarded. This means NexumDB's `bench` table has no uniqueness enforcement on `id`, making the comparison with SQLite (which enforces it) asymmetric and potentially misleading. Either drop the `PRIMARY KEY` from the NexumDB schema string to make the benchmark honest, or document this discrepancy. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/db_comparison.rs` around lines 27 - 29\u2026",
+   "created_at": "2026-02-12T04:10:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675721",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675724,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **\"Cold\" benchmark is not actually cold \u2014 cache warms after the first iteration.** Criterion runs many iterations inside `b.iter()`. After the first execution populates the semantic cache, all subsequent iterations are cache hits. The comment on lines 69\u201371 acknowledges this but no corrective action is taken. The result is that \"Cold\" and \"Cached\" benchmarks measure nearly the same thing, which the README results confirm (2.81 ms vs 2.64 ms \u2014 only 6% difference). To measure a true cold path, either disable the cache (`setup_nexum(false)`) for this benchmark or call `executor.clear_cache()` inside the loop. <details> <summary>Option A: Use a separate executor\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675724",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675729,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Markdown formatting issues \u2014 headings lack blank lines and shell comments render as H1 headings.** Multiple markdownlint violations (MD022, MD031) were flagged by static analysis. Additionally, lines 35, 40, and 45 use `# Comment text` outside of code fences, which Markdown renders as `<h1>` headings rather than comments. These should be moved inside the code blocks or converted to regular text. <details> <summary>Proposed fix for the \"Running Benchmarks\" section</summary> ```diff ## Running Benchmarks ### Prerequisites + Ensure `rusqlite` is available in your dev-dependencies. If missing, run: -# Comparative benchmarks (Nexum vs SQLite) +#### Comparative\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675729",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675731,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`sys` is imported but never used.** <details> <summary>Proposed fix</summary> ```diff -import sys ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion ``` </details> <!-- suggestion_end --> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/visualize.py` at line 3, The file imports the symbol \"sys\" but never uses it; remove\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675731",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675736,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Silently returning `0.0` on parse errors hides problems.** If `estimates.json` is malformed or has an unexpected structure, the caller gets `0.0` with no indication of failure. Consider logging a warning to stderr so users know data was skipped. <details> <summary>Proposed fix</summary> ```diff except (json.JSONDecodeError, KeyError, IOError): + print(f\"[warn] Could not parse benchmark data from {path}\", file=__import__('sys').stderr) return 0.0 ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/visualize.py` around lines 8 - 16, The function parse_criterion_json currently swallows json/json/key/io errors and returns 0.\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675736",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675738,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Duplicate target matches silently overwrite \u2014 last file wins.** If multiple `estimates.json` paths match the same target string (e.g., `new/` vs `base/` directories under Criterion), the dict assignment on line 36 overwrites the previous value. This could produce confusing results. Consider accumulating matches or preferring the `new/` directory explicitly. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/visualize.py` around lines 30 - 36, The loop that assigns results[target] = val (iterating over targets, using path_str and parse_criterion_json) can silently overwrite previous matches for the same target; change this so du\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675738",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675740,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Target keywords don't match the actual benchmark names \u2014 script will find no data.** The keywords `\"sqlite_single_insert\"` and `\"nexumdb_single_insert\"` do not appear anywhere in `db_comparison.rs`. The actual Criterion benchmark names are `\"SQLite_Point_Lookup\"`, `\"NexumDB_Point_Lookup_Cold\"`, and `\"NexumDB_Point_Lookup_Cached\"` under the group `\"Select_Performance\"`. Criterion creates directory paths like `target/criterion/Select_Performance/SQLite_Point_Lookup/new/estimates.json`, so the current keywords will never match. <details> <summary>Proposed fix</summary> ```diff target_keywords = [ - \"sqlite_single_insert\", - \"nexumdb_single_insert\" + \"SQLit\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675740",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675741,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for catalog/schema key patterns and drop_table implementation rg -n 'fn create_table|fn drop_table|fn get_table|schema:|catalog:' --type=rs -C3 ``` Repository: aviralgarg05/NexumDB Length of output: 90 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for catalog/schema patterns in Rust files rg -n 'catalog|schema' nexum_core/src/executor/mod.rs -A 2 -B 2 rg -n 'drop_table|DropTable' nexum_core/src/executor/mod.rs -A 5 -B 2 ``` Repository: aviralgarg05/NexumDB Length of output: 9890 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find the catalog module find . -name \"cat\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675741",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675743,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove leftover instructional comment.** `// In your convert_statement match block:` reads like a copy-pasted tutorial prompt. It adds no value and should be removed. <details> <summary>Proposed fix</summary> ```diff - // In your convert_statement match block: SqlStatement::Drop { ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion SqlStatement::Drop {\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675743",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796675745,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`DROP TABLE t1, t2` silently drops only the first table.** sqlparser parses `DROP TABLE t1, t2` into a `names` vec with two entries. This code takes only the first via `.first()` and ignores the rest. A user issuing a multi-table drop would see only `t1` dropped with no error \u2014 a silent data-correctness risk. Either reject multi-table drops explicitly or iterate over all names. <details> <summary>Proposed fix \u2014 reject multi-table drops</summary> ```diff SqlStatement::Drop { object_type, if_exists, names, .. } => { if *object_type != ast::ObjectType::Table { return Err(anyhow!(\"Only DROP TABLE is supported\")); } + if names.len() != 1 { + return Err(anyhow!(\u2026",
+   "created_at": "2026-02-12T04:10:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#discussion_r2796675745",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796723280,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Wrap the SQLite query result with `black_box` to prevent dead-code elimination.** The NexumDB benchmarks correctly use `black_box(nexum_executor.execute(...))`, but the SQLite benchmark discards the result with `let _`, which the compiler may optimize away entirely. This creates an uneven comparison. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff b.iter(|| { - let _ = stmt.query_row([], |r: &rusqlite::Row| r.get::<_, String>(0)).unwrap(); + black_box(stmt.query_row([], |r: &rusqlite::Row| r.get::<_, String>(0)).unwrap()); }); ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/benches/db_comparison.rs` around lines 5\u2026",
+   "created_at": "2026-02-12T04:32:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2796723280",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796723284,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, let's see the full content of the db_comparison.rs file to understand what benchmarks are defined cat -n nexum_core/benches/db_comparison.rs ``` Repository: aviralgarg05/NexumDB Length of output: 4260 --- \ud83c\udfc1 Script executed: ```shell # Search for INSERT benchmarks in the codebase rg -rn 'bench_insert\\|Insert_Performance\\|insert.*bench' --type rust ``` Repository: aviralgarg05/NexumDB Length of output: 46 --- \ud83c\udfc1 Script executed: ```shell # Search more broadly for all benchmark files find nexum_core/benches -type f -name \"*.rs\" ``` Repository: aviralgarg05/NexumDB Length of output\u2026",
+   "created_at": "2026-02-12T04:32:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2796723284",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796723287,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove unused `sys` import.** `sys` is imported on line 3 but never used anywhere in the file. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff import json import argparse -import sys from pathlib import Path from typing import Dict, List, Optional import matplotlib.pyplot as plt ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion import jso\u2026",
+   "created_at": "2026-02-12T04:32:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2796723287",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2796723291,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`rglob` may match stale results from Criterion's `base/` directory instead of the latest `new/` run.** Criterion stores results in both `new/estimates.json` (latest run) and `base/estimates.json` (previous run). Since `rglob(\"estimates.json\")` returns all matches and `results[target] = val` overwrites duplicates, the final value depends on filesystem traversal order \u2014 which is non-deterministic. You could end up plotting the previous run's data. Filter to only `new/estimates.json` paths: <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff for json_path in base_path.rglob(\"estimates.json\"): + if \"base\" in json_path.parts: + continue # Skip previous-run bas\u2026",
+   "created_at": "2026-02-12T04:32:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#discussion_r2796723291",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2799328569,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, explore the repository structure to understand the layout find . -type f -name \"mod.rs\" -o -name \"optimizer.py\" | head -20 ``` Repository: aviralgarg05/NexumDB Length of output: 243 --- \ud83c\udfc1 Script executed: ```shell # Check the Rust bridge code at the mentioned location cat -n nexum_core/src/bridge/mod.rs 2>/dev/null || echo \"File not found, searching for it...\" fd \"mod.rs\" | grep bridge ``` Repository: aviralgarg05/NexumDB Length of output: 18691 --- \ud83c\udfc1 Script executed: ```shell # Check Python optimizer.py file cat -n nexum_ai/optimizer.py 2>/dev/null | head -100 ``` Repository:\u2026",
+   "created_at": "2026-02-12T14:50:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2799328569",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994831,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`RefCell` makes `Executor` `!Send` and `!Sync` \u2014 no concurrent access possible.** Using `RefCell<Option<TransactionState>>` prevents `Executor` from being shared across threads. Since the PR states only single-active-transaction is supported for now, this is acceptable, but it's worth noting that switching to `Mutex<Option<TransactionState>>` would make the type thread-compatible at no runtime cost for the single-threaded case. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/executor/mod.rs` around lines 40 - 41, The tx_state field currently uses RefCell<Option<TransactionState>> which makes Executor !Send and !Sync; replace it with st\u2026",
+   "created_at": "2026-02-13T12:34:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994831",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994835,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Full-database snapshot on BEGIN is an O(n) bottleneck that won't scale.** `scan_all()` copies every key-value pair in the entire database into memory and to disk (as JSON) on every `BEGIN`. For any non-trivial database this will be extremely slow and memory-intensive. A true WAL approach would log individual mutations (undo/redo records) rather than a full snapshot. This is acceptable as a V1/MVP approach but should be documented as a known limitation and tracked for replacement. Would you like me to open an issue to track replacing the full-snapshot approach with an incremental undo-log WAL? <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nex\u2026",
+   "created_at": "2026-02-13T12:34:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994835",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994836,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Unnecessary clone of entire snapshot during commit.** Line 539 clones the full snapshot (`state.snapshot.clone()`) only to write it into the committed WAL entry (lines 542-546), which is then immediately deleted (line 547). The committed WAL entry doesn't need the snapshot data at all \u2014 recovery only checks the `committed` flag and discards it. <details> <summary>Proposed fix \u2014 avoid cloning snapshot on commit</summary> ```diff fn commit_transaction(&self) -> Result<ExecutionResult> { - let (tx_id, writes, snapshot) = { + let (tx_id, writes) = { let state_ref = self.tx_state.borrow(); let state = state_ref.as_ref().ok_or_else(|| { StorageError::ReadErr\u2026",
+   "created_at": "2026-02-13T12:34:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994836",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994851,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`record_transaction_write` silently does nothing outside a transaction.** This is intentional \u2014 writes outside a transaction don't need tracking. The current behavior is correct but it means the `write_count` only tracks statements, not individual row mutations. Consider whether `write_count` should track row counts instead for more useful commit messages. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/executor/mod.rs` around lines 570 - 574, record_transaction_write currently no-ops outside a transaction and increments tx_state.write_count by one per statement, but you should change it to track actual row mutations: modify fn record_\u2026",
+   "created_at": "2026-02-13T12:34:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994851",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994854,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **WAL write is not crash-safe \u2014 no `fsync` on the file.** `fs::write` does not guarantee the data is flushed to disk. A crash immediately after `fs::write` could result in a truncated or empty WAL file. Use `File::create` + `write_all` + `sync_all` to ensure durability, which is the fundamental guarantee a WAL must provide. <details> <summary>Proposed fix \u2014 fsync the WAL file</summary> ```diff fn write_transaction_wal(&self, wal: &TxWalFile) -> Result<()> { let Some(path) = self.storage.wal_path() else { return Ok(()); }; if let Some(parent) = path.parent() { fs::create_dir_all(parent).map_err(|e| StorageError::WriteError(e.to_string()))?; } let data = se\u2026",
+   "created_at": "2026-02-13T12:34:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994854",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994861,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`restore_snapshot` overwrites all keys unconditionally \u2014 consider a diff-based approach.** The current implementation deletes keys not in the snapshot and then batch-writes the entire snapshot. For large databases, this rewrite is expensive. A more efficient approach would diff the current state against the snapshot and only apply changes. However, as noted earlier, this ties to the broader snapshot-vs-WAL design choice. Also, note that `batch_set(snapshot.to_vec())` clones the entire snapshot Vec \u2014 the method signature takes `Vec<(Vec<u8>, Vec<u8>)>` by value, so the `.to_vec()` call on the slice creates a full copy. <details> <summary>\ud83e\udd16 Prompt for AI Agents</su\u2026",
+   "created_at": "2026-02-13T12:34:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994861",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994867,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`COMMIT TRANSACTION` and `ROLLBACK TRANSACTION` are not recognized, unlike `BEGIN TRANSACTION`.** `BEGIN TRANSACTION` is handled (Line 221-226), but the equally standard `COMMIT TRANSACTION` and `ROLLBACK TRANSACTION` forms will fall through to sqlparser and likely produce an error or unexpected result. For consistency, handle the two-token forms too. <details> <summary>Proposed fix</summary> ```diff if tokens.len() == 1 && tokens[0].eq_ignore_ascii_case(\"commit\") { return Ok(Some(Statement::CommitTransaction)); } + if tokens.len() == 2 + && tokens[0].eq_ignore_ascii_case(\"commit\") + && tokens[1].eq_ignore_ascii_case(\"transaction\") + { + return Ok(Some(Sta\u2026",
+   "created_at": "2026-02-13T12:34:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994867",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2803994877,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\u2753 Verification inconclusive</summary> Script executed: ```shell cd /tmp && find . -name \"engine.rs\" -path \"*/storage/*\" 2>/dev/null | head -5 ``` Repository: aviralgarg05/NexumDB --- Repository: aviralgarg05/NexumDB Exit code: 0 --- Script executed: ```shell rg -rn \"nexum_tx_wal\" --type=rs ``` Repository: aviralgarg05/NexumDB --- Repository: aviralgarg05/NexumDB Exit code: 2 stderr: ``` unrecognized file type: rs ``` --- Script executed: ```shell fd -e rs -p \"*storage/engine.rs\" && head -30 nexum_core/src/storage/engine.rs ``` Repository: aviralgarg05/NexumDB --- Repository: aviralgarg05/NexumDB Exit code: 1 stderr: ``` [fd error]: regex p\u2026",
+   "created_at": "2026-02-13T12:34:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#discussion_r2803994877",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2804618567,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Mixing fallback and model vectors produces incorrect cache behavior.** `_fallback_vectorize` and `SentenceTransformer.encode` produce vectors in completely different spaces. Cosine similarity between them is meaningless. This breaks the cache in multiple scenarios: 1. **Startup with persisted cache**: Cached entries have model vectors from a prior session. While the model loads async, `get()` computes a fallback vector and compares it against stored model vectors \u2192 all cache misses. 2. **Entries created during loading**: `put()` stores a fallback vector. Once the model loads, `get()` computes a model vector \u2192 cache miss for the exact same quer\u2026",
+   "created_at": "2026-02-13T14:53:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2804618567",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2804618573,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Unbounded retry storm: failed model load is retried on every `vectorize()` call.** After `_load()` catches an exception, it sets `_model_loading = False` and `model = None`. On the next `vectorize()` call, `initialize_model()` sees both conditions and spawns **another** background thread. If the model consistently fails to load (e.g., missing dependency), every `vectorize()` call creates a new thread. Guard against this by checking `_model_load_error` before re-attempting: <details> <summary>Proposed fix</summary> ```diff def initialize_model(self) -> None: with self._model_lock: if self.model is not None: return if self._model_loading: return + if self._m\u2026",
+   "created_at": "2026-02-13T14:53:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2804618573",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2804618577,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Extraneous blank lines between methods.** PEP 8 recommends a single blank line between method definitions inside a class. There are multiple consecutive blank lines here. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 151 - 153, There are multiple consecutive blank lines between method definitions in the class in nexum_ai/optimizer.py; edit the file to leave exactly one blank line between each method definition (for example between methods like optimize, _prepare_batch, _run_epoch or other def ... blocks inside the Optimizer class) so the class follows PEP 8 spacing rules; remove any extra empty lines but do not c\u2026",
+   "created_at": "2026-02-13T14:53:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2804618577",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150148,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Library module should not call `logging.basicConfig()`.** This module is imported by the Rust bridge and potentially other consumers. Calling `basicConfig` at module level hijacks the root logger for the entire process, overriding any configuration the host application may have set. Per Python logging best practices, libraries should only attach a `NullHandler` to their own logger. <details> <summary>Proposed fix</summary> ```diff logger = logging.getLogger(__name__) -logging.basicConfig(level=logging.INFO) +logger.addHandler(logging.NullHandler()) ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` at line 14\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150148",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150151,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **The default `cache_file` parameter is `\"semantic_cache.pkl\"` but all persistence is JSON-based.** Every save/load path converts `.pkl` \u2192 `.json`. The `.pkl` default is a vestige of the removed pickle support and misleads callers about the actual storage format. Consider updating the default to `\"semantic_cache.json\"` and removing the `.replace(\".pkl\", \".json\")` indirection throughout. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 55 - 59, The default cache_file in Optimizer.__init__ is incorrectly \"semantic_cache.pkl\" while the implementation always uses JSON; change the default to \"semantic_cache.json\" and remov\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150151",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150153,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Bug: `load_cache` and `save_cache` derive different JSON paths for non-`.pkl` filenames.** `save_cache` (Line 238) keeps a non-`.pkl` filepath as-is, but `load_cache` (Line 250) unconditionally appends `.json`, producing paths like `\"foo.json.json\"`. This means `save_cache(\"my_cache.json\")` writes to `my_cache.json`, while `load_cache(\"my_cache.json\")` reads from `my_cache.json.json` \u2014 the cache will silently fail to load. <details> <summary>Proposed fix: align with save_cache logic</summary> ```diff def load_cache(self, filepath: Optional[str] = None) -> None: \"\"\"Load cache from disk using JSON format\"\"\" if filepath is None: filepath = str(self.cache_p\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150153",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150155,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`save_cache_json` silently mutates `self.cache` by pruning entries \u2014 unexpected side effect for a save operation.** Lines 265\u2013271 filter out entries with invalid vectors and reassign `self.cache`. A save method should be read-only with respect to in-memory state. This can silently change cache size mid-operation and mask bugs where invalid vectors were inserted. Either clean at insertion time (`put`) or build `cleaned` only for serialization without overwriting `self.cache`. <details> <summary>Proposed fix: don't mutate self.cache during save</summary> ```diff - # remove bad entries (vector None) - cleaned = [] - for entry in self.cache: - vec = entry.get(\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150155",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150157,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`load_cache_json` overwrites `similarity_threshold` from the JSON file without validation.** Line 307\u2013309 replaces the instance's `similarity_threshold` with whatever value is in the JSON. A corrupted or hand-edited file could set it to a negative number or > 1.0, breaking cache-hit logic. Consider clamping to `[0.0, 1.0]`. <details> <summary>Proposed fix</summary> ```diff - self.similarity_threshold = data.get( - \"similarity_threshold\", self.similarity_threshold - ) + loaded_threshold = data.get(\"similarity_threshold\", self.similarity_threshold) + self.similarity_threshold = max(0.0, min(1.0, float(loaded_threshold))) ``` </details> <details> <summary>\ud83e\udd16 P\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150157",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150160,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Bare `except Exception` loses the specific error type; `logger.exception` is good but `self.cache = []` silently discards any partial data.** If the JSON is partially valid (e.g., truncated write), a `JSONDecodeError` is caught and the cache is silently wiped. Consider logging the filepath and distinguishing between \"file corrupt\" vs. \"permission error\" so operators can diagnose issues. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 317 - 319, The current bare except swallows error types and unconditionally wipes self.cache; change it to explicitly handle json.JSONDecodeError and OSError/PermissionError: import js\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150160",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807150162,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Move test/demo helpers out of the production module.** `test_vectorization` and `test_cache_persistence` live alongside production code and are only exercised via `__main__`. They create real `SemanticCache` instances (triggering model downloads and disk I/O), leave artifacts in `cache/`, and aren't wired into any test runner. Move them to a dedicated test file (e.g., `tests/test_optimizer.py`) using `pytest` or `unittest` so they run in CI and don't pollute the importable module. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 639 - 694, The two helper functions test_vectorization and test_cache_persistence are te\u2026",
+   "created_at": "2026-02-14T07:27:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#discussion_r2807150162",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807246689,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`time.time()` is called per-entry \u2014 consider snapshotting once.** `_is_entry_expired` calls `time.time()` on every invocation. When iterating large caches (e.g., in `get()`, `explain_query()`, `_evict_expired()`), this results in many redundant syscalls and introduces subtle inconsistency: an entry near the TTL boundary could appear expired or not depending on iteration order and wall-clock drift during the loop. A common pattern is to capture `now = time.time()` once and pass it in: <details> <summary>\u267b\ufe0f Snapshot current time once per operation</summary> ```diff - def _is_entry_expired(self, entry: Dict) -> bool: + def _is_entry_expired(self, entry: Dict, now: O\u2026",
+   "created_at": "2026-02-14T08:49:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2807246689",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807246690,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Restored TTL doesn't trigger eviction of entries that became stale while the process was down.** When `load_cache_json` restores `max_age_seconds`, entries that expired during the downtime remain in the cache until the next explicit `_evict_expired()` or `set_cache_expiration()` call. `get()` will skip them, so correctness is maintained, but stale entries waste memory and inflate `get_cache_stats()['total_entries']`. Consider calling `self._evict_expired()` after restoring TTL: <details> <summary>\u267b\ufe0f Evict stale entries on load</summary> ```diff # Restore persisted TTL setting (if any) saved_max_age = data.get('max_age_seconds') if saved_max_age is not None: self.\u2026",
+   "created_at": "2026-02-14T08:49:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2807246690",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807246691,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`get_cache_stats` can raise `OSError` if `self.cache_path` is deleted between `exists()` and `stat()`.** Line 345 has a TOCTOU race: `self.cache_path.exists()` may return `True`, but by the time `self.cache_path.stat()` runs the file could be gone (e.g., concurrent `clear()` call), raising `FileNotFoundError`. <details> <summary>\ud83d\udee1\ufe0f Proposed fix \u2014 use try/except instead of check-then-act</summary> ```diff - 'cache_size_bytes': self.cache_path.stat().st_size if self.cache_path.exists() else 0, + 'cache_size_bytes': self._safe_cache_size_bytes(), ``` Add a helper: ```python def _safe_cache_size_bytes(self) -> int: try: return self.cache_path.stat().st_size ex\u2026",
+   "created_at": "2026-02-14T08:49:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2807246691",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2807246694,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Unused import: `patch` is never used.** `from unittest.mock import patch` is imported but none of the tests in this file use it. Remove to keep the imports clean. <details> <summary>\ud83e\uddf9 Proposed fix</summary> ```diff import time -from unittest.mock import patch ``` </details> As per coding guidelines, `**/*.py`: Check Python code quality, type hints usage, and PEP 8 compliance. <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & b\u2026",
+   "created_at": "2026-02-14T08:49:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2807246694",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

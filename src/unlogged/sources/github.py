@@ -176,15 +176,24 @@ class GitHub:
         self.tape.record(key, {"status": r.status_code, "body": body})
         return body
 
-    def _paged(self, path: str, *, pages: int = 3, **params: Any) -> list[dict[str, Any]]:
+    def _paged(self, path: str, *, pages: int = 20, **params: Any) -> list[dict[str, Any]]:
+        """Read every page, and say so out loud if the safety cap stops it early.
+
+        This stopped at three pages and said nothing. A repository with 435 issue comments
+        therefore yielded 300, and the 135 it dropped were the most recent ones, because
+        GitHub returns them oldest first. Events went missing from a corpus with no sign that
+        anything had been left out — which is the worst way for a dataset to be wrong, since
+        the gap is invisible in the output.
+        """
         out: list[dict[str, Any]] = []
         for page in range(1, pages + 1):
             batch = self._get(path, per_page=100, page=page, **params)
             if not isinstance(batch, list) or not batch:
-                break
+                return out
             out.extend(batch)
             if len(batch) < 100:
-                break
+                return out
+        log.warning("github_pagination_capped", path=path, pages=pages, collected=len(out))
         return out
 
     # -- events -------------------------------------------------------------

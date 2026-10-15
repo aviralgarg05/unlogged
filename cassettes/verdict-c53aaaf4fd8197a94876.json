@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3924755277",
+ "call": "scope_request",
+ "clause_id": "X2",
+ "quoted_span": "Would you prefer: - I investigate and fix the Rust build issues in this PR, or - Keep this PR scoped to the CI guard and handle Rust fixes separately?",
+ "reason": "Requests direction on fixing unrelated Rust dependency/API issues, which falls outside the CI guard scope and conflicts with avoiding unrelated fixes. No investigation or fix is reported as performed.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.96
+}

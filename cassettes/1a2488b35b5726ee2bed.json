@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3896908913,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > `@samarjeet818` has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **9 minutes and 19 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <details>\u2026",
+   "created_at": "2026-02-13T12:21:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#issuecomment-3896908913",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3897283994,
+   "body": "All checks are passing and there are no merge conflicts. Please review the changes and let me know if any modifications are required. Thanks!",
+   "created_at": "2026-02-13T13:34:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#issuecomment-3897283994",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "id": 3897620478,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Asynchronous, non-blocking model loading and robust fallback behavior were added to `nexum_ai/optimizer.py`. Cache persistence moved to JSON, legacy pickle paths were removed, explain-query features and test helpers were introduced, and `cache/test_cache.json` removed. A `.gitignore` was added. ## Changes |Cohort / File(s)|Summary| |---|---| |**Optimizer core** <br> `nexum_ai/optimizer.py`|Adds async background loading of embedding model with thread/lock state; `vectorize` uses model when ready or deterministic fallback; stronger guards for cosine similarity, hit/miss logging, an\u2026",
+   "created_at": "2026-02-13T14:48:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#issuecomment-3897620478",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3897629679,
+   "body": "@Anisha-45 Please mention the issue the PR fixes in the description",
+   "created_at": "2026-02-13T14:50:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#issuecomment-3897629679",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3897638270,
+   "body": "Done \u2014 updated the PR description to include `Closes #120`.",
+   "created_at": "2026-02-13T14:52:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#issuecomment-3897638270",
+   "user": {
+    "login": "Anisha-45"
+   }
+  },
+  {
+   "id": 3898093877,
+   "body": "Sure @aviralgarg05 \u2014 I\u2019m working on the requested fixes and will push an updated commit soon.",
+   "created_at": "2026-02-13T16:26:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#issuecomment-3898093877",
+   "user": {
+    "login": "Anisha-45"
+   }
+  },
+  {
+   "id": 3898133255,
+   "body": "hi. can you assign this to me. I would like to work on this task.",
+   "created_at": "2026-02-13T16:34:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/117#issuecomment-3898133255",
+   "user": {
+    "login": "AvaneeshKesavan"
+   }
+  },
+  {
+   "id": 3901348113,
+   "body": "Hi @aviralgarg05 , I\u2019d like to work on this issue. Could you please assign it to me?",
+   "created_at": "2026-02-14T07:52:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/63#issuecomment-3901348113",
+   "user": {
+    "login": "PAVAN-VANAM"
+   }
+  },
+  {
+   "id": 3901453624,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > `@AvaneeshKesavan` has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **3 minutes and 7 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <detail\u2026",
+   "created_at": "2026-02-14T08:45:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#issuecomment-3901453624",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511071,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#137 - feat: add transaction support (BEGIN/COMMIT/ROLLBACK) with WAL recovery [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto-planning by selecting labels in the issue_enrichment configu\u2026",
+   "created_at": "2026-02-15T14:00:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/141#issuecomment-3904511071",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511175,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#130 - docs: add practical examples for advanced SQL operators in README [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto-planning by selecting labels in the issue_enrichment configuration\u2026",
+   "created_at": "2026-02-15T14:00:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/140#issuecomment-3904511175",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511331,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#55 - feat: Implement semantic cache persistence to disk (`#47`) [merged] aviralgarg05/NexumDB#56 - Add EXPLAIN query plan command with AI optimization insights [merged] aviralgarg05/NexumDB#131 - feat: add EXPLAIN query plan command [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <det\u2026",
+   "created_at": "2026-02-15T14:00:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/147#issuecomment-3904511331",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511365,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#56 - Add EXPLAIN query plan command with AI optimization insights [merged] aviralgarg05/NexumDB#131 - feat: add EXPLAIN query plan command [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto\u2026",
+   "created_at": "2026-02-15T14:00:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/146#issuecomment-3904511365",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511485,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#55 - feat: Implement semantic cache persistence to disk (`#47`) [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto-planning by selecting labels in the issue_enrichment configuration. To dis\u2026",
+   "created_at": "2026-02-15T14:00:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/149#issuecomment-3904511485",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511495,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#44 - Add comprehensive criterion benchmarks for nexum_core [merged] aviralgarg05/NexumDB#102 - feat(storage): improve error messages with actionable suggestions [merged] aviralgarg05/NexumDB#137 - feat: add transaction support (BEGIN/COMMIT/ROLLBACK) with WAL recovery [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"}\u2026",
+   "created_at": "2026-02-15T14:00:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/153#issuecomment-3904511495",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511607,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#39 - Add comprehensive pytest test suite for nexum_ai module [merged] aviralgarg05/NexumDB#122 - refactor: replace print statements with logging [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configur\u2026",
+   "created_at": "2026-02-15T14:00:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/148#issuecomment-3904511607",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511625,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#57 - feat: Add DELETE statement support with WHERE clause filtering [merged] aviralgarg05/NexumDB#59 - feat: Add UPDATE statement support [merged] aviralgarg05/NexumDB#137 - feat: add transaction support (BEGIN/COMMIT/ROLLBACK) with WAL recovery [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </deta\u2026",
+   "created_at": "2026-02-15T14:00:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/154#issuecomment-3904511625",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904511916,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#101 - feat(cli): add colorized output and improved formatting [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan </details> --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto-planning by selecting labels in the issue_enrichment configuration. To disab\u2026",
+   "created_at": "2026-02-15T14:01:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/152#issuecomment-3904511916",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3904652469,
+   "body": "Hi, I would like to work on this issue. Is it available?",
+   "created_at": "2026-02-15T15:08:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/148#issuecomment-3904652469",
+   "user": {
+    "login": "Subhayoni"
+   }
+  },
+  {
+   "id": 3904804655,
+   "body": "Hi @maintainers \ud83d\udc4b I would like to work on this issue as part of OSCG. Could you please assign it to me? Thank you \ud83d\ude42",
+   "created_at": "2026-02-15T16:50:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/154#issuecomment-3904804655",
+   "user": {
+    "login": "KUMARI-SONALIUPADHYAY"
+   }
+  },
+  {
+   "id": 3905116315,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: review paused by coderabbit.ai --> > [!NOTE] > ## Reviews paused > > It looks like this branch is under active development. To avoid overwhelming you with review comments due to an influx of new commits, CodeRabbit has automatically paused this review. You can configure this behavior by changing the `reviews.auto_review.auto_pause_after_reviewed_commits` setting. > > Use the following commands to manage reviews: > - `@coderabbitai resume` to resume automatic reviews. > - `@coderabbitai review` to trigger a single review. > > Use the checkboxes below for quick actions: > - [ ] <!--\u2026",
+   "created_at": "2026-02-15T20:21:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#issuecomment-3905116315",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3906870528,
+   "body": "### Labels The following labels could not be found: `ci`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-16T07:29:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/156#issuecomment-3906870528",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3906870972,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-16T07:29:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/156#issuecomment-3906870972",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906871187,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_ai/requirements-lock.txt</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td><a href=\"https://github.com/pypa/packaging\">packaging</a></td><td>26.0</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"htt\u2026",
+   "created_at": "2026-02-16T07:29:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/157#issuecomment-3906871187",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906871189,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-16T07:29:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/157#issuecomment-3906871189",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906871285,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 2 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>.github/workflows/docker-release.yml</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>actions/checkout</td><td>6.*.*</td><td>Null</td><td>Unknown License</td></tr></table> <h4><em>.github/workflows/sbom.yml</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>actions/checkout</td><td\u2026",
+   "created_at": "2026-02-16T07:29:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/156#issuecomment-3906871285",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906871985,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/clap-rs/clap\"> cargo/clap </a></td><td>4.5.58</td> <td>:green_circle: 4.8</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:warning: 0</td><td>Found 1/13 approved changesets -- score normalized to 0</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 20 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Packaging</\u2026",
+   "created_at": "2026-02-16T07:29:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/158#issuecomment-3906871985",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906872615,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_cli/Cargo.toml</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>colored</td><td>>= 3.1.0, < 4.0.0</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/colored-rs/colored\"> cargo/colo\u2026",
+   "created_at": "2026-02-16T07:29:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/159#issuecomment-3906872615",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906872590,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-16T07:29:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/159#issuecomment-3906872590",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906873110,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/ar_archive_writer\"> cargo/ar_archive_writer </a></td><td>0.5.1</td> <td>:green_circle: 4.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Token-Permissions</td><td>:warning: 0</td><td>detected GitHub workflow tokens with excessive permissions</td></tr><tr><td>Code-Review</td><td>:green_circle: 6</td><td>Found 9/15 approved changesets -- score normalized to 6</td></tr><tr><td>Danger\u2026",
+   "created_at": "2026-02-16T07:29:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/160#issuecomment-3906873110",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906874145,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/PyO3/pyo3\"> cargo/pyo3 </a></td><td>0.28.1</td> <td>:green_circle: 5.4</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Packaging</td><td>:warning: -1</td><td>packaging workflow not detected</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 15 issue activit\u2026",
+   "created_at": "2026-02-16T07:30:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/161#issuecomment-3906874145",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906874410,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/console-rs/console\"> cargo/console </a></td><td>0.16.2</td> <td> Unknown</td><td>Unknown</td></tr> <tr><td><a href=\"https://github.com/console-rs/indicatif\"> cargo/indicatif </a></td><td>0.18.4</td> <td> Unknown</td><td>Unknown</td></tr> <tr><td><a href=\"https://github.com/taiki-e/portable-atomic\"> cargo/portable-atomic </a></td><td>1.13.1</td> <td>:green_circle: 6.2</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>R\u2026",
+   "created_at": "2026-02-16T07:30:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/162#issuecomment-3906874410",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3906887802,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-16T07:34:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/159#issuecomment-3906887802",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3914217878,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Added a repository hygiene check script and integrated it into CI; Rust jobs now detect Rust-relevant changes and skip Rust-specific steps when none are detected, preventing unnecessary Rust builds and failing early on tracked junk files. ## Changes |Cohort / File(s)|Summary| |---|---| |**CI Workflow** <br> ` .github/workflows/ci.yml`|Added `./scripts/check_junk_files.sh` runs to Rust/Python jobs; added \"Detect Rust-relevant changes\" step; gated Rust setup, caching, formatting, linting, testing, coverage, docs, and security steps on the rust_changes flag; aligned conditional logi\u2026",
+   "created_at": "2026-02-17T11:38:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#issuecomment-3914217878",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3914403071,
+   "body": "Hi \ud83d\udc4b Since this PR modifies workflow files, it appears to require maintainer approval to run CI. Could you please approve the workflows so the checks can execute? Thank you!",
+   "created_at": "2026-02-17T12:19:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#issuecomment-3914403071",
+   "user": {
+    "login": "nacholiya"
+   }
+  },
+  {
+   "id": 3918612629,
+   "body": "Hi \ud83d\udc4b It looks like the Rust CI is currently failing due to dependency/API changes in upstream crates (e.g., pyo3 and sqlparser), unrelated to this PR. This PR only modifies CI workflow files and adds a reusable script for junk-file detection. Please let me know how you'd prefer to proceed \u2014 whether to rebase, wait for dependency updates, or handle this in a separate issue. Thanks!",
+   "created_at": "2026-02-18T04:54:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#issuecomment-3918612629",
+   "user": {
+    "login": "nacholiya"
+   }
+  },
+  {
+   "id": 3922223543,
+   "body": "> Fix the failing test and issues Hi! I know the CI test is failing, but when i ran the python test locally, it passed on my side. I have not made changes to any rust code. Please let me know if there\u2019s something specific I should check, or if I should sync with the latest base branch. Thanks!",
+   "created_at": "2026-02-18T17:39:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#issuecomment-3922223543",
+   "user": {
+    "login": "Subhayoni"
+   }
+  },
+  {
+   "id": 3922440516,
+   "body": "I solved this issue and requested for the pull request for this along with the pull request of \"feat: configurable AI Embedding Model\"",
+   "created_at": "2026-02-18T18:25:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/118#issuecomment-3922440516",
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "id": 3922462993,
+   "body": "Hi \ud83d\udc4b @aviralgarg05 I\u2019d like to take ownership of this documentation enhancement and add a clear dependency update and lockfile policy to the project. My plan is to: 1\ufe0f\u20e3 Add a \u201cDependency Policy\u201d section to CONTRIBUTING.md - Keep it concise and contributor-friendly. - Clearly explain when dependencies should be updated versus left unchanged. - Define expectations around version pinning and minimal update scope. 2\ufe0f\u20e3 Clarify Lockfile Guidance (Rust + Python) - Explain when Cargo.lock should be committed or updated in Rust workflows. - Provide guidance for Python lock files (e.g., when to regenerate them and how). - Ensure instructions are consistent with current repository practices. 3\ufe0f\u20e3 Add a\u2026",
+   "created_at": "2026-02-18T18:30:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/151#issuecomment-3922462993",
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "id": 3922500441,
+   "body": "> Mention the issue it solves Mention it in the description here",
+   "created_at": "2026-02-18T18:38:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#issuecomment-3922500441",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3923536189,
+   "body": "@aviralgarg05 , i would like to work on this issue. I would like to add more clear and clean examples. Where each would have possible outputs, clean and clear examples. Already the PR is made in this issue, but I would like to add more few innovative examples. I would be happy if you assign me this issue.",
+   "created_at": "2026-02-18T22:26:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/85#issuecomment-3923536189",
+   "user": {
+    "login": "SiriVennela24-star"
+   }
+  },
+  {
+   "id": 3924755277,
+   "body": "Thanks for the update. It appears the Rust job is currently failing due to dependency/API changes upstream (pyo3/sqlparser updates), which seem unrelated to this CI guard change. Would you prefer: - I investigate and fix the Rust build issues in this PR, or - Keep this PR scoped to the CI guard and handle Rust fixes separately? Happy to help either way.",
+   "created_at": "2026-02-19T05:21:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#issuecomment-3924755277",
+   "user": {
+    "login": "nacholiya"
+   }
+  },
+  {
+   "id": 3924905041,
+   "body": "Thanks for checking. Please keep this PR scoped to the CI guard change only. The Rust build failures should be handled in a separate PR/issue.",
+   "created_at": "2026-02-19T06:08:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#issuecomment-3924905041",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3924999683,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-19T06:41:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/156#issuecomment-3924999683",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3930053097,
+   "body": "Hi! I\u2019d like to work on this issue if it\u2019s available.",
+   "created_at": "2026-02-19T21:09:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/149#issuecomment-3930053097",
+   "user": {
+    "login": "Subhayoni"
+   }
+  },
+  {
+   "id": 3931886096,
+   "body": "Heyy @aviralgarg05 ,i would like to add those cli commands. Could you please assign me this issue ? I would like to work on this issue.",
+   "created_at": "2026-02-20T06:14:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/152#issuecomment-3931886096",
+   "user": {
+    "login": "SiriVennela24-star"
+   }
+  },
+  {
+   "id": 3931968768,
+   "body": "@aviralgarg05 i would like to work on this issue. Could you please assign me this issue?",
+   "created_at": "2026-02-20T06:35:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/144#issuecomment-3931968768",
+   "user": {
+    "login": "SiriVennela24-star"
+   }
+  },
+  {
+   "id": 3935863183,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/PyO3/pyo3\"> cargo/pyo3 </a></td><td>0.28.2</td> <td>:green_circle: 5.3</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 9</td><td>Found 29/30 approved changesets -- score normalized to 9</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 19 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>CII-Best\u2026",
+   "created_at": "2026-02-20T16:24:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/164#issuecomment-3935863183",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3939262844,
+   "body": "All issues were fixed. Can you review this, please",
+   "created_at": "2026-02-21T19:05:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#issuecomment-3939262844",
+   "user": {
+    "login": "AvaneeshKesavan"
+   }
+  },
+  {
+   "id": 3943131996,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/dtolnay/anyhow\"> cargo/anyhow </a></td><td>1.0.102</td> <td>:green_circle: 5.1</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>26 commit(s) and 0 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Code-Review</td><td>:warning: 1</td><td>Found 2/15 approved changesets -- score normalized to 1</td></tr><tr><td>Dangero\u2026",
+   "created_at": "2026-02-23T07:33:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/165#issuecomment-3943131996",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3943781887,
+   "body": "\ud83d\udc4b Thanks for opening your first issue in NexumDB! We appreciate your contribution to this project. A maintainer will review your issue soon. In the meantime, please make sure you've provided: - A clear description of the issue - Steps to reproduce (if applicable) - Your environment details Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) to learn more about how to contribute.",
+   "created_at": "2026-02-23T10:03:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/166#issuecomment-3943781887",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3949636128,
+   "body": "@aviralgarg05",
+   "created_at": "2026-02-24T06:57:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/166#issuecomment-3949636128",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3949892023,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough A new GitHub Actions workflow file was added to automatically label pull requests and issues with the OSCG26 label. The workflow triggers on pull request target opens and issue opens, then conditionally adds the label using GitHub script based on the event type. ## Changes |Cohort / File(s)|Summary| |---|---| |**GitHub Actions Workflow** <br> `.github/workflows/autolabeler.yml`|New workflow that automatically adds the OSCG26 label to pull requests and issues upon creation, using conditional steps with `actions/github-script@v7` to retrieve the resource number and apply the label.\u2026",
+   "created_at": "2026-02-24T08:01:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#issuecomment-3949892023",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3949892186,
+   "body": "@aviralgarg05 kindly take a look on this",
+   "created_at": "2026-02-24T08:01:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#issuecomment-3949892186",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3956896507,
+   "body": "Hi @aviralgarg05 , i had fixed the code .",
+   "created_at": "2026-02-25T05:19:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#issuecomment-3956896507",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3956952147,
+   "body": "@aviralgarg05 could you add the OSCG related labels to this PR ??",
+   "created_at": "2026-02-25T05:32:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#issuecomment-3956952147",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3957293931,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> No actionable comments were generated in the recent review. \ud83c\udf89 <details> <summary>\u2139\ufe0f Recent review info</summary> **Configuration used**: Path: .coderabbit.yaml **Review profile**: ASSERTIVE **Plan**: Pro <details> <summary>\ud83d\udce5 Commits</summary> Reviewing files that changed from the base of the PR and between c0cea290134d7d24a42799caf0229a548a9f8bc2 and 450062820f9f70304a4a7b14fba42fbd5b59ac67. </details> <details> <summary>\ud83d\udcd2 Files selected for processing (1)</summary> * `README.md` </details> </details> --- <!-- walkthrough_start --> ## Walkthrough Adds a SQL Support Matrix table to `README.md` under the v0.1.0 section, do\u2026",
+   "created_at": "2026-02-25T07:12:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/168#issuecomment-3957293931",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3977239816,
+   "body": "Please assign me this.",
+   "created_at": "2026-02-28T14:28:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/23#issuecomment-3977239816",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 3982631231,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/libc\"> cargo/libc </a></td><td>0.2.182</td> <td>:green_circle: 5.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 8</td><td>Found 15/17 approved changesets -- score normalized to 8</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Packaging</td><td>:warning: -1</td><td>pa\u2026",
+   "created_at": "2026-03-02T07:31:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/169#issuecomment-3982631231",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3999512792,
+   "body": "<!-- pr-reviewer-ci-fix-attempt:1 --> CI was failing. Attempt #1 to fix. Fixed: Added missing method to QueryOptimizer class and added Q-values display to explain output. The following tests were failing due to missing code: - - missing method - - missing method - - missing method - - missing Q-values in output Changes made: 1. Added method to QueryOptimizer class 2. Added Q-values display to function All 97 tests now pass locally. Note: Unable to push changes due to write access restrictions. Please apply the attached diff or manually implement the changes. CI will re-run automatically once changes are applied.",
+   "created_at": "2026-03-04T18:54:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#issuecomment-3999512792",
+   "user": {
+    "login": "vibingarthur"
+   }
+  },
+  {
+   "id": 4002154235,
+   "body": "<!-- pr-reviewer-ci-fix-attempt:1 --> CI is failing (Python tests). \u26a0\ufe0f **Note:** I don't have push access to this repository, so I cannot directly fix the CI failure. The Python tests are failing - please check the test output at: https://github.com/aviralgarg05/NexumDB/actions/runs/22013421617/job/63611306850",
+   "created_at": "2026-03-05T04:43:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#issuecomment-4002154235",
+   "user": {
+    "login": "vibingarthur"
+   }
+  },
+  {
+   "id": 4002624916,
+   "body": "> \ud83e\udd16 **Claude Coder** picking this up. (Timeout: 60min) Using AI/LLMs to code? wont be assigned, try making genuine contributions",
+   "created_at": "2026-03-05T06:37:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/147#issuecomment-4002624916",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 4003094171,
+   "body": "once check this pr and MERGE",
+   "created_at": "2026-03-05T08:00:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#issuecomment-4003094171",
+   "user": {
+    "login": "Adithyakp86"
+   }
+  },
+  {
+   "id": 4021725148,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/tokio-rs/tokio\"> cargo/tokio </a></td><td>1.50.0</td> <td>:green_circle: 6.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 16 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Security-Policy</td><td>:green_cir\u2026",
+   "created_at": "2026-03-09T07:29:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/170#issuecomment-4021725148",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4038059853,
+   "body": "now check this PR",
+   "created_at": "2026-03-11T10:16:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#issuecomment-4038059853",
+   "user": {
+    "login": "Adithyakp86"
+   }
+  },
+  {
+   "id": 4039294393,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: review paused by coderabbit.ai --> > [!NOTE] > ## Reviews paused > > It looks like this branch is under active development. To avoid overwhelming you with review comments due to an influx of new commits, CodeRabbit has automatically paused this review. You can configure this behavior by changing the `reviews.auto_review.auto_pause_after_reviewed_commits` setting. > > Use the following commands to manage reviews: > - `@coderabbitai resume` to resume automatic reviews. > - `@coderabbitai review` to trigger a single review. > > Use the checkboxes below for quick actions: > - [ ] <!--\u2026",
+   "created_at": "2026-03-11T13:39:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#issuecomment-4039294393",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 4065640935,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_cli/Cargo.toml</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>clap</td><td>>= 4.6.0, < 5.0.0</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <details><summary>Scorecard details</summary> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https:/\u2026",
+   "created_at": "2026-03-16T07:27:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/172#issuecomment-4065640935",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4065645822,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-03-16T07:28:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/159#issuecomment-4065645822",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4096629697,
+   "body": "can you please assign me this issue",
+   "created_at": "2026-03-20T08:45:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/52#issuecomment-4096629697",
+   "user": {
+    "login": "hargunsiingh"
+   }
+  },
+  {
+   "id": 4103944514,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Replaces stdin-based REPL with `rustyline::Editor`, adds `NexumCompleter` for SQL/table/column completions, persistent history at `~/.nexumdb_history`, and adds `rustyline`/`dirs` deps. Also updates catalog ownership to `Rc<Catalog>` and adjusts `get_schema_context` accordingly. ## Changes |Cohort / File(s)|Summary| |---|---| |**Dependencies** <br> `nexum_cli/Cargo.toml`|Added `rustyline = \"15\"` and `dirs = \"6\"` to support readline, completion, and history file management.| |**REPL input, completion & history** <br> `nexum_cli/src/main.rs`|Replaced `stdin.read_line` loop with `ru\u2026",
+   "created_at": "2026-03-21T18:43:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#issuecomment-4103944514",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 4190935104,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>Snapshot Warnings</h2> <blockquote>\u26a0\ufe0f: No snapshots were found for the head SHA 0ad61893dbbb65960a02d142871d1e2ded583462.</blockquote> Ensure that dependencies are being submitted on PR branches and consider enabling <em>retry-on-snapshot-warnings</em>. See <a href=\"https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#best-practices-for-using-the-dependency-review-api-and-the-dependency-submission-api-together\">the documentation</a> for more information and troubleshooting advice.<h2>OpenSSF Scorecard</h2> <table><\u2026",
+   "created_at": "2026-04-06T07:33:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/174#issuecomment-4190935104",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4208256641,
+   "body": "@aviralgarg05 , please check the recent commit.",
+   "created_at": "2026-04-08T17:42:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#issuecomment-4208256641",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 4216538316,
+   "body": "@aviralgarg05 , please check now.",
+   "created_at": "2026-04-09T18:30:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#issuecomment-4216538316",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 4225495791,
+   "body": "@aviralgarg05 , please check now, fixed formt error.",
+   "created_at": "2026-04-10T17:17:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#issuecomment-4225495791",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 4227830189,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/96#issuecomment-4227830189",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4227830304,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/95#issuecomment-4227830304",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4227830418,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/94#issuecomment-4227830418",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4227830503,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/70#issuecomment-4227830503",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4227830579,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/53#issuecomment-4227830579",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4227830651,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/51#issuecomment-4227830651",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4227830722,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-11T02:17:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/50#issuecomment-4227830722",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4230575407,
+   "body": "This pull request has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. Please update or rebase if this PR is still needed.",
+   "created_at": "2026-04-12T02:18:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/109#issuecomment-4230575407",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4230575438,
+   "body": "This pull request has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. Please update or rebase if this PR is still needed.",
+   "created_at": "2026-04-12T02:18:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108#issuecomment-4230575438",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4230575532,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-12T02:18:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/24#issuecomment-4230575532",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4230575578,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-12T02:18:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/21#issuecomment-4230575578",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4233365688,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-13T02:19:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/16#issuecomment-4233365688",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4233365759,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-13T02:19:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/14#issuecomment-4233365759",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4233365829,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-13T02:19:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/8#issuecomment-4233365829",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4233365884,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-13T02:19:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/4#issuecomment-4233365884",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4234636448,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>Snapshot Warnings</h2> <blockquote>\u26a0\ufe0f: No snapshots were found for the head SHA c33e117fe7bd80ee90794e015fb56dd5505601c6.</blockquote> Ensure that dependencies are being submitted on PR branches and consider enabling <em>retry-on-snapshot-warnings</em>. See <a href=\"https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#best-practices-for-using-the-dependency-review-api-and-the-dependency-submission-api-together\">the documentation</a> for more information and troubleshooting advice.<h2>OpenSSF Scorecard</h2> <table><\u2026",
+   "created_at": "2026-04-13T07:38:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/175#issuecomment-4234636448",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4264811432,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-04-17T02:19:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/19#issuecomment-4264811432",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4323756855,
+   "body": "This issue has been closed due to inactivity. Feel free to reopen if still relevant.",
+   "created_at": "2026-04-27T02:19:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/16#issuecomment-4323756855",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4323756964,
+   "body": "This issue has been closed due to inactivity. Feel free to reopen if still relevant.",
+   "created_at": "2026-04-27T02:19:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/14#issuecomment-4323756964",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4323757041,
+   "body": "This issue has been closed due to inactivity. Feel free to reopen if still relevant.",
+   "created_at": "2026-04-27T02:19:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/8#issuecomment-4323757041",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4323757130,
+   "body": "This issue has been closed due to inactivity. Feel free to reopen if still relevant.",
+   "created_at": "2026-04-27T02:19:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/4#issuecomment-4323757130",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4325262465,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/clap-rs/clap\"> cargo/clap </a></td><td>4.6.1</td> <td>:green_circle: 5.5</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:warning: 1</td><td>Found 3/19 approved changesets -- score normalized to 1</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 21 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Packaging</t\u2026",
+   "created_at": "2026-04-27T08:06:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/176#issuecomment-4325262465",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4357439593,
+   "body": "This issue has been closed due to inactivity. Feel free to reopen if still relevant.",
+   "created_at": "2026-05-01T02:19:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/19#issuecomment-4357439593",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4419330278,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/tokio-rs/tokio\"> cargo/tokio </a></td><td>1.52.3</td> <td>:green_circle: 6.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Security-Policy</td><td>:green_circle: 10</td><td>security policy file detected</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 19 issue activity found\u2026",
+   "created_at": "2026-05-11T09:36:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/177#issuecomment-4419330278",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4419331610,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/apache/datafusion-sqlparser-rs\"> cargo/sqlparser </a></td><td>0.62.0</td> <td> Unknown</td><td>Unknown</td></tr> </table><h2>Scanned Files</h2> <ul><li>Cargo.lock</li></ul> <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-05-11T09:37:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/178#issuecomment-4419331610",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4533678518,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/log\"> cargo/log </a></td><td>0.4.30</td> <td>:green_circle: 6.8</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 6</td><td>7 commit(s) and 1 issue activity found in the last 90 days -- score normalized to 6</td></tr><tr><td>Binary-Artifacts</td><td>:green_circle: 10</td><td>no binaries found in the repo</td></tr><tr><td>Dangerous-Workflow</td><td>:gr\u2026",
+   "created_at": "2026-05-25T10:51:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/179#issuecomment-4533678518",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  }
+ ]
+}

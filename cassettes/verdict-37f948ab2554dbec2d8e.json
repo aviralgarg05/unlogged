@@ -1,0 +1,11 @@
+{
+ "event_id": "pr-34",
+ "call": "included",
+ "clause_id": "S1",
+ "quoted_span": "Added cargo audit to CI for security checks.",
+ "reason": "Adding cargo audit to CI is explicitly covered by S1.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}

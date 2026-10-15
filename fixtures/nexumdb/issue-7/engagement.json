@@ -1,0 +1,36 @@
+{
+ "id": "nexumdb-issue-7",
+ "client_name": "NexumDB maintainer",
+ "client_email": null,
+ "invoicer_name": "contributor",
+ "currency": "USD",
+ "cap": null,
+ "rate_card": {
+  "default_rate": "0.00",
+  "currency": "USD",
+  "by_category": {}
+ },
+ "clauses": [
+  {
+   "id": "S1",
+   "kind": "scope",
+   "text": "Add a security audit step using `cargo audit` to CI to catch known vulnerabilities in dependencies."
+  },
+  {
+   "id": "S2",
+   "kind": "scope",
+   "text": "- name: Install cargo-audit\n  run: cargo install cargo-audit --locked\n\n- name: Security audit\n  run: cargo audit"
+  },
+  {
+   "id": "A1",
+   "kind": "approval",
+   "text": "**CI checks**: Ensure all automated checks pass"
+  },
+  {
+   "id": "A2",
+   "kind": "approval",
+   "text": "**Code review**: Address any feedback from reviewers"
+  }
+ ],
+ "opening": []
+}

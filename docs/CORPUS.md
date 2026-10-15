@@ -113,6 +113,57 @@ pushes in both directions — shared framing raises agreement, and targeted corr
 on exactly the events the critic named — so this figure is not clean inter-annotator agreement
 between independent readers. It is agreement between a pass and its own informed revision.
 
+### And then the model was given the same 31 events
+
+```bash
+uv run unlogged agreement
+```
+
+| pair | events | raw | Cohen's kappa | Gwet's AC1 |
+|---|---|---|---|---|
+| human first pass vs human second pass | 31 | 80.6% | 0.719 | 0.749 |
+| model vs human first pass | 31 | 61.3% | 0.437 | 0.507 |
+| model vs human second pass | 31 | 48.4% | 0.296 | 0.334 |
+
+**On the eight authored events in `fixtures/` the model scores 100%. On 31 events from real
+pull-request threads it agrees with a human reader less often than two human readers agree
+with each other.** That is the finding, it cuts against this project's own headline number,
+and it is reproducible from the committed label sets with no credentials.
+
+The error is not noise. It is one direction:
+
+| call | human first pass | human second pass | model |
+|---|---|---|---|
+| included | 7 | 5 | **18** |
+| scope_request | 7 | 6 | 1 |
+| billable_extra | 2 | 6 | 1 |
+| noise | 15 | 14 | 11 |
+
+The model calls more than half of everything `included`. On the ten events where both humans
+agreed and the model did not, it answered `included` nine times. It is not guessing badly — it
+is failing to find anything outside the agreement, which is the one job it has.
+
+### A hypothesis the data is consistent with, and the reason not to trust it yet
+
+The fixture engagement has two written exclusion clauses. The December threads here have
+**none** — their agreements list what is in scope and nothing else, because nothing in
+`CONTRIBUTING.md` at that date excluded anything. The February threads do have two.
+
+| agreement | events | human–human | model–human | model says `included` |
+|---|---|---|---|---|
+| no written exclusion | 21 | 76% | 43% | 13 of 21 |
+| two written exclusions | 10 | 90% | 80% | 5 of 10 |
+
+The reading that suggests itself is that the model finds out-of-scope work by matching it
+against a sentence that forbids something, and that when the agreement only says what IS
+included it stops looking. If that is right it is a real limitation with a real fix, and it
+would explain the 100% on a fixture that has exclusions.
+
+It is not established. Ten events against twenty-one is far too few, the two groups are
+different threads written by different people four months apart, and nothing rules out the
+simpler explanation that the February threads are just easier. It is written down here as a
+hypothesis with its confound named, not as a result.
+
 ### The disagreements are not scattered
 
 | thread | event | first pass | second pass |

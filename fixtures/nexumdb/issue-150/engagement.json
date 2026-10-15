@@ -1,0 +1,61 @@
+{
+ "id": "nexumdb-issue-150",
+ "client_name": "NexumDB maintainer",
+ "client_email": null,
+ "invoicer_name": "contributor",
+ "currency": "USD",
+ "cap": null,
+ "rate_card": {
+  "default_rate": "0.00",
+  "currency": "USD",
+  "by_category": {}
+ },
+ "clauses": [
+  {
+   "id": "S1",
+   "kind": "scope",
+   "text": "Add a lightweight check step in `.github/workflows/ci.yml`"
+  },
+  {
+   "id": "S2",
+   "kind": "scope",
+   "text": "Fail build if tracked files match a denylist (e.g. `.DS_Store`, `.coverage`, `htmlcov/`)"
+  },
+  {
+   "id": "S3",
+   "kind": "scope",
+   "text": "Document check behavior in `TESTING.md`"
+  },
+  {
+   "id": "S4",
+   "kind": "scope",
+   "text": "Add a CI guard that fails when generated/system junk files are committed."
+  },
+  {
+   "id": "A1",
+   "kind": "approval",
+   "text": "CI fails on denied tracked artifacts"
+  },
+  {
+   "id": "A2",
+   "kind": "approval",
+   "text": "CI remains green for clean commits"
+  },
+  {
+   "id": "A3",
+   "kind": "approval",
+   "text": "Rule list is easy to update"
+  },
+  {
+   "id": "X1",
+   "kind": "exclusion",
+   "text": "Keep changes small and focused"
+  },
+  {
+   "id": "X2",
+   "kind": "exclusion",
+   "text": "Avoid mixing unrelated fixes"
+  }
+ ],
+ "opening": []
+}

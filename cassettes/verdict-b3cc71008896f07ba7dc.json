@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628914463",
+ "call": "noise",
+ "clause_id": "A2",
+ "quoted_span": "this is the problematic file : > nexum_core/src/bridge/mod.rs",
+ "reason": "This only identifies a file; it neither performs work nor requests a specific change. A2 covers addressing reviewer feedback, but no such work is shown here.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.86
+}

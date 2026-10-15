@@ -1,0 +1,11 @@
+{
+ "event_id": "review-3851961815",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "Review (APPROVED): LGTM!",
+ "reason": "Review approval and acknowledgement only; no implementation work or additional scope requested.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}

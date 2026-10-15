@@ -1,0 +1,11 @@
+{
+ "event_id": "pr-163",
+ "call": "included",
+ "clause_id": "S4",
+ "quoted_span": "This PR adds a CI guard step to fail builds if generated/system junk files are committed (e.g. .DS_Store, .coverage, htmlcov).",
+ "reason": "The reported CI guard directly implements S4. The truncated Rust-change-detection note does not clearly establish separate unrelated work; where ambiguous, the lower-revenue reading is applied.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.94
+}

@@ -1,0 +1,11 @@
+{
+ "event_id": "pr-37",
+ "call": "included",
+ "clause_id": "S2",
+ "quoted_span": "Adds CI step: `cargo doc --workspace --no-deps` - Sets `RUSTDOCFLAGS=-D warnings` so doc warnings fail the CI",
+ "reason": "The documented CI change matches the command and warning policy explicitly specified in S2. The truncated automated summary does not clearly establish separately billable work; where ambiguous, the lower-revenue reading is applied.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.97
+}

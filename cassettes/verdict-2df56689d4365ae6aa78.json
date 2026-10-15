@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3629161421",
+ "call": "billable_extra",
+ "clause_id": "S2",
+ "quoted_span": "I made the cargo-audit installation conditional because of failing workflow, that way it ignores it if it already exists.",
+ "reason": "Completed a workflow installation change beyond generating and committing Cargo.lock. The event does not identify this as reviewer feedback covered by A1. The default rate is USD 0.00/h.",
+ "work_description": "Make cargo-audit installation conditional",
+ "category": "default",
+ "hours": "0.25",
+ "confidence": 0.86
+}

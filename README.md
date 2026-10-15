@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 117 tests, no credentials needed
+uv run pytest -q                       # 119 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -70,6 +70,15 @@ Both arms are scored, and both run with no key:
 |---|---|---|---|---|---|---|---|---|---|---|
 | keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 | 0 | $0.00 |
 | **gpt-6.1-sol** | **100%** | **100%** | **100%** | **0** | **0** | **0** | **$0.00** | **$0.00** | **1** | **-$42.50** |
+
+> **Read this beside the table, not after it.** Those eight events were written by the author
+> of the arm being measured. The same model was given 31 events from real pull-request threads
+> in another repository, alongside two human readers: the humans agree with each other 80.6%
+> of the time (κ=0.719), the model agrees with them 61.3% and 48.4%. It calls 18 of 31 events
+> `included` where the humans call 5 and 7 — it is not finding out-of-scope work at all.
+> `uv run unlogged agreement` reproduces that with no credentials, and
+> [`docs/CORPUS.md`](docs/CORPUS.md) is the whole account. **100% below is a fact about this
+> fixture, not a capability.**
 
 The last two columns exist because the model does not get a clean sheet. It calls all eight
 events correctly and cites a clause for each, then estimates `e8` at 1.5 hours where the label
@@ -234,7 +243,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 117 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 119 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

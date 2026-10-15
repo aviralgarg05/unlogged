@@ -255,16 +255,18 @@ def evaluate_corpus(
 
 @app.command()
 def agreement(
-    first: Path = typer.Option(Path("fixtures/agreement/round1.jsonl")),
-    second: Path = typer.Option(Path("fixtures/agreement/round2.jsonl")),
+    directory: Path = typer.Option(Path("fixtures/agreement"), help="A folder of label sets"),
 ) -> None:
-    """Score two independent label sets against each other.
+    """Score every pair of label sets against each other.
 
-    This project's own attempt at a real ground-truth corpus is the input: two passes over
-    the same pull-request threads, the second written after an independent reader attacked
-    the first. Reporting that attempt as a failure said nothing about how hard the task is.
-    This says it in a number a reader can check.
+    There is no gold standard here and the directory does not pretend otherwise: it holds one
+    file per reader. Two are passes a human made over the same real pull-request threads, the
+    second written after an independent reader attacked the first. One is the model's. With no
+    ground truth the only honest question is how far each reader is from the others, and the
+    useful comparison is how far the model sits from where two humans sit from each other.
     """
+    import itertools
+
     from unlogged.eval.agreement import score as agreement_score
 
     def load(path: Path) -> dict[str, str]:
@@ -275,12 +277,27 @@ def agreement(
                 out[f"{row['issue']}:{row['event_id']}"] = row["call"]
         return out
 
-    result = agreement_score(load(first), load(second))
-    typer.echo(result.table())
-    if result.disagreements:
-        typer.echo("\nWhere they differed:")
-        for event_id, a, b in result.disagreements:
-            typer.echo(f"  {event_id:<28} {a:<15} vs {b}")
+    sets = {p.stem: load(p) for p in sorted(directory.glob("*.jsonl"))}
+    if len(sets) < 2:
+        typer.secho(f"Need at least two label sets in {directory}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+    typer.echo("| pair | events | raw | Cohen's kappa | Gwet's AC1 |")
+    typer.echo("|---|---|---|---|---|")
+    for a, b in itertools.combinations(sets, 2):
+        r = agreement_score(sets[a], sets[b])
+        typer.echo(f"| {a} vs {b} | {r.n} | {r.raw:.1%} | {r.kappa:.3f} | {r.ac1:.3f} |")
+
+    names = list(sets)
+    first = sets[names[0]]
+    typer.echo("\nWhere the readers split, by call:")
+    for name in names:
+        counts: dict[str, int] = {}
+        for key in first:
+            if key in sets[name]:
+                counts[sets[name][key]] = counts.get(sets[name][key], 0) + 1
+        rendered = "  ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+        typer.echo(f"  {name:<10} {rendered}")
 
 
 @app.command()

@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3956896507",
+ "call": "included",
+ "clause_id": "S1",
+ "quoted_span": "i had fixed the code .",
+ "reason": "Reports a code fix without identifying any work outside the agreed workflow automation. Treating it as an in-scope fix is the lower-revenue reading; the comment does not establish an unrelated change.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.6
+}

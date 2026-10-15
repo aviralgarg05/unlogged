@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628908165",
+ "call": "noise",
+ "clause_id": "A2",
+ "quoted_span": "Ok I will look into it then",
+ "reason": "Acknowledges review feedback and expresses future intent; no refactoring or other work is performed in this event.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.94
+}

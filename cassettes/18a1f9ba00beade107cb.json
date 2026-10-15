@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2777432493,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Path traversal via `NEXUMDB_CACHE_FILE` environment variable.** The environment variable value is used directly as a path component without sanitization. If `NEXUMDB_CACHE_FILE` is set to something like `../../etc/cron.d/payload`, then `self.cache_dir / self.cache_file` resolves outside the intended `cache/` directory, allowing arbitrary file reads/writes via `load_cache`/`save_cache`. Sanitize the filename by stripping path separators and resolving against the intended directory: <details> <summary>\ud83d\udd12 Proposed fix</summary> ```diff # Support environment variable for cache file path cache_file_env = os.environ.get(\"NEXUMDB_CACHE_FILE\", cache_file) - self\u2026",
+   "created_at": "2026-02-07T11:13:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/99#discussion_r2777432493",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777432496,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Missing type hints on `choose_best_join` and other public functions.** `choose_best_join`, `optimize`, and `explain` lack parameter and return type annotations. As per coding guidelines, \"Check Python code quality, type hints usage, and PEP 8 compliance.\" <details> <summary>Example fix for `choose_best_join`</summary> ```diff -def choose_best_join(A_stats, B_stats): +def choose_best_join(A_stats: TableStats, B_stats: TableStats) -> tuple[str, float]: cost1 = cost_nested_loop(A_stats.row_count, B_stats.row_count) cost2 = cost_nested_loop(B_stats.row_count, A_stats.row_count) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable sugge\u2026",
+   "created_at": "2026-02-07T11:13:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/99#discussion_r2777432496",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777466621,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add language identifiers to expected-output fences.** The expected-output code fences are missing a language tag (MD040). Use `text` to satisfy linting and improve readability. As per coding guidelines, \"**/*.md: Check documentation clarity, spelling, grammar, and formatting.\" <details> <summary>\ud83d\udccc Example fix (apply to all expected-output blocks)</summary> ```diff -``` +```text id | name | age -------------------- 1 | Alice | 30 3 | Andrew | 22 4 | Anita | 28 ``` </details> <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b markdownlint-cli2 (0.20.0)</summary> [warning] 203-203: Fenced code blocks should have a language specified (MD040, fenced-code\u2026",
+   "created_at": "2026-02-07T12:03:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/100#discussion_r2777466621",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777596476,
+   "body": "Duplicate entries: Please update existing entries slightly instead of appending new ones (e.g. check for similarity > threshold and update timestamp/result).",
+   "created_at": "2026-02-07T14:11:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777596476",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2777596477,
+   "body": "Critically important: Enforce the cache limit here immediately after loading. Suggested: ```python while len(self.cache) > self.max_cache_size: self._evict_lru() ```",
+   "created_at": "2026-02-07T14:11:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777596477",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2777622224,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Long `__init__` signature exceeds PEP 8 line-length recommendation.** Consider breaking the parameters across multiple lines for readability. <details> <summary>Suggested formatting</summary> ```diff - def __init__(self, similarity_threshold: float = 0.95, cache_file: str = \"semantic_cache.pkl\", max_cache_size: int = 1000) -> None: + def __init__( + self, + similarity_threshold: float = 0.95, + cache_file: str = \"semantic_cache.pkl\", + max_cache_size: int = 1000, + ) -> None: ``` </details> As per coding guidelines, \"Check Python code quality, type hints usage, and PEP 8 compliance.\" <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary>\u2026",
+   "created_at": "2026-02-07T14:38:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777622224",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891071,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Statistics initialized before `load_cache()` may silently discard constructor defaults.** `hits`, `misses`, and `evictions` are initialized to 0 on lines 35\u201337, then immediately overwritten by `load_cache()` \u2192 `load_cache_json()` (lines 300\u2013303) if a persisted cache file exists. This is acceptable for resuming stats across restarts, but there is no way for a caller to explicitly reset statistics on construction while preserving the cache. Consider documenting this behavior or adding a `reset_stats` parameter. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 34 - 40, The constructor currently initializes self.hits/mi\u2026",
+   "created_at": "2026-02-07T18:12:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891071",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891072,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`put()` does not persist the cache after adding/updating entries.** The `put()` method modifies the in-memory cache but never calls `save_cache()`. If the process crashes, all entries added since the last explicit save are lost. The Rust bridge (`nexum_core/src/bridge/mod.rs` lines 102\u2013109) calls `put()` without a follow-up save, so inserts may never be persisted unless something else triggers a save. Consider either: 1. Calling `self.save_cache()` at the end of `put()` (simple, but adds I/O per insert), or 2. Implementing a dirty flag and periodic/deferred flush, or 3. Documenting that callers are responsible for calling `save_cache()`. <details> <summary\u2026",
+   "created_at": "2026-02-07T18:12:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891072",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891075,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`cache_exists` and `cache_size_bytes` always report wrong values.** Same root cause as the `clear()` bug: `self.cache_path` points to the `.pkl` filename, but the actual persisted file is `.json`. Consequently: - `cache_exists` will be `False` even when a JSON cache file exists. - `cache_size_bytes` will always be `0`. This should be fixed alongside the `clear()` path issue \u2014 either store the resolved JSON path as `self.cache_path`, or compute the JSON path consistently wherever it's referenced. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 325 - 341, get_cache_stats currently checks self.cache_path (which\u2026",
+   "created_at": "2026-02-07T18:12:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891075",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891079,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Negative `new_max_size` causes an infinite loop.** There is no validation that `new_max_size >= 0`. If a negative value is passed (e.g., `optimize_cache(new_max_size=-1)`), the eviction loop on line 404 becomes infinite: after all entries are evicted, `len(self.cache)` is `0`, but `0 > -1` is `True`, and `_evict_lru()` returns immediately on empty cache without reducing the size further. The same issue exists in `put()` (line 126) and the constructor (line 24) if `max_cache_size` is set to a negative value through any code path. <details> <summary>Proposed fix: validate in constructor and optimize_cache</summary> ```diff def __init__( self, similarity_t\u2026",
+   "created_at": "2026-02-07T18:12:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891079",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891084,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Tests silently pass/fail depending on whether `sentence-transformers` is installed \u2014 query strings are too similar for the fallback vectorizer.** With the fallback vectorizer, `\"query1\"`, `\"query2\"`, `\"query3\"`, `\"query4\"` produce near-identical vectors (they differ by a single character, yielding cosine similarity \u2248 0.9999). Since the dedup threshold in `put()` is 0.95, every `put()` after the first will _update_ the existing entry rather than adding a new one. The cache never grows beyond 1 entry, and all LRU/eviction assertions will fail. These tests only pass when the `SentenceTransformer` model is loaded and produces semantically distinct embedding\u2026",
+   "created_at": "2026-02-07T18:12:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891084",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891092,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Same query-similarity issue applies here \u2014 `\"query1\"`, `\"query2\"`, `\"query3\"` collide under fallback vectorization.** The same fix (dissimilar queries or higher threshold) applies. The `time.sleep(0.01)` calls are also fragile on heavily loaded CI runners, but are acceptable for this granularity of timestamp ordering. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_optimizer.py` around lines 138 - 162, Test uses queries that collide under the fallback vectorizer causing unintended eviction; update test_lru_updates_on_access to use clearly dissimilar query strings (e.g., \"alpha_query1\", \"beta_query2\", \"gamma_query3\") or s\u2026",
+   "created_at": "2026-02-07T18:12:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891092",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891093,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **`test_cache_stats_tracking` has the same similarity collision plus an additional assertion error.** Beyond the dedup issue (`\"query1\"` and `\"query2\"` collide so only 1 entry is stored), `cache.get(\"query3\")` on line 176 will also _hit_ the cache (similarity \u2248 0.9999 with `\"query1\"`), so `misses` stays at 0 and `hits` becomes 2 \u2014 breaking all assertions on lines 179\u2013184. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_optimizer.py` around lines 164 - 184, The test failure is caused by unintended high-similarity collisions in SemanticCache: change the test to use truly distinct keys or adjust the threshold so put/get behav\u2026",
+   "created_at": "2026-02-07T18:12:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891093",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777891095,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Same similarity collision \u2014 `f\"query{i}\"` strings all deduplicate to one entry.** This test expects 5 entries but would only store 1 with the fallback vectorizer. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_optimizer.py` around lines 186 - 200, The test test_optimize_cache_manual_resize is creating semantically identical inputs (f\"query{i}\") that the fallback vectorizer collapses into one entry; update the test to ensure distinct vectors per put by either (a) using truly unique texts for each insertion (e.g., include a generated uuid or index in the content passed to SemanticCache.put) or (b) monkeypatching SemanticC\u2026",
+   "created_at": "2026-02-07T18:12:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777891095",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777916180,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: `load_cache()` never finds the JSON file because `cache_path` is now `.json`.** The constructor (Line 44) now resolves `cache_path` to a `.json` extension. However, `load_cache()` (Line 206) applies its own `.pkl`\u2192`.json` conversion to `filepath`. When `filepath` is already `.json`, the `else` branch appends `.json` again, producing `\"cache/semantic_cache.json.json\"` \u2014 a path that will never exist. The cache is silently never loaded on startup. <details> <summary>Proposed fix</summary> ```diff # Try JSON first (safer format) - json_filepath = filepath.replace('.pkl', '.json') if filepath.endswith('.pkl') else f\"{filepath}.json\" + if filepath.e\u2026",
+   "created_at": "2026-02-07T18:38:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777916180",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777916183,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`get()` mutates `last_access` and `hits` without marking the cache dirty.** The LRU timestamp update is lost on restart unless something else triggers a save. Consider setting `self._dirty = True` here so the auto-save mechanism eventually persists LRU ordering changes. <details> <summary>Proposed fix</summary> ```diff # Update last access time for LRU entry['last_access'] = current_time self.hits += 1 + self._dirty = True print(f\"Cache hit! Similarity: {similarity:.4f}\") return entry['result'] ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 109 - 111, The get() method updates entry['last_acce\u2026",
+   "created_at": "2026-02-07T18:38:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777916183",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777916184,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`put()` returns early on dedup-update without setting `_dirty` or triggering auto-save.** When an existing similar entry is updated (Lines 128-131), the method returns before reaching `self._dirty = True` and `self._maybe_auto_save()` on Lines 146-147. Updated entries will never be auto-persisted. <details> <summary>Proposed fix</summary> ```diff if similarity >= self.similarity_threshold: # Update existing entry instead of creating duplicate entry['result'] = result entry['last_access'] = current_time print(f\"Updated existing cache entry (similarity: {similarity:.4f})\") + self._dirty = True + self._maybe_auto_save() return ``` </details> <details> <summar\u2026",
+   "created_at": "2026-02-07T18:38:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777916184",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777916186,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`_evict_lru` prints on every eviction \u2014 noisy during bulk operations.** When `optimize_cache` or `load_cache_json` triggers many evictions in a loop, each one produces a print statement. For a resize from 1000 \u2192 10, that's 990 log lines. Consider logging only a summary or using a logging framework with appropriate levels. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 159 - 176, The _evict_lru method currently prints a line for every eviction (causing noise during bulk evictions from optimize_cache or load_cache_json); replace the direct print call with a logging call at a debug or info level (e.g., self.logger.de\u2026",
+   "created_at": "2026-02-07T18:38:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777916186",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777916188,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Tests lack isolation \u2014 shared cache directory causes cross-test state leakage.** All `SemanticCache` instances use the default `cache_file` and write to the shared `cache/` directory. If any test persists data (via auto-save or `save_cache()`), subsequent tests may load stale state (stats, entries) during `__init__` \u2192 `load_cache()`. This can cause flaky results depending on execution order. Use `tmp_path` (pytest fixture) or unique cache file names per test, and clean up in teardown: ```python def test_lru_eviction_on_cache_full(self, tmp_path): cache = SemanticCache( similarity_threshold=0.95, max_cache_size=3, cache_file=str(tmp_path / \"test.pkl\"), ) ..\u2026",
+   "created_at": "2026-02-07T18:38:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777916188",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777916189,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`test_cache_size_zero_max`: verify `put()` behavior matches expectation.** With `max_cache_size=0`, `put()` appends an entry then immediately evicts it. The assertion `cache.evictions == 1` is correct given the current implementation, but this is somewhat surprising API behavior \u2014 an entry is briefly created only to be evicted. Consider adding a comment documenting this is the expected contract (add-then-evict), not a no-op. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_optimizer.py` around lines 205 - 212, The test observes that with max_cache_size=0 the SemanticCache.put method adds an entry then immediately evicts it; update\u2026",
+   "created_at": "2026-02-07T18:38:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777916189",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777928629,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`get()` performs O(n) linear scan with vectorization on every call.** Each `get()` vectorizes the query and computes cosine similarity against every cached entry. This is inherent to the semantic-similarity approach but worth noting: with `max_cache_size=1000`, every lookup does 1000 cosine similarity computations. If this is on a hot path (e.g., called from the Rust bridge per query), consider approximate nearest-neighbor indexing (e.g., FAISS or Annoy) as the cache grows. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 101 - 118, get() currently vectorizes the query and linearly scans self.cache computing cosine_\u2026",
+   "created_at": "2026-02-07T18:53:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777928629",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777928630,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`_evict_lru()` is O(n) per call, making bulk eviction O(n\u00b2).** Each call linearly scans the entire cache to find the oldest entry. When `optimize_cache` shrinks a large cache (e.g., 1000 \u2192 10), this results in 990 \u00d7 O(n) scans. Consider maintaining the cache sorted by `last_access` or using `heapq` / an `OrderedDict` for O(1) or O(log n) eviction. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 163 - 182, The current _evict_lru scans self.cache linearly causing O(n\u00b2) on bulk eviction; replace the linear-scan approach with an O(1)/O(log n) LRU structure (e.g., switch self.cache to collections.OrderedDict keyed by a\u2026",
+   "created_at": "2026-02-07T18:53:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777928630",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777928631,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Path mismatch for cache files with non-standard extensions.** When `cache_file` has neither `.pkl` nor `.json` extension (e.g., `\"my_cache\"`), `save_cache` writes to `cache/my_cache` (Line 201 passes it through unchanged), but `load_cache` looks for `cache/my_cache.json` (Line 218 appends `.json`). The cache will never be found on reload. <details> <summary>Proposed fix</summary> ```diff def __init__(self, similarity_threshold: float = 0.95, cache_file: str = \"semantic_cache.pkl\", max_cache_size: int = 1000) -> None: ... # Always use JSON extension for cache_path (actual persistence format) - json_filename = cache_file_env.replace('.pkl', '.json') if cache\u2026",
+   "created_at": "2026-02-07T18:53:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777928631",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931052,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Version string is duplicated across `Args` and `print_banner`.** `\"0.4.0\"` appears in the `#[command(version)]` attribute (Line 16) and again hard-coded in `print_banner` (Line 215). If one is updated without the other, they'll drift. Consider using a constant or referencing `env!(\"CARGO_PKG_VERSION\")`. <details> <summary>\u267b\ufe0f Proposed approach</summary> Define the version from the package metadata and reference it in both places: ```diff +const VERSION: &str = env!(\"CARGO_PKG_VERSION\"); + #[derive(Parser, Debug)] #[command(name = \"nexum\")] #[command(author = \"Aviral Garg\")] -#[command(version = \"0.4.0\")] +#[command(version = VERSION)] ``` Then in `print_banner`: `\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931052",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931054,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Database path `\"./nexumdb_data\"` is hardcoded.** The data directory is not configurable. Consider adding a `--data-dir` CLI argument to `Args` for flexibility, especially for testing or running multiple instances. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_cli/src/main.rs` around lines 52 - 61, The startup currently hardcodes the data path when constructing StorageEngine in main; add a --data-dir field to the Args struct and parse it in Args::parse(), use that value (falling back to the current \"./nexumdb_data\" default) when calling StorageEngine::new(...) and when passing storage into Executor::new(...) and Catalog::new(...). Update any r\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931054",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931055,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **String slicing with byte offsets is safe here but fragile.** `input[4..]` and `input[8..]` work because `\"ASK \"` and `\"EXPLAIN \"` are ASCII. This is fine currently, but if command prefixes ever change to non-ASCII, these would panic. A more robust alternative: <details> <summary>\u267b\ufe0f Slightly more robust approach</summary> ```diff - if input.to_uppercase().starts_with(\"ASK \") { - let natural_query = input[4..].trim(); + if let Some(natural_query) = input.strip_prefix(\"ASK \").or_else(|| input.strip_prefix(\"ask \")) { + let natural_query = natural_query.trim(); ``` Note: `strip_prefix` is case-sensitive, so you'd need to handle case. Alternatively, use `input.get(4..)\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931055",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931056,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # Locate and examine the banner function in nexum_cli/src/main.rs fd -t f main.rs | grep nexum_cli | head -1 | xargs -I {} sh -c 'sed -n \"199,219p\" {} && echo \"---\" && sed -n \"208p\" {}' ``` Repository: aviralgarg05/NexumDB Length of output: 596 --- </details> **Fix double backslash in ASCII art banner for correct alignment.** In the raw string literal on line 208, `\\_\\\\__` contains a double backslash that will render as two literal backslashes in the output. Since raw strings (`r#\"...\"#`) treat backslashes as literal characters, the `\\\\` prints as `\\\\` instead of the single `\\` used th\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931056",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931059,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Silent column/value mismatch in JSON output for `Selected` results.** Line 388 silently skips columns when `i >= row.values.len()`. If a row has fewer values than columns, the JSON object will have missing keys with no indication of the mismatch. This could mask data corruption or bugs upstream. Consider at minimum inserting a `null` for missing values so the JSON shape is consistent: <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff for (i, col) in columns.iter().enumerate() { - if i < row.values.len() { - obj.insert(col.clone(), value_to_json(&row.values[i])); - } + let val = row.values.get(i) + .map(value_to_json) + .unwrap_or(serde_json::Value::Null); + ob\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931059",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931060,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`unwrap()` on JSON serialization could panic on unusual float values.** `serde_json::to_string_pretty` will error on NaN/Infinity floats. If `ExecutionResult` can contain such values, this panics. Use `unwrap_or_else` or handle the error. <details> <summary>\ud83d\udee1\ufe0f Proposed fix</summary> ```diff - println!(\"{}\", serde_json::to_string_pretty(&json).unwrap()); + match serde_json::to_string_pretty(&json) { + Ok(output) => println!(\"{}\", output), + Err(e) => print_error(\"JSON serialization error\", &e.to_string()), + } ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_cli/src/main.rs` at line 442, The call to serde_json::to_string_pre\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931060",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777931061,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`serde_json::json!(f)` will fail for NaN/Infinity float values.** `serde_json::json!` panics when given `f64::NAN` or `f64::INFINITY`. If the database can store or compute such values, this is a runtime panic. <details> <summary>\ud83d\udee1\ufe0f Proposed fix</summary> ```diff - nexum_core::sql::types::Value::Float(f) => serde_json::json!(f), + nexum_core::sql::types::Value::Float(f) => { + if f.is_finite() { + serde_json::json!(f) + } else { + serde_json::Value::String(f.to_string()) + } + } ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accur\u2026",
+   "created_at": "2026-02-07T18:56:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777931061",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777945960,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Case-insensitive matching regression for `ASK` command.** `strip_prefix(\"ASK \")` / `strip_prefix(\"ask \")` only matches exact case. The previous approach (via `to_uppercase().starts_with(...)`) was fully case-insensitive. Inputs like `\"Ask ...\"` or `\"aSk ...\"` will now fall through to the SQL parser and fail. The same issue applies to `EXPLAIN` on line 161. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff - if let Some(natural_query) = input.strip_prefix(\"ASK \").or_else(|| input.strip_prefix(\"ask \")) { - let natural_query = natural_query.trim(); + if input.len() > 4 && input[..4].eq_ignore_ascii_case(\"ASK \") { + let natural_query = input[4..].trim(); ``\u2026",
+   "created_at": "2026-02-07T19:09:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777945960",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777945961,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Fallback error JSON doesn't escape the error message.** If `serde_json::to_string_pretty` fails, the error message `e` is interpolated into a JSON string without escaping. If `e` contains `\"` or `\\`, the output will be malformed JSON. This is unlikely to be reached now that NaN/Infinity are handled, but the fallback should still be valid. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff - println!(\"{}\", serde_json::to_string_pretty(&json).unwrap_or_else(|e| format!(\"{{\\\"error\\\": \\\"{}\\\"}}\", e))); + println!(\"{}\", serde_json::to_string_pretty(&json).unwrap_or_else(|e| { + let err = serde_json::json!({\"error\": e.to_string()}); + // This serialization won'\u2026",
+   "created_at": "2026-02-07T19:09:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777945961",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777945962,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Duplicated logic: `format_value` exists identically in `nexum_core::executor` (lines 653\u2013661).** This is a direct copy of the private `format_value` in the core crate. Consider either making the core version `pub` or implementing `std::fmt::Display` for `nexum_core::sql::types::Value` so both the CLI and executor can share it without duplication. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_cli/src/main.rs` around lines 526 - 534, The CLI duplicates the private helper format_value (identical to the one in nexum_core::executor); remove the copied function from nexum_cli/src/main.rs and instead expose a single implementation from the core crat\u2026",
+   "created_at": "2026-02-07T19:09:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#discussion_r2777945962",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777947512,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`misses` increment does not set `_dirty`, so miss counts may be lost.** On a cache miss, `self.misses` is incremented but `self._dirty` is not set. If the process terminates without any subsequent `put()` or hit, the miss count since the last save is lost. For consistency with how `hits` are handled (Line 116), consider marking dirty here as well. <details> <summary>Proposed fix</summary> ```diff self.misses += 1 + self._dirty = True return None ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 121 - 122, On cache miss in the method that increments self.misses, also set self._dirty = True so the\u2026",
+   "created_at": "2026-02-07T19:11:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777947512",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2777947514,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Eviction logging guard uses a cumulative lifetime counter, not a per-batch counter.** `self.evictions` is a lifetime counter that is also persisted and restored across restarts. After the 5th eviction *ever*, no individual eviction is logged again \u2014 even across fresh bulk evictions from `optimize_cache()` or `load_cache_json()`. The intent appears to be limiting noise during a single bulk operation. Consider using a local counter passed from the caller, or comparing against `evictions` at the start of the batch, rather than the cumulative total. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 186 - 190, The\u2026",
+   "created_at": "2026-02-07T19:11:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2777947514",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575368,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Extract duplicated \"table not found with suggestions\" logic into a helper method.** This exact 6-line pattern is copy-pasted across INSERT (line 64), SELECT (line 94), DESCRIBE (line 215), DROP (line 237), DELETE (line 264), and UPDATE (line 339). Extract it into a private method on `Executor` to reduce duplication and centralize the max-distance parameter. <details> <summary>\u267b\ufe0f Proposed helper method</summary> Add this private method to `Executor`: ```rust fn table_not_found_error(&self, table: &str, context: &str) -> StorageError { let similar = self.catalog.list_tables().unwrap_or_default(); StorageError::key_not_found( table, context, crate::storag\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575368",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575369,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Backward-compatibility constructors use PascalCase method names \u2014 consider a deprecation path.** The `#[allow(non_snake_case)]` methods (`OpenError(...)`, `WriteError(...)`, etc.) shadow the enum variant names, which is legal but non-idiomatic. They exist for backward compatibility, but there's no `#[deprecated]` annotation to nudge callers toward the preferred `open_error` / `key_not_found` / etc. helpers. Adding `#[deprecated(note = \"use StorageError::open_error() instead\")]` would make the migration intent explicit. Also applies to: 130-133, 151-154, 172-175, 193-196 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/storage/error.rs`\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575369",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575370,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`with_context` silently discards context for non-`KeyNotFound` variants.** The catch-all arm `_ => self` means callers adding context to `OpenError`, `WriteError`, `ReadError`, or `SerializationError` get no indication that the context was ignored. This is surprising API behavior. Consider either extending the method to append context to all variants' `reason` fields, or returning a `Result`/logging a warning so callers don't silently lose information. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/storage/error.rs` around lines 326 - 342, with_context currently only updates StorageError::KeyNotFound and returns self for all ot\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575370",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575371,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Bug: byte-index slicing in `truncate_preview` will panic on multi-byte UTF-8 input.** `s.len()` and `&s[..max_len]` operate on byte indices. If `max_len` falls in the middle of a multi-byte character (e.g., emoji, CJK, accented chars), slicing panics with `byte index is not a char boundary`. Data previews may contain arbitrary user-supplied data, so this is reachable. Use `s.char_indices()` or `.floor_char_boundary()` (nightly) to find a safe cut point, or simply use `s.chars().take(max_len)`. <details> <summary>\ud83d\udc1b Proposed fix using char_indices</summary> ```diff fn truncate_preview(s: &str, max_len: usize) -> String { - if s.len() <= max_len { + if s.c\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575371",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575372,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`#[allow(dead_code)]` is unnecessary on a `pub` function that is actively used.** `find_similar_keys` is re-exported in `storage/mod.rs` and called from `executor/mod.rs`. The `dead_code` suppression is not needed and may hide future actual dead-code warnings. <details> <summary>Proposed fix</summary> ```diff -#[allow(dead_code)] pub fn find_similar_keys(target: &str, candidates: &[String], max_distance: usize) -> Vec<String> { ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing l\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575372",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575373,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Bug: `levenshtein_distance` uses byte length for matrix dimensions but iterates by chars.** `s1.len()` and `s2.len()` return byte counts, but the nested loops iterate with `.chars()`, which yields fewer items for multi-byte UTF-8 strings. The matrix is sized for bytes, but only char-count rows/columns are filled. The final `matrix[len1][len2]` then reads an unfilled (zero-initialized) cell, producing an incorrect distance for any input containing non-ASCII characters. Use `s1.chars().count()` for the matrix dimensions (or collect chars into `Vec<char>` to also avoid re-iteration overhead). <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff fn levenshte\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575373",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575374,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Tests only cover ASCII inputs \u2014 add multi-byte UTF-8 test cases.** Given the byte-vs-char bugs in `levenshtein_distance` and `truncate_preview`, the current tests won't catch regressions for non-ASCII strings. After fixing those functions, add tests with multi-byte characters (e.g., `\"caf\u00e9\"`, `\"na\u00efve\"`, emoji table names) to prevent future regressions. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/storage/error.rs` around lines 455 - 510, Tests currently only use ASCII and will miss byte-vs-char bugs in levenshtein_distance and truncate_preview; update the tests module to add UTF-8/multi-byte cases (e.g., \"caf\u00e9\" vs \"cafe\"\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575374",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778575375,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # First, check the current state of mod.rs echo \"=== Current mod.rs content ===\" cat -n nexum_core/src/storage/mod.rs echo -e \"\\n=== Check if ErrorCode is referenced outside error.rs ===\" rg -nP '\\bErrorCode\\b' --type=rust -g '!**/storage/error.rs' echo -e \"\\n=== Check error.rs to understand ErrorCode definition ===\" head -100 nexum_core/src/storage/error.rs ``` Repository: aviralgarg05/NexumDB Length of output: 3316 --- </details> **`ErrorCode` must be re-exported for documented programmatic error handling to be usable.** `StorageError::code()` returns an `ErrorCode`, and\u2026",
+   "created_at": "2026-02-08T05:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778575375",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2778619709,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Minor: \"Did you mean one of these?\" is slightly misleading when there's exactly one suggestion.** When `similar_keys` has a single entry, the phrasing \"one of these?\" reads oddly. Consider differentiating the singular case: <details> <summary>\ud83d\udca1 Suggested tweak</summary> ```diff let suggestion = if !similar_keys.is_empty() { - format!( - \"Did you mean one of these? {}\\nUse 'SHOW TABLES' to see all available tables\", - similar_keys.join(\", \") - ) + if similar_keys.len() == 1 { + format!( + \"Did you mean '{}'?\\nUse 'SHOW TABLES' to see all available tables\", + similar_keys[0] + ) + } else { + format!( + \"Did you mean one of these? {}\\nUse 'SHOW TABLES' to see all av\u2026",
+   "created_at": "2026-02-08T05:57:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2778619709",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779083762,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Loaded `max_cache_size` from JSON is not validated \u2014 negative persisted value causes an infinite eviction loop.** The constructor (line 27) and `optimize_cache` (line 478) both validate `max_cache_size >= 0`, but `load_cache_json` blindly assigns the persisted value on line 370 without any check. A manually edited (or corrupted) JSON file with `\"max_cache_size\": -1` will make the `while len(self.cache) > self.max_cache_size` loop on line 388 (and subsequent `put()` calls) infinite. <details> <summary>Proposed fix</summary> ```diff # Load max_cache_size if available (format version 1.1+) if 'max_cache_size' in data: - self.max_cache_size = data['max_cach\u2026",
+   "created_at": "2026-02-08T10:17:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2779083762",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779083770,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Move `import time` and `import pytest` to the top of the file.** `time` (line 156) and `pytest` (lines 253, 263) are imported inside test methods. Moving them to the module level follows Python conventions and avoids repeated imports. <details> <summary>Suggested change at the top of the file</summary> ```diff +import time +import pytest from nexum_ai.optimizer import SemanticCache, QueryOptimizer ``` </details> Also applies to: 253-253, 263-263 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_optimizer.py` at line 156, The test file currently performs local imports of time and pytest inside test functions (the inline \"import time\"\u2026",
+   "created_at": "2026-02-08T10:17:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2779083770",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779263928,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for cache directory references and SemanticCache implementation rg -n \"cache\" --type=py nexum_ai/optimizer.py | head -30 ``` Repository: aviralgarg05/NexumDB Length of output: 2078 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for cache directory path definitions across the codebase rg -n -C2 'cache_dir|cache_path|cache.*=.*Path|cache.*=.*dir' --type=py ``` Repository: aviralgarg05/NexumDB Length of output: 3963 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for SemanticCache class definition and initialization rg -n \"class SemanticCache\" -A 20 --type=py ```\u2026",
+   "created_at": "2026-02-08T13:25:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2779263928",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779263930,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`_max_cache_size_explicit` is always `True`, making the persistence load path dead code.** Line 35 hardcodes `self._max_cache_size_explicit = True`, which means the condition on line 372 (`not self._max_cache_size_explicit`) is always `False`. The persisted `max_cache_size` is never loaded from the JSON file, making the load logic and the persistence of `max_cache_size` in `save_cache_json` pointless. If the intent is to always honor the constructor argument (which is reasonable), remove the dead load path entirely. If the intent is to fall back to persisted values when the caller uses the default, use a sentinel: <details> <summary>Option: Use sentinel to\u2026",
+   "created_at": "2026-02-08T13:25:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2779263930",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779263932,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Error message mismatch will cause `test_negative_new_max_size_raises_error` to fail.** The `ValueError` here uses `\"max_cache_size must be non-negative\"`, but the test on line 269 of `test_optimizer.py` matches against `\"new_max_size must be non-negative\"`. Since `pytest.raises(match=...)` performs a regex search, `\"new_max_size must be non-negative\"` will not match `\"max_cache_size must be non-negative, got -5\"`, causing the test to fail. <details> <summary>Proposed fix</summary> ```diff if target_size < 0: - raise ValueError(f\"max_cache_size must be non-negative, got {target_size}\") + raise ValueError(f\"new_max_size must be non-negative, got {target_s\u2026",
+   "created_at": "2026-02-08T13:25:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#discussion_r2779263932",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779278700,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider extracting a helper to reduce the repeated `list_tables` + `table_not_found` pattern.** This exact 2-line pattern (`list_tables().unwrap_or_default()` \u2192 `StorageError::table_not_found(...)`) is repeated ~7 times across different statement handlers. A small private helper would DRY this up. <details> <summary>Proposed helper method on Executor</summary> Add this to the `impl Executor` block: ```rust fn table_not_found_err(&self, table: impl Into<String>) -> StorageError { let candidates = self.catalog.list_tables().unwrap_or_default(); StorageError::table_not_found(table, &candidates) } ``` Then each call site simplifies to: ```diff .ok_or_else(|| { - let\u2026",
+   "created_at": "2026-02-08T13:37:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779278700",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779278701,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Threshold may be overly generous for very short identifiers.** For a 1- or 2-character needle, `max_distance` is always 2 (due to `.max(2)`). This means a single-character table name like `\"a\"` could suggest `\"xyz\"` (distance 2 when `len(b)==3`), which may feel spurious. Consider using `.max(1)` instead, or scaling the threshold differently for very short strings. This is a minor UX concern\u2014the suggestion is harmless but potentially confusing for short names. <details> <summary>Suggested threshold adjustment</summary> ```diff - let max_distance = (needle_norm.chars().count() / 3).max(2); + let max_distance = (needle_norm.chars().count() / 3).max(1); ``` </details\u2026",
+   "created_at": "2026-02-08T13:37:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779278701",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779278707,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Good test coverage for the core paths.** The tests cover stable codes, display formatting, positive suggestion matching, and negative suggestion matching. Consider adding a test for `column_not_found` with a close match (positive case) to mirror the `table_not_found_suggests_similar_name` test \u2014 currently only the negative case is tested for columns. <details> <summary>Suggested additional test</summary> ```diff + #[test] + fn column_not_found_suggests_similar_name() { + let candidates = vec![\"id\".to_string(), \"name\".to_string(), \"email\".to_string()]; + let err = StorageError::column_not_found(\"users\", \"emal\", &candidates); + let msg = err.to_string(); + assert!(\u2026",
+   "created_at": "2026-02-08T13:37:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779278707",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334768,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider using the `logging` module instead of `print()` throughout.** The file uses `print()` extensively for operational messages (cache hits, evictions, saves, etc.). In a library consumed by both Python and Rust (via PyO3 bridge), print output goes to stdout and cannot be filtered or leveled. Using Python's `logging` module would allow callers to control verbosity. This is a pre-existing pattern, but since this PR significantly increases the number of print statements (auto-save, eviction, stats), it's worth addressing now. <!-- fingerprinting:phantom:medusa:phoenix --> <!-- This is an auto-generated comment by CodeRabbit -->",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334768",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334769,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`_max_cache_size_explicit` is always `True` \u2014 persisted `max_cache_size` is never restored.** Line 35 unconditionally sets `self._max_cache_size_explicit = True`. This makes the guard in `load_cache_json` (Line 372: `if ... and not self._max_cache_size_explicit`) always false, so the persisted `max_cache_size` value from the JSON file is never loaded. If the intent is to distinguish a caller-supplied value from the default, you need to use a sentinel: <details> <summary>Proposed fix using a sentinel default</summary> ```diff - def __init__(self, similarity_threshold: float = 0.95, cache_file: str = \"semantic_cache.pkl\", max_cache_size: int = 1000) -> None:\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334769",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334773,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Hardcoded `cache_dir` creates a stray `cache/` directory even when `cache_file` is an absolute path.** When callers pass an absolute `cache_file` (e.g., tests using `tmp_path`), `Path(\"cache\")` is still created in CWD, but `self.cache_path` resolves to the absolute path (Python's `Path.__truediv__` discards the left operand for absolute right operands). The directory is created but never used for storage in that scenario. Consider deriving `cache_dir` from the resolved `cache_path`: <details> <summary>Sketch</summary> ```diff - self.cache_dir = Path(\"cache\") - self.cache_dir.mkdir(exist_ok=True) - - # Always use JSON extension for cache_path (actual persistence f\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334773",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334776,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Marking cache as dirty on every miss is excessive for auto-save purposes.** A miss doesn't modify the cache data \u2014 only the `misses` counter changes. Marking `_dirty = True` on every miss (Line 124) means `_maybe_auto_save` is evaluated on every lookup regardless of outcome. If stats persistence on every miss isn't critical, consider only dirtying on hits (where `last_access` actually changes) and flushing stats periodically or on shutdown instead. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 103 - 126, The get method currently sets self._dirty = True and calls self._maybe_auto_save() on every cache miss even th\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334776",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334777,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Minor: `_dirty` and `_last_save_time` are reset twice \u2014 once in `save_cache()` and again here.** `save_cache()` (Lines 235\u2013236) already resets both fields. The assignments on Lines 167\u2013168 are redundant. Not a bug, but worth noting for clarity. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 163 - 169, The _maybe_auto_save method resets _dirty and _last_save_time after calling save_cache(), but save_cache() already resets those fields; remove the redundant assignments in _maybe_auto_save so only save_cache() updates _dirty and _last_save_time, leaving _maybe_auto_save to just call save_cache() and log the auto-save\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334777",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334778,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Persisted `similarity_threshold` silently overrides the constructor argument.** Line 368 unconditionally overwrites `self.similarity_threshold` with the value from the cache file. A caller who explicitly passes `similarity_threshold=0.8` to the constructor will have it silently replaced by whatever value was persisted (e.g., `0.95`), since `load_cache()` runs at the end of `__init__`. This is inconsistent with the `max_cache_size` handling (which at least has a guard, even if currently ineffective). Consider applying the same explicit-vs-default precedence logic, or simply not overriding constructor parameters from disk. <details> <summary>Proposed fix \u2014 p\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334778",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334782,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Cache not persisted when eviction empties it entirely.** Line 500 guards `save_cache()` with `if len(self.cache) > 0`. If `optimize_cache(new_max_size=0)` evicts all entries, the stale on-disk file is never updated. The next `load_cache` will reload the old entries and immediately re-evict them. <details> <summary>Proposed fix \u2014 always persist after resize</summary> ```diff - if len(self.cache) > 0: - if evictions_count > 0: - print(f\"Cache optimized: {len(self.cache)} entries remaining ({evictions_count} evicted)\") - else: - print(f\"Cache optimized: {len(self.cache)} entries remaining\") - self.save_cache() + if evictions_count > 0: + print(f\"Cache optimiz\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334782",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334783,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **O(n\u00b2) similarity scan makes this test expensive.** `put()` performs a linear scan over all existing entries for deduplication. With 10,000 iterations, this results in ~50 million `cosine_similarity` calls (each allocating numpy arrays). This will be noticeably slow in CI. Consider reducing the entry count (e.g., 1,000) or, if the goal is specifically to test the capacity boundary, mocking the deduplication check / directly appending entries to `cache.cache`. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_expensive_ops.py` around lines 154 - 165, The test uses SemanticCache.put in a loop of 10,000 items causing an O(n\u00b2) deduplicat\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334783",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779334784,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Test will fail: `match` string doesn't match the actual error message.** `optimize_cache` raises `ValueError(f\"max_cache_size must be non-negative, got {target_size}\")` (optimizer.py Line 490), but the test on Line 269 matches against `\"new_max_size must be non-negative\"`. Since `pytest.raises(match=...)` uses `re.search`, this pattern won't be found in the actual message and the test will fail. <details> <summary>\ud83d\udc1b Proposed fix \u2014 align the match string with the actual error message</summary> Either fix the test: ```diff - with pytest.raises(ValueError, match=\"new_max_size must be non-negative\"): + with pytest.raises(ValueError, match=\"max_cache_size mu\u2026",
+   "created_at": "2026-02-08T14:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#discussion_r2779334784",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351585,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Relative link `../CONTRIBUTING.md` will likely be broken in the issue creation form.** GitHub renders issue template markdown in a special context where relative file paths don't resolve as they do in the repository file browser. Use an absolute URL instead. <details> <summary>Proposed fix</summary> ```diff - Please ensure your report follows our [quality standards](../CONTRIBUTING.md) for maximum impact. + Please ensure your report follows our [quality standards](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for maximum impact. ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORT\u2026",
+   "created_at": "2026-02-08T14:41:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351585",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351590,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Requiring OSCG'26 acknowledgment from all bug reporters adds unnecessary friction.** Non-OSCG contributors filing legitimate bugs must agree they \"understand this project participates in OSCG'26 quality standards\" \u2014 this is unrelated to bug reporting and may discourage external reports. Consider making this checkbox optional (`required: false`). <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @.github/ISSUE_TEMPLATE/bug_report.yml around lines 84 - 85, Change the OSCG acknowledgment checkbox in the bug report template so it isn't mandatory: locate the field with label \"I understand this project participates in OSCG'26 quality standards\" and chan\u2026",
+   "created_at": "2026-02-08T14:41:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351590",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351592,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # Find CONTRIBUTING.md location fd -t f 'CONTRIBUTING.md' ``` Repository: aviralgarg05/NexumDB Length of output: 79 --- \ud83c\udfc1 Script executed: ```shell # Check the directory structure ls -la .github/ISSUE_TEMPLATE/ | head -20 ``` Repository: aviralgarg05/NexumDB Length of output: 368 --- \ud83c\udfc1 Script executed: ```shell # Verify the full repository structure around .github tree -L 2 .github/ 2>/dev/null || find .github -type f -name \"*.yml\" -o -name \"*.yaml\" -o -name \"*.md\" | head -20 ``` Repository: aviralgarg05/NexumDB Length of output: 683 --- \ud83c\udf10 Web query: `GitHub issue template relative lin\u2026",
+   "created_at": "2026-02-08T14:41:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351592",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351595,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Missing blank lines around headings (markdownlint MD022/MD041).** Static analysis flags that line 1 is an `h2` (not `h1`) and there is no blank line between the heading and the body text on line 2. While PR templates commonly use `h2`, adding a blank line after the heading keeps the template consistent with markdownlint rules and improves readability. <details> <summary>Proposed fix</summary> ```diff ## \ud83d\ude80 OSCG'26 Contributor Notice + **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impac\u2026",
+   "created_at": "2026-02-08T14:41:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351595",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351599,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Missing blank line below heading (markdownlint MD022).** Same issue as above \u2014 line 75's heading needs a blank line before the body text on line 76, per MD022. <details> <summary>Proposed fix</summary> ```diff ## \ud83c\udfaf OSCG'26 Quality Standards + By submitting this PR, I confirm: ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion ## \ud83c\udfaf OSCG'26 Quali\u2026",
+   "created_at": "2026-02-08T14:41:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351599",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351601,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Orphaned list items from a previous version break document flow.** Lines 211\u2013212 (`6. Update documentation as needed` / `7. Submit a pull request!`) appear to be leftover fragments from a numbered list that was replaced by the new \"Contribution Workflow\" section. They have no preceding list context and disrupt the document structure. Remove them. <details> <summary>Proposed fix</summary> ```diff **Learning happens through participation, not shortcuts.** -6. Update documentation as needed -7. Submit a pull request! ## Development Setup ``` </details> As per coding guidelines, `**/*.md`: \"Check documentation clarity, spelling, grammar, and formatting.\" <!--\u2026",
+   "created_at": "2026-02-08T14:41:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351601",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2779351605,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Contributing section duplicates CONTRIBUTING.md content.** This section largely mirrors content already in `CONTRIBUTING.md`. Consider trimming it to a brief paragraph with a link to the contributing guide, rather than repeating the \"Why Contribute?\" and \"Get Started\" lists here. This reduces maintenance burden when guidelines change. <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b LanguageTool</summary> [uncategorized] ~260-~260: If this is a compound adjective that modifies the following noun, use a hyphen. Context: ...abases?** NexumDB participates in the **Open Source Contributor Games 2026 (OSCG'26)**! ##... (EN_COMPOUND_ADJECTIVE_INTERNAL) --- [st\u2026",
+   "created_at": "2026-02-08T14:41:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#discussion_r2779351605",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783769382,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Use `logger.warning()` for warning messages.** This message indicates a degraded state (missing dependency, falling back). Using `logger.info()` for messages prefixed with \"Warning:\" defeats the purpose of migrating to the `logging` module \u2014 callers can't filter by severity. The same applies to line 170 (`\"Warning: Invalid cache entry found and removed\"`). <details> <summary>Proposed fix</summary> ```diff - logger.info(\"Warning: sentence-transformers not installed, using fallback\") + logger.warning(\"sentence-transformers not installed, using fallback\") ``` And at line 170: ```diff - logger.info(\"Warning: Invalid cache entry found and removed\") + logger.war\u2026",
+   "created_at": "2026-02-09T17:39:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783769382",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783769387,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Prefer lazy `%`-style formatting in logging calls.** All `logger.*()` calls use f-strings, which evaluate the string even when the log level is disabled. The `logging` module supports deferred formatting via `%`-style arguments (e.g., `logger.info(\"Loaded from %s (%d entries)\", filepath, len(self.cache))`), which avoids the cost of string interpolation when the message would be discarded. This matters especially for the `DEBUG`-level calls suggested above. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 161 - 162, Update the two logger.info calls in optimizer.py to use logging's lazy `%`-style formatting instead of\u2026",
+   "created_at": "2026-02-09T17:39:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783769387",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783769394,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Use `logger.error()` (or `logger.exception()`) in `except` blocks.** Lines 178, 212, and 233 all log errors at `INFO` level. This loses the primary benefit of structured logging: the ability to alert on and filter by severity. In `except` blocks, prefer `logger.exception()` which automatically attaches the traceback, or at minimum `logger.error()`. <details> <summary>Proposed fix (apply the same pattern at lines 212 and 233)</summary> ```diff - logger.info(f\"Error loading semantic cache: {e}\") - logger.info(\"Starting with empty cache\") + logger.error(\"Error loading semantic cache: %s\", e, exc_info=True) + logger.info(\"Starting with empty cache\") ``` Line 2\u2026",
+   "created_at": "2026-02-09T17:39:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783769394",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783769405,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`DEBUG` is more appropriate for \"no cache file found\" on cold start.** This fires on every fresh instantiation and is expected behavior, not something an operator needs to see by default. <details> <summary>Proposed fix</summary> ```diff - logger.info(f\"No cache file found at {filepath}, starting with empty cache\") + logger.debug(\"No cache file found at %s, starting with empty cache\", filepath) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with inden\u2026",
+   "created_at": "2026-02-09T17:39:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783769405",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783769410,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Use `logger.debug()` for high-frequency diagnostic output.** `update()` is called on every query execution via `feed_metrics`. Logging every Q-value update at `INFO` will be extremely noisy in production and drown out meaningful messages. This is textbook `DEBUG`-level output. <details> <summary>Proposed fix</summary> ```diff - logger.info(f\"Updated Q({state}, {action}) = {new_q:.4f}\") + logger.debug(\"Updated Q(%s, %s) = %.4f\", state, action, new_q) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highli\u2026",
+   "created_at": "2026-02-09T17:39:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783769410",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783769415,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Test-harness formatting decorations are awkward as log messages.** Lines like `logger.info(\"\\n\" + \"=\"*60)` embed visual separators and newlines into structured log records. If these test functions are only run as scripts, consider either keeping `print()` in the `__main__` block or using a dedicated console handler with a simple formatter. Structured log aggregators will produce garbled output from these messages. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 581 - 583, The log lines that embed visual separators and newlines (e.g., logger.info(\"\\n\" + \"=\"*60), logger.info(\"Testing Semantic Cache Persistence\"), log\u2026",
+   "created_at": "2026-02-09T17:39:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783769415",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783828236,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove redundant \"Warning:\" prefix from warning-level log message.** The log level already conveys that this is a warning. The prefix is a leftover from the `print()` era and adds noise in structured log output. <details> <summary>Proposed fix</summary> ```diff - logger.warning(\"Warning: sentence-transformers not installed, using fallback\") + logger.warning(\"sentence-transformers not installed, using fallback\") ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no\u2026",
+   "created_at": "2026-02-09T17:53:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783828236",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783828247,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Use `logger.debug()` \u2014 this is expected on cold start, same as line 194.** Line 194 was correctly changed to `logger.debug` for the same \"no cache file found\" scenario. This line should be consistent. <details> <summary>Proposed fix</summary> ```diff - logger.info(f\"No JSON cache file found at {filepath}\") + logger.debug(\"No JSON cache file found at %s\", filepath) ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` at line 248, Replace the logger.info call that logs \"No JSON cache file found at {filepath}\" with logger.debug to match the existing behavior used elsewhere (e.g., the earlier \"no cache file found\"\u2026",
+   "created_at": "2026-02-09T17:53:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783828247",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783926460,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remaining f-strings in logger calls should use lazy `%`-style formatting.** The fix at lines 161\u2013165 correctly switched to `%`-style formatting, but the rest of the file still uses f-strings. These are eagerly evaluated even when the log level is disabled. This is most impactful for the `DEBUG` calls (lines 194, 248, 364) \u2014 especially line 364 which fires on every query \u2014 but should be applied consistently. Representative examples: <details> <summary>Proposed fixes (apply the same pattern to all remaining f-string logger calls)</summary> ```diff - logger.info(f\"Cache hit! Similarity: {similarity:.4f}\") + logger.info(\"Cache hit! Similarity: %.4f\", similarity) ```\u2026",
+   "created_at": "2026-02-09T18:14:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783926460",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2783926467,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **`__main__` block is silently broken \u2014 no `logging.basicConfig()` configured.** Without calling `logging.basicConfig()`, the root logger has no handlers, so Python's last-resort handler only emits `WARNING` and above to stderr. Every `logger.info()` and `logger.debug()` call in this block (and in `test_cache_persistence()`) will produce **no output** when running `python nexum_ai/optimizer.py` directly. This is a functional regression from the original `print()` statements. <details> <summary>Proposed fix</summary> ```diff if __name__ == \"__main__\": + logging.basicConfig(level=logging.DEBUG, format=\"%(levelname)s: %(message)s\") + # Run both tests logger.\u2026",
+   "created_at": "2026-02-09T18:14:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2783926467",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2784034207,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check the sled version in Cargo.toml fd -t f \"Cargo.toml\" | head -5 | while read file; do echo \"=== $file ===\" grep -A 5 \"sled\" \"$file\" | head -10 done ``` Repository: aviralgarg05/NexumDB Length of output: 523 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for CollectionNotFound in the codebase rg \"CollectionNotFound\" --type rust -n ``` Repository: aviralgarg05/NexumDB Length of output: 46 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Look at the StorageError definition to understand available error variants fd -t f \"error.rs\" --path \"*storage*\" -x cat {} | head -1\u2026",
+   "created_at": "2026-02-09T18:38:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#discussion_r2784034207",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786118966,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Avoid direct interpolation of `${{ github.base_ref }}` in the shell script.** Injecting GitHub context expressions directly into `run:` blocks is a known script-injection anti-pattern. Although `branches: [main]` constrains the value here, the safer pattern is to pass it through an environment variable: <details> <summary>Proposed fix</summary> ```diff + - name: Check DCO Sign-off (non-blocking) + env: + BASE_REF: ${{ github.base_ref }} run: | - commits=$(git log --format='%H %s' origin/${{ github.base_ref }}..HEAD) + commits=$(git log --format='%H %s' \"origin/${BASE_REF}..HEAD\") ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable sug\u2026",
+   "created_at": "2026-02-10T06:50:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#discussion_r2786118966",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786118977,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`per_page: 100` may miss the bot comment on heavily-discussed PRs.** If a PR has more than 100 comments, the existing bot comment might not be found, resulting in a duplicate. Consider paginating or increasing the limit. In practice this is unlikely for most PRs, so it's a minor concern. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @.github/workflows/pr-commenter.yml at line 85, The workflow currently sets per_page: 100 when listing PR comments which can miss the bot comment on very active PRs; update the logic that calls the GitHub REST API (the step that uses the comments list with the per_page parameter) to paginate through results (iterat\u2026",
+   "created_at": "2026-02-10T06:50:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#discussion_r2786118977",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786118980,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Bot detection could match unintended comments from other bot apps.** `c.user.type === 'Bot'` matches any bot account, not just the GitHub Actions bot. If another bot posts a comment that happens to contain the marker string, it would be matched. A more precise check would also verify `c.user.login === 'github-actions[bot]'`. <details> <summary>Proposed fix</summary> ```diff - const existing = comments.find(c => - c.user.type === 'Bot' && c.body && c.body.includes(marker) - ); + const existing = comments.find(c => + c.user.login === 'github-actions[bot]' && c.body && c.body.includes(marker) + ); ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``\u2026",
+   "created_at": "2026-02-10T06:50:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#discussion_r2786118980",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786118985,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **The `pr-sync-check` job is a no-op placeholder.** This job only echoes a string and consumes a runner allocation. If the sole purpose is to provide a passing status check for branch protection rules, this is a recognized pattern but worth documenting with a comment explaining why it exists. If it's not needed as a required check, consider removing it and dropping the `pull_request` trigger entirely. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @.github/workflows/pr-review-reminder.yml around lines 17 - 22, The pr-sync-check job is a no-op placeholder that wastes a runner; either document its intent or remove it: if you need a required status check f\u2026",
+   "created_at": "2026-02-10T06:50:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#discussion_r2786118985",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786118986,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Complex conditional \u2014 consider readability.** The compound `if` condition works correctly but is dense. For maintainability, consider extracting sub-conditions or adding an inline comment explaining the intent (skip PRs, skip bots, skip merge commits). <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In @.github/workflows/release-please.yml at line 35, The complex compound conditional in the workflow if expression (the line containing \"if: github.event_name != 'pull_request' && (github.event_name == 'workflow_dispatch' || (github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, 'Merge pull r\u2026",
+   "created_at": "2026-02-10T06:50:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#discussion_r2786118986",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786118989,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`synchronize` is unnecessary and wasteful for a first-interaction welcome workflow.** `actions/first-interaction` only comments on a user's very first PR. Triggering this workflow on every `synchronize` (i.e., every push to the PR branch) burns runner minutes for a guaranteed no-op after the first run. Additionally, `pull_request_target` with `synchronize` widens the trigger surface for a privileged-context workflow, even though the risk is low here since no PR code is checked out. Consider keeping only `opened`: <details> <summary>Suggested fix</summary> ```diff pull_request_target: - types: [opened, reopened, synchronize] + types: [opened] ``` </details>\u2026",
+   "created_at": "2026-02-10T06:50:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#discussion_r2786118989",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2786325608,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Test helper log messages still use f-strings and embed `\\n` prefixes.** While these are in test code, embedding newlines (e.g., `\"\\n2. Creating new...\"`) produces multi-line log records that break structured log aggregators. Consider either keeping `print()` for test-harness output or removing the embedded newlines. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 614 - 642, Remove embedded newline prefixes in the test helper logger calls (e.g., logger.info(\"\\n2. Creating new cache instance...\")) so log records remain single-line for structured aggregators; update the logger.info calls around the SemanticCache test\u2026",
+   "created_at": "2026-02-10T07:46:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#discussion_r2786325608",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2787599356,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Missing type annotations for model attributes.** `self.model`, `self.hf_model`, and `self.hf_tokenizer` are all initialized to `None` without type hints. Adding `Optional[...]` annotations would clarify the expected types and improve IDE/static-analysis support. <details> <summary>\u267b\ufe0f Suggested type annotations</summary> ```diff + from typing import TYPE_CHECKING + # At module level or behind TYPE_CHECKING guard: + # from sentence_transformers import SentenceTransformer + # from transformers import AutoModel, AutoTokenizer + self.model = None # Optional[SentenceTransformer] - self.hf_model = None - self.hf_tokenizer = None + self.hf_model = None # Optional[AutoMod\u2026",
+   "created_at": "2026-02-10T12:11:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2787599356",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2787599369,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Use `logging` module instead of `print` for warnings and diagnostics.** The new fallback chain emits several warning/info messages via `print()`. While this matches the existing pattern in the file, `print()` offers no level filtering, no structured output, and is invisible to log aggregators. For new code, prefer `logging.getLogger(__name__)` with appropriate levels (`logger.warning(...)`, `logger.info(...)`). <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 44 - 51, Replace the print-based diagnostics in the semantic cache initializer with the logging module: add an import for logging and get a module logger (logg\u2026",
+   "created_at": "2026-02-10T12:11:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2787599369",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2787599373,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Security: environment-controlled model name passed to `from_pretrained` enables arbitrary model loading.** An attacker who controls the `NEXUM_EMBEDDING_MODEL` environment variable can point `AutoModel.from_pretrained` / `AutoTokenizer.from_pretrained` at an arbitrary HuggingFace Hub repository. Models hosted on the Hub may contain malicious payloads (e.g., pickle-based weight files, custom code). Consider: 1. Validating `model_name` against an allow-list of trusted models. 2. Pinning model revisions (the `revision` parameter). 3. Forcing safetensors-only loading (`use_safetensors=True` if your `transformers` version supports it). <details> <summary>\ud83d\udee1\ufe0f Exa\u2026",
+   "created_at": "2026-02-10T12:11:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2787599373",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2787599376,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **PEP 8 indentation violation: extra leading space.** Line 70 appears to have 13 spaces of indentation instead of the expected 12 (three levels of 4-space indent). This will still run in Python, but it's inconsistent with the rest of the file. ```diff except ImportError: - print(\"Warning: transformers not installed, using simple fallback\") - self.model = None - self.hf_model = None - self.hf_tokenizer = None + print(\"Warning: transformers not installed, using simple fallback\") + self.model = None + self.hf_model = None + self.hf_tokenizer = None ``` As per coding guidelines, `**/*.py`: Check Python code quality, type hints usage, and PEP 8 compliance. <!-- s\u2026",
+   "created_at": "2026-02-10T12:11:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2787599376",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2787599390,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Silent fallback to character-hash vectorizer can corrupt cache semantics.** If the HF model successfully vectorizes text during `put()` but later fails during `get()` (e.g., OOM, torch error), the code silently falls back to `_fallback_vectorize` (line 110). The fallback produces a character-hash vector whose geometry is completely unrelated to the HF embedding space. Cosine similarity between an HF-produced vector and a fallback vector is meaningless \u2014 leading to guaranteed cache misses (or, worse, spurious hits). This same concern applies if the model backend changes between process restarts (e.g., `sentence-transformers` is installed, vectors are cached\u2026",
+   "created_at": "2026-02-10T12:11:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2787599390",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2787599395,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Re-importing `torch` on every vectorize call is unnecessary.** `torch` was already successfully imported during `initialize_model()` (line 56) if the HF path was taken. The guarded import on line 90 is redundant in this branch since `self.hf_model` being non-`None` already implies `torch` was importable. You could capture the `torch` module reference as `self._torch` during init instead. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/optimizer.py` around lines 88 - 110, The HF vectorization branch in vectorize (the elif that checks self.hf_model and self.hf_tokenizer) re-imports torch unnecessarily; update initialize_model() to stash the im\u2026",
+   "created_at": "2026-02-10T12:11:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2787599395",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789191558,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **`workflow_dispatch` will not populate `context.payload.pull_request`, causing every manual run to crash.** With `workflow_dispatch`, `context.payload.pull_request` is `undefined`, so lines 18\u201320 (`user.login`, `.number`, `.title`) will throw a TypeError at runtime. If the intent is to fully disable this workflow, consider either: 1. Deleting the file entirely, or 2. Commenting out / removing the job body so there's no dead, broken code left behind. If you genuinely want a manual trigger that targets a specific PR, you'd need to accept the PR number as an input and fetch the PR data via the API: <details> <summary>Option 1 \u2013 delete the file (preferred if\u2026",
+   "created_at": "2026-02-10T17:03:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/127#discussion_r2789191558",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789226045,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Tautological tests that can never fail \u2014 these provide no value.** Multiple tests in this file use the pattern: ```rust if result.is_ok() { assert!(true); } else { assert!(result.is_err()); } ``` This is a tautology \u2014 the test passes for *every possible outcome*, so it can never catch a regression. The same pattern appears in: `test_error_create_table_missing_columns`, `test_error_create_table_empty_columns`, `test_error_special_characters_in_unquoted_identifier`, and `test_error_reserved_keyword_without_quotes`. If the parser's behavior for these inputs is genuinely dialect-dependent and you want to document it without asserting a specific outcome, either\u2026",
+   "created_at": "2026-02-10T17:11:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#discussion_r2789226045",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789226053,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Missing blank line before `#[test]`.** Every other test in this file has a blank line separating it from the previous test. Line 549 breaks the pattern (no blank line after the closing `}` of `test_error_whitespace_only`). ```diff } + #[test] fn test_error_create_table_missing_columns() { ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion } #[test] fn test_error\u2026",
+   "created_at": "2026-02-10T17:11:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#discussion_r2789226053",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789226073,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`test_error_select_join_not_supported` silently passes when JOIN succeeds.** If `result.is_ok()`, no assertion runs and the test passes \u2014 you'd never know the parser started accepting JOINs. Pin the behavior or add an `Ok` branch assertion. <details> <summary>Suggested fix</summary> ```diff fn test_error_select_join_not_supported() { let sql = \"SELECT * FROM users JOIN orders ON users.id = orders.user_id\"; let result = Parser::parse(sql); - // This might parse but should fail during execution or return unsupported error - // Depending on implementation, adjust assertion - if result.is_err() { - let err_msg = result.unwrap_err().to_string(); - assert!(err_m\u2026",
+   "created_at": "2026-02-10T17:11:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#discussion_r2789226073",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789226074,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`test_error_negative_limit` silently passes on success \u2014 no meaningful assertion.** When `result.is_err()` is false, the test body does nothing and passes silently. This means a `LIMIT -5` that is accepted without error goes completely unnoticed. Either assert the expected behavior on the `Ok` path (e.g., verify the `limit` field value) or assert that it *must* error. <details> <summary>Suggested fix</summary> ```diff fn test_error_negative_limit() { let sql = \"SELECT * FROM users LIMIT -5\"; let result = Parser::parse(sql); - // Parser might accept it, but it should be handled - if result.is_err() { - assert!(true); - } + // Pin the expected behavior so ch\u2026",
+   "created_at": "2026-02-10T17:11:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#discussion_r2789226074",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789226080,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Management statement \"incomplete input\" tests look correct in logic but are fragile.** `test_error_describe_missing_table`, `test_error_drop_table_missing_name`, and `test_error_drop_table_if_exists_missing_name` rely on the fact that `parse_management_statement` won't match (wrong token count) and then `sqlparser` will also error. The `panic!` on the `Ok` branch is good \u2014 these are not tautological. However, consider adding a comment noting the two-stage fallthrough so future maintainers understand why these error out. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_core/src/sql/parser.rs` around lines 765 - 800, The three tests test_error_des\u2026",
+   "created_at": "2026-02-10T17:11:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#discussion_r2789226080",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2789597828,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **This debug script should not be committed to the repository.** `reproduce_issue.py` appears to be a temporary debugging/demo artifact. It was likely used locally to exercise the new `initialize_model()` dual-path flow but adds no value as a permanent file in the repo. Either remove it entirely or convert it into a proper test under the test suite with assertions. Additional issues if the file is kept: - `os` (line 2) is imported but never used. - Top-level side effects (printing, model initialization) should be guarded with `if __name__ == \"__main__\":`. - No error handling or assertions \u2014 it doesn't verify behavior. <details> <summary>\ud83e\udd16 Prompt for AI Agent\u2026",
+   "created_at": "2026-02-10T18:35:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2789597828",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2790159289,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add blank line before code fence for markdown formatting.** Markdown best practices and linting tools recommend blank lines before and after fenced code blocks for better rendering across different parsers. <details> <summary>\ud83d\udcdd Proposed formatting fix</summary> ```diff **Advanced SQL Operators (v0.3.0):** + ```sql ``` </details> As per coding guidelines, documentation should follow proper formatting standards. <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues wi\u2026",
+   "created_at": "2026-02-10T20:36:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#discussion_r2790159289",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

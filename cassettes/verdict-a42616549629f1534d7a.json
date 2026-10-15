@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3861237250",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+ "reason": "Administrative PR cleanup, not substantive code-review work or a request for additional work.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}

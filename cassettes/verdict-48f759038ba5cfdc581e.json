@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628920440",
+ "call": "included",
+ "clause_id": "A1",
+ "quoted_span": "The CI failure is because PyO3 0.24 renamed `import_bound()` to `import()`. The code still uses the old method name. I've pushed a fix to the `fix-pyo3-deprecations` branch",
+ "reason": "The pushed fix addresses a failing CI check, covered by A1's requirement to ensure all automated checks pass. Although dependency and bridge changes extend beyond adding cargo audit, the broader CI approval clause supports inclusion; this is the lower-revenue reading.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.9
+}

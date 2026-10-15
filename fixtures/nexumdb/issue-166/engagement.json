@@ -1,0 +1,46 @@
+{
+ "id": "nexumdb-issue-166",
+ "client_name": "NexumDB maintainer",
+ "client_email": null,
+ "invoicer_name": "contributor",
+ "currency": "USD",
+ "cap": null,
+ "rate_card": {
+  "default_rate": "0.00",
+  "currency": "USD",
+  "by_category": {}
+ },
+ "clauses": [
+  {
+   "id": "S1",
+   "kind": "scope",
+   "text": "we can automate this task by setting up the desired workflow that going to automate this task"
+  },
+  {
+   "id": "S2",
+   "kind": "scope",
+   "text": "Currently we are manually adding the labels to the issue and PR"
+  },
+  {
+   "id": "X1",
+   "kind": "exclusion",
+   "text": "Keep changes small and focused"
+  },
+  {
+   "id": "X2",
+   "kind": "exclusion",
+   "text": "Avoid mixing unrelated fixes"
+  },
+  {
+   "id": "A1",
+   "kind": "approval",
+   "text": "CI must pass before human review"
+  },
+  {
+   "id": "A3",
+   "kind": "approval",
+   "text": "Push fixes to the same branch (don't create new PRs)"
+  }
+ ],
+ "opening": []
+}

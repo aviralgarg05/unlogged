@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3956952147",
+ "call": "included",
+ "clause_id": "S2",
+ "quoted_span": "could you add the OSCG related labels to this PR ??",
+ "reason": "The request concerns adding labels to a PR, the activity identified in S2. It does not request a separate feature or unrelated fix, and no completed work is evidenced here.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.86
+}

@@ -91,6 +91,53 @@ def test_the_disagreements_are_listed_so_a_reader_can_see_if_they_are_one_judgem
     ]
 
 
+def _published(name):
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1] / "fixtures" / "agreement"
+    out = {}
+    for line in (root / f"{name}.jsonl").read_text().splitlines():
+        if line.strip():
+            row = json.loads(line)
+            out[f"{row['issue']}:{row['event_id']}"] = row["call"]
+    return out
+
+
+def test_the_model_sits_further_from_both_humans_than_they_sit_from_each_other():
+    """The finding that cuts against this project's own headline.
+
+    On the eight authored events the model scores 100%. On 31 events from real pull-request
+    threads it agrees with a human reader less often than two human readers agree with each
+    other. Both numbers are in the repository and the second one is why the first should not
+    be read as a capability claim.
+    """
+    human = score(_published("round1"), _published("round2"))
+    against_first = score(_published("round1"), _published("model"))
+    against_second = score(_published("round2"), _published("model"))
+
+    assert human.raw > against_first.raw > against_second.raw
+    assert human.kappa > 0.7
+    assert against_first.kappa < 0.5
+    assert against_second.kappa < 0.35
+
+
+def test_the_models_error_is_one_direction_not_noise():
+    """It collapses everything into "included" rather than being randomly wrong, which is a
+    diagnosable failure and not a quality score."""
+    import collections
+
+    model = _published("model")
+    human = _published("round1")
+
+    calls = collections.Counter(model.values())
+    assert calls["included"] == 18
+    assert calls["included"] > collections.Counter(human.values())["included"] * 2
+
+    wrong_way = sum(1 for k in model if human[k] != model[k] and model[k] == "included")
+    assert wrong_way >= 10
+
+
 def test_this_projects_own_two_passes_reproduce_the_published_figures():
     """The numbers quoted in docs/CORPUS.md, from the committed label sets."""
     import json

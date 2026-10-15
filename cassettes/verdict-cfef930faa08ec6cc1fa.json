@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3924905041",
+ "call": "noise",
+ "clause_id": "X2",
+ "quoted_span": "Please keep this PR scoped to the CI guard change only. The Rust build failures should be handled in a separate PR/issue.",
+ "reason": "Scope-management comment reinforcing the exclusion of unrelated fixes; no work is performed or requested within this PR.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.97
+}

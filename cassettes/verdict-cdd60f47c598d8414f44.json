@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3914403071",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "Could you please approve the workflows so the checks can execute?",
+ "reason": "Administrative request for permission to run CI, not a request for additional implementation work or evidence of work performed. It supports verification of A1.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}

@@ -1,0 +1,320 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 4646347835,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/log\"> cargo/log </a></td><td>0.4.32</td> <td>:green_circle: 7.2</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Binary-Artifacts</td><td>:green_circle: 10</td><td>no binaries found in the repo</td></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns dete\u2026",
+   "created_at": "2026-06-08T07:24:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/180#issuecomment-4646347835",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4694661956,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/PyO3/pyo3\"> cargo/pyo3 </a></td><td>0.29.0</td> <td>:green_circle: 5.6</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 9</td><td>Found 27/28 approved changesets -- score normalized to 9</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 19 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>CII-Best\u2026",
+   "created_at": "2026-06-12T19:41:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/181#issuecomment-4694661956",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4705549983,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/regex\"> cargo/regex </a></td><td>1.12.4</td> <td>:green_circle: 6.3</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>7 commit(s) and 6 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Code-Review<\u2026",
+   "created_at": "2026-06-15T07:26:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/182#issuecomment-4705549983",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4765880286,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/log\"> cargo/log </a></td><td>0.4.33</td> <td>:green_circle: 7.2</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>29 commit(s) and 1 issue activi\u2026",
+   "created_at": "2026-06-22T07:24:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/183#issuecomment-4765880286",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4829974975,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/dtolnay/anyhow\"> cargo/anyhow </a></td><td>1.0.103</td> <td>:green_circle: 4.2</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:warning: 1</td><td>1 commit(s) and 1 issue activity found in the last 90 days -- score normalized to 1</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Code-Review</td><t\u2026",
+   "created_at": "2026-06-29T07:24:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/184#issuecomment-4829974975",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4890163529,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>Cargo.lock</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>console</td><td>0.16.4</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td> cargo/console </td><td>0.16.4</td> <td> Unknown</td><td>Unknown</td></tr> <tr><\u2026",
+   "created_at": "2026-07-06T07:24:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/185#issuecomment-4890163529",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 4955468285,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/regex\"> cargo/regex </a></td><td>1.13.0</td> <td>:green_circle: 6.4</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:warning: 2</td><td>Found 6/30 approved changesets -- score normalized to 2</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>10 commit(s) and 8 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Dangerou\u2026",
+   "created_at": "2026-07-13T07:24:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/186#issuecomment-4955468285",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5019770872,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 2 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>Cargo.lock</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>serde_json</td><td>1.0.151</td><td>Null</td><td>Unknown License</td></tr><tr><td>syn</td><td>3.0.2</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <details><summary>Scorecard details</summary> <table><tr><th>Package</th><th>Version</th><t\u2026",
+   "created_at": "2026-07-20T07:25:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/187#issuecomment-5019770872",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5019771633,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-07-20T07:25:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/188#issuecomment-5019771633",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5019771920,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/dtolnay/thiserror\"> cargo/thiserror </a></td><td>2.0.19</td> <td>:green_circle: 4.4</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:warning: 0</td><td>Found 2/27 approved changesets -- score normalized to 0</td></tr><tr><td>Maintained</td><td>:green_circle: 4</td><td>5 commit(s) and 0 issue activity found in the last 90 days -- score normalized to 4</td></tr><tr><td>Packa\u2026",
+   "created_at": "2026-07-20T07:25:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/188#issuecomment-5019771920",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5019784261,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-07-20T07:27:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/188#issuecomment-5019784261",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5088477389,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/clap-rs/clap\"> cargo/clap </a></td><td>4.6.4</td> <td>:green_circle: 5.7</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 3</td><td>Found 5/16 approved changesets -- score normalized to 3</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 14 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Dangero\u2026",
+   "created_at": "2026-07-27T07:24:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/189#issuecomment-5088477389",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5237124365,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/clap-rs/clap\"> cargo/clap </a></td><td>4.6.6</td> <td>:green_circle: 5.7</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 12 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Packaging</td><td>:warning: -1</td><td>packaging workflow not detected</td></tr><tr><td>Code-Review</td><td>:green_circle: 3<\u2026",
+   "created_at": "2026-08-10T07:24:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/190#issuecomment-5237124365",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5237125235,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_cli/Cargo.toml</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td>comfy-table</td><td>>= 8.0.0, < 9.0.0</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/Nukesor/comfy-table\"> cargo\u2026",
+   "created_at": "2026-08-10T07:24:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/191#issuecomment-5237125235",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5237125965,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-08-10T07:24:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/191#issuecomment-5237125965",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5313073250,
+   "body": "Superseded by #192.",
+   "created_at": "2026-08-17T07:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/188#issuecomment-5313073250",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 5313074458,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-08-17T07:24:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/192#issuecomment-5313074458",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5313074729,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/dtolnay/thiserror\"> cargo/thiserror </a></td><td>2.0.20</td> <td>:green_circle: 5</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:warning: 0</td><td>Found 2/27 approved changesets -- score normalized to 0</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Packaging</td><td>:warning: -1</td><td>pac\u2026",
+   "created_at": "2026-08-17T07:24:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/192#issuecomment-5313074729",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5475120009,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/rust-lang/log\"> cargo/log </a></td><td>0.4.34</td> <td>:green_circle: 7.2</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>25 commit(s) and 4 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Binary-Artifacts</td><td>:green_circle\u2026",
+   "created_at": "2026-08-31T07:22:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/193#issuecomment-5475120009",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5756882943,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > Bot user detected. > > To trigger a single review, invoke the `@coderabbitai review` command. > > <details> > <summary>\u2699\ufe0f Run configuration</summary> > > **Configuration used**: Repository: aviralgarg05/NexumDB/.coderabbit.yaml > > **Review profile**: ASSERTIVE > > **Plan**: Advanced > > **Run ID**: `8eea11b2-d436-48d9-889a-4809107168d5` > > </details> > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file. > > Use the checkbox below for a\u2026",
+   "created_at": "2026-09-21T07:24:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/194#issuecomment-5756882943",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 5756883553,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > Bot user detected. > > To trigger a single review, invoke the `@coderabbitai review` command. > > <details> > <summary>\u2699\ufe0f Run configuration</summary> > > **Configuration used**: Repository: aviralgarg05/NexumDB/.coderabbit.yaml > > **Review profile**: ASSERTIVE > > **Plan**: Advanced > > **Run ID**: `fc36fee5-5f07-40a2-82b0-e822c6e7f09c` > > </details> > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file. > > Use the checkbox below for a\u2026",
+   "created_at": "2026-09-21T07:24:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/195#issuecomment-5756883553",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 5756884238,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/clap-rs/clap\"> cargo/clap </a></td><td>4.6.7</td> <td>:green_circle: 6.6</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:warning: 1</td><td>Found 2/13 approved changesets -- score normalized to 1</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 12 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Packaging</t\u2026",
+   "created_at": "2026-09-21T07:24:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/194#issuecomment-5756884238",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5756885723,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/apache/datafusion-sqlparser-rs\"> cargo/sqlparser </a></td><td>0.63.0</td> <td> Unknown</td><td>Unknown</td></tr> </table><h2>Scanned Files</h2> <ul><li>Cargo.lock</li></ul> <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-09-21T07:24:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/195#issuecomment-5756885723",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5865356711,
+   "body": "Superseded by #196.",
+   "created_at": "2026-09-28T07:24:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/192#issuecomment-5865356711",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 5865357914,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-09-28T07:24:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/196#issuecomment-5865357914",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5865358551,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td> cargo/thiserror </td><td>2.0.21</td> <td>:green_circle: 4.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Packaging</td><td>:warning: -1</td><td>packaging workflow not detected</td></tr><tr><td>Code-Review</td><td>:warning: 0</td><td>Found 1/28 approved changesets -- score normalized to 0</td></tr><tr><td>Mai\u2026",
+   "created_at": "2026-09-28T07:24:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/196#issuecomment-5865358551",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5865361810,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > Bot user detected. > > To trigger a single review, invoke the `@coderabbitai review` command. > > <details> > <summary>\u2699\ufe0f Run configuration</summary> > > **Configuration used**: Repository: aviralgarg05/NexumDB/.coderabbit.yaml > > **Review profile**: ASSERTIVE > > **Plan**: Advanced > > **Run ID**: `939e3add-aa8c-42f4-9b72-b6183cb33475` > > </details> > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file. > > Use the checkbox below for a\u2026",
+   "created_at": "2026-09-28T07:24:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/196#issuecomment-5865361810",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 5989982985,
+   "body": "Superseded by #198.",
+   "created_at": "2026-10-05T07:24:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/191#issuecomment-5989982985",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 5989983770,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > Bot user detected. > > To trigger a single review, invoke the `@coderabbitai review` command. > > <details> > <summary>\u2699\ufe0f Run configuration</summary> > > - **Configuration used**: Repository: aviralgarg05/NexumDB/.coderabbit.yaml > - **Review profile**: ASSERTIVE > - **Plan**: Advanced > - **Run ID**: `761668b3-e312-4496-bca5-1d2937c206f6` > > </details> > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file. > > Use the checkbox below for\u2026",
+   "created_at": "2026-10-05T07:24:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/197#issuecomment-5989983770",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 5989983895,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > Bot user detected. > > To trigger a single review, invoke the `@coderabbitai review` command. > > <details> > <summary>\u2699\ufe0f Run configuration</summary> > > - **Configuration used**: Repository: aviralgarg05/NexumDB/.coderabbit.yaml > - **Review profile**: ASSERTIVE > - **Plan**: Advanced > - **Run ID**: `6e78b674-7502-4ffc-be68-68e96785eeda` > > </details> > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file. > > Use the checkbox below for\u2026",
+   "created_at": "2026-10-05T07:24:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/198#issuecomment-5989983895",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 5989984526,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td> cargo/pyo3 </td><td>0.29.3</td> <td>:green_circle: 6.7</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) out of 30 and 10 issue activity out of 30 found in the last 90 days -- score normalized to 10</td></tr><tr><td>Code-Review</td><td>:green_circle: 8</td><td>GitHub code reviews found for 25 commits out of the last 30 -- score normalized to 8</td></tr><tr><td>CII\u2026",
+   "created_at": "2026-10-05T07:24:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/197#issuecomment-5989984526",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5989986346,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/Nukesor/comfy-table\"> cargo/comfy-table </a></td><td>8.0.1</td> <td> Unknown</td><td>Unknown</td></tr> <tr><td> cargo/comfy-table </td><td>>= 8.0.0, < 9.0.0</td> <td> Unknown</td><td>Unknown</td></tr> </table><h2>Scanned Files</h2> <ul><li>Cargo.lock</li><li>nexum_cli/Cargo.toml</li></ul> <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-10-05T07:24:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/198#issuecomment-5989986346",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 5989986790,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-10-05T07:24:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/198#issuecomment-5989986790",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 6133689100,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: skip review by coderabbit.ai --> > [!IMPORTANT] > ## Review skipped > > Bot user detected. > > To trigger a single review, invoke the `@coderabbitai review` command. > > <details> > <summary><strong>\u2699\ufe0f Run configuration</strong></summary> > <dl> > <dd> > > - **Configuration used**: Repository: aviralgarg05/NexumDB/.coderabbit.yaml > - **Review profile**: ASSERTIVE > - **Plan**: Advanced > - **Run ID**: `2ab8f2d1-eb40-470f-8d56-bacf06e53d85` > > </dd> > </dl> > </details> > > You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit conf\u2026",
+   "created_at": "2026-10-12T22:21:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/199#issuecomment-6133689100",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 6133689454,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/tokio-rs/tokio\"> cargo/tokio </a></td><td>1.53.2</td> <td>:green_circle: 6.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>30 commit(s) and 22 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Security-Policy</td><td>:green_cir\u2026",
+   "created_at": "2026-10-12T22:21:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/199#issuecomment-6133689454",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3633293209",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "/gemini review",
+ "reason": "A bot command triggering code review, not substantive work or a request for an additional deliverable. It is administrative activity related to A1's review process.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.95
+}

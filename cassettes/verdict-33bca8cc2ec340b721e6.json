@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3949892186",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "@aviralgarg05 kindly take a look on this",
+ "reason": "A review ping, not evidence of performed work or a request for out-of-scope changes. A1 contemplates human review.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.97
+}

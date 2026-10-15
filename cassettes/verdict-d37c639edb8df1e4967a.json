@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3628789451",
+ "call": "included",
+ "clause_id": "A1",
+ "quoted_span": "The auditing failure appears because of this dependency is outdated and vulnerable:",
+ "reason": "Updating the vulnerable dependency to resolve the audit failure is reasonably covered by ensuring all automated CI checks pass. Although dependency remediation could be read as beyond adding the audit step, the lower-revenue reading is included. This event authorizes the update; it does not show completed work.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.87
+}

@@ -1,0 +1,833 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2807246698,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`cache_entries_checked` assertion is coupled to a potentially misleading field.** Line 221 asserts `cache_entries_checked == 1` with a comment `# total in list`. This validates the current behavior where `cache_entries_checked` reports `len(self.cache)` (including expired entries), which is semantically confusing as noted in the optimizer.py review. If that field is updated to reflect actually-checked entries, this assertion would need to change to `0`. Consider adding a comment or TODO noting this coupling so it doesn't silently break if the stat semantics are corrected. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/tests/test_opti\u2026",
+   "created_at": "2026-02-14T08:49:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2807246698",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912580,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Logging file-system path at INFO level during normal initialization.** Same concern as in `translator.py` \u2014 `logger.info(f\"ModelManager initialized with directory: {self.models_dir}\")` exposes the working directory to all log consumers. `DEBUG` would be more appropriate for routine lifecycle messages. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/model_manager.py` at line 26, The ModelManager logs its filesystem path at INFO level via logger.info(f\"ModelManager initialized with directory: {self.models_dir}\"), which exposes directory info; change this to logger.debug so the routine lifecycle message and the models_dir attribute are only vis\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912580",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912584,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Redundant follow-up `logger.info` after `logger.exception`.** `logger.exception` already logs at ERROR level with the full traceback. The subsequent `logger.info` with a user-facing hint (\"check your internet connection\u2026\") will appear as a separate, lower-severity log entry, which is confusing in structured logging pipelines. Fold the hint into the exception message. <details> <summary>Proposed fix</summary> ```diff except Exception: - logger.exception(\"Error downloading model\") - logger.info(\"Please check your internet connection and HuggingFace credentials\") + logger.exception( + \"Error downloading model. \" + \"Please check your internet connection an\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912584",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912586,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Missing return type annotation on `list_models`.** All other public methods in this file have type hints. `list_models` should too. <details> <summary>Proposed fix</summary> ```diff - def list_models(self): + def list_models(self) -> list[str]: ``` </details> As per coding guidelines, \"Check Python code quality, type hints usage, and PEP 8 compliance.\" <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912586",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912592,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Wrong log level: \"No models found\" is not an error.** Having no downloaded models is a perfectly normal state (e.g., first run). `logger.error` will trigger alerts or noise in production log pipelines. Use `logger.info` instead. The same concern applies to Line 101 \u2014 `logger.error` for a missing directory is misleading since `__init__` creates it. This would only fire if the directory was externally deleted between init and this call, which is at most a warning. <details> <summary>Proposed fix</summary> ```diff - logger.error(f\"Models directory does not exist: {self.models_dir}\") + logger.warning(f\"Models directory does not exist: {self.models_dir}\") ``` `\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912592",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912594,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Logging model file path at INFO level may expose filesystem details.** `logger.info(f\"Loading LLM from {model_path}...\")` reveals the full filesystem path to any log consumer. This is low risk but worth noting \u2014 `DEBUG` level would be more appropriate for operational paths. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/translator.py` at line 53, The log statement uses logger.info to print the full filesystem path (logger.info(f\"Loading LLM from {model_path}...\")), which can expose sensitive path details; change this to a lower verbosity level and avoid full-path exposure by using logger.debug and/or logging only the model base name or an a\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912594",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912597,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **PEP 8: extraneous whitespace before `:` in `except` clause.** `except Exception :` has a space before the colon. This is flagged by PEP 8 (E203). Also, consider binding the exception variable even if you rely on `logger.exception` \u2014 it makes the intent clearer and avoids confusion with a bare `except`. The same issue appears on Line 98. <details> <summary>Proposed fix</summary> ```diff - except Exception : - logger.exception(\"Could not load LLM\") + except Exception: + logger.exception(\"Could not load LLM\") ``` And at Line 98: ```diff - except Exception : - logger.exception(\"Translation error\") + except Exception: + logger.exception(\"Translation error\") ```\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912597",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912598,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Logging user input and generated SQL at INFO level \u2014 consider privacy implications.** `logger.info(f\"Translated: '{natural_query}' -> '{sql}'\")` will emit the raw user query and generated SQL to any configured log sink. If these logs are persisted or shipped to an external system, this could expose sensitive user data. Consider using `DEBUG` level instead, so it's available during development but suppressed in production by default. <details> <summary>Proposed fix</summary> ```diff - logger.info(f\"Translated: '{natural_query}' -> '{sql}'\") + logger.debug(f\"Translated: '{natural_query}' -> '{sql}'\") ``` </details> <!-- suggestion_start --> <details> <summar\u2026",
+   "created_at": "2026-02-15T20:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912598",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2809912603,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Test helper uses `logger.info` for visual separators \u2014 will be invisible without logging config.** When `test_translator()` is run via `__main__`, no logging is configured, so all output is silently dropped (unlike the original `print` calls). You need at least a `logging.basicConfig()` call in the `if __name__ == \"__main__\":` block, or switch back to `print` for this user-facing test/demo function. <details> <summary>Proposed fix</summary> ```diff if __name__ == \"__main__\": + logging.basicConfig(level=logging.INFO) test_translator() ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@nexum_ai/translator.py` around lines 190 - 195,\u2026",
+   "created_at": "2026-02-15T20:24:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2809912603",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2811021669,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **ORDER BY / LIMIT validation for aggregates happens after those operations have already executed.** The aggregate checks at lines 234\u2013244 run *after* ORDER BY sorting (lines 192\u2013227) and LIMIT truncation (lines 229\u2013232) have already been applied to the rows. While the error is still returned, the work is wasted and could produce confusing intermediate errors (e.g., ORDER BY column lookup failure masking the \"aggregates not supported\" message). Move the aggregate detection and validation before ORDER BY/LIMIT processing. <details> <summary>\ud83d\udd27 Proposed restructuring</summary> ```diff + let is_aggregate = projection.iter().any(|item| matches!(item, SelectItem::\u2026",
+   "created_at": "2026-02-16T07:30:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2811021669",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2811021671,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Find and display sqlparser version from Cargo.toml and Cargo.lock echo \"=== Cargo.toml sqlparser dependency ===\" fd Cargo.toml | head -5 | while read f; do echo \"File: $f\" rg -A2 'sqlparser' \"$f\" || true done echo \"\" echo \"=== Cargo.lock sqlparser entry ===\" fd Cargo.lock | head -1 | while read f; do rg -A5 'name = \"sqlparser\"' \"$f\" || true done ``` Repository: aviralgarg05/NexumDB Length of output: 625 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Also check the actual parser.rs file to see imports and how func is used echo \"=== Imports in parser.rs ===\" head -30 nexu\u2026",
+   "created_at": "2026-02-16T07:30:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2811021671",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2811049425,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **SUM returns `Integer(0)` instead of `NULL` for an empty set.** When there are no rows (or all values are NULL), the loop at lines 1082\u20131096 never executes, so `sum_int = 0` and `is_float = false`, resulting in `Value::Integer(0)`. Per SQL standard, `SUM` over an empty set should return `NULL`. The test at `tests/aggregate_test.rs:205` also expects `Value::Null`. <details> <summary>\ud83d\udc1b Proposed fix: track whether any non-null value was seen</summary> ```diff if let Some(col_name) = column { let col_idx = Self::resolve_column_index(schema, col_name)?; let mut sum_int = 0i64; let mut sum_float = 0.0f64; let mut is_float = false; + let mut has_value = false; for\u2026",
+   "created_at": "2026-02-16T07:41:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2811049425",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2811049431,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **This test will fail: `SUM(id)` on empty table returns `Integer(0)`, not `Null`.** Line 205 asserts `SUM(id)` is `Value::Null`, but the current executor SUM logic returns `Value::Integer(0)` when no rows are processed. The root cause is in `execute_aggregate` (see review comment on `nexum_core/src/executor/mod.rs` lines 1074\u20131107). Once that fix is applied, this test will pass. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@tests/aggregate_test.rs` around lines 199 - 209, The test fails because SUM(id) on an empty table returns Integer(0) instead of Null; update the aggregate logic in execute_aggregate so that for SUM (and similarly for MIN/MA\u2026",
+   "created_at": "2026-02-16T07:41:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2811049431",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2811049434,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Same SUM-returns-zero issue applies here.** Line 227 expects `SUM(val)` over all-NULL rows to be `Value::Null`, but the executor will return `Value::Integer(0)`. This will pass once the SUM fix in the executor is applied. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In `@tests/aggregate_test.rs` around lines 223 - 231, The test expects SUM(val) and AVG(val) over an all-NULL column to yield Value::Null (as asserted for \"SUM(val)\", \"AVG(val)\" in the test that calls Parser::parse and executor.execute); fix the executor's SUM aggregation implementation so that when no non-NULL inputs are seen it returns NULL (not Integer(0)), and ensure AVG follows\u2026",
+   "created_at": "2026-02-16T07:41:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2811049434",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2816603635,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`\\.coverage` pattern will falsely match `.coveragerc` (a legitimate config file).** The regex `\\.coverage` matches any path containing `.coverage` as a substring \u2014 this includes `.coveragerc`, which is a standard coverage.py configuration file. If someone adds a `.coveragerc` to the repo, CI will break unexpectedly. Tighten the patterns to match exact filenames or directory names: <details> <summary>Proposed fix</summary> ```diff - if git ls-files | grep -E '\\.DS_Store|\\.coverage|htmlcov'; then + if git ls-files | grep -E '(^|/)\\.DS_Store$|(^|/)\\.coverage$|(^|/)htmlcov(/|$)'; then ``` </details> Also, this step is duplicated verbatim in the Python job (Lin\u2026",
+   "created_at": "2026-02-17T11:40:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2816603635",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2816603641,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Duplicate of the junk-file check in the Rust job.** This block is identical to Lines 29\u201336. Any pattern fix or denylist update will need to be applied in both places. See the comment on the Rust job step for the regex fix and the suggestion to extract a shared script. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In @.github/workflows/ci.yml around lines 181 - 188, The \"Fail if junk files are tracked\" step duplicates the same git grep check used in the Rust job; extract the logic into a shared script or reusable workflow and update the regex to a single, correct pattern (\u2026",
+   "created_at": "2026-02-17T11:40:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2816603641",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2816747766,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Add `set -o pipefail` to catch failures in the pipe.** Without `pipefail`, if `git ls-files` fails (e.g., not a git repo, corrupt index), `grep` receives empty input, returns 1 (no match), and the script happily prints \"\u2705 Repository clean.\" \u2014 silently swallowing the error. <details> <summary>Proposed fix</summary> ```diff #!/usr/bin/env bash -set -e +set -euo pipefail ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly t\u2026",
+   "created_at": "2026-02-17T12:16:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2816747766",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2817708259,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **PEP 8 E251: No spaces around `=` in keyword argument.** `level = logging.INFO` should be `level=logging.INFO`. <details> <summary>Proposed fix</summary> ```diff - logging.basicConfig(level = logging.INFO) + logging.basicConfig(level=logging.INFO) ``` </details> As per coding guidelines, \"Check Python code quality, type hints usage, and PEP 8 compliance.\" <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_ai/translator.py` at line 199, PEP8 violation in the call to logging.basicConfig: remove spaces around the keyword assignment so the argument reads level=logging.INFO;\u2026",
+   "created_at": "2026-02-17T15:40:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2817708259",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2817747774,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider using `print` for user-facing demo output in `test_translator`.** `logger.info` calls inside `test_translator` will be silently swallowed if this function is ever called without prior `logging.basicConfig`. Since this is a demo/test helper (not library logic), `print` is arguably the right tool \u2014 it guarantees visible output regardless of logging configuration. The `__main__` guard covers the direct-execution case, but an import-and-call scenario would produce no output. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_ai/translator.py` around lines 190 - 196, The d\u2026",
+   "created_at": "2026-02-17T15:48:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2817747774",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2817910143,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Prefer lazy `%s` formatting over f-strings in logger calls.** f-strings are eagerly interpolated even when the log level is disabled. For `DEBUG` messages (lines 26, 48, 84) this is wasteful. The idiomatic pattern is: ```python logger.debug(\"Model found at %s\", local_path) ``` This defers string formatting until the message is actually emitted. Also applies to: 48-48, 84-84 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_ai/model_manager.py` at line 26, Replace eager f-string interpolation in logger.debug calls with lazy %-style formatting so logging formatting is deferred;\u2026",
+   "created_at": "2026-02-17T16:23:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2817910143",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823824012,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **No mechanism to disable TTL once set.** `set_cache_expiration` only accepts positive values, and there's no public API to reset `max_age_seconds` back to `None`. Users must reach into the private attribute directly (`cache.max_age_seconds = None`). Consider accepting `None` to disable TTL, or adding a `disable_cache_expiration()` method. <details> <summary>\u267b\ufe0f Allow disabling TTL via set_cache_expiration</summary> ```diff - def set_cache_expiration(self, max_age_hours: float = 24) -> int: + def set_cache_expiration(self, max_age_hours: Optional[float] = 24) -> int: \"\"\"Set TTL and immediately evict cache entries older than *max_age_hours*. ... Args: max_age_hours:\u2026",
+   "created_at": "2026-02-18T18:29:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2823824012",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823836268,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **`idx_cache_entries_id` index is redundant \u2014 SQLite already indexes the PRIMARY KEY** `id INTEGER PRIMARY KEY AUTOINCREMENT` implicitly creates a B-tree index in SQLite. The explicit `CREATE INDEX \u2026 ON cache_entries(id)` is a no-op that adds DDL noise. <details> <summary>\u267b\ufe0f Suggested fix</summary> ```diff - conn.execute( - \"CREATE INDEX IF NOT EXISTS idx_cache_entries_id ON cache_entries(id)\" - ) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with inde\u2026",
+   "created_at": "2026-02-18T18:32:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2823836268",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823836291,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`initialize_model()` re-attempted on every `vectorize()` call when all model loads failed** If both `sentence-transformers` and `transformers` are unavailable, `initialize_model()` leaves `self.model = None` and `self.hf_model = None`. Because the guard condition `if self.model is None and self.hf_model is None` is still `True` on the next call, every subsequent `vectorize()` invocation re-attempts the full import chain (two `ImportError`s each time). Add a sentinel flag to short-circuit after the first failed attempt. <details> <summary>\ud83d\udd27 Suggested fix</summary> ```diff + self._model_init_attempted: bool = False ... def vectorize(self, text: str) -> List[\u2026",
+   "created_at": "2026-02-18T18:32:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2823836291",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823836294,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`clear()` leaves orphaned `.sqlite-wal` / `.sqlite-shm` files after deleting the main database** WAL mode creates `{cache_path}-wal` and `{cache_path}-shm` alongside the main file. `self.cache_path.unlink()` removes only the `.sqlite` file, leaving the auxiliary files behind. SQLite recovers gracefully on the next open, but the stale files waste disk space and can confuse monitoring/tooling. Additionally `self._db_ok` remains `True` after `clear()`, so the next `put()` / `get()` transparently re-creates the DB\u2014potentially replaying data from an orphaned WAL. <details> <summary>\ud83d\udd27 Suggested fix</summary> ```diff if self.cache_path.exists(): try: self.cache_p\u2026",
+   "created_at": "2026-02-18T18:32:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2823836294",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823836297,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`save_cache(filepath)` silently ignores its `filepath` parameter** The method signature preserves `filepath: Optional[str] = None` from the old pickle-based API, but the new implementation ignores it entirely. Any external caller that passed a custom filepath expecting data to be saved there will see a silent no-op. Either remove the parameter or document clearly that it is deprecated and raise a `DeprecationWarning`. <details> <summary>\ud83d\udd27 Suggested fix</summary> ```diff -def save_cache(self, filepath: Optional[str] = None) -> None: - \"\"\"Persist cache to SQLite backend (no-op for in-memory only mode)\"\"\" +def save_cache(self, filepath: Optional[str] = None)\u2026",
+   "created_at": "2026-02-18T18:32:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2823836297",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823836301,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`cur.rowcount` accessed after the connection is closed \u2014 move it inside the `with` block** `cur` is obtained inside `with self._db() as conn:`, which calls `conn.close()` on exit. `cur.rowcount` is then read after `conn.close()`. While CPython's `sqlite3` caches `rowcount` as a plain Python integer on the cursor object, reading it after connection close is an implementation-detail reliance. Move the read inside the `with` block. <details> <summary>\ud83d\udd27 Suggested fix</summary> ```diff try: with self._db() as conn: cur = conn.execute(\"DELETE FROM cache_entries WHERE created_at < ?\", (cutoff,)) - removed = int(cur.rowcount) if cur and cur.rowcount is not None el\u2026",
+   "created_at": "2026-02-18T18:32:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2823836301",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2823836307,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Use `Path.with_suffix()` instead of `str.replace()` for the extension swap** `str.replace('.pkl', '.sqlite')` replaces the **first occurrence**, so if `temp_dir` ever contains `.pkl` somewhere in its path (e.g., a system-temp path that includes `.pkl`), the result will be incorrect. Use the idiomatic `Path` API instead. <details> <summary>\ud83d\udd27 Suggested fix</summary> ```diff - actual_cache_file = cache_file.replace('.pkl', '.sqlite') + actual_cache_file = str(Path(cache_file).with_suffix('.sqlite')) ``` ```diff - actual_custom_cache = custom_cache.replace('.pkl', '.sqlite') + actual_custom_cache = str(Path(custom_cache).with_suffix('.sqlite')) ``` `Path` is a\u2026",
+   "created_at": "2026-02-18T18:32:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#discussion_r2823836307",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2825892319,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Rust-change detection misses `rust-toolchain.toml` and `.cargo/config.toml`.** The grep pattern covers `Cargo.toml`, `Cargo.lock`, and `*.rs`, but a PR that only modifies `rust-toolchain.toml`, `rust-toolchain` (bare file), or `.cargo/config.toml` will produce `changed=false`, silently skipping every Rust CI step \u2014 including `cargo fmt`, `clippy`, and tests \u2014 despite a potentially breaking toolchain or linker config change. <details> <summary>\ud83d\udd27 Proposed fix</summary> ```diff - if git diff --name-only \"origin/${{ github.base_ref }}...HEAD\" | grep -Eq '(^|/)(Cargo\\.toml|Cargo\\.lock)$|\\.rs$'; then + if git diff --name-only \"origin/${{ github.base_ref }}...HEA\u2026",
+   "created_at": "2026-02-19T06:18:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2825892319",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2825918711,
+   "body": "Fixed in 6e83602: expanded Rust-change detection to include rust-toolchain/rust-toolchain.toml and .cargo paths, and added junk-file guard step to benchmarks job as requested.",
+   "created_at": "2026-02-19T06:28:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2825918711",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2825920960,
+   "body": "`@aviralgarg05` Perfect! \u2728 The regex pattern now correctly captures `rust-toolchain`, `rust-toolchain.toml`, and `.cargo/` paths, and the junk-file guard has been added to the benchmarks job. Thank you for addressing this! <!-- <review_comment_addressed> --> --- <!-- This is an auto-generated comment: tweet message by coderabbit.ai --> If you found this review helpful, would you consider giving us a shout-out on [X](https://twitter.com/intent/tweet?related=CodeRabbitAI&text=CI%20gap%3A%20Rust-change%20detection%20missed%20rust-toolchain%20and%20.cargo%20configs%2C%20so%20fmt%2Fclippy%2Ftests%20could%20be%20skipped.%20%40coderabbitai%20recommended%20adding%20rust-toolchain(.toml)%3F%20and%20\u2026",
+   "created_at": "2026-02-19T06:29:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2825920960",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2825935799,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove redundant `${{ }}` wrapper for consistency with all other `if:` conditions in this file.** The `${{ }}` wrapper is unnecessary \u2014 `if:` fields are already expression contexts in GitHub Actions. Every other conditional in this job omits the wrapper; this one is the sole exception. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff - if: ${{ always() && steps.rust_changes.outputs.changed == 'true' }} + if: always() && steps.rust_changes.outputs.changed == 'true' ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces th\u2026",
+   "created_at": "2026-02-19T06:35:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#discussion_r2825935799",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2825988127,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`--depth=1` fetch creates a false-negative risk for Rust change detection** The workflow uses `actions/checkout@v4` at its default `fetch-depth: 1` (shallow clone), and then fetches the base ref with `--depth=1`. The merge-base guard on lines 38\u201341 only fires when `git merge-base` returns non-zero \u2014 i.e., when git explicitly can't resolve the ancestor. It does **not** protect against the more subtle failure where git resolves a shallow-but-incorrect common ancestor, causing `git diff --name-only` to succeed but return an **empty or incomplete file list**. In that case `grep` finds no Rust patterns, `changed=false` is emitted, and all Rust CI steps are sile\u2026",
+   "created_at": "2026-02-19T06:54:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2825988127",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2825988129,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Inconsistent `if:` expression syntax** Line 97 wraps the condition in `${{ }}` while all other gated steps in the same job use bare expressions. Both forms are valid in GitHub Actions, but consistency improves readability. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff - if: ${{ always() && steps.rust_changes.outputs.changed == 'true' }} + if: always() && steps.rust_changes.outputs.changed == 'true' ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues\u2026",
+   "created_at": "2026-02-19T06:54:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#discussion_r2825988129",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2836445324,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`load_cache_json` does not reset TTL when loading a cache saved without one.** When `saved_max_age` is `None` (either because TTL was disabled at save time, or because the file is a pre-TTL format), the existing `self.max_age_seconds` is left untouched. If the current instance already has a TTL set, loading a no-TTL cache will: 1. Keep the stale TTL from the current instance. 2. Immediately evict freshly loaded entries via `_evict_expired()` on line 341, using the wrong TTL. The fix is to always restore the saved TTL state, including `None`: <details> <summary>\ud83d\udc1b Proposed fix \u2014 always restore TTL state on load</summary> ```diff # Restore persisted TTL setti\u2026",
+   "created_at": "2026-02-21T18:36:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2836445324",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2836445327,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Consider adding a test for loading a no-TTL cache into a TTL-enabled instance.** This test verifies the positive case (TTL survives save/load). There's no test for the reverse: loading a cache that was saved *without* TTL into an instance that already has TTL set. This scenario relates to the bug flagged in `optimizer.py` where `load_cache_json` fails to reset `max_age_seconds` to `None`. <details> <summary>\ud83e\uddea Suggested test</summary> ```python def test_load_clears_ttl_when_saved_without_one(self): \"\"\"Loading a cache saved without TTL should reset max_age_seconds.\"\"\" import tempfile, os with tempfile.TemporaryDirectory() as td: path = os.path.join(td, \"\u2026",
+   "created_at": "2026-02-21T18:36:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2836445327",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2836464621,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`set_cache_expiration` accepts non-numeric types without a guard.** If a caller passes a non-numeric truthy value (e.g., a string `\"abc\"`), line 495 (`max_age_hours <= 0`) will raise a `TypeError` instead of the documented `ValueError`. A type check would give a clearer error message. <details> <summary>\ud83d\udee1\ufe0f Proposed fix</summary> ```diff if max_age_hours is None: self.max_age_seconds = None logger.info(\"Cache expiration disabled\") return 0 + if not isinstance(max_age_hours, (int, float)): + raise TypeError(\"max_age_hours must be a number or None\") + if max_age_hours <= 0: raise ValueError(\"max_age_hours must be a positive number\") ``` </details> <details> <\u2026",
+   "created_at": "2026-02-21T18:51:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2836464621",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2836464623,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`set_cache_expiration` allows `float('inf')` and `float('nan')`.** `float('inf')` passes the `> 0` check and sets `max_age_seconds` to infinity (effectively disabling TTL without signaling it). `float('nan')` fails `<= 0` (since NaN comparisons are always False) and also slips through, producing a NaN `max_age_seconds` that corrupts all subsequent expiration checks. <details> <summary>\ud83d\udee1\ufe0f Proposed fix</summary> ```diff + import math + if not isinstance(max_age_hours, (int, float)) or math.isnan(max_age_hours) or math.isinf(max_age_hours): + raise ValueError(\"max_age_hours must be a finite positive number\") + if max_age_hours <= 0: raise ValueError(\"max_age_\u2026",
+   "created_at": "2026-02-21T18:51:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2836464623",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2836464624,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Missing test for `NaN` and `Inf` inputs to `set_cache_expiration`.** `float('nan')` silently passes the `<= 0` check (NaN comparisons are always False) and would corrupt TTL state. `float('inf')` also passes validation. Consider adding: <details> <summary>\ud83e\uddea Suggested test</summary> ```python def test_set_cache_expiration_rejects_nan_and_inf(self): \"\"\"set_cache_expiration must reject NaN and Inf.\"\"\" cache = SemanticCache() with pytest.raises((ValueError, TypeError)): cache.set_cache_expiration(float('nan')) with pytest.raises((ValueError, TypeError)): cache.set_cache_expiration(float('inf')) ``` </details> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary>\u2026",
+   "created_at": "2026-02-21T18:51:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2836464624",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2836464625,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider hoisting `tempfile` and `os` imports to the top of the file.** These are standard-library modules imported inline within two test methods. Moving them to the top improves readability and follows PEP 8 conventions. As per coding guidelines, `**/*.py`: Check Python code quality, type hints usage, and PEP 8 compliance. Also applies to: 255-256 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_ai/tests/test_optimizer.py` around lines 239 - 240, Move the inline imports of the standard-library modules tempfile and os out of the test functions and hoist them to the module t\u2026",
+   "created_at": "2026-02-21T18:51:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#discussion_r2836464625",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2845186505,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Be aware of `pull_request_target`'s elevated privileges** `pull_request_target` runs in the context of the **base branch** and has access to repository secrets and write permissions \u2014 even for PRs opened from forks. Since this workflow does not check out or execute any code from the PR branch, the risk here is acceptable. However, any future expansion of this workflow (e.g., adding a checkout step) would introduce a significant supply-chain attack surface. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In @.github/workflows/autolabeler.yml around lines 4 - 5, The workflow curr\u2026",
+   "created_at": "2026-02-24T08:06:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#discussion_r2845186505",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2845186510,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `actions/github-script context.issue.number pull_request_target issues events` \ud83d\udca1 Result: - `context.issue.number` (from `actions/github-script`) is meant to give you the **current \u201cissue-like\u201d number** for the event (issue *or* PR), and is commonly used as `issue_number` when calling REST endpoints like `issues.createComment`. [1] - **`issues` event**: the payload is an **issue**, so the number is `github.event.issue.number` (and `context.issue.number` will match). Also, the `issues` workflow trigger is for issues activity (not PR activity). [2] - **`pull_request_target` event**: the payload is a **pull_req\u2026",
+   "created_at": "2026-02-24T08:06:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#discussion_r2845186510",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2845186526,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Workflow will hard-fail if label `\"OSCG26\"` does not exist in the repository** `github.rest.issues.addLabels` returns HTTP 422 when any label in the array is absent from the repository, causing the job to fail on every trigger. There is no label-creation guard anywhere in this workflow. Add a `createLabel` call (using `try/catch` to tolerate an already-existing label) before the `addLabels` call, or ensure the label is pre-created as a one-time repository setup step and document it as a prerequisite. <details> <summary>\ud83d\udee1\ufe0f Proposed fix \u2014 create label if absent, then add it</summary> ```diff script: | const prNumber = context.payload.pull_request.number; + +\u2026",
+   "created_at": "2026-02-24T08:06:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#discussion_r2845186526",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2851290391,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`Since` column label is semantically misleading for planned rows.** For implemented features, `Since` correctly conveys the version in which the feature was introduced. For planned features (lines 68\u201373), the same column holds a *target* milestone, which `Since` does not describe. A reader unfamiliar with the project may interpret it as \"available since v0.6.0\" rather than \"planned for v0.6.0\". Consider a label that works for both contexts, e.g. `Version`, or split it into two columns `Since` / `Target`: <details> <summary>\u270f\ufe0f Proposed fix</summary> ```diff -| Feature | Status | Since | Notes | -|---------|--------|-------|-------| +| Feature | Status | Ver\u2026",
+   "created_at": "2026-02-25T07:15:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/168#discussion_r2851290391",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2917140710,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Aggregate execution is still unreachable from this branch.** `build_projection(&schema, &projection)?` runs immediately above this and now errors on `SelectItem::Aggregate` at Lines 758-762, so every aggregate `SELECT` fails before `is_aggregate` is checked. Detect aggregates before calling `build_projection`, and only build projection indices for non-aggregate queries. <details> <summary>\ud83d\udc1b Minimal fix direction</summary> ```diff - let (projection_indices, output_columns) = - Self::build_projection(&schema, &projection)?; - let is_aggregate = projection .iter() .any(|item| matches!(item, SelectItem::Aggregate { .. })); + + let (projection_indices, outpu\u2026",
+   "created_at": "2026-03-11T09:45:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2917140710",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2917140719,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Default aggregate headers become ambiguous for multi-aggregate queries.** Without aliases, `COUNT(*)` and `COUNT(id)` both surface as `\"count\"` here, and the same happens for `MIN`/`MAX` on different columns. Using `FUNC(column)` as the fallback keeps `ExecutionResult::Selected.columns` unambiguous and aligns better with the planner/cache formatting. <details> <summary>\u267b\ufe0f Suggested change</summary> ```diff - let col_name = alias.clone().unwrap_or_else(|| { - match func { - crate::sql::types::AggregateType::Count => \"count\".to_string(), - crate::sql::types::AggregateType::Sum => \"sum\".to_string(), - crate::sql::types::AggregateType::Avg => \"avg\".to_string()\u2026",
+   "created_at": "2026-03-11T09:45:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2917140719",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2917140724,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`MIN`/`MAX` on `BOOLEAN` columns are currently input-order dependent.** `Value::Boolean` falls through to `_ => false`, so once the first non-null boolean is seen, it is never replaced. `MIN(flag)` and `MAX(flag)` will therefore return whichever row appears first instead of `false`/`true`. Either compare booleans explicitly or reject boolean columns with an error. <details> <summary>\ud83d\udc1b Suggested fix</summary> ```diff let should_replace = match (curr_val, val) { (Value::Integer(c), Value::Integer(v)) => if is_min { v < c } else { v > c }, (Value::Float(c), Value::Float(v)) => if is_min { v < c } else { v > c }, (Value::Text(c), Value::Text(v)) => if is_min {\u2026",
+   "created_at": "2026-03-11T09:45:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2917140724",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2917140736,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Avoid deriving SQL text from `Debug` output.** `format!(\"{:?}\", func)` makes the plan label depend on the enum's Rust variant names (`Count(*)`, `Sum(x)`) instead of the SQL spelling already used elsewhere. An explicit mapping keeps planner output stable and consistent. <details> <summary>\u267b\ufe0f Suggested change</summary> ```diff crate::sql::types::SelectItem::Aggregate { func, column, alias } => { let col = column.as_deref().unwrap_or(\"*\"); - alias.clone().unwrap_or_else(|| format!(\"{:?}({})\", func, col)) + let func_name = match func { + crate::sql::types::AggregateType::Count => \"COUNT\", + crate::sql::types::AggregateType::Sum => \"SUM\", + crate::sql::types::Aggrega\u2026",
+   "created_at": "2026-03-11T09:45:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#discussion_r2917140736",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509732,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **BridgeError still doesn't expose the stable error codes promised by this refactor.** Issue `#23` explicitly calls for machine-readable codes. Callers can match variants here, but there is no stable bridge error code surface analogous to `ErrorCode` for logging, interoperability, or cross-layer programmatic handling. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/bridge/error.rs` around lines 4 - 16, BridgeError currently lacks a stable, machine-readable error code surface; add a new ErrorCode enum (e.g., ErrorCode::NotInitialized, ::PythonError, ::Directory\u2026",
+   "created_at": "2026-03-11T13:51:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509732",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509740,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Rename `InvalidaPath` before this becomes part of the public API.** This typo will leak into downstream imports and pattern matches, and correcting it later becomes a breaking change. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/bridge/error.rs` around lines 14 - 15, The enum variant name contains a typo: rename the variant InvalidaPath to InvalidPath in error.rs (keep the existing #[error(\"Invalid path\")] attribute), then update all references/usages (pattern matches, imports, tests, and any public re-exports) from InvalidaPath to InvalidPath so the\u2026",
+   "created_at": "2026-03-11T13:51:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509740",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509746,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove commented-out code.** The commented `anyhow` import is dead code. Since this PR replaces anyhow with typed errors, this line should be removed entirely rather than left as a comment. <details> <summary>\ud83e\uddf9 Proposed fix</summary> ```diff -//use anyhow::{anyhow}; use pyo3::Py; ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion use pyo3::Py; ``` </d\u2026",
+   "created_at": "2026-03-11T13:51:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509746",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509765,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove commented-out code and fix formatting.** Line 57 contains commented-out dead code. Additionally, line 56 has inconsistent spacing (`e:PyErr` should be `e: PyErr` for consistency with other occurrences like line 34). <details> <summary>\ud83e\uddf9 Proposed fix</summary> ```diff .ok_or_else(|| BridgeError::PythonError(\"Python interpreter not available\".into()))? - .map_err(|e:PyErr| BridgeError::PythonError(e.to_string())) - //.map_err(|e: PyErr| BridgeError::PythonError(e.to_string())) + .map_err(|e: PyErr| BridgeError::PythonError(e.to_string())) } ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Car\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509765",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509781,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Use the write error code for duplicate table creation.** Line 28 tags this `WriteError` as `NXM-STOR-103`, but that is the read code. Any caller branching on `ErrorCode` will misclassify duplicate-table failures. <details> <summary>Minimal fix</summary> ```diff - code: ErrorCode::NxmStor103, + code: ErrorCode::NxmStor102, ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509781",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509790,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **FilterError doesn't expose the stable codes promised by this refactor.** This public error surface only offers enum variants and free-form payloads. If the goal is machine-readable handling across modules, filter failures still have no stable code to log or branch on. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/executor/filter_error.rs` around lines 4 - 31, The public FilterError enum currently exposes only variants and string payloads, so add a stable, machine-readable error code accessor (for example implement impl FilterError { pub fn code(&self) -> &\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509790",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509795,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Boolean literal predicates regressed here.** The `Expr::Value(Boolean)` arm is commented out, so valid predicates like `WHERE TRUE` and `WHERE FALSE` now fall through to `UnsupportedExpression`. That is a behavior change, not just an error-handling refactor. Also applies to: 100-106 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/executor/filter.rs` around lines 61 - 64, Restore handling for boolean literal expressions so predicates like WHERE TRUE/FALSE don't fall through to UnsupportedExpression: re-enable the Expr::Value(v) match arm (matching SqlValue::B\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509795",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509799,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **LIKE `ESCAPE` is parsed but never applied.** Lines 82-88 throw away `escape_char`, and `evaluate_like` ignores its escape parameter anyway. Queries that rely on escaped `%` or `_` will therefore be evaluated with normal wildcard semantics and return the wrong rows. Also applies to: 229-245 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/executor/filter.rs` around lines 82 - 88, The LIKE variant discards the parsed escape_char and evaluate_like ignores any escape, so patterns with escaped %/_ are treated as wildcards; update the call sites (the Expr::Like mat\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509799",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509802,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **These helper constructors regress both codes and suggestions.** `StorageError::read()` hardcodes `NXM-STOR-102`, which is the write code, and both helpers blank out `suggestion`. Because most new call sites go through these wrappers, the executor now emits the wrong machine-readable code and loses the context-aware guidance already defined in `storage/error.rs`. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/executor/mod.rs` around lines 47 - 61, The helpers StorageError::read and StorageError::write currently hardcode ErrorCode::NxmStor102 and clear out su\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509802",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509805,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **These `ReadError` instances are tagged with the write code.** Line 218 and Line 438 set `NxmStor102` even though both branches construct `ReadError`. `ORDER BY` and `UPDATE` validation failures will therefore report the wrong machine-readable code. <details> <summary>Minimal fix</summary> ```diff - code: ErrorCode::NxmStor102, + code: ErrorCode::NxmStor103, ... - code: ErrorCode::NxmStor102, + code: ErrorCode::NxmStor103, ``` </details> Also applies to: 437-445 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/executor/mod.rs` around lines 217 - 223, The Stora\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509805",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509812,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Keep `serde_json` failures as `SerializationError`.** `StorageError` already has `From<serde_json::Error>` that emits `NXM-STOR-105` with preview context. Wrapping those failures as generic read/write strings throws away the dedicated code and diagnostics this refactor added. <details> <summary>Minimal fix</summary> ```diff - let value = serde_json::to_vec(&row).map_err(|e| { - StorageError::write(format!(\"Failed to serialize row: {}\", e)) - })?; + let value = serde_json::to_vec(&row)?; ... - let wal: TxWalFile = - serde_json::from_slice(&bytes).map_err(|e| StorageError::read(e.to_string()))?; + let wal: TxWalFile = serde_json::from_slice(&bytes)?; ... - l\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509812",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509815,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, let's look at the specific file and lines mentioned cat -n nexum_core/src/sql/parser.rs | sed -n '165,230p' ``` Repository: aviralgarg05/NexumDB Length of output: 3244 --- \ud83c\udfc1 Script executed: ```shell # Let's check what OrderByKind variants exist in the sqlparser crate # First, let's see if there's a Cargo.toml to understand dependencies cd nexum_core && cat Cargo.toml | grep -A 5 sqlparser ``` Repository: aviralgarg05/NexumDB Length of output: 250 --- \ud83c\udfc1 Script executed: ```shell # Let's search for where OrderByKind is used or referenced in the codebase rg \"OrderByKind\" --type\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509815",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509819,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Preserve the existing `sled::Error` classification here.** These closures collapse every open failure into `OpenError`/`NXM-STOR-101`. That discards the more precise mapping already implemented in `From<sled::Error>` (for example corruption/read vs unsupported/write), so callers lose both the correct code and the better suggestion. <details> <summary>Minimal fix</summary> ```diff - let db = sled::open(&db_path).map_err(|e| StorageError::OpenError{ - code: ErrorCode::NxmStor101, - reason: e.to_string(), - suggestion: \"Check database path and permissions\".to_string(), - })?; + let db = sled::open(&db_path).map_err(StorageError::from)?; ... - .map_err(|e| Sto\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509819",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2918509822,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **These rustdoc examples are malformed and document private helpers.** Each block closes with ````ignore` instead of a real closing fence, and every snippet calls a private constructor (`open_error`, `write_error`, etc.). The rendered docs will be broken and downstream users still won't have a usable public example. Also applies to: 126-129, 147-150, 168-171, 189-192 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ```` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/storage/error.rs` around lines 105 - 108, The rustdoc examples use malformed closing fences (they end with ```ignore instead of a proper ```), and\u2026",
+   "created_at": "2026-03-11T13:51:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2918509822",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152523,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Reorder module declaration before use statements.** In idiomatic Rust, `mod` declarations should appear before `use` statements. Consider moving `pub mod error;` to the top of the file. <details> <summary>\ud83e\uddf9 Suggested fix</summary> ```diff +pub mod error; + //use anyhow::{anyhow}; use pyo3::Py; use pyo3::types::PyAny; use pyo3::prelude::*; use pyo3::types::{PyList, PyModule}; use crate::bridge::error::{BridgeError, Result}; -pub mod error; ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains n\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152523",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152541,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove all remaining commented-out `.map_err` lines.** Multiple locations have commented-out duplicate error handling that should be removed: - Lines 70, 117, 128, 143, 154, 165, 177, 189, 270 <details> <summary>\ud83e\uddf9 Example fix (apply pattern to all occurrences)</summary> ```diff .ok_or_else(|| BridgeError::PythonError(\"Python interpreter not available\".into()))? .map_err(|e: PyErr| BridgeError::PythonError(e.to_string())) - //.map_err(|e: PyErr| BridgeError::PythonError(e.to_string())) ``` </details> Also applies to: 115-118, 126-129, 141-144, 152-155, 163-166, 175-178, 187-190, 268-271 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding ag\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152541",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152544,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove extra blank lines.** Lines 211 and 229 have unnecessary trailing blank lines that should be cleaned up for consistency. Also applies to: 229-229 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/bridge/mod.rs` around lines 210 - 211, Remove the unnecessary blank lines surrounding the expression that maps Python errors to BridgeError; specifically clean up the trailing blank line after the .map_err(|e| BridgeError::PythonError(e.to_string()))?; call (and the similar extra blank line around the second occurrence near BridgeError::PythonError at the later spot).\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152544",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152550,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Fix inconsistent spacing in type annotations.** Several closures use `e:PyErr` instead of `e: PyErr`. Apply consistent formatting across all occurrences (lines 228, 256, 269). <details> <summary>\ud83e\uddf9 Suggested fix</summary> ```diff - .map_err(|e:PyErr| BridgeError::PythonError(e.to_string())) + .map_err(|e: PyErr| BridgeError::PythonError(e.to_string())) ``` </details> Also applies to: 256-256, 269-269 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/bridge/mod.rs` at line 228, Update the type annotation spacing in the closures that map Python errors to BridgeError so\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152550",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152556,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove commented-out import.** The commented `anyhow` import on line 43 is dead code and should be removed since this PR replaces anyhow with typed errors. <details> <summary>\ud83e\uddf9 Suggested fix</summary> ```diff -//use anyhow::anyhow; use crate::sql::types::Value; ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion use crate::sql::types::Value; ``` </deta\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152556",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152564,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove commented-out error code structure.** These commented lines are dead code. If error codes are planned for future use, track them in an issue rather than leaving commented scaffolding in the codebase. <details> <summary>\ud83e\uddf9 Suggested fix</summary> ```diff - _ => Err(FilterError::UnsupportedExpression - //{ - // code: ErrorCode::NxmExec101, - // reason: format!(\"Unsupported expression type: {:?}\", expr), - // suggestion: \"Check SQL syntax\".to_string(), - //} - ), + _ => Err(FilterError::UnsupportedExpression), ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before com\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152564",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152571,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Inconsistent formatting in `TypeMismatch` construction.** Missing space after `format!(\"{:?}\",` on lines 223-224. <details> <summary>\ud83e\uddf9 Suggested fix</summary> ```diff _ => Err(FilterError::TypeMismatch( - // \"Type mismatch in comparison: {:?} vs {:?}\", - format!(\"{:?}\",left), - format!(\"{:?}\",right), + format!(\"{:?}\", left), + format!(\"{:?}\", right), )), ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the c\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152571",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152577,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Fix inconsistent formatting.** The table access and column iteration have unusual line breaks that reduce readability. <details> <summary>\u267b\ufe0f Proposed formatting fix</summary> ```diff SqlStatement::Insert(insert) => { - - let table = insert. - table - .to_string(); - let col_names = insert - .columns - .iter() - .map(|c| c.to_string()) - .collect(); - + let table = insert.table.to_string(); + let col_names = insert.columns.iter().map(|c| c.to_string()).collect(); ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the high\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152577",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2924152584,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove dead commented-out code.** The commented-out else block is dead code that adds noise without value. If this logic is intentionally disabled, consider removing it entirely or adding a TODO explaining why it's preserved. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff - // else { - // return Err(anyhow!(\"DELETE requires a table name\")); - // }; - ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the\u2026",
+   "created_at": "2026-03-12T12:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2924152584",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2925000994,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Factor the attach/error-conversion boilerplate into one helper.** The same `try_attach` \u2192 `ok_or_else` \u2192 `map_err` chain is repeated across nearly every bridge method. Centralizing that keeps the typed-error behavior consistent and avoids future drift in messages or codes. <details> <summary>Refactor sketch</summary> ```diff +fn with_python<T>(f: impl FnOnce(Python<'_>) -> PyResult<T>) -> Result<T> { + Python::try_attach(f) + .ok_or_else(|| BridgeError::PythonError(\"Python interpreter not available\".into()))? + .map_err(|e| BridgeError::PythonError(e.to_string())) +} + pub fn vectorize(&self, text: &str) -> Result<Vec<f32>> { if !self.initialized { return Err(Bri\u2026",
+   "created_at": "2026-03-12T14:19:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2925000994",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2925001009,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Return `NotInitialized` here too.** `vectorize()` guards on `self.initialized`, but `test_integration()` skips that check and falls through to a generic `PythonError`. That makes initialization failures harder to handle programmatically than the rest of `PythonBridge`. <details> <summary>Proposed fix</summary> ```diff pub fn test_integration(&self) -> Result<String> { + if !self.initialized { + return Err(BridgeError::NotInitialized); + } + Python::try_attach(|py| { let nexum_ai = PyModule::import(py, \"nexum_ai.optimizer\")?; let test_func = nexum_ai.getattr(\"test_vectorization\")?; ``` </details> As per coding guidelines, `**/*.rs`: Focus on Rust best pract\u2026",
+   "created_at": "2026-03-12T14:19:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2925001009",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2925001028,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Don't collapse `FilterError` back into a formatted storage string.** These branches take a typed filter failure and immediately stringify it into `StorageError::read(...)`. That discards the exact filter variant and any future filter-specific code surface, which undercuts the point of this refactor. Also applies to: 461-464 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/executor/mod.rs` around lines 358 - 360, The code is collapsing a typed FilterError into a formatted string via StorageError::read; instead preserve the original error type by adding a Stora\u2026",
+   "created_at": "2026-03-12T14:19:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2925001028",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2931195369,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Semantic mismatch between error variant and actual failure condition.** `Python::try_attach` returns `None` when the Python GIL cannot be acquired (no active interpreter), not when the bridge is uninitialized. Using `BridgeError::NotInitialized` here conflates two distinct failure modes: 1. Bridge not initialized (user forgot to call `initialize()`) 2. Python interpreter not available (GIL acquisition failed) This can mislead callers who check for `NotInitialized` expecting it means they need to call `initialize()`. <details> <summary>\ud83d\udee0\ufe0f Proposed fix: Add a dedicated error variant</summary> In `error.rs`: ```diff pub enum BridgeError { #[error(\"Python brid\u2026",
+   "created_at": "2026-03-13T13:26:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2931195369",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2931195377,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Remove commented-out dead code.** Lines 495-497 contain remnant commented code from a previous refactor. The logic inside doesn't even make sense (it would serialize again without using the result). Remove this dead code. <details> <summary>\u267b\ufe0f Proposed fix</summary> ```diff - let value = serde_json::to_vec(&row)?; - // .map_err(|e| { - // serde_json::to_vec(&row)?; - // })?; + let value = serde_json::to_vec(&row)?; batch_operations.push((key, value)); ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the high\u2026",
+   "created_at": "2026-03-13T13:26:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2931195377",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2931195404,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`serde_json` errors should use the `From` impl for proper `SerializationError`.** `StorageError` implements `From<serde_json::Error>` which creates a `SerializationError` with `NxmStor105` and includes line/column preview context. Wrapping via `StorageError::read/write` loses this specialized handling. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff - let bytes = fs::read(path).map_err(|e| StorageError::read(e.to_string()))?; - let wal: TxWalFile = - serde_json::from_slice(&bytes).map_err(|e| StorageError::read(e.to_string()))?; + let bytes = fs::read(path).map_err(|e| StorageError::read(e.to_string()))?; + let wal: TxWalFile = serde_json::from_slice(&\u2026",
+   "created_at": "2026-03-13T13:26:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2931195404",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2931195410,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove commented-out code block.** This ~105-line block of commented-out public constructors and documentation is dead code. If these constructors are intentionally replaced by private helpers, delete this block entirely. Version control preserves history if restoration is ever needed. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_core/src/storage/error.rs` around lines 97 - 201, Delete the entire commented-out block containing the legacy public constructors and docs (the commented functions OpenError, WriteError, ReadError, KeyNotFound, SerializationError and their examp\u2026",
+   "created_at": "2026-03-13T13:26:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2931195410",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2931195415,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Case-sensitivity bug: `\"Permission denied\"` will never match a lowercased string.** `reason_lower` is lowercased, but `\"Permission denied\"` contains uppercase characters. This condition will always be false. <details> <summary>\ud83d\udc1b Proposed fix</summary> ```diff fn open_error(reason: impl Into<String>) -> Self { let reason = reason.into(); let reason_lower = reason.to_lowercase(); - let suggestion = if reason_lower.contains(\"Permission denied\") { + let suggestion = if reason_lower.contains(\"permission denied\") { \"Check file permissions or run with appropriate privileges\".to_string() } else if reason.contains(\"No space left\") { ``` Note: The other conditions (\u2026",
+   "created_at": "2026-03-13T13:26:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r2931195415",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2969983211,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cd /tmp && find . -type f -name \"main.rs\" 2>/dev/null | head -5 ``` Repository: aviralgarg05/NexumDB Length of output: 46 --- \ud83c\udfc1 Script executed: ```shell git ls-files | grep -E \"main\\.rs$\" ``` Repository: aviralgarg05/NexumDB Length of output: 85 --- \ud83c\udfc1 Script executed: ```shell cat -n nexum_cli/src/main.rs | head -120 ``` Repository: aviralgarg05/NexumDB Length of output: 5230 --- \ud83c\udfc1 Script executed: ```shell cat -n nexum_cli/src/main.rs | sed -n '80,99p' ``` Repository: aviralgarg05/NexumDB Length of output: 1041 --- \ud83c\udfc1 Script executed: ```shell python3 << 'EOF' # Test the UTF-8 byte of\u2026",
+   "created_at": "2026-03-21T18:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2969983211",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2969983214,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Don't return early on an empty completion prefix.** `DESCRIBE <Tab>`, `UPDATE <Tab>`, or `FROM <Tab>` all produce an empty `prefix`, so this exits before the table/column candidate loops run. The completer therefore only starts working after the user has already typed the first character, which misses the advertised Tab-completion flow. Let the empty prefix fall through to candidate generation. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_cli/src/main.rs` around lines 118 - 120, The early return when prefix.is_empty() (the branch returning Ok((pos, vec![]))) preve\u2026",
+   "created_at": "2026-03-21T18:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2969983214",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2969983216,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell find . -name \"main.rs\" -path \"*/nexum_cli/*\" | head -5 ``` Repository: aviralgarg05/NexumDB Length of output: 87 --- \ud83c\udfc1 Script executed: ```shell wc -l nexum_cli/src/main.rs ``` Repository: aviralgarg05/NexumDB Length of output: 89 --- \ud83c\udfc1 Script executed: ```shell sed -n '160,190p' nexum_cli/src/main.rs ``` Repository: aviralgarg05/NexumDB Length of output: 973 --- \ud83c\udfc1 Script executed: ```shell sed -n '230,350p' nexum_cli/src/main.rs ``` Repository: aviralgarg05/NexumDB Length of output: 4817 --- </details> **Implement `Validator` to support multi-line SQL statements.** The empty `Validato\u2026",
+   "created_at": "2026-03-21T18:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2969983216",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2969983217,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **History configuration is still hard-coded.** Issue `#52` asked for a configurable history location and configurable history retention. This always uses `~/.nexumdb_history`, and there is still no user-facing way to override the file location or set the maximum retained entries. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_cli/src/main.rs` around lines 220 - 225, The history file location and retention are hard-coded; update the startup logic to read history_path and history_retention from user-config/CLI flags/env (e.g., add fields to the existing config/args you\u2026",
+   "created_at": "2026-03-21T18:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2969983217",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2969983218,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Surface history persistence failures instead of swallowing them.** Ignoring every load/save error means the feature can silently stop working on permission or disk failures. It's fine to ignore `NotFound` on the first load, but other load errors and any save error should be reported so users know their history was not persisted. As per coding guidelines, \"Focus on Rust best practices, memory safety, error handling, and idiomatic code patterns.\" Also applies to: 346-347 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` Verify each finding against the current code and only fix it if needed. In `@nexum_cli/src/main.rs` around lines 227 - 228, The code c\u2026",
+   "created_at": "2026-03-21T18:53:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2969983218",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2970023154,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash rg -n 'input\\[\\.\\.4\\]|input\\[4\\.\\.\\]|input\\[\\.\\.8\\]|input\\[8\\.\\.\\]' nexum_cli/src/main.rs python3 <<'PY' samples = [\"\u0928\u00e9xplain\", \"\u0928\u4f60\u597d\"] for sample in samples: data = sample.encode(\"utf-8\") boundaries = [0] offset = 0 for ch in sample: offset += len(ch.encode(\"utf-8\")) boundaries.append(offset) print(f\"{sample!r} -> {data}\") print(f\" char boundaries: {boundaries}\") print(f\" byte 4 boundary? {4 in boundaries}\") print(f\" byte 8 boundary? {8 in boundaries}\") PY ``` Repository: aviralgarg05/NexumDB Length of output: 639 --- </details> **Stop byte-slicing `input` for command di\u2026",
+   "created_at": "2026-03-21T19:18:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2970023154",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2997280764,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider accepting `&Catalog` instead of `&Rc<Catalog>`.** Since `Rc<T>` implements `Deref<Target = T>`, you can pass `&catalog` (where `catalog: Rc<Catalog>`) to a function accepting `&Catalog`. This makes the function more flexible and idiomatic: ```diff -fn get_schema_context(catalog: &Rc<Catalog>) -> String { +fn get_schema_context(catalog: &Catalog) -> String { ``` The call site `get_schema_context(&catalog)` remains unchanged due to auto-deref. <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no m\u2026",
+   "created_at": "2026-03-26T19:40:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2997280764",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2997280775,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **`check_python_available` does not cover the translator path used later.** This helper only proves that `nexum_ai.optimizer` imports. `test_nl_translator` can still panic on `NLTranslator::new()` instead of being skipped when `nexum_ai.translator` is missing or broken. <details> <summary>Suggested fix</summary> ```diff fn check_python_available() -> bool { let mut bridge = PythonBridge::new().unwrap(); bridge.initialize().is_ok() && Python::attach(|py: pyo3::Python| { - PyModule::import(py, \"nexum_ai.optimizer\").is_ok() + PyModule::import(py, \"nexum_ai.optimizer\").is_ok() + && PyModule::import(py, \"nexum_ai.translator\").is_ok() }) } ``` </details> As per co\u2026",
+   "created_at": "2026-03-26T19:40:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2997280775",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2997280787,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Fail fast on `LIKE ... ESCAPE` until the escape char is actually honored.** These lines decode `escape_char`, but `evaluate_like` still ignores `_escape_char`. Queries with escaped `%` or `_` therefore return incorrect matches instead of a clear unsupported-syntax error. <details> <summary>Safe short-term fix</summary> ```diff - let ec_char = escape_char.as_ref().and_then(|ec_val| { - if let sqlparser::ast::Value::SingleQuotedString(s) = ec_val { - s.chars().next() - } else if let sqlparser::ast::Value::DoubleQuotedString(s) = ec_val { - s.chars().next() - } else { - None - } - }); - self.evaluate_like(*negated, expr, pattern, ec_char.as_ref(), row_values)\u2026",
+   "created_at": "2026-03-26T19:40:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2997280787",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2997280793,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Reject non-single-table `DELETE` forms instead of collapsing them to the first relation.** Lines 95-100 keep only `from.first()` and discard the rest of the DELETE source. Because the executor only has a single-table `Statement::Delete` path, joined or multi-table deletes would be reinterpreted instead of rejected. <details> <summary>Suggested guard</summary> ```diff - let from = match &delete.from { - ast::FromTable::WithFromKeyword(f) => f, - ast::FromTable::WithoutKeyword(f) => f, - }; - let table = if let Some(from_clause) = from.first() { - from_clause.relation.to_string() - } else { - return Err(anyhow!(\"DELETE requires a table name\")); - }; + let\u2026",
+   "created_at": "2026-03-26T19:40:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2997280793",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2997280795,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Do not silently discard `OFFSET` or unsupported `LIMIT` syntax.** Anything except a bare numeric `LIMIT` becomes `None` here, and `OFFSET` is dropped entirely. `LIMIT 10 OFFSET 5` will therefore execute as `LIMIT 10`, while overflow or other unsupported forms fall back to an unbounded query instead of returning an error. <details> <summary>Suggested fix</summary> ```diff - let limit = - query - .limit_clause - .as_ref() - .and_then(|limit_clause| match limit_clause { - ast::LimitClause::LimitOffset { - limit: - Some(ast::Expr::Value(ast::ValueWithSpan { - value: ast::Value::Number(n, _), - .. - })), - .. - } => n.parse().ok(), - _ => None, - }); + let limi\u2026",
+   "created_at": "2026-03-26T19:40:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#discussion_r2997280795",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3053177472,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Give `InterpreterUnavailable` its own bridge code.** `BridgeError::InterpreterUnavailable` is a distinct failure mode, but `code()` collapses it into `BridgeNotInitialized`. Callers that rely on `error.code()` still cannot distinguish \u201ccall `initialize()` first\u201d from \u201cthe Python runtime is unavailable,\u201d which undercuts the machine-readable contract this refactor is adding. <details> <summary>Suggested fix</summary> ```diff pub enum ErrorCode { BridgeNotInitialized, + BridgeInterpreterUnavailable, BridgePythonError, BridgeDirectoryError, BridgeInvalidPath, } @@ - BridgeError::InterpreterUnavailable => ErrorCode::BridgeNotInitialized, + BridgeError::Interpre\u2026",
+   "created_at": "2026-04-08T17:51:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r3053177472",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3053177476,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Verify that `initialize()` still panics instead of using the typed bridge errors. rg -n 'expect\\(\"Failed to get current directory\"\\)|expect\\(\"Invalid path\"\\)' nexum_core/src/bridge/mod.rs rg -n 'DirectoryError|InvalidPath' nexum_core/src/bridge/error.rs nexum_core/src/bridge/mod.rs ``` Repository: aviralgarg05/NexumDB Length of output: 668 --- </details> **Move error handling outside `with_python()` and use typed `BridgeError` variants.** Lines 32\u201333 still panic with `expect()` on recoverable errors instead of returning `BridgeError::DirectoryError` or `BridgeError::Inval\u2026",
+   "created_at": "2026-04-08T17:51:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r3053177476",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3053177478,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **`FilterError` should not share the generic read code.** `StorageError::FilterError` is a separate variant, but `code()` maps it to `NXM-STOR-103`, the same code used by `ReadError`. Once callers go through `StorageError::code()`, filter-evaluation failures are indistinguishable from ordinary read failures. <details> <summary>Suggested fix</summary> ```diff pub enum ErrorCode { NxmStor101, NxmStor102, NxmStor103, NxmStor104, NxmStor105, + NxmStor106, } @@ ErrorCode::NxmStor104 => write!(f, \"NXM-STOR-104\"), ErrorCode::NxmStor105 => write!(f, \"NXM-STOR-105\"), + ErrorCode::NxmStor106 => write!(f, \"NXM-STOR-106\"), } @@ - StorageError::FilterError(_) => ErrorCod\u2026",
+   "created_at": "2026-04-08T17:51:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#discussion_r3053177478",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

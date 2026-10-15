@@ -1,0 +1,11 @@
+{
+ "event_id": "review-3845897195",
+ "call": "included",
+ "clause_id": "A1",
+ "quoted_span": "Pls fix the issues and failing workflow",
+ "reason": "The request to fix the failing workflow aligns with the requirement that CI pass before human review. No specific unrelated or out-of-scope fix is identified; the lower-revenue reading is included remediation.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.88
+}

@@ -1,0 +1,11 @@
+{
+ "event_id": "comment-3636413751",
+ "call": "included",
+ "clause_id": "A1",
+ "quoted_span": "I have fix the issue.",
+ "reason": "Reports an issue fix, consistent with addressing review feedback under A1. The issue is unspecified and there is no evidence of out-of-scope work, so the lower-revenue interpretation applies.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.66
+}
