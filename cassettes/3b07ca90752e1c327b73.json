@@ -1,0 +1,15 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3780366753,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In @.github/workflows/pr-commenter.yml: - Line 4: This workflow uses workflow_dispatch which leaves context.payload.pull_request undefined and causes TypeErrors when accessing context.payload.pull_request.user.login, .number, and .title; fix by either removing the broken workflow file entirely (delete .github/workflows/pr-commenter.yml) or modify the workflow to accept a PR number input for manual runs (add a workflow_dispatch input like pr_number) and update the job script to fetch PR details from the GitHub API using that pr_number (instead of context.payload.pull_request), or at minimum gua\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T17:03:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/127#pullrequestreview-3780366753",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

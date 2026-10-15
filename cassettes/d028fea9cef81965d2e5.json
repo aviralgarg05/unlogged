@@ -1,0 +1,75 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3778576804,
+   "body": "**Actionable comments posted: 7** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_ai/optimizer.py (1)</summary><blockquote> > > `114-119`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ > > **Fallback vector dimension (384) is hardcoded and may mismatch the configured model's output.** > > `_fallback_vectorize` always returns a 384-dimensional vector. With the new `NEXUM_EMBEDDING_MODEL` env var, users can select models that produce different dimensions (e.g., 768 for `all-mpnet-base-v2`). If the fallback is triggered after vecto\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T12:11:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3778576804",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3780817588,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@reproduce_issue.py`: - Around line 1-7: reproduce_issue.py is a temporary debug/demo script and should be removed from the repo or converted into a proper automated test; if you choose to keep it, eliminate the unused import os, wrap the top-level print and cache.initialize_model() calls inside an if __name__ == \"__main__\": guard, and replace bare side-effecting calls with a test that instantiates SemanticCache and calls initialize_model() with assertions (or try/except checks) to validate expected behavior instead of printing. ``` </details> <!-- This is an auto-generated comment by Code\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T18:35:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3780817588",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784163933,
+   "body": "Resolve the conflicts pls",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-11T11:10:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3784163933",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3791486982,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_ai/optimizer.py`: - Around line 78-89: Rust bridge creates a new SemanticCache for every vectorize call causing redundant model reloads; add and expose a module-level getter (e.g., get_or_create_cache) that returns the existing singleton (the same instance used by _get_default_cache/explain_query_plan) so Rust can call the getter instead of constructing SemanticCache each time; implement get_or_create_cache() to return the module-level singleton and ensure it returns the same object that initialize_model/configure uses so SentenceTransformer or HF AutoModel weights are loaded once a\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-12T14:50:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3791486982",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3791829879,
+   "body": "Mention the issue it solves",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-12T15:48:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3791829879",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3821557325,
+   "body": "**Actionable comments posted: 6** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_core/src/bridge/mod.rs (1)</summary><blockquote> > > `278-306`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **Test uses `.pkl` path after SQLite migration \u2014 misleading naming** > > Both `with_cache_file(\"test_rust_cache.pkl\")` calls rely on the Python backend silently redirecting to `cache/test_rust_cache.sqlite`. The test passes but the file name contradicts the PR's stated goal of switching to SQLite. Update to use `.sqlite` directly for clari\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-18T18:32:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3821557325",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3821583806,
+   "body": "Fix the issues",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-18T18:38:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#pullrequestreview-3821583806",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

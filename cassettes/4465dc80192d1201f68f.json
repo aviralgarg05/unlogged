@@ -1,0 +1,65 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3783240065,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T07:27:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#pullrequestreview-3783240065",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3783261784,
+   "body": "**Actionable comments posted: 14** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_core/src/bridge/mod.rs (1)</summary><blockquote> > > `241-245`: _\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ > > **Silent test skipping can hide CI regressions.** > > All new tests (and existing ones) silently skip via `return` when `check_python_available()` is false, with only a `println!` message that's easy to miss in CI output. If the Python environment is expected in CI, these tests would pass vacuously without executing any logic. > > Consider using\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T07:33:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#pullrequestreview-3783261784",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3783418269,
+   "body": "**Actionable comments posted: 6** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@docs/EXPLAIN_FEATURE.md`: - Around line 199-204: Documentation and code disagree on action name truncation: docs state 20 chars while format_explain_output currently uses truncate(action, 15) (see format_explain_output and explain_action). Fix by making the truncation consistent\u2014either change format_explain_output to use truncate(action, 20) to match explain_action, or update the documentation to say 15; ensure the single source of truth (preferably the code) is used and update any other uses of truncate for action names accordingly. In `@nexum_ai/optimizer.py`: - Around line 738-740: The\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T08:20:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#pullrequestreview-3783418269",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3783506622,
+   "body": "**Actionable comments posted: 6** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>docs/EXPLAIN_FEATURE.md (1)</summary><blockquote> > > `410-416`: _\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ > > **Missing `RL AGENT` assertion in mutation queries test reference (line 416 of Rust tests).** > > The documentation at line 234 states Rust tests cover \"Mutation queries (INSERT, UPDATE, DELETE)\" but the corresponding Rust test `test_query_explainer_mutation_queries` omits the `RL AGENT` section assertion \u2014 see the Rust file review for details. Consid\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T08:44:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#pullrequestreview-3783506622",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3783727372,
+   "body": "**Actionable comments posted: 3** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_ai/optimizer.py`: - Line 612: Replace eager f-string interpolation in logger calls with lazy %-style formatting: change the logger.warning call using f\"Cache analysis failed: {e}\" to use logger.warning(\"Cache analysis failed: %s\", e), and similarly update the other two logger.warning/logger.error calls that currently use f-strings (the ones referencing the same exception/message pattern) to use \"%s\" placeholders and pass the variable(s) as additional arguments to the logger so interpolation is deferred when the log level is disabled. - Around line 746-747: The box-drawing lines buil\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T09:35:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#pullrequestreview-3783727372",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784137777,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-11T11:04:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#pullrequestreview-3784137777",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

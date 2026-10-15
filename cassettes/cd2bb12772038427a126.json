@@ -1,0 +1,25 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3780402107,
+   "body": "**Actionable comments posted: 5** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_core/src/sql/parser.rs`: - Around line 765-800: The three tests test_error_describe_missing_table, test_error_drop_table_missing_name, and test_error_drop_table_if_exists_missing_name are fragile because they rely on a two-stage fallthrough (parse_management_statement fails due to token count, then sqlparser errors); update each test to include a short inline comment explaining this two-stage matching behavior and why the panic! on Ok is required so future maintainers understand the dependency on both management-parser token-count checks and sqlparser's erroring behavior. - Around l\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T17:11:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#pullrequestreview-3780402107",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3809951747,
+   "body": "Pls fix the issues and failing workflows",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-16T18:12:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#pullrequestreview-3809951747",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

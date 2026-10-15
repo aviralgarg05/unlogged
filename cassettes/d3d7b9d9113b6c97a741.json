@@ -1,0 +1,55 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3797697682,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-13T14:49:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#pullrequestreview-3797697682",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3797718150,
+   "body": "**Actionable comments posted: 3** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_ai/optimizer.py`: - Around line 151-153: There are multiple consecutive blank lines between method definitions in the class in nexum_ai/optimizer.py; edit the file to leave exactly one blank line between each method definition (for example between methods like optimize, _prepare_batch, _run_epoch or other def ... blocks inside the Optimizer class) so the class follows PEP 8 spacing rules; remove any extra empty lines but do not change method signatures or logic. - Around line 140-141: vectorize() can spawn unbounded background threads because initialize_model() will retry every call\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-13T14:53:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#pullrequestreview-3797718150",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3798088331,
+   "body": "Fix the issues pls",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-13T16:04:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#pullrequestreview-3798088331",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3801177780,
+   "body": "**Actionable comments posted: 7** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_ai/optimizer.py`: - Around line 639-694: The two helper functions test_vectorization and test_cache_persistence are test/demo utilities that should be removed from the production module and relocated to a proper test file; create a new test module (e.g., tests/test_optimizer.py) and move the functions there as pytest-style tests that instantiate SemanticCache (use tmp_path or tmp_path_factory for cache_file to avoid polluting cache/ and mock or stub model downloads/vectorization if possible), update imports to reference SemanticCache from nexum_ai.optimizer, and remove these helpers\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-14T07:27:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#pullrequestreview-3801177780",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3893937901,
+   "body": "Looks like you have used a lot of AI while creating this PR. Moreover the CI workflow fails for your PR. Lastly there are merge conflicts so resolve them as well. And try to be a genuine contributor, else I will close the PRs made by LLMs",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-03-05T05:36:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138#pullrequestreview-3893937901",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

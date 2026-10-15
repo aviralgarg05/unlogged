@@ -1,0 +1,95 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3813496592,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-17T11:38:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3813496592",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3813509199,
+   "body": "**Actionable comments posted: 2** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In @.github/workflows/ci.yml: - Around line 181-188: The \"Fail if junk files are tracked\" step duplicates the same git grep check used in the Rust job; extract the logic into a shared script or reusable workflow and update the regex to a single, correct pattern (avoid unescaped dots and ensure anchors as discussed) so denylist changes apply once. Replace the inline pipeline (git ls-files | grep -E '\\.DS_Store|\\.coverage|htmlcov') with a call to the new shared script or reusable workflow and\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-17T11:40:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3813509199",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3813657693,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In `@scripts/check_junk_files.sh`: - Around line 1-2: Add \"set -o pipefail\" alongside the existing \"set -e\" in the script so pipeline failures aren't masked; update the top of scripts/check_junk_files.sh immediately after the shebang and the existing set -e line to include set -o pipefail to ensure commands in pipelines (e.g., the git ls-files | grep pipeline) propagate errors. --- Duplicate comments: In @.github/workflows/ci.yml: - Around line 175-177: Keep the CI step named \"Fail if junk\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-17T12:16:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3813657693",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3821120405,
+   "body": "This is the failing issue: the CI check \"Rust fmt, clippy, tests\" is failing at the clippy step, so this PR cannot be merged yet.",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-18T17:01:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3821120405",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3823727659,
+   "body": "**Actionable comments posted: 1** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>.github/workflows/ci.yml (1)</summary><blockquote> > > `111-120`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **Junk-file check is absent from the `benchmarks` job.** > > Both the `rust` and `python` jobs gain `./scripts/check_junk_files.sh` as an early guard, but the `benchmarks` job (which also checks out the repository and runs on every PR) does not. While the parallel jobs would catch junk files and fail the PR overall, the `benchmarks` job itself\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-19T06:18:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3823727659",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3823752980,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-19T06:28:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3823752980",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3823755107,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-19T06:29:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3823755107",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3823770601,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In @.github/workflows/ci.yml: - Around line 94-95: The `if:` on the \"Upload coverage to Codecov\" step is using an unnecessary `${{ }}` wrapper; update the step (the one named \"Upload coverage to Codecov\") to remove the wrapper so the condition reads `if: always() && steps.rust_changes.outputs.changed == 'true'` to match the other job conditionals. ``` </details> <!-- This is an auto-generated comment by CodeRabbit for review status -->",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-19T06:35:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3823770601",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3823783672,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-19T06:40:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163#pullrequestreview-3823783672",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

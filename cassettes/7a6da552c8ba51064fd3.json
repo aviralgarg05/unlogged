@@ -1,0 +1,25 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3797030217,
+   "body": "**Actionable comments posted: 8** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_core/src/executor/mod.rs (1)</summary><blockquote> > > `85-91`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Writes within a transaction are immediately visible to reads \u2014 no isolation.** > > The linked issue `#22` mentions \"Provide isolation via MVCC or an initial simpler locking mechanism,\" but the current implementation applies writes directly to storage during a transaction. Any `SELECT` (even from a hypothetical concurrent session) will se\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-13T12:34:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#pullrequestreview-3797030217",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3797659303,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-13T14:41:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137#pullrequestreview-3797659303",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

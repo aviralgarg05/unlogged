@@ -1,0 +1,35 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3784772056,
+   "body": "**Actionable comments posted: 19** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_core/benches/db_comparison.rs`: - Around line 77-88: The benchmarks label a \"Cold\" vs \"Cached\" run but setup_nexum() constructs an Executor without enabling the semantic cache, so the \"Cached\" path (the extra warmup execute on nexum_executor with select_stmt) has no effect; either enable the cache by calling with_cache(...) on the Executor returned by setup_nexum() (so that nexum_executor.with_cache(...) / setup_nexum() config includes the caching layer) before running the \"NexumDB_Point_Lookup_Cached\" benchmark, or remove/rename the cached benchmark and its warmup execute to avoid\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T13:17:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#pullrequestreview-3784772056",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3788690173,
+   "body": "**Actionable comments posted: 4** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_core/benches/db_comparison.rs`: - Around line 56-64: The SQLite benchmark discards the query_row result (let _) which can be optimized away; wrap the retrieved value in criterion::black_box inside the group.bench_function closure to prevent dead-code elimination (i.e., pass the result of stmt.query_row(... ) into black_box). Ensure criterion::black_box is in scope (import if necessary) and update the closure around stmt.query_row in the \"SQLite_Point_Lookup\" benchmark to use black_box instead of ignoring the value. - Around line 88-89: Add full CRUD benchmarks and register them: imp\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-12T04:32:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#pullrequestreview-3788690173",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3809944787,
+   "body": "Pls fix the issues",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-16T18:10:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#pullrequestreview-3809944787",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

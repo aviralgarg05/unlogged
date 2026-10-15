@@ -1,0 +1,45 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3784096130,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T10:54:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#pullrequestreview-3784096130",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3784105947,
+   "body": "**Actionable comments posted: 2** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ``` In `@nexum_core/src/executor/mod.rs`: - Around line 821-834: Add a companion test that ensures DROP TABLE with if_exists: true on a non-existent table returns Ok(ExecutionResult::Deleted { rows: 0 }) by creating a StorageEngine::memory(), constructing an Executor, building Statement::DropTable with name \"imaginary_table\" and if_exists: true, calling Executor::execute and asserting the result unwraps to ExecutionResult::Deleted where table == \"imaginary_table\" and rows == 0; also fix the existing inline comment (near the test) to include a space after // or remove it to follow style. - Around l\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T10:56:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#pullrequestreview-3784105947",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3788636412,
+   "body": "**Actionable comments posted: 10** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ```` In `@nexum_core/benches/db_comparison.rs`: - Around line 27-29: The CREATE TABLE string includes a PRIMARY KEY that Nexum's parser currently ignores (convert_column only extracts name and data_type), making the benchmark asymmetric with SQLite; update the sql used with Parser::parse (the sql variable passed to Parser::parse and then executor.execute) to remove the \"PRIMARY KEY\" clause (e.g., use \"CREATE TABLE bench (id INTEGER, val TEXT)\") or alternatively add a clear comment/documentation next to that sql explaining that convert_column does not handle constraints so id uniqueness is not enf\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-12T04:10:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#pullrequestreview-3788636412",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3809948602,
+   "body": "Pls fix the issues",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-16T18:11:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#pullrequestreview-3809948602",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

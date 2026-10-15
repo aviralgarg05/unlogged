@@ -1,0 +1,75 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3785718434,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T15:58:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3785718434",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3785775820,
+   "body": "**Actionable comments posted: 5** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (3)</summary><blockquote> > > <details> > <summary>nexum_core/src/executor/mod.rs (3)</summary><blockquote> > > `489-528`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ > > **Non-exhaustive match \u2014 `SelectItem::Aggregate` is not handled, causing a compile error.** > > `build_projection` is called at Line 103 *before* the `is_aggregate` check at Line 106. The match at Line 503 only covers `Wildcard` and `Column`, so any query containing an `Aggregate` item will fail to compile. > > Move the `is_aggregate`\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T16:09:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3785775820",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3806991521,
+   "body": "Resolve the issues and failing workflows",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-16T07:14:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3806991521",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3807041327,
+   "body": "**Actionable comments posted: 2** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_core/src/executor/mod.rs (2)</summary><blockquote> > > `735-759`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ > > **Non-exhaustive match \u2014 `SelectItem::Aggregate` is not handled, causing a compilation error.** > > `build_projection` only matches `Wildcard` and `Column`, but the `SelectItem` enum now has three variants. Rust requires exhaustive matches, so this will fail to compile. > > Since `build_projection` is called unconditionally (line 145)\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-16T07:30:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3807041327",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3807069684,
+   "body": "**Actionable comments posted: 3** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_core/src/executor/mod.rs (2)</summary><blockquote> > > `735-759`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ > > **`build_projection` will not compile \u2014 missing `SelectItem::Aggregate` arm.** > > The `SelectItem` enum now has three variants (`Wildcard`, `Column`, `Aggregate`), but this `match` only handles `Wildcard` and `Column`. Rust requires exhaustive matches, so this is a compile error. > > Moreover, `build_projection` is called at line 145\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-16T07:41:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3807069684",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3895181610,
+   "body": "Fix the failing workflows and issues that have been mentioned by coderabbit",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-03-05T09:35:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3895181610",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3928248271,
+   "body": "**Actionable comments posted: 4** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In `@nexum_core/src/executor/mod.rs`: - Around line 1171-1179: Default aggregate column naming uses just the function name which makes results ambiguous for multiple aggregates; change the alias fallback in the alias.clone().unwrap_or_else block (where col_name is set) to include the aggregate target, e.g., produce \"count(*)\" or \"min(col_name)\" instead of just \"count\"/\"min\". Use the AggregateType match to get the function label (Count/Sum/Avg/Min/Max) and combine it with the aggregate argum\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-11T09:45:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#pullrequestreview-3928248271",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

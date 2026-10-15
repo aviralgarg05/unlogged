@@ -22,7 +22,7 @@ def _record(tape: cassette.Tape, path: str, body, **params) -> None:
     )
 
 
-def _repo(tmp_path, pulls=(), issues=(), review=(), comments=(), details=()):
+def _repo(tmp_path, pulls=(), issues=(), review=(), comments=(), details=(), reviews=()):
     gh = GitHub("o/r", replay=True)
     gh.tape = cassette.Tape(tmp_path)
     _record(gh.tape, "/repos/o/r/pulls", list(pulls), state="all")
@@ -33,6 +33,11 @@ def _repo(tmp_path, pulls=(), issues=(), review=(), comments=(), details=()):
         gh.tape.record(
             cassette.key({"gh": f"/repos/o/r/pulls/{d['number']}", "q": {}}),
             {"status": 200, "body": d},
+        )
+    for pr in pulls:
+        gh.tape.record(
+            cassette.key({"gh": f"/repos/o/r/pulls/{pr['number']}/reviews", "q": {}}),
+            {"status": 200, "body": list(reviews)},
         )
     return gh
 
@@ -202,3 +207,61 @@ def test_a_reviewer_bot_without_the_suffix_is_still_a_bot():
     and the evaluation would have been measuring how well an arm ignores a robot."""
     assert is_bot("Copilot")
     assert not is_bot("copilot-user")
+
+
+def test_a_review_submission_is_its_own_event(tmp_path):
+    """ "CHANGES_REQUESTED: Solve the issues" is the client saying this is not what was asked
+    for, and it is a different event from a comment on a line of code. The endpoint that
+    returns review comments does not return reviews, so every one of these was dropped — from
+    a corpus built to find exactly them.
+    """
+    submission = {
+        "id": 77,
+        "body": "Solve the issues",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-10-04T08:00:00Z",
+        "user": {"login": "client"},
+        "html_url": "https://github.com/o/r/pull/312#pullrequestreview-77",
+    }
+    gh = _repo(tmp_path, pulls=[PR], reviews=[submission])
+
+    review = next(e for e in gh.events() if e.id == "review-77")
+
+    assert "CHANGES_REQUESTED" in review.text
+    assert "Solve the issues" in review.text
+    assert review.author == "client"
+
+
+def test_an_empty_review_body_is_not_an_event(tmp_path):
+    """Approving with no words says nothing about scope and would pad the corpus."""
+    empty = {
+        "id": 78,
+        "body": "",
+        "state": "APPROVED",
+        "submitted_at": "2026-10-04T08:00:00Z",
+        "user": {"login": "client"},
+    }
+    gh = _repo(tmp_path, pulls=[PR], reviews=[empty])
+
+    assert [e.id for e in gh.events()] == ["pr-312"]
+
+
+def test_a_review_submission_and_a_line_comment_do_not_share_an_id_space(tmp_path):
+    """Both arrive with GitHub ids drawn from different sequences. Collapsed under one prefix
+    they could collide, and two different events would silently become one."""
+    submission = {
+        "id": 5,
+        "body": "Solve the issues",
+        "state": "CHANGES_REQUESTED",
+        "submitted_at": "2026-10-04T08:00:00Z",
+        "user": {"login": "client"},
+    }
+    line_comment = {
+        "id": 5,
+        "body": "Consider extracting this",
+        "created_at": "2026-10-04T09:00:00Z",
+        "user": {"login": "client"},
+    }
+    gh = _repo(tmp_path, pulls=[PR], reviews=[submission], review=[line_comment])
+
+    assert sorted(e.id for e in gh.events()) == ["inline-5", "pr-312", "review-5"]

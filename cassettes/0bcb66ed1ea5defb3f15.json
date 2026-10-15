@@ -1,0 +1,95 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3805461505,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-15T20:21:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3805461505",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3805468913,
+   "body": "**Actionable comments posted: 8** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_ai/model_manager.py (1)</summary><blockquote> > > `128-129`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Same issue as `translator.py`: `__main__` block lacks `logging.basicConfig()`.** > > Running `python -m nexum_ai.model_manager` will produce no visible output because no handler is configured. > > <details> > <summary>Proposed fix</summary> > > ```diff > if __name__ == \"__main__\": > + logging.basicConfig(level=logging.INFO) > test_model_man\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-15T20:24:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3805468913",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3806986840,
+   "body": "Resolve the issues by coderabbit, rest it is perfect",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-16T07:12:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3806986840",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3814730731,
+   "body": "**Actionable comments posted: 1** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (4)</summary><blockquote> > > <details> > <summary>nexum_ai/model_manager.py (2)</summary><blockquote> > > `130-131`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **Missing `logging.basicConfig` in `__main__` block \u2014 test output will be silently dropped.** > > Unlike `translator.py` (line 199), this file's `__main__` guard doesn't configure logging, so running `python model_manager.py` directly produces no visible output. > > <details> > <summary>Proposed fix</summary> > > ```diff > if __name__ == \"__m\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-17T15:40:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3814730731",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3814774298,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In `@nexum_ai/translator.py`: - Around line 190-196: The demo helper test_translator currently uses logger.info for user-facing messages (the block that logs \"Natural Language Translation Tests:\", the separator, and each NL/SQL pair produced via translator.translate), which can be silent if logging isn't configured; replace those logger.info calls with print statements so output is always visible when test_translator is run or imported and invoked (preserve the same messages and formatting\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-17T15:48:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3814774298",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3814960883,
+   "body": "**Actionable comments posted: 1** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_ai/model_manager.py (2)</summary><blockquote> > > `100-107`: _\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ > > **Minor type-hint style inconsistency.** > > `list_models` uses the built-in `list[str]` (3.9+ syntax), while the rest of the file uses `typing.Optional`. Consider aligning to one style \u2014 either `Optional[str]` everywhere or `str | None` + `list[str]` everywhere. > > <details> > <summary>\ud83e\udd16 Prompt for AI Agents</summary> > > ``` > Verify each finding\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-17T16:23:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3814960883",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3821129093,
+   "body": "Fix the failing test and issues",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-18T17:03:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3821129093",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3823821209,
+   "body": "**Actionable comments posted: 2** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>.github/workflows/ci.yml (1)</summary><blockquote> > > `113-116`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **`benchmarks` job runs full Rust build for every PR, bypassing the new change detection** > > The `rust` job's Rust-change gating is not applied to the `benchmarks` job. Because `benchmarks` is a separate job it cannot access `steps.rust_changes.outputs`. As a result, every PR \u2014 including Python-only ones \u2014 still triggers a full `cargo bench`\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-19T06:54:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3823821209",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3823846400,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-19T07:03:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155#pullrequestreview-3823846400",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

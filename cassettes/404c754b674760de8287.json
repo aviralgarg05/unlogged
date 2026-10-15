@@ -1,0 +1,45 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3986444698,
+   "body": "**Actionable comments posted: 5** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In `@nexum_cli/src/main.rs`: - Around line 220-225: The history file location and retention are hard-coded; update the startup logic to read history_path and history_retention from user-config/CLI flags/env (e.g., add fields to the existing config/args you parse) instead of always using \"~/.nexumdb_history\", and use those values when creating/loading/saving the rustyline Editor history. Specifically, replace the direct use of history_path = dirs::home_dir().map(|h| h.join(\".nexumdb_history\"\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-21T18:53:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#pullrequestreview-3986444698",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3986508013,
+   "body": "**Actionable comments posted: 1** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In `@nexum_cli/src/main.rs`: - Around line 296-297: The code currently slices the input by byte indices (input[..4], input[4..], input[..8], input[8..]) which can panic on UTF-8 multi-byte characters; replace these raw byte slices with a tokenizing helper (e.g., implement a split_command(input: &str, command: &str) -> Option<&str>) that splits the input on the first whitespace, compares the head with the command using eq_ignore_ascii_case, and returns the trimmed tail when it matches; then\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-21T19:18:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#pullrequestreview-3986508013",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3987836960,
+   "body": "Pls fix the issues and failing tests",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-03-22T07:10:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#pullrequestreview-3987836960",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 4016928582,
+   "body": "**Actionable comments posted: 5** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_core/src/bridge/mod.rs (1)</summary><blockquote> > > `15-24`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Stop resolving `nexum_ai` from the process working directory.** > > Lines 20-24 prepend `current_dir()` to `sys.path`, so imports depend on where the caller launched the process and can pick up a shadow `nexum_ai` package from an untrusted directory. The two `expect`s also panic inside a fallible API. Please resolve the Python package root\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-26T19:40:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173#pullrequestreview-4016928582",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

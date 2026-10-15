@@ -1,0 +1,55 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3929760331,
+   "body": "**Actionable comments posted: 14** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (7)</summary><blockquote> > > <details> > <summary>nexum_core/src/sql/parser.rs (2)</summary><blockquote> > > `31-239`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Use a typed parser error here instead of `anyhow`.** > > This module still returns `anyhow::Result` and adds more stringly `anyhow!` failures inside library code, so callers still cannot match parser failures or consume machine-readable error codes. That misses the main contract of this refactor. Please switch this file to a dedicated pa\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-11T13:51:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#pullrequestreview-3929760331",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3936026607,
+   "body": "**Actionable comments posted: 10** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_core/src/storage/error.rs (2)</summary><blockquote> > > `199-210`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Case-sensitivity bug in suggestion matching.** > > Line 202 converts `reason` to lowercase in `reason_lower`, but then checks `reason_lower.contains(\"Permission denied\")` which will never match because the search string has uppercase letters. > > <details> > <summary>\ud83d\udc1b Proposed fix</summary> > > ```diff > fn open_error(reason: impl I\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-12T12:03:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#pullrequestreview-3936026607",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3937029684,
+   "body": "**Actionable comments posted: 3** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (5)</summary><blockquote> > > <details> > <summary>nexum_core/src/sql/parser.rs (1)</summary><blockquote> > > `35-75`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Move the parser off `anyhow` before merging this typed-error refactor.** > > These branches still construct ad-hoc `anyhow!` strings and bubble up `anyhow::Result`, so parser failures from `nexum_core` still have no module-specific variant or machine-readable code. That breaks the PR\u2019s main goal of typed, `From`-propagated library errors.\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-12T14:19:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#pullrequestreview-3937029684",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3944034145,
+   "body": "**Actionable comments posted: 5** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_core/src/bridge/mod.rs (1)</summary><blockquote> > > `31-33`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ > > **Use typed errors instead of panicking.** > > `expect()` will panic if `current_dir()` fails or the path contains invalid UTF-8. The `BridgeError` enum already defines `DirectoryError` and `InvalidPath` variants for these exact cases. > > > > <details> > <summary>\ud83d\udc1b Proposed fix</summary> > > ```diff > - let nexum_ai_pathbuf = > - std::env::\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-03-13T13:26:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#pullrequestreview-3944034145",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 4077119030,
+   "body": "**Actionable comments posted: 3** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_core/src/executor/mod.rs (1)</summary><blockquote> > > `713-718`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ > > **Do not let cache invalidation turn a committed write into an error.** > > `invalidate_cache()` is called after CREATE/INSERT/UPDATE/DELETE have already mutated storage. If `clear_cache()` fails here, the mutation is already committed but `execute()` returns an error, which can drive duplicate retries on non-idempotent statements. Th\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-04-08T17:51:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171#pullrequestreview-4077119030",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

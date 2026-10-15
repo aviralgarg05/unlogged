@@ -1,0 +1,15 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3777043604,
+   "body": "**Actionable comments posted: 6** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>.github/workflows/pr-review-reminder.yml (1)</summary><blockquote> > > `91-93`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **Potential null dereference on `c.body`.** > > If a comment has a `null` or `undefined` body, `c.body.includes(...)` will throw. Add a guard similar to the pr-commenter workflow pattern. > > > <details> > <summary>Proposed fix</summary> > > ```diff > const hasRecentReminder = comments.some(c => > - c.body.includes('Review Remind\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T06:50:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#pullrequestreview-3777043604",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

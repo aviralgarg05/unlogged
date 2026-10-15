@@ -1,0 +1,115 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3781435084,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T20:34:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3781435084",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3781447164,
+   "body": "**Actionable comments posted: 4** <details> <summary>\ud83e\udd16 Fix all issues with AI agents</summary> ```` In `@README.md`: - Around line 199-201: The SQL examples use double quotes for string literals; update each example SELECT statement (e.g., SELECT * FROM users WHERE name LIKE \"%e\"; SELECT * FROM users WHERE name LIKE \"_l%\"; SELECT * FROM products WHERE name NOT LIKE \"%z%\";) to use single quotes for string literals (e.g., '%e', '_l%', '%z%') and apply the same replacement for the other occurrences noted (lines referenced as 218 and 224) so the README consistently follows SQL string-literal conventions. - Line 197: Add a blank line immediately before the fenced code block that begins with the\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-10T20:37:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3781447164",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784142202,
+   "body": "Just fix these coderabbit issues that have come up, rest perfect",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-11T11:05:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784142202",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3784400692,
+   "body": "**Actionable comments posted: 1** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>README.md (1)</summary><blockquote> > > `232-237`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **SQL fence contains prose; make it SQL or change fence type.** > > This block is labeled `sql` but contains prose lines. Either convert to a real SQL example (with comments) or change the fence to `text` to avoid misleading formatting. > > <details> > <summary>\ud83d\udcdd Suggested update (make it valid SQL with comments)</summary> > > ```diff > -```sql > -Query: SEL\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T12:07:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784400692",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784465987,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T12:19:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784465987",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784488752,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T12:24:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784488752",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "id": 3784491926,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T12:24:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784491926",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784509416,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T12:28:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784509416",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "id": 3784513406,
+   "body": "",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-11T12:29:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784513406",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3784559128,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-11T12:39:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784559128",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3784899773,
+   "body": "",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-11T13:42:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#pullrequestreview-3784899773",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

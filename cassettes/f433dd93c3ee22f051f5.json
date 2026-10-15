@@ -1,0 +1,35 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3845853963,
+   "body": "**Actionable comments posted: 3** <details> <summary>\ud83e\udd16 Prompt for all review comments with AI agents</summary> ``` Verify each finding against the current code and only fix it if needed. Inline comments: In @.github/workflows/autolabeler.yml: - Around line 4-5: The workflow currently uses pull_request_target (pull_request_target: types: [opened]) which runs with base-branch privileges; add a short inline comment above that line warning maintainers about elevated privileges and the supply-chain risk, and harden the workflow by explicitly restricting permissions (e.g., add a top-level permissions block like permissions: contents: read, id-token: none, actions: none) and a note that no checkou\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-24T08:06:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#pullrequestreview-3845853963",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3845897195,
+   "body": "Pls fix the issues and failing workflow",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-24T08:15:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#pullrequestreview-3845897195",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3851961815,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-25T05:27:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167#pullrequestreview-3851961815",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

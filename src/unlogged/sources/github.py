@@ -73,6 +73,7 @@ KEEP = {
     "detail": ("number", "changed_files", "additions", "deletions"),
     "issue": ("number", "title", "body", "created_at", "html_url", "state"),
     "comment": ("id", "body", "created_at", "html_url"),
+    "review": ("id", "body", "state", "submitted_at", "html_url"),
 }
 
 
@@ -97,7 +98,9 @@ def project(path: str, body: Any) -> Any:
         return _slim(body, KEEP["detail"] + KEEP["pull"])
     if not isinstance(body, list):
         return body
-    if path.endswith("/comments"):
+    if path.endswith("/reviews"):
+        fields = KEEP["review"]
+    elif path.endswith("/comments"):
         fields = KEEP["comment"]
     elif path.endswith("/issues"):
         fields = KEEP["issue"]
@@ -203,10 +206,16 @@ class GitHub:
         # structure: without them an event still says what was asked for and by whom. A rate
         # limit, a permission or a missing recording therefore costs detail, not the thread.
         stats: dict[int, dict[str, Any]] = {}
+        reviews: list[dict[str, Any]] = []
         missed = 0
         for pr in sorted(pulls, key=lambda p: p["number"], reverse=True)[:pr_detail]:
+            n = pr["number"]
             try:
-                stats[pr["number"]] = self._get(f"/repos/{owner_repo}/pulls/{pr['number']}")
+                stats[n] = self._get(f"/repos/{owner_repo}/pulls/{n}")
+            except GitHubError:
+                missed += 1
+            try:
+                reviews += self._get(f"/repos/{owner_repo}/pulls/{n}/reviews")
             except GitHubError:
                 missed += 1
         if missed:
@@ -251,10 +260,29 @@ class GitHub:
                 )
             )
 
+        for r in reviews:
+            # A review submission is the verdict on the whole change — "CHANGES_REQUESTED:
+            # Solve the issues" — and it is a different event from a comment on a line of
+            # code. These were missing entirely: the endpoint that returns review comments
+            # does not return the reviews, so every "this is not what I asked for" was
+            # dropped from a corpus built to find exactly those.
+            if not (r.get("body") or "").strip():
+                continue
+            events.append(
+                WorkEvent(
+                    id=f"review-{r['id']}",
+                    source=Source.GITHUB,
+                    author=(r.get("user") or {}).get("login", "unknown"),
+                    occurred_at=r["submitted_at"],
+                    text=_clip(f"Review ({r.get('state', 'COMMENTED')}): {r.get('body')}"),
+                    permalink=r.get("html_url"),
+                )
+            )
+
         for c in review_comments:
             events.append(
                 WorkEvent(
-                    id=f"review-{c['id']}",
+                    id=f"inline-{c['id']}",
                     source=Source.GITHUB,
                     author=(c.get("user") or {}).get("login", "unknown"),
                     occurred_at=c["created_at"],

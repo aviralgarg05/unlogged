@@ -1,0 +1,15 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 4541927286,
+   "body": "",
+   "state": "APPROVED",
+   "submitted_at": "2026-06-22T07:24:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/183#pullrequestreview-4541927286",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  }
+ ]
+}

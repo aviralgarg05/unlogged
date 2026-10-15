@@ -1,0 +1,75 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3801335998,
+   "body": "\ud83c\udf89 Thanks for opening your first pull request in NexumDB! We appreciate your contribution! Here's what happens next: 1. \u2705 Automated checks will run (CI, tests, linting) 2. \ud83d\udc40 A maintainer will review your changes 3. \ud83d\udcac We may suggest some improvements or ask questions 4. \ud83d\ude80 Once approved, we'll merge your contribution! **Before we can merge:** - Make sure all CI checks pass - Sign your commits with DCO (`git commit -s`) - Address any review feedback Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) for more details. Thanks for making NexumDB better! \ud83d\ude4c",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-14T08:45:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3801335998",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3801341396,
+   "body": "**Actionable comments posted: 6** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_ai/optimizer.py (2)</summary><blockquote> > > `153-169`: _\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ > > **Expired entries accumulate in memory \u2014 `get()` skips but never removes them.** > > `get()` skips expired entries but does not evict them, so they remain in `self.cache` indefinitely until `set_cache_expiration` or `_evict_expired` is called explicitly. For long-running processes with heavy cache usage, this could cause gradual memory growth. > > Consi\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-14T08:49:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3801341396",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3806989452,
+   "body": "Resolve the issues and failing workflows",
+   "state": "CHANGES_REQUESTED",
+   "submitted_at": "2026-02-16T07:13:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3806989452",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3821544134,
+   "body": "**Actionable comments posted: 1** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_ai/optimizer.py (1)</summary><blockquote> > > `456-458`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **`cache_entries_checked` includes expired (skipped) entries, making the name misleading.** > > Line 458 reports `len(self.cache)` which counts all entries including expired ones that were skipped at lines 422-423. The field name `cache_entries_checked` implies only entries that were actually analyzed. > > Consider either renaming to `total_cache\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-18T18:29:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3821544134",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3835769955,
+   "body": "**Actionable comments posted: 2** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (1)</summary><blockquote> > > <details> > <summary>nexum_ai/optimizer.py (1)</summary><blockquote> > > `456-458`: _\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ > > **`cache_entries_checked` reports total entries, not entries actually checked.** > > Line 458 returns `len(self.cache)` which includes expired entries that were skipped. This is semantically misleading \u2014 consumers may assume this reflects the number of entries actually evaluated. Consider renaming to `total_cache_entries` or computing the actual\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-21T18:36:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3835769955",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3835793691,
+   "body": "**Actionable comments posted: 4** > [!CAUTION] > Some comments are outside the diff and can\u2019t be posted inline due to platform limitations. > > > > <details> > <summary>\u26a0\ufe0f Outside diff range comments (2)</summary><blockquote> > > <details> > <summary>nexum_ai/optimizer.py (2)</summary><blockquote> > > `160-177`: _\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ > > **Lazy eviction in `get()` means expired entries accumulate silently.** > > `get()` skips expired entries but never removes them. In a long-running process that never calls `set_cache_expiration()` again or reloads, expired entries pile up and are iterated every lookup, degrading performance over time. Consider opportunistically evicting (e.g., calling\u2026",
+   "state": "COMMENTED",
+   "submitted_at": "2026-02-21T18:51:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3835793691",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3837091011,
+   "body": "LGTM!",
+   "state": "APPROVED",
+   "submitted_at": "2026-02-22T09:15:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139#pullrequestreview-3837091011",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}
