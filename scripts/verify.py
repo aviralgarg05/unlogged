@@ -1,7 +1,3 @@
-# /// script
-# requires-python = ">=3.12"
-# dependencies = ["httpx>=0.27"]
-# ///
 """Re-verify every claim this project makes, and print what it found.
 
     uv run scripts/verify.py              # everything that needs no credentials
@@ -38,8 +34,23 @@ def check(name: str, status: str, detail: str) -> None:
 
 
 def run(*cmd: str, cwd: Path = ROOT) -> tuple[int, str]:
-    p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    # This file runs under `uv run --script` in its own isolated environment, so VIRTUAL_ENV
+    # points somewhere the project is not installed. A nested `uv run` inherits it and resolves
+    # against the wrong environment, which surfaces as a missing cassette rather than as an
+    # environment error. Drop it and let uv resolve the project normally.
+    env = {k: v for k, v in os.environ.items() if k != "VIRTUAL_ENV"}
+    p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, env=env)
     return p.returncode, (p.stdout + p.stderr).strip()
+
+
+def _why(code: int, out: str) -> str:
+    """A failure should say what went wrong, not just that something did."""
+    import re as _re
+    m = _re.search(r"No cassette for ([^\n]*)", out)
+    if m:
+        return f"exit {code}: missing {m.group(1)[:80]}"
+    last = out.strip().splitlines()[-1][:60] if out.strip() else "no output"
+    return f"exit {code}: {last}"
 
 
 def section(title: str) -> None:
@@ -93,14 +104,14 @@ def offline() -> None:
         "--events",
         "fixtures/events.jsonl",
         "--invoice-id",
-        "INV2-MSMM-CLAS-Z36Z-CXSH",
+        "INV2-AD9X-DDY8-AUNL-L9ZD",
         "--apply",
     )
     total = next((line for line in out.splitlines() if "Total now" in line), "")
     check(
         "full apply flow replays from cassettes",
         PASS if "690.00" in total else FAIL,
-        total.strip()[:60] or "no total",
+        total.strip()[:60] or _why(code, out),
     )
 
     section("Submission requirements")

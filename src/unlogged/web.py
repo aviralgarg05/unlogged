@@ -7,6 +7,7 @@ executed by this process.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from decimal import Decimal
 from pathlib import Path
@@ -22,7 +23,7 @@ from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.invoices import total_of
 from unlogged.paypal.webhooks import Webhooks, is_simulated
 from unlogged.scope.baseline import KeywordBaseline
-from unlogged.scope.models import Engagement, WorkEvent
+from unlogged.scope.models import Engagement, WorkEvent, line_name
 
 log = structlog.get_logger(__name__)
 
@@ -56,8 +57,10 @@ def health() -> dict[str, Any]:
         "ok": True,
         "paypal_configured": s.has_paypal,
         "replay": s.replay,
-        "model_configured": bool(s.openai_api_key),
-        "adjudicator": "gpt-6.1-sol" if s.openai_api_key else "keyword-baseline",
+        "openai_key_set": bool(s.openai_api_key),
+        "openai_importable": s.openai_importable,
+        "model_configured": s.model_ready,
+        "adjudicator": s.adjudicator_name(),
     }
 
 
@@ -93,7 +96,7 @@ def read_events(page: int = 1, page_size: int = 50) -> dict[str, Any]:
 @app.get("/api/verdicts")
 def read_verdicts() -> dict[str, Any]:
     s, e = settings(), engagement()
-    if s.openai_api_key:
+    if s.model_ready:
         from unlogged.scope.adjudicate import Adjudicator
 
         arm = Adjudicator(e, s.openai_api_key)
@@ -186,7 +189,7 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
     s, eng = settings(), engagement()
     by_id = {e.id: e for e in events()}
     arm = KeywordBaseline(eng)
-    if s.openai_api_key:
+    if s.model_ready:
         from unlogged.scope.adjudicate import Adjudicator
 
         arm = Adjudicator(eng, s.openai_api_key)
@@ -196,11 +199,20 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
     if not chosen:
         raise HTTPException(400, "none of the selected events are billable extras")
 
+    # The ledger is the record of what has already been billed. Re-applying an event already on
+    # this invoice is the expensive mistake, and it is refused here rather than left to the
+    # idempotency header, which only covers an immediate retry of the same call.
+    ledger = Ledger(DATA / f"{eng.id}.jsonl")
+    already = {e.event_id for e in ledger if e.invoice_id == req.invoice_id}
+    repeats = sorted({v.event_id for v in chosen} & already)
+    if repeats:
+        raise HTTPException(409, f"already billed to {req.invoice_id}: {', '.join(repeats)}")
+
     with PayPalClient(s) as c:
         inv = Invoices(c)
         items = [
             LineItem(
-                name=v.reason[:120],
+                name=line_name(v),
                 quantity=v.hours,
                 unit_price=eng.rate_card.rate_for(v.category),
                 currency=eng.currency,
@@ -208,11 +220,11 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
             )
             for v in chosen
         ]
-        updated = inv.add_items(req.invoice_id, items, notify=req.notify)
+        key = hashlib.sha256(",".join(sorted(v.event_id for v in chosen)).encode()).hexdigest()[:16]
+        updated = inv.add_items(req.invoice_id, items, notify=req.notify, idempotency_key=key)
         total = total_of(updated)
-        led = Ledger(DATA / f"{eng.id}.jsonl")
         for v, item in zip(chosen, items, strict=True):
-            led.append(
+            ledger.append(
                 Entry(
                     at=now(),
                     invoice_id=req.invoice_id,

@@ -34,3 +34,26 @@ class Settings:
     @property
     def has_paypal(self) -> bool:
         return bool(self.client_id and self.client_secret)
+
+    @property
+    def openai_importable(self) -> bool:
+        """Whether the SDK is actually installed, not merely configured.
+
+        A key in the environment and an uninstallable module is the one combination that makes
+        this service claim a capability it does not have, so the two are checked separately and
+        reported separately.
+        """
+        import importlib.util
+
+        return importlib.util.find_spec("openai") is not None
+
+    @property
+    def model_ready(self) -> bool:
+        return bool(self.openai_api_key) and self.openai_importable
+
+    def adjudicator_name(self) -> str:
+        if self.model_ready:
+            return "gpt-6.1-sol"
+        if self.openai_api_key and not self.openai_importable:
+            return "keyword-baseline (OPENAI_API_KEY set, but the openai package is not installed)"
+        return "keyword-baseline"

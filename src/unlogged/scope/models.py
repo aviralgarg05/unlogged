@@ -82,6 +82,10 @@ class Verdict(BaseModel):
     clause_id: str | None = None
     quoted_span: str | None = None
     reason: str
+    # What the client sees on their invoice. Deliberately separate from `reason`, which is why
+    # this was billable — a client reading "matched a request-shaped phrase" on a line item is
+    # being shown our internal justification instead of their own work.
+    work_description: str | None = None
     category: str | None = None
     hours: Decimal | None = None
     confidence: float = Field(ge=0.0, le=1.0, default=1.0)
@@ -122,3 +126,15 @@ class Engagement(BaseModel):
         scope = next((c.text for c in self.clauses if c.kind == "scope"), "")
         cap = f" Agreed cap {self.currency} {self.cap:,.2f}." if self.cap is not None else ""
         return f"Agreed scope: {scope}{cap} Extra work is itemised with its source."
+
+
+def line_name(verdict: Verdict) -> str:
+    """What goes on the client's invoice line.
+
+    The adjudicator's `reason` explains why we billed it; it is not a description of the work
+    and must never reach the payer. When no description was produced — the keyword baseline
+    never produces one — say so plainly rather than substituting the justification, because an
+    invoice line nobody can read is a visible defect and a silently wrong one is not.
+    """
+    description = (verdict.work_description or "").strip()
+    return description[:120] if description else "Unspecified work (no description produced)"

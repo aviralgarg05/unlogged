@@ -3,16 +3,22 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .ruff_cache/
-.env
 *.egg-info/
 dist/
 build/
 .DS_Store
-docs/*.png
+
+# Credentials. Never committed; verified by scripts/verify.py on every run and in CI.
+.env
+.env.local
+web/.env.local
+
 web/node_modules/
 web/.next/
-data/
-evals/
-web/.env.local
-.env.local
+
+# Working state, not evidence. The committed evidence lives in docs/ and evals/report.md:
+# data/ accumulates local runs, so it is ignored EXCEPT the seeded ledger a judge needs for
+# the "What reached the bill" page to render on a clean clone.
+data/*
+!data/seed/
 docs/verification.json

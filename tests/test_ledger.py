@@ -32,3 +32,17 @@ def test_ledger_is_append_only_and_round_trips(tmp_path: Path):
 def test_summary_of_an_empty_ledger_does_not_explode(tmp_path: Path):
     s = Ledger(tmp_path / "none.jsonl").summary()
     assert s == {"changes": 0, "added": "0.00", "first": None, "last": None}
+
+
+def test_a_fresh_clone_reads_the_seeded_ledger(tmp_path: Path):
+    """The climax page must not be blank on the documented judge path."""
+    seed_dir = tmp_path / "seed"
+    seed_dir.mkdir()
+    (seed_dir / "eng.jsonl").write_text(entry().line() + "\n")
+
+    led = Ledger(tmp_path / "eng.jsonl")
+    assert [e.event_id for e in led] == ["e1"]
+
+    # Once there is local history, the seed is no longer consulted.
+    led.append(entry(event_id="e9"))
+    assert [e.event_id for e in led] == ["e9"]

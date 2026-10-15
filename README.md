@@ -30,7 +30,7 @@ uv run scripts/verify.py               # checks every claim in this README
 That script is the short version of everything below: it runs the tests, reproduces the
 evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
 the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
-Thirteen checks, no credentials, about twenty seconds.
+Nine checks keyless, thirteen with sandbox credentials, about twenty seconds.
 
 With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
 against PayPal on the day you run it — it creates a real invoice, grows it, and prints the
@@ -123,15 +123,29 @@ strictly worse than none, because a trial can expire and nothing here can.
 An invoice that has already been sent can **grow line items**. The invoice id, and therefore
 the payer-view URL and the QR the client filed, stay valid.
 
-Verified live against the PayPal sandbox on 2026-10-15 — `$520.00 → $690.00 → $817.50`
-across two writes, id stable, every discovered item named on the client's page:
+Verified live against the PayPal sandbox on 2026-10-15 — `$520.00 → $690.00`, invoice id stable,
+every added item named on the client's own page:
 
 ```
-Checkout page — agreed scope                        $520.00   8hrs x $65.00
-Retry logic on checkout (slack 02 Oct)              $170.00   2hrs x $85.00
-Review thread fixes (github 06 Oct)                 $127.50   1.5hrs x $85.00
-                                          Subtotal  $817.50
-                                             Total  $817.50
+Checkout page — agreed scope                              $520.00   8hrs x $65.00
+Unspecified work (no description produced) (slack 02 Oct) $ 85.00   1hr  x $85.00
+Unspecified work (no description produced) (slack 04 Oct) $ 85.00   1hr  x $85.00
+                                                Subtotal  $690.00
+                                                   Total  $690.00
+```
+
+That is the **keyword baseline** billing, and it is wrong in three visible ways: it bills a
+request rather than the work that answered it, it bills a plea for a copy of an old invoice, and
+it cannot describe either of them. `fixtures/gold.jsonl` says the two billable extras are `e3`
+(3hrs, the PSP-timeout PR) and `e8` (2hrs, the idempotency PR) — neither of which the baseline
+found. A correct run therefore reaches **$945.00**, and that number is not claimed anywhere in
+this repo because the model arm has never been executed. See [`docs/HONESTY.md`](docs/HONESTY.md).
+
+The mechanism itself — that a sent invoice grows line items while its id, payer URL and QR stay
+valid — is verified and reproducible from the committed cassettes:
+
+```
+$520.00 → $690.00   invoice id unchanged   QR unchanged
 ```
 
 The client is notified by PayPal itself on every change — `send_to_recipient=true` on the
@@ -213,7 +227,7 @@ src/unlogged/
 
 | | |
 |---|---|
-| Mechanism verified live | ✅ 2026-10-15, `$520 → $690 → $817.50` |
+| Mechanism verified live | ✅ 2026-10-15, `$520 → $690`, reproducible from `cassettes/` |
 | Invoice engine | ✅ live sandbox, end to end |
 | Webhooks + signature verification | ✅ |
 | HTTP API + `/health` | ✅ |

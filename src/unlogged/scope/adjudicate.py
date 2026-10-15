@@ -39,6 +39,9 @@ clause it falls outside of. Do NOT estimate hours — the money attaches to the 
 Rules you must follow:
 - Always cite the clause id you relied on, and quote the exact span of the event text that \
 decided it. A verdict that cannot quote its own evidence is worthless.
+- For billable_extra, write work_description as the client will read it on their invoice: what \
+was done, in their words, under 60 characters. "Retry handling on card decline", not "matched a \
+request" and not a restatement of your reasoning.
 - Being asked politely does not make something billable, and arriving without a request does \
 not make it unbillable. Judge the work, not the phrasing.
 - A request and the work that answers it are separate events. Bill the work once. If you bill \
@@ -50,7 +53,16 @@ This bills a real person.
 SCHEMA = {
     "type": "object",
     "additionalProperties": False,
-    "required": ["call", "clause_id", "quoted_span", "reason", "category", "hours", "confidence"],
+    "required": [
+        "call",
+        "clause_id",
+        "quoted_span",
+        "reason",
+        "work_description",
+        "category",
+        "hours",
+        "confidence",
+    ],
     "properties": {
         "call": {
             "type": "string",
@@ -59,6 +71,7 @@ SCHEMA = {
         "clause_id": {"type": ["string", "null"]},
         "quoted_span": {"type": ["string", "null"]},
         "reason": {"type": "string"},
+        "work_description": {"type": ["string", "null"]},
         "category": {"type": ["string", "null"]},
         "hours": {"type": ["number", "null"]},
         "confidence": {"type": "number"},
@@ -117,6 +130,7 @@ class Adjudicator:
             clause_id=data["clause_id"],
             quoted_span=data["quoted_span"],
             reason=data["reason"],
+            work_description=data.get("work_description"),
             category=data["category"],
             hours=Decimal(str(data["hours"])) if data["hours"] is not None else None,
             confidence=float(data["confidence"]),

@@ -1,14 +1,14 @@
 {
  "status": 201,
  "body": {
-  "id": "INV2-MSMM-CLAS-Z36Z-CXSH",
+  "id": "INV2-AD9X-DDY8-AUNL-L9ZD",
   "status": "DRAFT",
   "detail": {
    "reference": "eng-checkout-001",
    "currency_code": "USD",
    "note": "Agreed scope: Build the checkout page: cart summary, address form, and card entry, to the agreed Figma. Agreed cap USD 1,200.00. Extra work is itemised with its source.",
    "category_code": "SHIPPABLE",
-   "invoice_number": "0010",
+   "invoice_number": "0018",
    "invoice_date": "2026-10-15",
    "payment_term": {
     "term_type": "NET_15",
@@ -17,11 +17,11 @@
    "viewed_by_recipient": false,
    "group_draft": false,
    "metadata": {
-    "create_time": "2026-10-15T11:42:22Z",
-    "last_update_time": "2026-10-15T11:42:22Z",
+    "create_time": "2026-10-15T14:18:06Z",
+    "last_update_time": "2026-10-15T14:18:06Z",
     "created_by_flow": "REGULAR_SINGLE",
-    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#MSMMCLASZ36ZCXSH",
-    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-MSMM-CLAS-Z36Z-CXSH",
+    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#AD9XDDY8AUNLL9ZD",
+    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-AD9X-DDY8-AUNL-L9ZD",
     "caller_type": "API_V2_INVOICE",
     "spam_info": {}
    },
@@ -39,7 +39,7 @@
   ],
   "items": [
    {
-    "id": "ITEM-3U0222049P418531Y",
+    "id": "ITEM-71N735456A5060523",
     "name": "Checkout page \u2014 agreed scope",
     "quantity": "8",
     "unit_amount": {
@@ -90,27 +90,27 @@
   },
   "links": [
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-MSMM-CLAS-Z36Z-CXSH",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-AD9X-DDY8-AUNL-L9ZD",
     "rel": "self",
     "method": "GET"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-MSMM-CLAS-Z36Z-CXSH/send",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-AD9X-DDY8-AUNL-L9ZD/send",
     "rel": "send",
     "method": "POST"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-MSMM-CLAS-Z36Z-CXSH",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-AD9X-DDY8-AUNL-L9ZD",
     "rel": "replace",
     "method": "PUT"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-MSMM-CLAS-Z36Z-CXSH",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-AD9X-DDY8-AUNL-L9ZD",
     "rel": "delete",
     "method": "DELETE"
    },
    {
-    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-MSMM-CLAS-Z36Z-CXSH/payments",
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-AD9X-DDY8-AUNL-L9ZD/payments",
     "rel": "record-payment",
     "method": "POST"
    }

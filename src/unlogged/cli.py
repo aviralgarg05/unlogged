@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.invoices import total_of
 from unlogged.scope.baseline import KeywordBaseline
-from unlogged.scope.models import Engagement, WorkEvent
+from unlogged.scope.models import Engagement, WorkEvent, line_name
 
 app = typer.Typer(add_completion=False, help=__doc__)
 DATA = Path("data")
@@ -28,11 +29,11 @@ def _adjudicator(eng: Engagement, settings: Settings):
     The baseline is not a placeholder — it is the evaluation's ablation arm, and the
     project is expected to run and be judged on both.
     """
-    if settings.openai_api_key:
+    if settings.model_ready:
         from unlogged.scope.adjudicate import Adjudicator
 
         return Adjudicator(eng, settings.openai_api_key)
-    typer.secho("No OPENAI_API_KEY — using the keyword baseline.", fg=typer.colors.YELLOW)
+    typer.secho(f"Using the {settings.adjudicator_name()}.", fg=typer.colors.YELLOW)
     return KeywordBaseline(eng)
 
 
@@ -108,14 +109,19 @@ def discover(
             rate = eng.rate_card.rate_for(v.category)
             items.append(
                 LineItem(
-                    name=v.reason[:120],
+                    name=line_name(v),
                     quantity=v.hours,
                     unit_price=rate,
                     currency=eng.currency,
                     provenance=ev.provenance,
                 )
             )
-        updated = inv.add_items(invoice_id, items, notify=True)
+        # Keyed on the events, not the resulting document: re-running this command after a
+        # lost response must not bill the same work twice.
+        key = hashlib.sha256(",".join(sorted(v.event_id for v in billable)).encode()).hexdigest()[
+            :16
+        ]
+        updated = inv.add_items(invoice_id, items, notify=True, idempotency_key=key)
         total = total_of(updated)
         for v, item in zip(billable, items, strict=True):
             ledger.append(

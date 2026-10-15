@@ -58,3 +58,22 @@ def test_every_event_gets_exactly_one_verdict():
 def test_provenance_is_human_readable():
     e = next(e for e in events() if e.id == "e3")
     assert e.provenance == "github 03 Oct"
+
+
+def test_the_invoice_line_never_shows_our_reasoning_to_the_client():
+    """`reason` is why we billed it. The payer should see the work, not our justification."""
+    from unlogged.scope.models import Verdict, line_name
+
+    reasoned = Verdict(
+        event_id="e3", call=Call.BILLABLE_EXTRA, reason="matched a request-shaped phrase"
+    )
+    assert "request-shaped" not in line_name(reasoned)
+    assert line_name(reasoned) == "Unspecified work (no description produced)"
+
+    described = Verdict(
+        event_id="e3",
+        call=Call.BILLABLE_EXTRA,
+        reason="X1 excludes error handling",
+        work_description="Retry handling on card decline",
+    )
+    assert line_name(described) == "Retry handling on card decline"

@@ -1057,6 +1057,7 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "httpx" },
+    { name = "openai" },
     { name = "paypal-server-sdk" },
     { name = "pydantic" },
     { name = "structlog" },
@@ -1065,9 +1066,6 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-ai = [
-    { name = "openai" },
-]
 dev = [
     { name = "hypothesis" },
     { name = "pytest" },
@@ -1080,7 +1078,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.143.1" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "hypothesis", marker = "extra == 'dev'", specifier = ">=6.112" },
-    { name = "openai", marker = "extra == 'ai'", specifier = ">=1.60" },
+    { name = "openai", specifier = ">=1.60" },
     { name = "paypal-server-sdk", specifier = ">=2.4.0" },
     { name = "pydantic", specifier = ">=2.9" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3" },
@@ -1090,7 +1088,7 @@ requires-dist = [
     { name = "typer", specifier = ">=0.15" },
     { name = "uvicorn", specifier = ">=0.54.0" },
 ]
-provides-extras = ["ai", "dev"]
+provides-extras = ["dev"]
 
 [[package]]
 name = "urllib3"

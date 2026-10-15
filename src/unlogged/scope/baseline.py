@@ -49,6 +49,10 @@ class KeywordBaseline:
                         event_id=ev.id,
                         call=Call.BILLABLE_EXTRA,
                         reason="matched a request-shaped phrase",
+                        # Left unset on purpose: matching a phrase tells you nothing about what
+                        # the work was, and the fallback below makes that visible on the invoice
+                        # rather than papering over it.
+                        work_description=None,
                         hours=BASELINE_HOURS,
                         confidence=0.5,
                     )

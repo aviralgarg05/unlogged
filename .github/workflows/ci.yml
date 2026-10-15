@@ -69,7 +69,7 @@ jobs:
           uv run unlogged discover \
             --engagement fixtures/engagement.json \
             --events fixtures/events.jsonl \
-            --invoice-id INV2-MSMM-CLAS-Z36Z-CXSH --apply
+            --invoice-id INV2-AD9X-DDY8-AUNL-L9ZD --apply
 
   web:
     runs-on: ubuntu-latest

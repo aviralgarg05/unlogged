@@ -106,18 +106,40 @@ def test_notify_true_asks_paypal_to_tell_the_client_it_changed():
     assert params == {"send_to_recipient": "true", "send_to_invoicer": "false"}
 
 
-def test_the_idempotency_key_is_derived_from_the_resulting_items():
-    """A retry after a timeout must not append the same work twice."""
-    first = FakeClient(invoice())
-    Invoices(first).add_items("INV2-TEST", [item()])
-    again = FakeClient(invoice())
-    Invoices(again).add_items("INV2-TEST", [item()])
-    key = lambda c: next(x for x in c.calls if x["method"] == "PUT")["idempotency"]  # noqa: E731
-    assert key(first) == key(again)
+def test_a_retry_after_a_lost_response_does_not_bill_the_work_twice():
+    """The failure this product cannot have.
 
-    different = FakeClient(invoice())
-    Invoices(different).add_items("INV2-TEST", [item(name="Something else")])
-    assert key(different) != key(first)
+    PayPal applied the write; the response never arrived; the caller retries. Because the
+    client re-reads the invoice first, a key derived from the RESULTING document would differ
+    on the second attempt and the duplicate would be accepted. Keyed on what is being added,
+    it does not.
+    """
+    c = FakeClient(invoice())
+    inv = Invoices(c)
+    inv.add_items("INV2-TEST", [item()])
+    first_key = next(x for x in c.calls if x["method"] == "PUT")["idempotency"]
+
+    # Same client, so the invoice now carries the line PayPal already applied.
+    inv.add_items("INV2-TEST", [item()])
+    retry_key = [x for x in c.calls if x["method"] == "PUT"][-1]["idempotency"]
+
+    assert retry_key == first_key, "a retry must reuse the key, or PayPal accepts a duplicate"
+
+
+def test_a_different_addition_gets_a_different_key():
+    a = FakeClient(invoice())
+    Invoices(a).add_items("INV2-TEST", [item()])
+    b = FakeClient(invoice())
+    Invoices(b).add_items("INV2-TEST", [item(name="Something else")])
+    key = lambda c: next(x for x in c.calls if x["method"] == "PUT")["idempotency"]  # noqa: E731
+    assert key(a) != key(b)
+
+
+def test_callers_may_key_on_the_originating_events():
+    """Line text can be reworded; the events it came from cannot."""
+    c = FakeClient(invoice())
+    Invoices(c).add_items("INV2-TEST", [item()], idempotency_key="e3,e8")
+    assert next(x for x in c.calls if x["method"] == "PUT")["idempotency"].endswith("e3,e8")
 
 
 @settings(max_examples=40, deadline=None)

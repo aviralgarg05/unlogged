@@ -3,7 +3,7 @@
 An invoice that has already been sent can grow line items. The invoice id, and
 therefore the payer-view URL and the QR the client filed, stay valid, and PayPal
 renders every new line on its own hosted page. Verified live on 2026-10-15:
-$520.00 -> $690.00 -> $817.50 across two writes, id stable, each discovered item
+$520.00 -> $690.00, id stable, each discovered item
 named on the payer page. See docs/VERIFIED.md.
 
 Deliberately NOT used: `detail.payment_term.conditional_rules.early_payment_discount`,
@@ -126,7 +126,12 @@ class Invoices:
     # -- the mechanism ------------------------------------------------------
 
     def add_items(
-        self, invoice_id: str, new_items: Iterable[LineItem], *, notify: bool = True
+        self,
+        invoice_id: str,
+        new_items: Iterable[LineItem],
+        *,
+        notify: bool = True,
+        idempotency_key: str | None = None,
     ) -> dict[str, Any]:
         """Append line items to an invoice that has already been sent.
 
@@ -138,20 +143,29 @@ class Invoices:
         notify=True asks PayPal to email the client that the invoice changed. That is the
         consent step, and it is PayPal's own machinery rather than something we invented.
         """
+        new = list(new_items)
         current = self.get(invoice_id)
-        items = list(current.get("items", [])) + [i.to_paypal() for i in new_items]
+        items = list(current.get("items", [])) + [i.to_paypal() for i in new]
 
         upd = {k: v for k, v in current.items() if k not in READONLY + COMPUTED}
         upd["items"] = items
         upd["amount"] = {"currency_code": current["detail"]["currency_code"]}
 
-        digest = hashlib.sha256("".join(i["name"] for i in items).encode()).hexdigest()[:16]
+        # Derived from what is being ADDED, never from the resulting document. Hashing the
+        # result means a retry after a lost response reads a longer invoice, produces a
+        # different digest, and bills the work twice — the one failure this product cannot
+        # have. Callers that know the originating events pass their ids instead, so the key
+        # stays stable even if the line text is later reworded.
+        if idempotency_key is None:
+            idempotency_key = hashlib.sha256(
+                "".join(i.display_name for i in new).encode()
+            ).hexdigest()[:16]
         return self.c.request(
             "PUT",
             f"/v2/invoicing/invoices/{invoice_id}",
             json_body=upd,
             params={"send_to_recipient": str(notify).lower(), "send_to_invoicer": "false"},
-            idempotency=f"items-{invoice_id}-{digest}",
+            idempotency=f"items-{invoice_id}-{idempotency_key}",
         )
 
     # -- payer surface ------------------------------------------------------

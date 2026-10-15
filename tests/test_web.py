@@ -86,3 +86,22 @@ def test_settlement_says_why_it_is_unavailable_rather_than_inventing_a_number():
     assert body["available"] is False
     # The reason has to be actionable, not just a refusal.
     assert "UNLOGGED_REPLAY=0" in body["reason"]
+
+
+def test_health_never_claims_a_model_it_cannot_import(monkeypatch):
+    """The endpoint written to be checked during judging must not be able to lie.
+
+    A key in the environment plus an uninstallable SDK is the one combination that made this
+    service report a capability that would crash on first use.
+    """
+    import unlogged.config as config
+
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-not-a-real-key")
+    monkeypatch.setattr(config.Settings, "openai_importable", property(lambda self: False))
+
+    body = client.get("/health").json()
+    assert body["openai_key_set"] is True
+    assert body["openai_importable"] is False
+    assert body["model_configured"] is False
+    assert body["adjudicator"].startswith("keyword-baseline")
+    assert "not installed" in body["adjudicator"]
