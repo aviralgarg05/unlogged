@@ -39,7 +39,18 @@ MAX_TEXT = 700
 # Review bots and coverage reporters are a real part of a repository and no part of an
 # engagement: a client thread has no coderabbit in it. Left in, they outnumber the humans
 # three to two and the evaluation becomes a measurement of how well an arm ignores robots.
-BOTS = ("codecov-commenter", "dependabot", "github-actions", "renovate", "pre-commit-ci")
+BOTS = (
+    "codecov-commenter",
+    "dependabot",
+    "github-actions",
+    "renovate",
+    "pre-commit-ci",
+    # Reviews as "Copilot", with no [bot] suffix, and produced 72 of 365 events on the first
+    # repository this was pointed at. A suffix check alone is not enough.
+    "Copilot",
+    "sourcery-ai",
+    "codiumai-pr-agent",
+)
 
 
 def is_bot(login: str) -> bool:

@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 180,
+  "changed_files": 1,
+  "additions": 2,
+  "deletions": 2,
+  "title": "chore(deps): bump log from 0.4.30 to 0.4.32 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [log](https://github.com/rust-lang/log). Updates `log` from 0.4.30 to 0.4.32 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/log/releases\">log's releases</a>.</em></p> <blockquote> <h2>0.4.32</h2> <h2>What's Changed</h2> <ul> <li>Support <code>Value</code> -&gt; string conversions with <code>kv</code> + <code>std</code> features instead of <code>kv_std</code> by <a href=\"https://github.com/tisonkun\"><code>@\u200btisonkun</code></a> in <a href=\"https://redirect.github.com/rust-lang/log/pull/729\">rust-lang/log#729</a></li> <li>Prepare for 0.4.32 release by <a href=\"https://github.com/KodrAus\"><code\u2026",
+  "created_at": "2026-06-08T07:24:45Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/180",
+  "state": "closed",
+  "merged_at": "2026-06-08T07:24:56Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

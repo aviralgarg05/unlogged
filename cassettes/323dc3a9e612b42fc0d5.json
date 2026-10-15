@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 197,
+  "changed_files": 1,
+  "additions": 10,
+  "deletions": 10,
+  "title": "chore(deps): bump pyo3 from 0.29.2 to 0.29.3 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [pyo3](https://github.com/pyo3/pyo3). Updates `pyo3` from 0.29.2 to 0.29.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.29.3</h2> <p>This release is a series of fixes worth landing to the PyO3 0.29 series; the PyO3 0.30 release is planned to follow within a few weeks, however during the development cycle a number of rough edges were discovered which were deemed worth a backport.</p> <p>The patch broadly includes:</p> <ul> <li>a further fix the to the opt-out of <code>raw-dylib</code> linking for Windows introduced in PyO3 0.2\u2026",
+  "created_at": "2026-10-05T07:24:11Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/197",
+  "state": "closed",
+  "merged_at": "2026-10-05T07:24:23Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

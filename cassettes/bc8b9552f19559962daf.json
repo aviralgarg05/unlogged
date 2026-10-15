@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 194,
+  "changed_files": 1,
+  "additions": 6,
+  "deletions": 6,
+  "title": "chore(deps): bump clap from 4.6.6 to 4.6.7 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [clap](https://github.com/clap-rs/clap). Updates `clap` from 4.6.6 to 4.6.7 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/clap-rs/clap/releases\">clap's releases</a>.</em></p> <blockquote> <h2>v4.6.7</h2> <h2>[4.6.7] - 2026-09-14</h2> <h3>Features</h3> <ul> <li><em>(derive)</em> Add <code>#[command(defer = &lt;bool&gt;)]</code> attribute to opt-in to lazy initialisation of subcommands</li> </ul> </blockquote> </details> <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/clap-rs/clap/blob/main/CHANGELOG.md\">clap's changelog</a>.</em></p> <blockquote> <h2>[4.6.7] - 2\u2026",
+  "created_at": "2026-09-21T07:24:20Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/194",
+  "state": "closed",
+  "merged_at": "2026-09-21T07:24:32Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 169,
+  "changed_files": 2,
+  "additions": 9,
+  "deletions": 9,
+  "title": "chore(deps): bump tempfile from 3.25.0 to 3.26.0 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [tempfile](https://github.com/Stebalien/tempfile). Updates `tempfile` from 3.25.0 to 3.26.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/Stebalien/tempfile/blob/master/CHANGELOG.md\">tempfile's changelog</a>.</em></p> <blockquote> <h2>3.26.0</h2> <ul> <li>Support <code>NamedTempFile::persist</code> on RedoxOS (<a href=\"https://redirect.github.com/Stebalien/tempfile/issues/393\">#393</a>) (thanks to <a href=\"https://github.com/Andy-Python-Programmer\"><code>@\u200bAndy-Python-Programmer</code></a>).</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li>See full diff in <a href=\"https\u2026",
+  "created_at": "2026-03-02T07:30:49Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/169",
+  "state": "closed",
+  "merged_at": "2026-03-02T07:31:01Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

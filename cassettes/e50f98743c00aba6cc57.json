@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 183,
+  "changed_files": 1,
+  "additions": 2,
+  "deletions": 2,
+  "title": "chore(deps): bump log from 0.4.32 to 0.4.33 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [log](https://github.com/rust-lang/log). Updates `log` from 0.4.32 to 0.4.33 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/log/blob/master/CHANGELOG.md\">log's changelog</a>.</em></p> <blockquote> <h2>[0.4.33] - 2026-06-20</h2> <h2>What's Changed</h2> <ul> <li>Fixed key comparison by <a href=\"https://github.com/matteo-zeggiotti-ok\"><code>@\u200bmatteo-zeggiotti-ok</code></a> in <a href=\"https://redirect.github.com/rust-lang/log/pull/732\">rust-lang/log#732</a></li> </ul> <h2>New Contributors</h2> <ul> <li><a href=\"https://github.com/matteo-zeggiotti-ok\"><code>@\u200bmatteo-zeggiotti-ok</code></a> made the\u2026",
+  "created_at": "2026-06-22T07:24:14Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/183",
+  "state": "closed",
+  "merged_at": "2026-06-22T07:24:27Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

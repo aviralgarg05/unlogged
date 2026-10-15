@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2594696524,
+   "body": "The CODEOWNERS file is missing the `nexum_ai/` directory. According to the CONTRIBUTING.md documentation (lines 23-26), the project has three main components: Rust Core (`nexum_core/`), Python AI Engine (`nexum_ai/`), and CLI Interface (`nexum_cli/`). Consider adding: ``` /nexum_ai/ @aviralgarg05 ``` between lines 6 and 7 to ensure code ownership coverage for the AI engine component. ```suggestion /nexum_core/ @aviralgarg05 /nexum_ai/ @aviralgarg05 ```",
+   "created_at": "2025-12-06T10:01:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/26#discussion_r2594696524",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2594872242,
+   "body": "[nitpick] The documentation could be more helpful by: 1. Explaining what actionlint does (e.g., \"actionlint checks GitHub Actions workflow files for common errors and best practices\") 2. Specifying which files/directories it will check (e.g., \".github/workflows/*.yml\") 3. Providing an example of expected output or mentioning that no output means no issues found 4. Optionally including alternative installation methods (e.g., via package managers) for users who prefer not to use Docker",
+   "created_at": "2025-12-06T13:32:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#discussion_r2594872242",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2594872247,
+   "body": "The closing backticks for the bash code block are missing. The code block should be properly closed with three backticks (```) on line 285.",
+   "created_at": "2025-12-06T13:32:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#discussion_r2594872247",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2594872250,
+   "body": "This new section \"Linting GitHub Actions\" should be integrated into the existing document structure rather than placed after the \"Thank You!\" closing remarks. Consider placing it: 1. As a subsection under \"Style Guidelines\" (after line 208), alongside the Rust and Python code style sections, or 2. As part of \"Development Setup\" (after line 112), or 3. Under \"Pull Request Process\" \u2192 \"Before Submitting\" (after line 180) Additionally, the Table of Contents at the top of the document should be updated to reflect this new section.",
+   "created_at": "2025-12-06T13:32:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#discussion_r2594872250",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2594913760,
+   "body": "Fixed \u2014 added closing backticks so the code block renders correctly.",
+   "created_at": "2025-12-06T14:22:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#discussion_r2594913760",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 2595056003,
+   "body": "Extra blank line creates inconsistent spacing. Sections in this document are separated by a single blank line, not double blank lines. Remove one of the blank lines here to maintain consistency with the rest of the document (e.g., the spacing between \"Commit Message Convention\" and \"Linting GitHub Actions\" sections). ```suggestion ```",
+   "created_at": "2025-12-06T15:51:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#discussion_r2595056003",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246029,
+   "body": "Security concern with Docker Hub password: Using `DOCKER_PASSWORD` as a secret name is acceptable, but it's recommended to use Docker Hub access tokens instead of passwords for CI/CD workflows. Access tokens provide better security through scoped permissions and easier revocation. Consider updating the documentation to recommend using a Personal Access Token (PAT) for the `DOCKER_PASSWORD` secret.",
+   "created_at": "2025-12-06T18:40:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246029",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246031,
+   "body": "Typo in code block language identifier: `badh` should be `bash`. ```suggestion ```bash ```",
+   "created_at": "2025-12-06T18:40:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246031",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246034,
+   "body": "Inefficient Docker layer caching: Copying the entire context (line 17) immediately after copying `Cargo.toml` and `Cargo.lock` (line 16) negates the benefit of dependency caching. The second COPY overwrites the first. Consider restructuring to copy only source files after the dependency files, or remove line 16 entirely if you intend to copy everything at once. ```suggestion COPY src ./src ```",
+   "created_at": "2025-12-06T18:40:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246034",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246036,
+   "body": "Missing port exposure configuration: The docker-compose.yaml file doesn't expose any ports for the application. This makes it impossible to connect to the database from outside the container. Consider adding a `ports` section to map the application's port(s) to the host, e.g.: ```yaml ports: - \"8080:8080\" # Adjust based on actual application port ``` ```suggestion ports: - \"8080:8080\" # Adjust based on actual application port ```",
+   "created_at": "2025-12-06T18:40:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246036",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246037,
+   "body": "Inconsistent capitalization in step name: \"Docker-hub\" should be \"Docker Hub\" (with capital H and space) for proper branding and consistency with Docker's official naming. ```suggestion - name: Docker Hub account login ```",
+   "created_at": "2025-12-06T18:40:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246037",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246038,
+   "body": "Inconsistent capitalization: \"docker\" should be \"Docker\" (capitalized) to match the proper noun and be consistent with line 17. ```suggestion - name: Set up Docker Buildx ```",
+   "created_at": "2025-12-06T18:40:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246038",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246039,
+   "body": "Missing documentation for required setup: The docker-compose.yaml references environment variables, volumes (`./data` and `./config.toml`), but the README doesn't document: 1. That users need to create a `config.toml` file before running 2. What should be in the `config.toml` file 3. That a `./data` directory will be created for persistent storage 4. What ports the application uses (if any) Consider adding a prerequisites or configuration section before the Docker commands explaining these requirements.",
+   "created_at": "2025-12-06T18:40:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246039",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246041,
+   "body": "Redundant `--manifest-path` argument: The `--manifest-path ./Cargo.toml` is unnecessary since the working directory is already `/app` and `Cargo.toml` is at the root. Simply using `cargo build --release` would be cleaner and more conventional. ```suggestion RUN cargo build --release ```",
+   "created_at": "2025-12-06T18:40:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246041",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246042,
+   "body": "Security best practice: Container runs as root user. For better security, consider creating a non-root user in the runtime stage and switching to it before running the application. For example: ```dockerfile RUN useradd -m -u 1000 nexum && \\ chown -R nexum:nexum /app USER nexum ``` This follows the principle of least privilege and reduces security risks.",
+   "created_at": "2025-12-06T18:40:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246042",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246043,
+   "body": "Inconsistent command format: This line uses `docker-compose` (with hyphen) while the other commands use `docker compose` (with space). For consistency and to follow modern Docker Compose V2 syntax, use `docker compose` throughout. ```suggestion ```bash $ docker compose logs ```",
+   "created_at": "2025-12-06T18:40:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246043",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246046,
+   "body": "Hard-coded Python version creates portability issues: The `libpython3.11` dependency is specific to Python 3.11, which may not be available or might differ in future Debian versions. Consider using a more generic approach like `python3` and `python3-dev` packages, or explicitly install Python 3.11 from a specific source if this exact version is required. ```suggestion python3-dev \\ ```",
+   "created_at": "2025-12-06T18:40:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246046",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246047,
+   "body": "Volume mount references non-existent file: The docker-compose.yaml mounts `./config.toml:/app/config.toml`, but there's no `config.toml` file in the repository. This will cause the container to fail to start or create an empty directory mount. Either provide a default `config.toml` file in the repository, make this mount optional, or document that users need to create this file before running docker compose.",
+   "created_at": "2025-12-06T18:40:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246047",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246052,
+   "body": "Using outdated GitHub Actions versions: The workflow uses `@v2` and `@v3` versions of actions while newer `@v4` versions are available (as seen in ci.yml which uses `@v4` for checkout). Consider updating to the latest versions: - `actions/checkout@v3` \u2192 `actions/checkout@v4` - `docker/setup-buildx-action@v2` \u2192 `docker/setup-buildx-action@v3` - `docker/login-action@v2` \u2192 `docker/login-action@v3` - `docker/build-push-action@v3` \u2192 `docker/build-push-action@v5` This ensures you have the latest features and security updates.",
+   "created_at": "2025-12-06T18:40:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246052",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595246055,
+   "body": "The container currently runs `nexum` as the default root user (no `USER` directive is set), so any compromise of the application results in full root privileges inside the container and write access to mounted host volumes. To reduce the blast radius, create a dedicated unprivileged user, adjust ownership/permissions on `/app` and data paths, and add a `USER` directive (or `user` in `docker-compose`) so the process does not run as root. ```suggestion # Create unprivileged user and group RUN useradd --system --create-home --home-dir /app --shell /bin/bash nexumuser && \\ chown -R nexumuser:nexumuser /app ENV PATH=\"/app/.venv/bin:$PATH\" ENV VIRTUAL_ENV=\"/app/.venv\" USER nexumuser ```",
+   "created_at": "2025-12-06T18:40:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595246055",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423569,
+   "body": "The `version` field in docker-compose.yaml is obsolete. Docker Compose v1.27.0+ (and all v2.x versions) no longer require or use the top-level `version` field. The Compose Specification considers it optional and the field is ignored. Consider removing this line: ```yaml services: nexumdb-app: build: ``` ```suggestion ```",
+   "created_at": "2025-12-06T20:25:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423569",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423570,
+   "body": "Trailing whitespace after the command. Remove the trailing space for consistency with other code blocks. ```suggestion $ docker compose up ```",
+   "created_at": "2025-12-06T20:25:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423570",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423571,
+   "body": "[nitpick] The custom `app-network` is defined but not necessary for a single-service application. Docker Compose automatically creates a default network for all services. The custom network adds unnecessary complexity without providing any benefit. Consider removing the networks section entirely unless you plan to add more services that need network isolation: ```yaml services: nexumdb-app: build: context: . dockerfile: Dockerfile container_name: nexumdb environment: - PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1 - RUST_LOG=info volumes: - ./data:/app/nexumdb_data stdin_open: true tty: true ``` ```suggestion ports: - \"8080:8080\" ```",
+   "created_at": "2025-12-06T20:25:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423571",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423573,
+   "body": "The Dockerfile copies source from a non-existent `src` directory. Based on the workspace structure in `Cargo.toml`, the project uses workspace members (`nexum_core`, `nexum_cli`, `tests`), not a root-level `src` directory. This line should copy all workspace members: ```dockerfile COPY nexum_cli ./nexum_cli COPY nexum_core ./nexum_core COPY tests ./tests ``` ```suggestion COPY nexum_core ./nexum_core COPY nexum_cli ./nexum_cli COPY tests ./tests ```",
+   "created_at": "2025-12-06T20:25:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423573",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423577,
+   "body": "Inconsistent secret names used in the workflow. Line 20 uses `DOCKERHUB_USERNAME`, line 34 uses `DOCKER_USERNAME`, and lines 37-38 use `DOCKERHUB_USERNAME`. All references should use the same secret name. Consider using `DOCKERHUB_USERNAME` consistently throughout: ```yaml tags: | ${{ secrets.DOCKERHUB_USERNAME }}/nexumdb:latest ${{ secrets.DOCKERHUB_USERNAME }}/nexumdb:${{ steps.meta.outputs.version }} ${{ secrets.DOCKERHUB_USERNAME }}/nexumdb:${{ github.sha }} ``` ```suggestion ${{ secrets.DOCKERHUB_USERNAME }}/nexumdb:latest ${{ secrets.DOCKERHUB_USERNAME }}/nexumdb:${{ steps.meta.outputs.version }} ${{ secrets.DOCKERHUB_USERNAME }}/nexumdb:${{ github.sha }} ```",
+   "created_at": "2025-12-06T20:25:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423577",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423578,
+   "body": "Trailing whitespace after the command. Remove the trailing space for consistency with other code blocks. ```suggestion $ docker compose down ```",
+   "created_at": "2025-12-06T20:25:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423578",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423581,
+   "body": "The Python dependencies are installed as root before switching to `nexumuser`. While this is functionally correct, it's a security best practice to create the user earlier and run pip install as the non-root user. Consider reordering: ```dockerfile RUN useradd --system --create-home --home-dir /app --shell /bin/bash nexumuser && \\ chown -R nexumuser:nexumuser /app USER nexumuser RUN python3 -m venv .venv && \\ . .venv/bin/activate && \\ pip install --no-cache-dir -r nexum_ai/requirements.txt ``` ```suggestion RUN useradd --system --create-home --home-dir /app --shell /bin/bash nexumuser && \\ chown -R nexumuser:nexumuser /app USER nexumuser RUN python3 -m venv .venv && \\ . .venv/bin/activate &\u2026",
+   "created_at": "2025-12-06T20:25:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423581",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595423583,
+   "body": "[nitpick] The Dockerfile doesn't leverage Docker layer caching for Rust dependencies. Copying `Cargo.toml` and `Cargo.lock` before the source code is good, but you should also create dummy source files and build dependencies first. This way, dependency builds are cached and only rebuild when `Cargo.toml` or `Cargo.lock` change. Consider adding a dependency caching layer: ```dockerfile COPY Cargo.toml Cargo.lock ./ COPY nexum_cli/Cargo.toml ./nexum_cli/ COPY nexum_core/Cargo.toml ./nexum_core/ COPY tests/Cargo.toml ./tests/ # Create dummy source files to build dependencies RUN mkdir -p nexum_cli/src nexum_core/src tests/src && \\ echo \"fn main() {}\" > nexum_cli/src/main.rs && \\ echo \"pub fn d\u2026",
+   "created_at": "2025-12-06T20:25:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595423583",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595505531,
+   "body": "bruh, u were the one who suggested it. yup AI is an AI afterall.",
+   "created_at": "2025-12-06T21:24:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595505531",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2595507240,
+   "body": "i think that it is a necessity.",
+   "created_at": "2025-12-06T21:24:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595507240",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2595508124,
+   "body": "my bad.",
+   "created_at": "2025-12-06T21:25:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595508124",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2595510744,
+   "body": "fr ?",
+   "created_at": "2025-12-06T21:26:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595510744",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2595514069,
+   "body": "fair enough .",
+   "created_at": "2025-12-06T21:26:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595514069",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2595537329,
+   "body": "funny enough",
+   "created_at": "2025-12-06T21:36:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595537329",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2595538102,
+   "body": "funny pt.2",
+   "created_at": "2025-12-06T21:36:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595538102",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2595555932,
+   "body": "A custom network makes sense if we: Plan to add more services and explicitly isolate groups of them, or maybe need to reuse a named network across multiple Compose projects (e.g. with external: true), or we want to tweak driver options / attach non-Compose containers manually. If that\u2019s the plan, I\u2019m totally fine keeping it \u2014 but then it might be good to add a short comment in the file explaining why app-network is needed so future contributors don\u2019t think it\u2019s dead config. Otherwise, I\u2019d still recommend dropping the explicit networks section to keep the compose file minimal and easier to maintain.",
+   "created_at": "2025-12-06T21:44:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595555932",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2595567221,
+   "body": "Then i'll remove it since it isn't needed now and you want to keep it minimal for easy maintenance, consider adding opening an issue when it needs to be sat, which sounds like a good plan for now.",
+   "created_at": "2025-12-06T21:47:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595567221",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2595574183,
+   "body": "The Docker instructions don't explain that nexum is an interactive CLI application. Users following these instructions will find the container starts but they can't interact with it. Add a note explaining how to connect to the interactive shell. For example: ```markdown ### Run the application ```bash $ docker compose up -d $ docker exec -it nexumdb nexum ``` Or run it interactively: ```bash $ docker compose run --rm nexumdb-app ``` ``` This will help users understand how to actually use the Dockerized application. ```suggestion > **Note:** NexumDB is an interactive CLI application. After starting the container, you need to connect to the CLI to interact with the database. > > To open an in\u2026",
+   "created_at": "2025-12-06T21:52:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574183",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574194,
+   "body": "The Dockerfile creates a dummy `src/main.rs` in the root directory for dependency caching, but this project structure has the actual binary in `nexum_cli/src/main.rs` (as shown in nexum_cli/Cargo.toml). This dummy file will not match the workspace structure and `cargo build --release` on line 27 will fail. Instead, you should create dummy main.rs files in the correct locations: ```dockerfile RUN mkdir -p nexum_cli/src && echo \"fn main() {}\" > nexum_cli/src/main.rs ``` Additionally, you'll need dummy lib.rs files for the library crates: ```dockerfile RUN mkdir -p nexum_core/src && echo \"\" > nexum_core/src/lib.rs RUN mkdir -p tests/src && echo \"\" > tests/src/lib.rs ```",
+   "created_at": "2025-12-06T21:52:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574194",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574197,
+   "body": "After copying the real source code, line 33 should also rebuild the workspace binaries. However, since the workspace doesn't have a src/main.rs in the root, the `touch src/main.rs` will have no effect. Change this to touch the actual binary location: ```dockerfile RUN touch nexum_cli/src/main.rs && cargo build --release ``` ```suggestion RUN touch nexum_cli/src/main.rs && cargo build --release ```",
+   "created_at": "2025-12-06T21:52:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574197",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574206,
+   "body": "This line has trailing whitespace. Remove it for cleaner formatting. ```suggestion ```",
+   "created_at": "2025-12-06T21:52:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574206",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574216,
+   "body": "[nitpick] The Dockerfile copies the `tests/` directory but it's only needed for building, not for the final runtime image. The tests crate is being built in the builder stage but isn't used in the runtime. If tests aren't needed in the Docker build at all, consider excluding them from the workspace build by using `--workspace --exclude tests`: ```dockerfile RUN cargo build --release --workspace --exclude tests ``` This will speed up the build and reduce the builder image size. ```suggestion RUN cargo build --release --workspace --exclude tests COPY nexum_core ./nexum_core COPY nexum_cli ./nexum_cli COPY tests ./tests RUN touch src/main.rs && cargo build --release --workspace --exclude tests\u2026",
+   "created_at": "2025-12-06T21:52:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574216",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574221,
+   "body": "Installing PyTorch and ML dependencies without specifying CPU-only versions will default to downloading CUDA-enabled packages, which are significantly larger (~2-3GB extra). For a general Docker image, consider using CPU-only PyTorch to reduce image size: ```dockerfile RUN python3 -m venv .venv && \\ . .venv/bin/activate && \\ pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \\ pip install --no-cache-dir -r nexum_ai/requirements.txt ``` This will make the image much smaller and build faster, which likely addresses the storage issue mentioned in the PR description. ```suggestion . .venv/bin/activate && \\ pip install --no-cache-dir torch --index-url https://do\u2026",
+   "created_at": "2025-12-06T21:52:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574221",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574225,
+   "body": "The README uses inconsistent Docker Compose commands. Line 85 uses `docker-compose` (with a hyphen), while lines 67, 73, and 79 use `docker compose` (without a hyphen). The modern Docker Compose V2 uses `docker compose` (space-separated). For consistency, change line 85 to: ```bash $ docker compose logs ``` ```suggestion $ docker compose logs ```",
+   "created_at": "2025-12-06T21:52:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574225",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574234,
+   "body": "The workflow uses `docker/build-push-action@v5`, but this action is now at v6 (released in 2024). Consider updating to the latest version for improved features, bug fixes, and security updates: ```yaml uses: docker/build-push-action@v6 ``` ```suggestion uses: docker/build-push-action@v6 ```",
+   "created_at": "2025-12-06T21:52:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574234",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2595574241,
+   "body": "This line has trailing whitespace. Remove it for cleaner formatting. ```suggestion ### Stop the application ```",
+   "created_at": "2025-12-06T21:52:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2595574241",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596153384,
+   "body": "Both runs fine for me.",
+   "created_at": "2025-12-07T08:14:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2596153384",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2596161034,
+   "body": "Inconsistent hyphenation: \"natural language\" should be \"natural-language\" to match the terminology used in line 1 where it's written as \"natural-language translation\". ```suggestion /// Re-exports for natural-language translator, Python bridge, and semantic cache. ```",
+   "created_at": "2025-12-07T08:33:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/31#discussion_r2596161034",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596164291,
+   "body": "> Then i'll remove it since it isn't needed now and you want to keep it minimal for easy maintenance, consider adding opening an issue when it needs to be sat, which sounds like a good plan for now. Sure will do that",
+   "created_at": "2025-12-07T08:40:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2596164291",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2596164505,
+   "body": "> Both runs fine for me. Yea, you can skip this",
+   "created_at": "2025-12-07T08:41:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2596164505",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2596170016,
+   "body": "I do not agree with this, at least the first half, i mean it's better to build it all and run the tests in the building stage then exclude them in the rebuilding before the runtime stage, so that i makes sure everything works fine.",
+   "created_at": "2025-12-07T08:53:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2596170016",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2596206279,
+   "body": "Hmm, skip it",
+   "created_at": "2025-12-07T10:06:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2596206279",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2596207420,
+   "body": "Already made sure of building the whole app and run the tests first, then proceeded with building it while excluding them afterwards.",
+   "created_at": "2025-12-07T10:08:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#discussion_r2596207420",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2596389559,
+   "body": "The imports `List`, `Dict`, and `Any` from the `typing` module are added but never used in this file. Only `Optional` is actually used in the type hints. Consider removing the unused imports to keep the code clean. ```suggestion from typing import Optional ```",
+   "created_at": "2025-12-07T15:35:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2596389559",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596389573,
+   "body": "Import of 'Tuple' is not used. ```suggestion from typing import Optional, List, Dict, Any ```",
+   "created_at": "2025-12-07T15:35:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2596389573",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2596389581,
+   "body": "Import of 'Tuple' is not used. Import of 'List' is not used. Import of 'Optional' is not used. Import of 'Any' is not used. ```suggestion from typing import Dict ```",
+   "created_at": "2025-12-07T15:35:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2596389581",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2597609801,
+   "body": "The parameter `filepath` has a default value of `None`, so its type should be `Optional[str]` instead of `str`. This requires adding `Optional` to the imports from typing at line 7. Example: ```python from typing import Dict, Optional def save_state(self, filepath: Optional[str] = None) -> None: ```",
+   "created_at": "2025-12-08T08:43:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2597609801",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2597609813,
+   "body": "The parameter `filepath` has a default value of `None`, so its type should be `Optional[str]` instead of `str`. This requires adding `Optional` to the imports from typing at line 7. Example: ```python from typing import Dict, Optional def load_state(self, filepath: Optional[str] = None) -> None: ```",
+   "created_at": "2025-12-08T08:43:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2597609813",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2599912384,
+   "body": "Installing `cargo-audit` on every CI run will significantly slow down the workflow. Consider using a GitHub Action like `actions-rs/install@v0.1` with caching, or add `~/.cargo/bin` to the cache paths and check if cargo-audit is already installed before running `cargo install`. This will avoid reinstalling the tool on every run when the cache is hit.",
+   "created_at": "2025-12-08T19:44:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#discussion_r2599912384",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2599912393,
+   "body": "[nitpick] This quote style change from single to double quotes appears unrelated to adding cargo audit security checks. If this is an intentional style change, it should be mentioned in the PR description or done in a separate commit. Otherwise, please revert this unrelated change. ```suggestion python-version: '3.10' ```",
+   "created_at": "2025-12-08T19:44:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#discussion_r2599912393",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2599927695,
+   "body": "i didn't notice that, it is just because my yamlls",
+   "created_at": "2025-12-08T19:50:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#discussion_r2599927695",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 2599932979,
+   "body": "no issues, just ai giving random style issues",
+   "created_at": "2025-12-08T19:52:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#discussion_r2599932979",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2602681141,
+   "body": "The \"Install Python dependencies\" step is malformed. Line 76 contains a `run:` command, but line 77 has `python-version:` which belongs under a `with:` block from the previous step. This creates invalid YAML structure where a step's action field is followed by configuration from a different context. ```suggestion ```",
+   "created_at": "2025-12-09T13:31:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2602681141",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602681179,
+   "body": "The indentation of the `key:` line is incorrect. It should be aligned with the `path:` above it. The line should start with spaces to match YAML indentation (should have 10 spaces, currently has 9). Additionally, there's an extra blank line that breaks the YAML structure. ```suggestion key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }} ```",
+   "created_at": "2025-12-09T13:31:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2602681179",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602681214,
+   "body": "Duplicate `python-version` field. Line 74 already sets `python-version: '3.10'`, but line 77 attempts to set it again. Line 77 should be removed as it's redundant and will cause a YAML parsing error. ```suggestion ```",
+   "created_at": "2025-12-09T13:31:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2602681214",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602691277,
+   "body": "The cache key was changed from `Cargo.lock` to `Cargo.toml`, but `Cargo.lock` is the correct file to use for cache invalidation as it contains the actual resolved dependency versions. Using `Cargo.toml` will cause unnecessary cache invalidation when dependencies change without updating the manifest. Please revert this to use `Cargo.lock`. ```suggestion key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }} ```",
+   "created_at": "2025-12-09T13:33:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2602691277",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602691303,
+   "body": "YAML syntax error: The workflow is malformed. Line 68 correctly sets `python-version: '3.10'` under the `with:` block for \"Set up Python\", but line 71 has `python-version: \"3.10\"` that appears to be orphaned (not properly indented under any `with:` block). This line should be removed as it's a duplicate and will cause the workflow to fail. ```suggestion ```",
+   "created_at": "2025-12-09T13:33:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2602691303",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712444,
+   "body": "The coverage configuration `--cov=nexum_ai` in pytest.ini and `--cov=.` in the CI workflow are inconsistent. The pytest.ini will measure coverage for the `nexum_ai` package, but running `pytest --cov=.` from inside the nexum_ai directory will measure coverage for the current directory. This should be consistent. Consider using `--cov=.` in pytest.ini or `--cov=nexum_ai` in the CI workflow (without the `cd nexum_ai`). ```suggestion pytest --cov=nexum_ai --cov-report=xml --cov-report=term-missing - name: Upload coverage to Codecov uses: codecov/codecov-action@v4 with: file: ./coverage.xml ```",
+   "created_at": "2025-12-09T13:37:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712444",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712493,
+   "body": "The CI workflow attempts to install all dependencies from `nexum_ai/requirements.txt`, including heavy dependencies like `torch>=2.0.0`, `llama-cpp-python>=0.2.0`, and `sentence-transformers>=2.2.0`. These are large packages that will significantly slow down CI builds. Since the tests mock these dependencies (as indicated by the optional imports), consider creating a separate `requirements-dev.txt` or `requirements-ci.txt` file with only the necessary dependencies for running tests (numpy, scikit-learn), and use optional dependencies for the heavy packages. ```suggestion pip install -r nexum_ai/requirements-ci.txt ```",
+   "created_at": "2025-12-09T13:37:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712493",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712512,
+   "body": "The codecov/codecov-action@v4 requires a token for upload. The action will likely fail without the `token` parameter set to `${{ secrets.CODECOV_TOKEN }}`. Either add the token or consider using v3 which doesn't require authentication for public repositories. ```suggestion name: nexum_ai-coverage token: ${{ secrets.CODECOV_TOKEN }} ```",
+   "created_at": "2025-12-09T13:37:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712512",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712557,
+   "body": "Variable manager is not used. ```suggestion ModelManager(models_dir=new_dir) ```",
+   "created_at": "2025-12-09T13:37:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712557",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712599,
+   "body": "Import of 'Path' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712599",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712625,
+   "body": "Import of 'pytest' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712625",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712648,
+   "body": "Import of 'MagicMock' is not used. ```suggestion from unittest.mock import Mock, patch ```",
+   "created_at": "2025-12-09T13:37:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712648",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712673,
+   "body": "Import of 'np' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712673",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712692,
+   "body": "Import of 'pytest' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712692",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712717,
+   "body": "Import of 'MagicMock' is not used. Import of 'Mock' is not used. Import of 'patch' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712717",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712747,
+   "body": "Import of 'pytest' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712747",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712783,
+   "body": "Import of 'np' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712783",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712806,
+   "body": "Import of 'Mock' is not used. Import of 'patch' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712806",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712837,
+   "body": "Import of 'pytest' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712837",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712860,
+   "body": "Import of 'Mock' is not used. Import of 'patch' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712860",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712884,
+   "body": "Import of 'pytest' is not used. ```suggestion ```",
+   "created_at": "2025-12-09T13:37:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712884",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2602712902,
+   "body": "Import of 'MagicMock' is not used. ```suggestion from unittest.mock import Mock, patch ```",
+   "created_at": "2025-12-09T13:37:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2602712902",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603466056,
+   "body": "The YAML indentation is incorrect here. The `key` field should be indented at the same level as `path` (under the `with` block). Currently, it's not properly aligned with the `with` block structure, which will cause a YAML syntax error. ```suggestion key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }} ```",
+   "created_at": "2025-12-09T16:45:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#discussion_r2603466056",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603466101,
+   "body": "Malformed YAML structure: The `python-version` field on line 85 is followed by additional steps (lines 86-87), then another `python-version` field appears on line 88. This creates invalid YAML syntax. The steps should be separate list items, and there should only be one `python-version` field under the `with` block. Lines 85-87 appear to be incorrectly structured. ```suggestion ```",
+   "created_at": "2025-12-09T16:45:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#discussion_r2603466101",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603466119,
+   "body": "Missing required authentication token for Codecov action. The `codecov/codecov-action@v4` requires a token to upload coverage data. Add a `token` parameter with `${{ secrets.CODECOV_TOKEN }}` to authenticate the upload. ```suggestion files: lcov.info token: ${{ secrets.CODECOV_TOKEN }} ```",
+   "created_at": "2025-12-09T16:45:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#discussion_r2603466119",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603468261,
+   "body": "The return type `Dict[str, float]` is inaccurate. The dictionary contains both `int` values ('q_table_size', 'total_updates', 'episodes') and `float` values ('epsilon', 'avg_reward'). Consider using `Dict[str, Union[int, float]]` (and import `Union` from `typing`) or simply `Dict[str, Any]` for a less strict type hint.",
+   "created_at": "2025-12-09T16:45:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2603468261",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603468282,
+   "body": "The indentation on this line is incorrect. The `key:` field should be aligned with the `path:` field above (line 34). Currently it has one less space of indentation, which will cause a YAML syntax error in the GitHub Actions workflow. ```suggestion key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }} ```",
+   "created_at": "2025-12-09T16:45:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2603468282",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603468314,
+   "body": "Changing the cache key from `Cargo.lock` to `Cargo.toml` is problematic. The cache key should use `Cargo.lock` (the lockfile) rather than `Cargo.toml` because the lockfile contains the exact resolved dependency versions, ensuring cache invalidation when dependencies change. Using `Cargo.toml` alone may cause stale caches when dependency versions are updated without modifying the manifest. This change appears unrelated to the PR's stated purpose of adding type hints. ```suggestion key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }} ```",
+   "created_at": "2025-12-09T16:45:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2603468314",
+   "user": {
+    "login": "Copilot"
+   }
+  },
+  {
+   "id": 2603499574,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) For clarity and consistency with the comment in the generated `requirements-lock.txt` file, it's better to use the long-form option `--output-file` instead of the short-form `-o`. This makes the command more self-documenting. ```suggestion 2. Update the lock file: `pip-compile requirements.txt --output-file=requirements-lock.txt` ```",
+   "created_at": "2025-12-09T16:54:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603499574",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603499584,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The autogenerated header states this file was created with Python 3.14, which is a future, unreleased version of Python. This is likely a tooling error and could be confusing for other developers. It might be worth investigating if the tool can be configured to report the correct Python version to avoid confusion.",
+   "created_at": "2025-12-09T16:54:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603499584",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603499587,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) To support a more accurate type hint for the `get_stats` method, `Union` should be imported from `typing`. I've left another comment on the `get_stats` method with more details. ```suggestion from typing import Dict, Optional, Union ```",
+   "created_at": "2025-12-09T16:54:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603499587",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603499594,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The return type hint `Dict[str, float]` is not entirely accurate. The dictionary returned by this function contains both `int` values (e.g., `'q_table_size'`, `'total_updates'`) and `float` values. For better type safety and to be more precise, `Dict[str, Union[int, float]]` is a better fit. This requires importing `Union` from `typing` as noted in my other comment. ```suggestion def get_stats(self) -> Dict[str, Union[int, float]]: ```",
+   "created_at": "2025-12-09T16:54:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603499594",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603503868,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The command to update the lock file seems to assume it's run from the `nexum_ai/` directory. Since `CONTRIBUTING.md` is at the root, it's clearer to provide paths relative to the project root so the command can be run from there. ```suggestion 2. Update the lock file: `pip-compile nexum_ai/requirements.txt -o nexum_ai/requirements-lock.txt` ```",
+   "created_at": "2025-12-09T16:55:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603503868",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603503873,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) To correctly type the return value of `get_stats`, `Union` is needed from the `typing` module, as the dictionary it returns contains both `int` and `float` values. ```suggestion from typing import Dict, Optional, Union ```",
+   "created_at": "2025-12-09T16:55:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603503873",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603503877,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The dictionary returned by this function contains values of both `int` (e.g., `'q_table_size'`) and `float` (e.g., `'epsilon'`). The type hint should reflect this by using `Union[int, float]`. This requires importing `Union` from `typing` as suggested in the other comment. ```suggestion def get_stats(self) -> Dict[str, Union[int, float]]: ```",
+   "created_at": "2025-12-09T16:55:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2603503877",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603512765,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) To support a more accurate type hint for the `get_stats` method, `Union` should be imported. Also, `List` was removed but is used for `self.training_history`; consider re-adding it for future type hinting. ```suggestion from typing import Dict, Optional, Union, List ```",
+   "created_at": "2025-12-09T16:58:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2603512765",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603512768,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The return type hint `Dict[str, float]` is not entirely accurate, as the returned dictionary contains both `int` and `float` values (e.g. `'q_table_size'` is an integer). Using `Dict[str, Union[int, float]]` would be more precise. Note that `Union` needs to be imported from `typing`. ```suggestion def get_stats(self) -> Dict[str, Union[int, float]]: ```",
+   "created_at": "2025-12-09T16:58:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2603512768",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603514606,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) For better document structure and discoverability, this section about updating dependencies would be more logically placed under the `## Development Setup` section. It's a core part of the development workflow rather than a community interaction topic.",
+   "created_at": "2025-12-09T16:58:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2603514606",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  }
+ ]
+}

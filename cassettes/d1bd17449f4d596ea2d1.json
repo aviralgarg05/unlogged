@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 129,
+  "changed_files": 1,
+  "additions": 317,
+  "deletions": 0,
+  "title": "tests: add comprehensive error handling tests",
+  "body": "## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Closes #87 ## Changes - \u2705 Added 47 new test cases covering various error scenarios - \u2705 Tests for CREATE TABLE syntax errors (missing columns, invalid data types) - \u2705 Tests for INSERT statement errors (missing values, malformed syntax, invalid formats) - \u2705 Tests for SELECT edge cases (missing FROM, invalid projections, unsupported expressions) - \u2705 Tests for UPDATE/DELETE incomplete statements - \u2705 Tests for WHERE clause and ORDER BY errors - \u2705 Tests for management statement errors (DESCRIBE, DROP TABLE) - \u2705 Tests for general syntax errors (unclosed strings, mixed quotes, unbalanced parenthe\u2026",
+  "created_at": "2026-02-10T17:08:31Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "noor05-creator"
+  }
+ }
+}

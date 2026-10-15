@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 163,
+  "changed_files": 2,
+  "additions": 53,
+  "deletions": 1,
+  "title": "ci: add guard to fail builds on tracked generated/system files",
+  "body": "This PR adds a CI guard step to fail builds if generated/system junk files are committed (e.g. .DS_Store, .coverage, htmlcov). The check runs early in both Rust and Python jobs to ensure repository hygiene and prevent accidental artifact commits. Closes #150 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * CI now fails early if common junk files are tracked; a repository-hygiene check was added and applied across CI paths, including benchmarks and PR flows. * Rust-change detection added to skip Rust-specific work when no Rust files changed. * All Rust tooling and checks (format, lint, build, test, coverage, docs, audits, benc\u2026",
+  "created_at": "2026-02-17T11:38:06Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163",
+  "state": "closed",
+  "merged_at": "2026-02-19T06:40:24Z",
+  "user": {
+   "login": "nacholiya"
+  }
+ }
+}

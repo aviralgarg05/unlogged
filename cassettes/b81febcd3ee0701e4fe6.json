@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 137,
+  "changed_files": 8,
+  "additions": 633,
+  "deletions": 5,
+  "title": "feat: add transaction support (BEGIN/COMMIT/ROLLBACK) with WAL recovery",
+  "body": "## Summary - add transaction SQL support for `BEGIN`, `BEGIN TRANSACTION`, `COMMIT`, and `ROLLBACK` - implement executor transaction state with transaction ID tracking and single active transaction guard - add WAL-backed snapshot recovery: - write snapshot on `BEGIN` - restore snapshot on `ROLLBACK` - recover uncommitted transaction snapshot on startup - wire CLI help and output formatting (human/json) for transaction events - extend tests for parser, executor transaction flow, rollback/commit behavior, and recovery - fix storage batch key removal to use `key.as_slice()` for sled compatibility ## Testing - `cargo fmt --all -- --check` - `cargo +stable-x86_64-pc-windows-gnu clippy --workspac\u2026",
+  "created_at": "2026-02-13T12:21:23Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137",
+  "state": "closed",
+  "merged_at": "2026-02-13T14:41:39Z",
+  "user": {
+   "login": "samarjeet818"
+  }
+ }
+}

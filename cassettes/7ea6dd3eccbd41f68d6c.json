@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 184,
+  "changed_files": 1,
+  "additions": 2,
+  "deletions": 2,
+  "title": "chore(deps): bump anyhow from 1.0.102 to 1.0.103 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [anyhow](https://github.com/dtolnay/anyhow). Updates `anyhow` from 1.0.102 to 1.0.103 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em></p> <blockquote> <h2>1.0.103</h2> <ul> <li>Fix Stacked Borrows violation (UB) in <code>Error::downcast_mut</code> (<a href=\"https://redirect.github.com/dtolnay/anyhow/issues/451\">#451</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/452\">#452</a>)</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/dtolnay/anyhow/commit/5bdb0e24db3994be119d42f18f\u2026",
+  "created_at": "2026-06-29T07:24:13Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/184",
+  "state": "closed",
+  "merged_at": "2026-06-29T07:24:23Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

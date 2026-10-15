@@ -1,0 +1,293 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "number": 58,
+   "title": "feat: Add UPDATE statement support",
+   "body": "## Summary Implements SQL UPDATE statement support to allow users to modify existing rows in tables. ## Changes - **Parser**: Added parsing for `UPDATE table SET col = val, ... WHERE ...` syntax - **Types**: Added `Update` variant to `Statement` enum with table, assignments, and where_clause fields - **Planner**: Added `Update` variant to `Plan` enum - **Executor**: Implemented two-phase atomic update execution with WHERE clause filtering ## Features - Parse UPDATE statements correctly - Support SET clause with multiple columns - Execute update operations with WHERE clause support - Type checking for updated values - Atomic updates (collect then apply) to prevent partial updates on failure\u2026",
+   "created_at": "2025-12-25T13:17:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/58",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 57,
+   "title": "feat: Add DELETE statement support with WHERE clause filtering",
+   "body": "## Summary Implements DELETE statement support for NexumDB SQL engine, addressing issue #45. This adds the ability to remove rows from tables using standard SQL DELETE syntax with optional WHERE clause filtering. ## Changes Made ### Core Implementation - **SQL Types**: Added `Delete` variant to `Statement` enum with table name and optional WHERE clause - **SQL Parser**: Implemented parsing for `DELETE FROM table [WHERE condition]` statements - **SQL Planner**: Added `Delete` variant to execution plan with metadata - **Executor**: Added DELETE execution logic with row filtering and result reporting ### Key Features - \u2705 **Targeted Deletion**: `DELETE FROM users WHERE id = 1` - \u2705 **Full Table\u2026",
+   "created_at": "2025-12-23T12:48:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/57",
+   "state": "closed",
+   "merged_at": "2025-12-27T06:47:57Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 56,
+   "title": "Add EXPLAIN query plan command with AI optimization insights",
+   "body": "This PR implements the EXPLAIN <query> command requested in issue #48, providing detailed query execution plans that show AI optimization decisions and cache predictions without executing queries. \ud83d\ude80 Features Added - Query Parsing Analysis: Detects query type, complexity, and features (WHERE, JOIN, aggregation) - Cache Similarity Prediction: Shows similarity scores for all cached entries with hit/miss indicators - RL Agent State Analysis: Displays Q-values, predicted actions, and exploration decisions - Execution Strategy: Provides estimated latency and caching recommendations - Formatted Output: Clean table format with Unicode box drawing for readability \ud83d\udccb Usage -- Basic usage EXPLAIN SELEC\u2026",
+   "created_at": "2025-12-22T06:05:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/56",
+   "state": "closed",
+   "merged_at": "2025-12-23T12:59:48Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 55,
+   "title": "feat: Implement semantic cache persistence to disk (#47)",
+   "body": "## Summary #47 Implements disk persistence for the semantic cache, ensuring cached query results survive application restarts. ## Changes - **Persistence**: Auto-save cache to disk using pickle format after each entry - **Auto-load**: Automatically load existing cache on startup - **Configurable path**: Support `NEXUMDB_CACHE_FILE` environment variable - **JSON export**: Alternative format for debugging/analysis - **Cache management**: Optimization, clearing, and statistics methods - **Rust integration**: Exposed cache management via PyO3 bridge ## Files Modified - `nexum_ai/optimizer.py` - Enhanced SemanticCache with persistence - `nexum_core/src/bridge/mod.rs` - Added Rust integration met\u2026",
+   "created_at": "2025-12-21T07:10:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/55",
+   "state": "closed",
+   "merged_at": "2025-12-21T15:06:53Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 54,
+   "title": "feat: Add result caching for unchanged scenarios (Issue #26)",
+   "body": "## \ud83d\ude80 Feature: Result Caching for Unchanged Scenarios Resolves #26 ### \ud83d\udccb Summary Implements comprehensive result caching system that caches query results and automatically invalidates them when underlying data changes, providing significant performance improvements for repeated queries. ### \u2705 Features Implemented #### 1. Hash-based Cache Keys - Cache keys generated from query string + data state hash - Ensures unique identification of query scenarios - Automatic invalidation when data changes #### 2. File-based Storage - Results stored in `.nexum/cache/` directory - JSON format with metadata (timestamp, data hash, query) - Automatic directory creation #### 3. CLI Integration - `--no-cache` f\u2026",
+   "created_at": "2025-12-20T12:50:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 44,
+   "title": "Add comprehensive criterion benchmarks for nexum_core",
+   "body": "## Summary #25 This PR implements a comprehensive benchmarking suite for `nexum_core` using Criterion.rs, resolving issue #25. ## Changes ### \ud83d\ude80 Benchmark Suites Added **4 comprehensive benchmark suites covering all performance-critical paths:** 1. **Storage Engine Benchmarks** (`storage_bench.rs`) - Write/read throughput (100 to 100,000 operations) - Mixed workloads with different read/write ratios - Prefix scanning performance - Persistence and flush operations 2. **SQL Parser Benchmarks** (`sql_bench.rs`) - CREATE TABLE parsing (simple to complex schemas) - INSERT statement parsing (1 to 10,000 rows) - SELECT query parsing (simple to complex WHERE clauses) - Mixed workload and error handl\u2026",
+   "created_at": "2025-12-18T11:51:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44",
+   "state": "closed",
+   "merged_at": "2025-12-20T07:42:42Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 43,
+   "title": "Implement beginner cost-based query optimizer with SemanticCache and Q-Learning",
+   "body": "Added a cost-based query optimizer with: SemanticCache for caching query results. Cost-based join order selection with optimize() and explain(). Q-Learning optimizer to improve query plans based on latency. closes #24 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * Added basic cost models, table statistics collection, selectivity/cardinality estimators, a join-order decision helper, optimizer entry points (optimize/explain), richer explain output (including cache and agent analysis), and persistence/backup for optimizer cache. * **Tests** * Added unit tests covering statistics, selectivity/cardinality estimators, and o\u2026",
+   "created_at": "2025-12-11T13:30:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 42,
+   "title": "test: Verify CodeRabbit auto-review integration",
+   "body": "Testing CodeRabbit integration: - Adding test Python file - Verifying auto-review on PR creation - Will add additional commits to test incremental review This PR will be closed after verification. <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Tests** * Added a new test module providing basic arithmetic and utility checks. * Includes a TODO noting missing edge-case handling and is marked temporary for removal after verification. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2025-12-09T19:51:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "number": 41,
+   "title": "Feature: Cached Python deps in CI",
+   "body": "## Summary - Solves #3 ## Checklist - [X] Linked issue (or explained why not) - [ ] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [X] Follows Code of Conduct <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Enabled pip dependency caching in CI to speed up builds and reduce redundant downloads. * Added an explicit dependency installation step in the CI workflow to ensure consistent environment setup and reliable byte-compilation. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2025-12-09T18:32:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41",
+   "state": "closed",
+   "merged_at": "2025-12-09T19:40:31Z",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "number": 40,
+   "title": "Add Rust code coverage reporting to CI",
+   "body": "### Summary This PR adds code coverage reporting to the Rust CI workflow using `cargo-llvm-cov` and Codecov. It helps track test coverage automatically for all Rust code in the workspace. ### Changes - Installed `cargo-llvm-cov` in the CI workflow. - Run tests with coverage instrumentation. - Uploaded coverage results to Codecov. ### Benefits - Provides visibility into test coverage. - Helps maintain code quality over time. - Enables adding a coverage badge to the README. ### How to verify - Check GitHub Actions CI run; coverage should be generated. - Verify coverage is uploaded on Codecov. closes #18 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by C\u2026",
+   "created_at": "2025-12-09T15:46:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40",
+   "state": "closed",
+   "merged_at": "2025-12-10T08:43:32Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 39,
+   "title": "Add comprehensive pytest test suite for nexum_ai module",
+   "body": "## Summary #17 This PR adds a comprehensive pytest test suite for the `nexum_ai` module, resolving issue #17. ## Changes ### Test Suite - **75 tests** across 5 test files - **90% code coverage** (exceeds 80% target) - **100% passing** tests - Fast execution (~7 seconds) ### Files Added **Test Files:** - `nexum_ai/tests/test_model_manager.py` - 9 tests for model loading and inference - `nexum_ai/tests/test_optimizer.py` - 20 tests for query optimization logic - `nexum_ai/tests/test_rl_agent.py` - 18 tests for RL training loop and state/action handling - `nexum_ai/tests/test_translator.py` - 18 tests for NL to SQL translation - `nexum_ai/tests/test_expensive_ops.py` - 10 tests for expensive o\u2026",
+   "created_at": "2025-12-09T13:29:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39",
+   "state": "closed",
+   "merged_at": "2025-12-10T14:13:48Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "number": 38,
+   "title": "Add Ruff linter to Python CI",
+   "body": "This PR adds Ruff linter to the Python CI workflow. - Installs Ruff using pip. - Runs `ruff check nexum_ai/` to lint Python source code. closes #8 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Documentation** * Clarified dependency update command in contribution guide. * **Bug Fixes & Improvements** * Improved state load error handling with clearer messages and robust fallback. * Expanded agent statistics reporting with additional metrics. * Reduced noisy debug output during model initialization. * **Chores** * Optimized CI cache configuration for more reliable builds. * Added coverage artefacts to ignore list. <sub>\u270f\ufe0f Tip: You can c\u2026",
+   "created_at": "2025-12-09T11:00:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 37,
+   "title": "Add cargo doc check to CI",
+   "body": "This adds a documentation build step to CI to ensure Rust docs compile without warnings. - Adds CI step: `cargo doc --workspace --no-deps` - Sets `RUSTDOCFLAGS=-D warnings` so doc warnings fail the CI closes #11 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * CI workflow updated with explicit dependency install, dependency caching and an added byte-compile/syntax-check step; unresolved merge conflict markers remain in the workflow and may affect CI execution. * **Refactor** * Type annotations for reported statistics widened to accept both integer and float values for improved type safety. <sub>\u270f\ufe0f Tip: You can customize this\u2026",
+   "created_at": "2025-12-09T08:37:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 36,
+   "title": "Pin Python dependencies with requirements-lock.txt and update CI",
+   "body": "This PR: - Adds requirements-lock.txt with pinned dependencies - Updates CI workflow to install from the lock file - Documents how to update dependencies in CONTRIBUTING.md closes #4 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Updated CI workflow with finer-grained caching and added Python dependency installation steps for more reliable builds. * **Refactor** * Improved type annotations and adjusted function signatures for clearer, more robust code interfaces. <sub>\u270f\ufe0f Tip: You can customize this high-level summary in your review settings.</sub> <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2025-12-09T07:36:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 35,
+   "title": "Feature: Committed Cargo.lock for reproducible builds",
+   "body": "## Summary - Solves #10 ## Checklist - [X] Linked issue (or explained why not) - [ ] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [X] Follows Code of Conduct",
+   "created_at": "2025-12-08T21:51:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35",
+   "state": "closed",
+   "merged_at": "2025-12-09T19:15:34Z",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "number": 34,
+   "title": "Enhacement: Added cargo audit to CI for security checks",
+   "body": "## Summary - Solves #7 ## Checklist - [X] Linked issue (or explained why not) - [ ] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [X] Follows Code of Conduct",
+   "created_at": "2025-12-08T19:33:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34",
+   "state": "closed",
+   "merged_at": "2025-12-08T20:57:03Z",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "number": 33,
+   "title": "Add full type hints to nexum_ai Python modules",
+   "body": "I have added basic type hints and simple documentation to three files: rl_agent.py, optimizer.py, and translator.py. These changes make the code easier to read and understand. I did not change any logic \u2014 only added annotations and comments. Everything runs correctly after the changes. closes #13 I have fixed the issue. <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * CI improvements: more stable cache tied to lockfiles, coverage uploads run even on failures, quieter byte-compilation output, and stabilized Python setup; linting added and run before tests. * Minor code cleanup: removed unused imports and simplified a log messa\u2026",
+   "created_at": "2025-12-07T12:54:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33",
+   "state": "closed",
+   "merged_at": "2025-12-11T12:46:01Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 32,
+   "title": "Feature/add editorconfig for consistent formatting",
+   "body": "## Summary - Solves #12 ## Checklist - [X] Linked issue (or explained why not) - [ ] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [X] Follows Code of Conduct ## Additional Notes - Noting to add, but feel free to mention me if i'm missing something.",
+   "created_at": "2025-12-07T10:16:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/32",
+   "state": "closed",
+   "merged_at": "2025-12-08T13:37:43Z",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "number": 31,
+   "title": "Add doc comments to public API in nexum_core",
+   "body": "This PR adds basic Rust doc comments (///) to public structs and functions in nexum_core/src/lib.rs. Improves discoverability and prepares for cargo doc. closes #9",
+   "created_at": "2025-12-07T04:23:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/31",
+   "state": "closed",
+   "merged_at": "2025-12-07T08:39:23Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 30,
+   "title": "Feature/add dockerfile and docker compose and add new release workflow",
+   "body": "## Summary - Solves #15 - Changes release workflow - Dockerization ## Checklist - [ ] Linked issue (or explained why not) - [X] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [X] Follows Code of Conduct ## Additional Notes - Please considering re-running the app, i ran out of storage when trying to build but it passed most of it, only the 13th step halted (i think the requirements are too much for my machine). - If you find something that needs to be addressed or changed, please mention me.",
+   "created_at": "2025-12-06T18:23:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30",
+   "state": "closed",
+   "merged_at": "2025-12-07T11:16:57Z",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "number": 29,
+   "title": "Add actionlint instructions to CONTRIBUTING.md",
+   "body": "This PR adds actionlint documentation under \"Before Submitting\" and fixes the code block. Closes #2.",
+   "created_at": "2025-12-06T14:20:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/29",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 28,
+   "title": "Add actionlint instructions to CONTRIBUTING.md",
+   "body": "Adds a short section explaining how to run actionlint locally using Docker. Closes #2.",
+   "created_at": "2025-12-06T13:26:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28",
+   "state": "closed",
+   "merged_at": "2025-12-06T16:24:29Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 27,
+   "title": "Add CI Status Badge to README",
+   "body": "This pull request adds a GitHub Actions CI status badge to the top of the README.md file. The badge displays the current status of the CI workflow and links directly to the GitHub Actions page for easier visibility. Closes #5",
+   "created_at": "2025-12-06T12:51:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/27",
+   "state": "closed",
+   "merged_at": "2025-12-06T13:08:52Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 26,
+   "title": "Add CODEOWNERS file",
+   "body": "This PR adds a .github/CODEOWNERS file to ensure PRs are automatically assigned to the correct reviewers. closes #1",
+   "created_at": "2025-12-06T08:37:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/26",
+   "state": "closed",
+   "merged_at": "2025-12-06T10:00:22Z",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  }
+ ]
+}

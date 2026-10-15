@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3674607448,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Related Issues** - https://github.com/aviralgarg05/NexumDB/issues/24 - https://github.com/aviralgarg05/NexumDB/issues/45 </det\u2026",
+   "created_at": "2025-12-19T10:58:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/48#issuecomment-3674607448",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674608243,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Possible Duplicates** - https://github.com/aviralgarg05/NexumDB/issues/19 **Related Issues** - https://github.com/aviralgarg05\u2026",
+   "created_at": "2025-12-19T10:58:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/49#issuecomment-3674608243",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674609382,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Related Issues** - https://github.com/aviralgarg05/NexumDB/issues/21 </details> <details> <summary><b>\ud83d\udc64 Suggested Assignees</b\u2026",
+   "created_at": "2025-12-19T10:59:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/50#issuecomment-3674609382",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674610951,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto-planning by selecting labels in the issue_enrichment configuration. To disable\u2026",
+   "created_at": "2025-12-19T10:59:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/51#issuecomment-3674610951",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674611930,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Related Issues** - https://github.com/aviralgarg05/NexumDB/issues/50 </details> <details> <summary><b>\ud83d\udc64 Suggested Assignees</b\u2026",
+   "created_at": "2025-12-19T10:59:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/52#issuecomment-3674611930",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674612690,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Related Issues** - https://github.com/aviralgarg05/NexumDB/issues/48 - https://github.com/aviralgarg05/NexumDB/issues/47 </det\u2026",
+   "created_at": "2025-12-19T10:59:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/53#issuecomment-3674612690",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3677800344,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F54) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-20T12:50:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#issuecomment-3677800344",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3677800394,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a file-backed ResultCache to nexum_core with per-table invalidation, integrates it into Executor (opt-out via CLI `--no-cache`), exposes cache control APIs (`clear_cache`, `cache_stats`, `is_result_cache_enabled`), and updates the CLI REPL to accept `CACHE STATS` and `CACHE CLEAR`. ## Changes | Cohort / File(s) | Summary | |---|---| | **CLI: flag & runtime commands** <br> `nexum_cli/src/main.rs` | Added `--no-cache` flag and conditional Executor initialization (`new_with_cache_disabled` vs `new(...).with_cache()`); updated startup/help messaging; added REPL handlers for `CAC\u2026",
+   "created_at": "2025-12-20T12:50:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#issuecomment-3677800394",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3677900303,
+   "body": "@aviralgarg05 Thanks for pointing this out. I\u2019ve addressed the issue and made the necessary updates. Kindly let me know if there\u2019s anything else I should improve.",
+   "created_at": "2025-12-20T15:29:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#issuecomment-3677900303",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3677914120,
+   "body": "@aviralgarg05 Sorry for the confusion. I realized this PR was opened in the wrong repository. As both repositories are maintained by the same owner, could you please confirm whether I should close this PR and submit it to the correct repository?",
+   "created_at": "2025-12-20T15:50:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#issuecomment-3677914120",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3677964660,
+   "body": "Yes close and submit in the correct repo",
+   "created_at": "2025-12-20T17:07:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#issuecomment-3677964660",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3678521044,
+   "body": "Can i work on this issue ?",
+   "created_at": "2025-12-21T06:44:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/47#issuecomment-3678521044",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3678539208,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F55) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-21T07:10:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/55#issuecomment-3678539208",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3678539305,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds disk-backed persistence to the SemanticCache (configurable by constructor or NEXUMDB_CACHE_FILE), automatic load/save (JSON-first, pickle fallback), JSON import/export, cache management APIs exposed in Python and bridged to Rust/executor, plus docs, demo, and integration tests. ## Changes | Cohort / File(s) | Summary | |---|---| | **Docs & Issue Notes** <br> `CACHE_PERSISTENCE_IMPLEMENTATION.md`, `ISSUE_47_RESOLUTION.md` | New design and issue-resolution docs describing disk persistence, configuration, usage, error cases, tests, and demo summaries. | | **Demo** <br> `demo_ca\u2026",
+   "created_at": "2025-12-21T07:11:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/55#issuecomment-3678539305",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3678718695,
+   "body": "@aviralgarg05 Thank you for the review. I\u2019ve fixed the reported issues and updated the PR accordingly. This resolves Issue #47. Please let me know if any further changes are required.",
+   "created_at": "2025-12-21T11:42:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/55#issuecomment-3678718695",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3679078393,
+   "body": "Can i work on this issue ?",
+   "created_at": "2025-12-21T16:36:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/48#issuecomment-3679078393",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3680610326,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F56) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-22T06:05:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/56#issuecomment-3680610326",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3680610552,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds an EXPLAIN query-plan feature: Python modules provide explain helpers (optimizer + RL agent); Rust bridge exposes a new QueryExplainer and delegates to Python; CLI supports an EXPLAIN command; tests and a Python test harness exercise and validate formatted EXPLAIN output. ## Changes | Cohort / File(s) | Summary | |---|---| | **Python optimizer & explain helpers** <br> `nexum_ai/optimizer.py` | Added `SemanticCache.explain_query()`, `QueryOptimizer.explain_action()`, top-level `explain_query_plan()` and `format_explain_output()` plus test-harness calls to exercise the explain\u2026",
+   "created_at": "2025-12-22T06:06:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/56#issuecomment-3680610552",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3681667876,
+   "body": "@aviralgarg05 I have fix the issue",
+   "created_at": "2025-12-22T11:29:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/56#issuecomment-3681667876",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3686411461,
+   "body": "Can you please assign this issue to me ?",
+   "created_at": "2025-12-23T12:06:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/45#issuecomment-3686411461",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3686531727,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F57) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-23T12:48:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/57#issuecomment-3686531727",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3686532278,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > @sshekhar563 has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **13 minutes and 49 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <details> >\u2026",
+   "created_at": "2025-12-23T12:49:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/57#issuecomment-3686532278",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3689657004,
+   "body": "Can you please assign this issue to me ?",
+   "created_at": "2025-12-24T12:18:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/46#issuecomment-3689657004",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3690209401,
+   "body": "@aviralgarg05 Thanks for the feedback. I\u2019ve resolved the issues pointed out in the review and updated the changes in the PR. Looking forward to your re-review.",
+   "created_at": "2025-12-24T16:34:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/57#issuecomment-3690209401",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3691435589,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F58) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-25T13:17:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/58#issuecomment-3691435589",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3691435694,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough The pull request adds DELETE and UPDATE SQL statement support throughout the nexum_core pipeline. Changes include adding a log dependency, implementing parsing and planning logic for both statements, expanding the Statement and Plan enum types, and implementing comprehensive execution logic with WHERE clause filtering, multi-phase atomic operations, caching integration, and structured logging. ## Changes | Cohort / File(s) | Summary | |---|---| | **Type System** <br> `nexum_core/src/sql/types.rs` | Added two Statement enum variants: `Delete { table: String, where_clause: Option<B\u2026",
+   "created_at": "2025-12-25T13:17:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/58#issuecomment-3691435694",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3691447401,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F59) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-25T13:31:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/59#issuecomment-3691447401",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3691447475,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > `@sshekhar563` has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **4 minutes and 24 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <details>\u2026",
+   "created_at": "2025-12-25T13:32:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/59#issuecomment-3691447475",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3691665617,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F60) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-25T18:42:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/60#issuecomment-3691665617",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3691665661,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Refactors storage error handling into structured `StorageError` variants and codes. Updates storage engine, executor, and catalog to use the new variants (e.g., `Open`, `KeyNotFound`, `CacheRead/CacheWrite`, `LogicalWrite`) and adjusts executor control flow for `Insert`/`Select` and cache interactions. ## Changes | Cohort / File(s) | Summary | |---|---| | **Storage error types** <br> `nexum_core/src/storage/error.rs` | Replaced ad-hoc string variants with structured `StorageError` variants (`Open { source }`, `Write { source }`, `Read { source }`, `CacheWrite { source }`, `CacheR\u2026",
+   "created_at": "2025-12-25T18:42:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/60#issuecomment-3691665661",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3707304837,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F61) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-03T19:39:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/61#issuecomment-3707304837",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3707304889,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Refactors storage error types from string-based variants to structured, source-carrying variants; adds StorageErrorCode and code(); updates error mappings and propagation across storage engine, executor, and catalog; adds cache-related error variants; minor .gitignore addition. ## Changes | Cohort / File(s) | Summary | |---|---| | **Storage error type redesign**<br>`nexum_core/src/storage/error.rs` | Replaces string-based `StorageError` variants with structured variants (e.g., `Open { source: sled::Error }`, `Write { source: sled::Error }`, `Read { source: sled::Error }`, `Serial\u2026",
+   "created_at": "2026-01-03T19:39:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/61#issuecomment-3707304889",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3724544182,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F62) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-08T16:02:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/62#issuecomment-3724544182",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3724544905,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough The changes introduce a structured logging system with configurable log levels and format support. Dependencies (log, env_logger, tracing, tracing-subscriber) are added to workspace and CLI Cargo.toml files. An init_logging function in main.rs configures environment-based filtering and JSON/pretty formatting. Logging instrumentation is added throughout CLI startup, component initialization, and query processing flows. ## Changes | Cohort / File(s) | Summary | |---|---| | **Workspace & CLI Dependencies** <br> `Cargo.toml`, `nexum_cli/Cargo.toml` | Added workspace dependencies: log\u2026",
+   "created_at": "2026-01-08T16:03:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/62#issuecomment-3724544905",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3734665742,
+   "body": "@aviralgarg05, could you assign me on this issue?",
+   "created_at": "2026-01-11T14:45:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/69#issuecomment-3734665742",
+   "user": {
+    "login": "jaideepkathiresan"
+   }
+  },
+  {
+   "id": 3736624910,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F71) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2026-01-12T01:44:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/71#issuecomment-3736624910",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3736625013,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Replaces stdin-based REPL with a rustyline-based interactive loop, adds persistent history at ~/.nexum_history, implements ASK/EXPLAIN/EXIT command routing, updates startup messaging and version to v0.3.0, and adds `rustyline = \"17.0.2\"` and `dirs = \"6.0\"` dependencies. ## Changes | Cohort / File(s) | Summary | |---|---| | **Dependencies** <br> `nexum_cli/Cargo.toml` | Added `rustyline = \"17.0.2\"` and `dirs = \"6.0\"` to the `[dependencies]` section. | | **REPL & CLI core** <br> `nexum_cli/src/main.rs` | Replaced std::io REPL with `rustyline::DefaultEditor`; load/save persistent hi\u2026",
+   "created_at": "2026-01-12T01:44:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/71#issuecomment-3736625013",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3736677063,
+   "body": "Hi @aviralgarg05, could you test the latest PR and share your feedback or changes if any? Thanks!",
+   "created_at": "2026-01-12T02:25:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/71#issuecomment-3736677063",
+   "user": {
+    "login": "jaideepkathiresan"
+   }
+  },
+  {
+   "id": 3762810244,
+   "body": "@aviralgarg05 I've fix the issue",
+   "created_at": "2026-01-17T06:50:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/59#issuecomment-3762810244",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3860540908,
+   "body": "### Labels The following labels could not be found: `ci`, `dependencies`. Please create them before Dependabot can add them to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/72#issuecomment-3860540908",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860541288,
+   "body": "### Labels The following labels could not be found: `ci`, `dependencies`. Please create them before Dependabot can add them to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/73#issuecomment-3860541288",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860541653,
+   "body": "### Labels The following labels could not be found: `ci`, `dependencies`. Please create them before Dependabot can add them to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/74#issuecomment-3860541653",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860542527,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/75#issuecomment-3860542527",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860542949,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/76#issuecomment-3860542949",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860543255,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/77#issuecomment-3860543255",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860543562,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/78#issuecomment-3860543562",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860545010,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/79#issuecomment-3860545010",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860545922,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:41:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/80#issuecomment-3860545922",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860546599,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:42:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/81#issuecomment-3860546599",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860547334,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:42:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/82#issuecomment-3860547334",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860547881,
+   "body": "### Labels The following labels could not be found: `dependencies`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-06T13:42:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/83#issuecomment-3860547881",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3860830204,
+   "body": "Resolved by recent commits and CI updates.",
+   "created_at": "2026-02-06T14:38:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/10#issuecomment-3860830204",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3860830413,
+   "body": "Resolved by recent commits and CI updates.",
+   "created_at": "2026-02-06T14:38:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/11#issuecomment-3860830413",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3860830746,
+   "body": "Implemented in v0.4.0.",
+   "created_at": "2026-02-06T14:38:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/65#issuecomment-3860830746",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3860831282,
+   "body": "Implemented in v0.4.0.",
+   "created_at": "2026-02-06T14:38:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/67#issuecomment-3860831282",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861213439,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:02:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/83#issuecomment-3861213439",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861233598,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/82#issuecomment-3861233598",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861233818,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/81#issuecomment-3861233818",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861233849,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/82#issuecomment-3861233849",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861234060,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/80#issuecomment-3861234060",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861234071,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/81#issuecomment-3861234071",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861234312,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/79#issuecomment-3861234312",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861234318,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/80#issuecomment-3861234318",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861234543,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/78#issuecomment-3861234543",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861234522,
+   "body": "This pull request was built based on a group rule. Closing it will not ignore any of these versions in future pull requests. To ignore these dependencies, configure [ignore rules](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#ignore) in dependabot.yml",
+   "created_at": "2026-02-06T16:07:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/79#issuecomment-3861234522",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861234766,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/77#issuecomment-3861234766",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861234792,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/78#issuecomment-3861234792",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861234985,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/76#issuecomment-3861234985",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861235000,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/77#issuecomment-3861235000",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861235237,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/75#issuecomment-3861235237",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861235271,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/76#issuecomment-3861235271",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861235502,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/74#issuecomment-3861235502",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861235537,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/75#issuecomment-3861235537",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861235713,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/73#issuecomment-3861235713",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861235752,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/74#issuecomment-3861235752",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861235947,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/72#issuecomment-3861235947",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861235966,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/73#issuecomment-3861235966",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861236271,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/62#issuecomment-3861236271",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861236286,
+   "body": "OK, I won't notify you again about this release, but will get in touch when a new version is available. If you'd rather skip all updates until the next major or minor version, let me know by commenting `@dependabot ignore this major version` or `@dependabot ignore this minor version`. You can also ignore all major, minor, or patch releases for a dependency by adding an [`ignore` condition](https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#ignore) with the desired `update_types` to your config file. If you change your mind, just re-open this PR and I'll resolve any conflicts on it.",
+   "created_at": "2026-02-06T16:07:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/72#issuecomment-3861236286",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3861236489,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/61#issuecomment-3861236489",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861236729,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#issuecomment-3861236729",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861236955,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:07:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3861236955",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861237250,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:08:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3861237250",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861237531,
+   "body": "Closing to clean up PRs. Will be re-evaluated and merged as needed.",
+   "created_at": "2026-02-06T16:08:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#issuecomment-3861237531",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3861490765,
+   "body": "\ud83e\udd16 Created releases: - [v0.5.0](https://github.com/aviralgarg05/NexumDB/releases/tag/v0.5.0) :sunflower:",
+   "created_at": "2026-02-06T16:50:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/84#issuecomment-3861490765",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3862233738,
+   "body": "\ud83d\udc4b Thanks for opening your first issue in NexumDB! We appreciate your contribution to this project. A maintainer will review your issue soon. In the meantime, please make sure you've provided: - A clear description of the issue - Steps to reproduce (if applicable) - Your environment details Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) to learn more about how to contribute.",
+   "created_at": "2026-02-06T19:36:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/94#issuecomment-3862233738",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863358858,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/24#issuecomment-3863358858",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863358905,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/22#issuecomment-3863358905",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863358960,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/21#issuecomment-3863358960",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863359001,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/16#issuecomment-3863359001",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863359049,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/19#issuecomment-3863359049",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863359089,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/14#issuecomment-3863359089",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863359125,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/8#issuecomment-3863359125",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863359160,
+   "body": "This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 14 days if no further activity occurs. If this issue is still relevant, please comment or update it.",
+   "created_at": "2026-02-07T02:17:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/4#issuecomment-3863359160",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3863589876,
+   "body": "Hi! I'd like to work on this issue. I've looked through the current error.rs and can see how the errors could be more helpful. Planning to add error codes, better context messages, and fuzzy matching for the \"Did you mean?\" suggestions when tables aren't found. Quick question: Should error codes follow any specific naming convention, or is something like DB001-DB005 fine? Looking forward to contributing! @aviralgarg05 Please Assign this issue to me under OSCG'26",
+   "created_at": "2026-02-07T04:57:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/89#issuecomment-3863589876",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3863809589,
+   "body": "> Hi! I'd like to work on this issue. I've looked through the current error.rs and can see how the errors could be more helpful. Planning to add error codes, better context messages, and fuzzy matching for the \"Did you mean?\" suggestions when tables aren't found. > > Quick question: Should error codes follow any specific naming convention, or is something like DB001-DB005 fine? Looking forward to contributing! [@aviralgarg05](https://github.com/aviralgarg05) Please Assign this issue to me under OSCG'26 Hi @noor05-creator! Welcome to NexumDB and OSCG'26. \ud83d\ude80 Great plan! For error codes, let's use a project-specific prefix like `NXM-xxx` (e.g., `NXM-101`). Using the prefix `NXM-STOR-xxx` for st\u2026",
+   "created_at": "2026-02-07T07:06:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/89#issuecomment-3863809589",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3863889704,
+   "body": "@aviralgarg05 Alright Thank you soo much",
+   "created_at": "2026-02-07T07:49:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/89#issuecomment-3863889704",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3864104760,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough This PR introduces LRU (Least Recently Used) eviction to the semantic cache with a new max_cache_size parameter. It adds runtime statistics tracking (hits, misses, evictions), per-entry timestamps (last_access, created_at), and updates persistence to JSON format v1.1. Backward compatibility is maintained during deserialization, and comprehensive tests validate eviction behavior and cache statistics. ## Changes |Cohort / File(s)|Summary| |---|---| |**Semantic Cache LRU Implementation** <br> `nexum_ai/optimizer.py`|Added max_cache_size parameter, _evict_lru() method, runtime statis\u2026",
+   "created_at": "2026-02-07T10:22:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/97#issuecomment-3864104760",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3864114948,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds configurable max_cache_size to SemanticCache with LRU eviction, auto-save/dirty tracking and expanded JSON persistence/upgrade logic; updates get/put semantics and statistics; adds optimize_cache API; tests updated; .gitignore gains cache/, Dockerfile and ROADMAP.md deleted. ## Changes |Cohort / File(s)|Summary| |---|---| |**Cache Implementation** <br> `nexum_ai/optimizer.py`|Added `max_cache_size` parameter and attribute with validation; implemented LRU eviction (`_evict_lru()`), `_dirty` tracking, `_maybe_auto_save()` and auto-save interval; extended `get()`/`put()` to upd\u2026",
+   "created_at": "2026-02-07T10:32:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#issuecomment-3864114948",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3864152888,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > `@Jagriti-student` has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **18 minutes and 58 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <deta\u2026",
+   "created_at": "2026-02-07T11:00:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/99#issuecomment-3864152888",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

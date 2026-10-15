@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 135,
+  "changed_files": 6,
+  "additions": 584,
+  "deletions": 20,
+  "title": "Implement SQL aggregate functions (COUNT, SUM, AVG, MIN, MAX)",
+  "body": "## Issues Fixed Fixes # (#126) # Implement SQL Aggregate Functions (COUNT, SUM, AVG, MIN, MAX) ## Summary Added support for standard SQL aggregate functions: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`. ## Description This PR implements aggregation logic in the query executor and updates the SQL parser to support aggregate functions in `SELECT` statements. ### Changes - **Core Types**: Added `AggregateType` enum and updated `SelectItem` to support aggregation. - **SQL Parser**: Updated parser to recognize aggregate functions (e.g., `SELECT COUNT(*) FROM table`). - **Query Executor**: Implemented logic to scan filtered rows and compute aggregate results. - **Tests**: Added integration tests in [test\u2026",
+  "created_at": "2026-02-11T15:57:36Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "Adithyakp86"
+  }
+ }
+}

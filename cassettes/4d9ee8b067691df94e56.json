@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 132,
+  "changed_files": 6,
+  "additions": 316,
+  "deletions": 58,
+  "title": "feat: implement DROP TABLE and verify storage wipe logic",
+  "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary I was assigned the DROP TABLE task and found that the core implementation was already present in the source. I have taken ownership of the Validation Phase by: - Developing and passing test_verify_physical_deletion to confirm the storage engine actually purges data. - Resolving critical Windows/Python 3.13 build issues that were preventing the project from compiling. -\u2026",
+  "created_at": "2026-02-11T10:53:48Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "crimson17-debug"
+  }
+ }
+}

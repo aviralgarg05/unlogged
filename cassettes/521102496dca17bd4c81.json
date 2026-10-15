@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 161,
+  "changed_files": 2,
+  "additions": 11,
+  "deletions": 40,
+  "title": "chore(deps): bump pyo3 from 0.24.2 to 0.28.1",
+  "body": "[//]: # (dependabot-start) \u26a0\ufe0f **Dependabot is rebasing this PR** \u26a0\ufe0f Rebasing might not happen immediately, so don't worry if this takes some time. Note: if you make any changes to this PR yourself, they will take precedence over the rebase. --- [//]: # (dependabot-end) Bumps [pyo3](https://github.com/pyo3/pyo3) from 0.24.2 to 0.28.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.28.1</h2> <p>This patch contains a number of minor compile-time fixes for PyO3 0.28.0.</p> <p>Thank you to the following contributors for the improvements:</p> <p><a href=\"https://github.com/davidhe\u2026",
+  "created_at": "2026-02-16T07:29:41Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/161",
+  "state": "closed",
+  "merged_at": "2026-02-16T07:30:48Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

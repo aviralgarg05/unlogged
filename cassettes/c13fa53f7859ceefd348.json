@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 131,
+  "changed_files": 6,
+  "additions": 1221,
+  "deletions": 103,
+  "title": "feat: add EXPLAIN query plan command",
+  "body": "## Overview This PR implements the EXPLAIN query plan command feature requested in Issue #66. ## Problem Statement Users needed a way to understand how NexumDB would execute their SQL queries, including cache analysis, query optimization insights, and execution strategy recommendations. ## Solution Implemented a comprehensive EXPLAIN command that provides: - SQL query parsing and structure analysis - Query complexity calculation (0-10 scale) - Clause detection (WHERE, JOIN, ORDER BY, GROUP BY) - Semantic cache analysis with similarity scoring - RL agent Q-values and optimization recommendations - Execution strategy suggestions ## Implementation Details ### Modified Files #### nexum_ai/optim\u2026",
+  "created_at": "2026-02-11T07:27:04Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131",
+  "state": "closed",
+  "merged_at": "2026-02-11T11:04:27Z",
+  "user": {
+   "login": "samarjeet818"
+  }
+ }
+}

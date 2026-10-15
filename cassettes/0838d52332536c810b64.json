@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3619755986,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F26) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-06T08:37:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/26#issuecomment-3619755986",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3619812933,
+   "body": "Please link the issue number you are solving! Rest LGTM for Merge",
+   "created_at": "2025-12-06T09:38:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/26#issuecomment-3619812933",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3620216810,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F27) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-06T12:51:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/27#issuecomment-3620216810",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3620276905,
+   "body": "LGTM! Thank you for the contribution",
+   "created_at": "2025-12-06T13:08:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/27#issuecomment-3620276905",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3620362740,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F28) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-06T13:26:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#issuecomment-3620362740",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3620389149,
+   "body": "Solve the issues that have come up",
+   "created_at": "2025-12-06T13:33:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/28#issuecomment-3620389149",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3620448435,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F29) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-06T14:20:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/29#issuecomment-3620448435",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3620458543,
+   "body": "Dont create a separate pr for solving those issues, do it in the same pr",
+   "created_at": "2025-12-06T14:27:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/29#issuecomment-3620458543",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3620654448,
+   "body": "Hey, can i do this task ? if so, just assign me.",
+   "created_at": "2025-12-06T16:23:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/15#issuecomment-3620654448",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3620655855,
+   "body": "Go for it! Let me know here if you face any issues",
+   "created_at": "2025-12-06T16:25:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/15#issuecomment-3620655855",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3620864312,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F30) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-06T18:23:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/30#issuecomment-3620864312",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3621581560,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F31) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-07T04:23:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/31#issuecomment-3621581560",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3621608607,
+   "body": "Please assign me this issue.",
+   "created_at": "2025-12-07T04:55:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/9#issuecomment-3621608607",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 3621818085,
+   "body": "> Please assign me this issue. A pull request relating to this issue has already been created, please choose some other issue",
+   "created_at": "2025-12-07T08:31:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/9#issuecomment-3621818085",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3621833353,
+   "body": "Hey, can i do this one too ? also, do you need me to add the formatting for python and rust files ... too ?",
+   "created_at": "2025-12-07T08:56:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/12#issuecomment-3621833353",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3621880013,
+   "body": "Yup do it complete, Thanks for your contribution",
+   "created_at": "2025-12-07T10:05:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/12#issuecomment-3621880013",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3621888423,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F32) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-07T10:16:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/32#issuecomment-3621888423",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3621995532,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F33) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-07T12:54:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3621995532",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3622037771,
+   "body": "Hey, can do this too ?",
+   "created_at": "2025-12-07T13:14:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/7#issuecomment-3622037771",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3625157433,
+   "body": "I would like to work on this. Can u assign me this issue?",
+   "created_at": "2025-12-08T06:10:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/3#issuecomment-3625157433",
+   "user": {
+    "login": "Sandhya7147"
+   }
+  },
+  {
+   "id": 3625687446,
+   "body": "Assigned",
+   "created_at": "2025-12-08T08:40:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/3#issuecomment-3625687446",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3626991562,
+   "body": "Sure",
+   "created_at": "2025-12-08T13:37:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/7#issuecomment-3626991562",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628057757,
+   "body": "Can you assign this issue to me ?",
+   "created_at": "2025-12-08T17:02:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/17#issuecomment-3628057757",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3628696225,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F34) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-08T19:33:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628696225",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3628750590,
+   "body": "Also fix the failing workflow",
+   "created_at": "2025-12-08T19:50:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628750590",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628777007,
+   "body": "The auditing failure appears because of this dependency is outdated and vulnerable: > pyo3 = { version = \"0.22\", features = [\"auto-initialize\"] } Should i update it ?",
+   "created_at": "2025-12-08T19:59:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628777007",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3628789451,
+   "body": "> The auditing failure appears because of this dependency is outdated and vulnerable: > > > pyo3 = { version = \"0.22\", features = [\"auto-initialize\"] } > > Should i update it ? Yes do it",
+   "created_at": "2025-12-08T20:03:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628789451",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628907319,
+   "body": "Still issues, fix it completely",
+   "created_at": "2025-12-08T20:38:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628907319",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628907392,
+   "body": "guess the code needs to be refactored.",
+   "created_at": "2025-12-08T20:38:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628907392",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3628908165,
+   "body": "> guess the code needs to be refactored. Ok I will look into it then",
+   "created_at": "2025-12-08T20:38:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628908165",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628914463,
+   "body": "this is the problematic file : > nexum_core/src/bridge/mod.rs",
+   "created_at": "2025-12-08T20:40:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628914463",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3628917809,
+   "body": "> this is the problematic file : > > > nexum_core/src/bridge/mod.rs Yup got that, will add a commit in this pr itself to fix it",
+   "created_at": "2025-12-08T20:42:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628917809",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628920440,
+   "body": "The CI failure is because PyO3 0.24 renamed `import_bound()` to `import()`. The code still uses the old method name. I've pushed a fix to the `fix-pyo3-deprecations` branch that: 1. Updates `pyo3` from `0.22` to `0.24` in `Cargo.toml` 2. Replaces all `import_bound()` calls with `import()` in `nexum_core/src/bridge/mod.rs` You can either: - Cherry-pick commit `7c1b4b6` from `fix-pyo3-deprecations` into your branch - Or merge `fix-pyo3-deprecations` into your branch The specific changes needed in `bridge/mod.rs`: ```diff - let sys = py.import_bound(\"sys\")?; + let sys = py.import(\"sys\")?; - let nexum_ai = PyModule::import_bound(py, \"nexum_ai.optimizer\")?; + let nexum_ai = PyModule::import(py,\u2026",
+   "created_at": "2025-12-08T20:42:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628920440",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3628925741,
+   "body": "Do the above, then I will merge the pr",
+   "created_at": "2025-12-08T20:43:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/34#issuecomment-3628925741",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3629135166,
+   "body": "Hey, can i do this ?",
+   "created_at": "2025-12-08T21:46:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/10#issuecomment-3629135166",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3629149275,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F35) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-08T21:51:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#issuecomment-3629149275",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3629161421,
+   "body": "I made the cargo-audit installation conditional because of failing workflow, that way it ignores it if it already exists.",
+   "created_at": "2025-12-08T21:55:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#issuecomment-3629161421",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3630793477,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F36) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T07:36:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#issuecomment-3630793477",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3631024263,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F37) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T08:37:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3631024263",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3631609253,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F38) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T11:00:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3631609253",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3632276024,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F39) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T13:29:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#issuecomment-3632276024",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3632817931,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-09T15:18:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#issuecomment-3632817931",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3632851856,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-09T15:25:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3632851856",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3632856882,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-09T15:26:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3632856882",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3632947945,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F40) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T15:46:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#issuecomment-3632947945",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3633293209,
+   "body": "/gemini review",
+   "created_at": "2025-12-09T16:59:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#issuecomment-3633293209",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3633596094,
+   "body": "I think gemeni is hellucinating, because when i ran: ```bash \u276f cargo generate-lockfile ``` i got these: ```bash Updating crates.io index Locking 87 packages to latest compatible versions Adding pyo3 v0.24.2 (available: v0.27.2) Adding sqlparser v0.39.0 (available: v0.60.0) Adding thiserror v1.0.69 (available: v2.0.17) ```",
+   "created_at": "2025-12-09T18:11:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#issuecomment-3633596094",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3633677600,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F41) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T18:32:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633677600",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3633678554,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough CI workflow: enable pip caching in `actions/setup-python@v5` with `cache: \"pip\"` and `cache-dependency-path: nexum_ai/requirements.txt`, and add a step to install dependencies via `pip install -r nexum_ai/requirements.txt` before the byte-compile step. ## Changes | Cohort / File(s) | Change Summary | |---|---| | **CI workflow** <br> `/.github/workflows/ci.yml` | Enabled `cache: \"pip\"` and `cache-dependency-path: nexum_ai/requirements.txt` on `actions/setup-python@v5`; added step `pip install -r nexum_ai/requirements.txt` placed before the byte-compile step; no other workflow orde\u2026",
+   "created_at": "2025-12-09T18:33:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633678554",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3633693168,
+   "body": "> I think gemeni is hellucinating, because when i ran: > > ```shell > \u276f cargo generate-lockfile > ``` > > i got these: > > ```shell > Updating crates.io index > Locking 87 packages to latest compatible versions > Adding pyo3 v0.24.2 (available: v0.27.2) > Adding sqlparser v0.39.0 (available: v0.60.0) > Adding thiserror v1.0.69 (available: v2.0.17) > ``` i'll check this locally once then",
+   "created_at": "2025-12-09T18:36:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#issuecomment-3633693168",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3633708741,
+   "body": "I got the error, it isn't a cashing problem, the problem is that there are no dependencies to cache, in other words i think installing the dependencies might solve it, i'll try it right away.",
+   "created_at": "2025-12-09T18:39:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633708741",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3633742911,
+   "body": "[ths commit](https://github.com/aviralgarg05/NexumDB/pull/35/commits/16fd85113b86cfb21029dfc233ae532f5064c46c) solves the issue with cargo-audit",
+   "created_at": "2025-12-09T18:45:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633742911",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3633862394,
+   "body": "Also check for the failing workflow, because I had fixed them once",
+   "created_at": "2025-12-09T19:10:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633862394",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3633870404,
+   "body": "@coderabbitai full review",
+   "created_at": "2025-12-09T19:12:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633870404",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3633870801,
+   "body": "> Also check for the failing workflow, because I had fixed them once Like i said before, this is linked to [this](https://github.com/aviralgarg05/NexumDB/pull/35/commits/16fd85113b86cfb21029dfc233ae532f5064c46c) commit, which isn't related to the respective issue but i did it anyway, then either merge the respective PR first then i'll rebase or merge this PR before it.",
+   "created_at": "2025-12-09T19:12:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633870801",
+   "user": {
+    "login": "ignorant05"
+   }
+  },
+  {
+   "id": 3633871001,
+   "body": "<!-- This is an auto-generated reply by CodeRabbit --> <details> <summary>\u2705 Actions performed</summary> Full review triggered. </details>",
+   "created_at": "2025-12-09T19:12:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633871001",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3633881802,
+   "body": "> > Also check for the failing workflow, because I had fixed them once > > Like i said before, this is linked to [this](https://github.com/aviralgarg05/NexumDB/pull/35/commits/16fd85113b86cfb21029dfc233ae532f5064c46c) commit, which isn't related to the respective issue but i did it anyway, then either merge the respective PR first then i'll rebase or merge this PR before it. Merged that, take a rebase",
+   "created_at": "2025-12-09T19:16:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/41#issuecomment-3633881802",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3634005737,
+   "body": "[**Keep this PR in a mergeable state \u2192**](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F42) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-09T19:51:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#issuecomment-3634005737",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3634006159,
+   "body": "## Summary of Changes Hello @aviralgarg05, I'm Gemini Code Assist[^1]! I'm currently reviewing this pull request and will post my feedback shortly. In the meantime, here's a summary to help you and other reviewers quickly get up to speed! This pull request serves as a dedicated test for the CodeRabbit auto-review integration. Its primary purpose is to verify that the automated review system triggers and functions as expected when a new pull request is created. A temporary Python file has been introduced to provide content for this verification, and the PR will be closed once the integration is confirmed. ### Highlights * **CodeRabbit Integration Testing**: This pull request is specifically\u2026",
+   "created_at": "2025-12-09T19:51:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#issuecomment-3634006159",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 3634006531,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough Adds a new test module `tests/test_coderabbit_verification.py` containing four small utility functions: `calculate_sum`, `find_max`, `divide`, and `multiply`. The file includes a TODO comment about missing edge-case handling and is intended for temporary verifi\u2026",
+   "created_at": "2025-12-09T19:51:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#issuecomment-3634006531",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3634021729,
+   "body": "Verified CodeRabbit integration is working. Auto-review and incremental commit review both triggered successfully.",
+   "created_at": "2025-12-09T19:56:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#issuecomment-3634021729",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3635344936,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough The changes add Rust code coverage reporting to CI using cargo-llvm-cov with Codecov upload, introduce a Python dependency lock file with pinned versions, document the dependency update workflow, and add explicit return type annotations across Python modules wi\u2026",
+   "created_at": "2025-12-10T04:36:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#issuecomment-3635344936",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3635349319,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T04:39:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#issuecomment-3635349319",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3635420493,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough Unresolved merge conflict markers were introduced into `.github/workflows/ci.yml`, and additional Python CI steps (pip cache, explicit install from `nexum_ai/requirements.txt`, byte-compile check) appear alongside duplicates. In `nexum_ai/rl_agent.py`, typing i\u2026",
+   "created_at": "2025-12-10T05:14:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3635420493",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3635423731,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-10T05:15:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3635423731",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3635436444,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough Adds pinned Python dependency installation and pip caching to CI for nexum_ai, and refines type hints and signatures in `nexum_ai/rl_agent.py` (imports and return/parameter types). No behavioral logic changes beyond typing and CI install steps. ## Changes | Coh\u2026",
+   "created_at": "2025-12-10T05:20:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#issuecomment-3635436444",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3635439989,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-10T05:21:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#issuecomment-3635439989",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3635451106,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough CI workflow updated: Rust cache key now hashes `Cargo.lock`; Codecov upload set to always run. Python CI now installs from `nexum_ai/requirements-lock.txt`, adds `ruff` and a pre-test lint step, and runs quiet byte-compilation. Dependency lockfile and manifest\u2026",
+   "created_at": "2025-12-10T05:26:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3635451106",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3635456869,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-10T05:29:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3635456869",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3635465783,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough Updated CI cache keys for Cargo, changed pip-compile invocation in contributing docs, broadened RL agent stats typing and simplified state load error handling, altered a debug print in ModelManager to a literal, and added coverage patterns to .gitignore. ## Cha\u2026",
+   "created_at": "2025-12-10T05:34:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3635465783",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3635465971,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T05:34:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3635465971",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3635921141,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T08:24:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#issuecomment-3635921141",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3636182808,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- other_code_reviewer_warning_start --> > [!NOTE] > ## Other AI code review bot(s) detected > > CodeRabbit has detected other AI code review bot(s) in this pull request and will avoid duplicating their findings in the review comments. This may lead to a less comprehensive review. <!-- other_code_reviewer_warning_end --> <!-- walkthrough_start --> ## Walkthrough Adds a pytest test suite and supporting test infrastructure, updates CI to install test deps, run pytest with coverage and upload to Codecov, and makes translator.py and rl_agent.py defensive against missing optional dependencies so tests run without heavy extr\u2026",
+   "created_at": "2025-12-10T09:36:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#issuecomment-3636182808",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3636297984,
+   "body": "Thanks for the review! I\u2019ve updated the test dependencies as suggested. Upgraded pytest to the latest stable version to address the 2024 CVEs. Verified compatibility with pytest-cov and pytest-mock. All related issues have been resolved in the updated commit. If anything else needs adjustment, please let me know!",
+   "created_at": "2025-12-10T10:05:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#issuecomment-3636297984",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3636413751,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T10:32:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3636413751",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3636438090,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T10:38:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#issuecomment-3636438090",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3636462260,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T10:44:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3636462260",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3636665774,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-10T11:36:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3636665774",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3636816181,
+   "body": "Fix the issue",
+   "created_at": "2025-12-10T12:18:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3636816181",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3636818466,
+   "body": "Fix the failing check",
+   "created_at": "2025-12-10T12:19:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#issuecomment-3636818466",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3636924513,
+   "body": "See it is failing, check the issue",
+   "created_at": "2025-12-10T12:43:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#issuecomment-3636924513",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3637119066,
+   "body": "I\u2019ve resolved the issue and updated the PR accordingly. Whenever you have a moment, I would really appreciate your review of the latest changes. Thank you so much for your help and support.",
+   "created_at": "2025-12-10T13:34:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#issuecomment-3637119066",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3640178692,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-11T05:22:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3640178692",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3640234629,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-11T05:37:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#issuecomment-3640234629",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3641715587,
+   "body": "I have fix the issue.",
+   "created_at": "2025-12-11T12:34:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#issuecomment-3641715587",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3641945828,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F43) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts </details>",
+   "created_at": "2025-12-11T13:30:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#issuecomment-3641945828",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3641946269,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds cost-model functions, table statistics collection, selectivity/cardinality estimators, a join-order chooser using nested-loop costs, an optimizer/explain entrypoint with an RL scaffold and cache persistence, unit tests for the estimators, and a Cobertura-style coverage report. ## Changes | Cohort / File(s) | Summary | |---|---| | **Cost estimation infrastructure** <br> `nexum_ai/cost_model.py` | New module with `cost_scan(rows)`, `cost_filter(rows)` (pass-through) and `cost_nested_loop(outer_rows, inner_rows)` returning `outer_rows + outer_rows * inner_rows`. | | **Statistic\u2026",
+   "created_at": "2025-12-11T13:30:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#issuecomment-3641946269",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3642262812,
+   "body": "Fix the failing workflow",
+   "created_at": "2025-12-11T14:44:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3642262812",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3663835060,
+   "body": "I have solve the issue.",
+   "created_at": "2025-12-17T06:18:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3663835060",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 3663957329,
+   "body": "@coderabbitai full review",
+   "created_at": "2025-12-17T07:03:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3663957329",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3663957593,
+   "body": "<!-- This is an auto-generated reply by CodeRabbit --> <details> <summary>\u2705 Actions performed</summary> Full review triggered. </details>",
+   "created_at": "2025-12-17T07:03:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#issuecomment-3663957593",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3669831834,
+   "body": "Please assign me this issue.",
+   "created_at": "2025-12-18T11:26:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/23#issuecomment-3669831834",
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "id": 3669861639,
+   "body": "Can you assign this issue to me ?",
+   "created_at": "2025-12-18T11:35:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/25#issuecomment-3669861639",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3669914198,
+   "body": "[![All Green - Keep your PRs mergeable](https://hub.continue.dev/allgreen-promo-banner.png)](https://hub.continue.dev/allgreen?pr=https%3A%2F%2Fgithub.com%2Faviralgarg05%2FNexumDB%2Fpull%2F44) <details> <summary>Learn more</summary> --- [All Green](https://hub.continue.dev/allgreen) is an AI agent that automatically: \u2705 Addresses code review comments \u2705 Fixes failing CI checks \u2705 Resolves merge conflicts --- [Unsubscribe from All Green comments](https://allgreen.dev/unsubscribe-comments) </details>",
+   "created_at": "2025-12-18T11:51:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#issuecomment-3669914198",
+   "user": {
+    "login": "continue[bot]"
+   }
+  },
+  {
+   "id": 3669914630,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a Criterion-based benchmarking suite (four benches, docs, runner script), registers Criterion dev-dependency and bench targets in Cargo.toml, exposes executor filter module, and adds a PR-scoped GitHub Actions job that runs PR benchmarks, optionally compares against main, produces a summary, and uploads artifacts. (.gitignore updated) ## Changes | Cohort / File(s) | Summary | |---|---| | **CI Benchmarking Workflow** <br> `\\.github/workflows/ci.yml` | Adds a PR-scoped \"Rust benchmarks\" job that installs/caches bench tooling, runs `cargo bench` on the PR branch, checks `nexum_\u2026",
+   "created_at": "2025-12-18T11:51:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#issuecomment-3669914630",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3669961494,
+   "body": "Assigned!",
+   "created_at": "2025-12-18T12:04:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/23#issuecomment-3669961494",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3670449005,
+   "body": "@aviralgarg05 Hello, I\u2019ve created this PR and would be grateful for a review when possible. Please let me know if any changes are needed. Thank you.",
+   "created_at": "2025-12-18T14:06:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#issuecomment-3670449005",
+   "user": {
+    "login": "sshekhar563"
+   }
+  },
+  {
+   "id": 3674605637,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- --- <details> <summary> \ud83e\uddea Issue enrichment is currently in open beta.</summary> You can configure auto-planning by selecting labels in the issue_enrichment configuration. To disable\u2026",
+   "created_at": "2025-12-19T10:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/45#issuecomment-3674605637",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674606255,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Related Issues** - https://github.com/aviralgarg05/NexumDB/issues/45 </details> <details> <summary><b>\ud83d\udc64 Suggested Assignees</b\u2026",
+   "created_at": "2025-12-19T10:58:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/46#issuecomment-3674606255",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3674606903,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> ### \ud83d\udcdd CodeRabbit Plan Mode Generate an implementation plan and prompts that you can use with your favorite coding agent. - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan <details> <summary>Examples</summary> - [Example 1](https://github.com/coderabbitai/git-worktree-runner/issues/29#issuecomment-3589134556) - [Example 2](https://github.com/coderabbitai/git-worktree-runner/issues/12#issuecomment-3606665167) </details> --- <details> <summary><b>\ud83d\udd17 Similar Issues</b></summary> **Related Issues** - https://github.com/aviralgarg05/NexumDB/issues/53 </details> <details> <summary><b>\ud83d\udc64 Suggested Assignees</b\u2026",
+   "created_at": "2025-12-19T10:58:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/47#issuecomment-3674606903",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

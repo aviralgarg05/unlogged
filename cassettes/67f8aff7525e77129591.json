@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 198,
+  "changed_files": 2,
+  "additions": 3,
+  "deletions": 3,
+  "title": "chore(deps): bump comfy-table from 7.2.2 to 8.0.1",
+  "body": "Bumps [comfy-table](https://github.com/nukesor/comfy-table) from 7.2.2 to 8.0.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/nukesor/comfy-table/releases\">comfy-table's releases</a>.</em></p> <blockquote> <h2>v8.0.0</h2> <h2>[8.0.0] - 05.08.2026</h2> <h3>Breaking Changes</h3> <ul> <li> <p>The following types and functions have been removed:</p> <ul> <li><code>TableComponent</code> enum</li> <li>The <code>modifiers</code> module and <code>Table::apply_modifier</code> have been removed.</li> <li><code>Table::current_style_as_preset</code></li> <li><code>Table::set_style</code></li> <li><code>Table::style</code></li> <li><code>Table::remove_style<\u2026",
+  "created_at": "2026-10-05T07:24:13Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/198",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

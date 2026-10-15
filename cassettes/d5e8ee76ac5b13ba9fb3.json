@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 171,
+  "changed_files": 10,
+  "additions": 378,
+  "deletions": 316,
+  "title": "refactor(storage): implement typed error system with error codes and \u2026",
+  "body": "\u2026thiserror ## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Implemented error handling with `thiserror` module, replaced anyhow with typed errors. Closes #23 <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> Changed `nexum_core/src` module with necessary\u2026",
+  "created_at": "2026-03-11T13:39:11Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "dharapandya85"
+  }
+ }
+}

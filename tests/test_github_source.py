@@ -194,3 +194,11 @@ def test_a_missing_diff_stat_costs_detail_not_the_thread(tmp_path):
     assert event.id == "pr-312"
     assert "files changed" not in event.text
     assert PR["title"] in event.text
+
+
+def test_a_reviewer_bot_without_the_suffix_is_still_a_bot():
+    """GitHub's own reviewer appears as plain "Copilot" and produced 72 of the 365 events on
+    the first repository this was pointed at. A suffix check alone would have let it through
+    and the evaluation would have been measuring how well an arm ignores a robot."""
+    assert is_bot("Copilot")
+    assert not is_bot("copilot-user")

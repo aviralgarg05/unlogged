@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 173,
+  "changed_files": 6,
+  "additions": 581,
+  "deletions": 181,
+  "title": "feat(cli): add command history and auto-completion",
+  "body": "## Summary Closes #52 Enhances the CLI REPL experience with persistent command history and tab auto-completion by replacing the raw `stdin.read_line()` loop with `rustyline::Editor`. ## Changes ### New Dependencies (`nexum_cli/Cargo.toml`) - `rustyline = \"15\"` \u2014 readline-style editing, history, and completion - `dirs = \"6\"` \u2014 cross-platform `~/.nexumdb_history` path resolution ### CLI REPL Rewrite (`nexum_cli/src/main.rs`) - **`NexumCompleter`** struct implementing rustyline's `Helper` traits with: - SQL keyword completion (SELECT, INSERT, CREATE, etc.) - Table name completion from the live catalog - Column name completion when table context is detected (e.g. after `FROM users`) - **`rustyl\u2026",
+  "created_at": "2026-03-21T18:42:40Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "hargunsiingh"
+  }
+ }
+}

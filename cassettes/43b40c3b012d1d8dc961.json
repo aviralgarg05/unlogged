@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 123,
+  "changed_files": 11,
+  "additions": 107,
+  "deletions": 11,
+  "title": "ci: make DCO advisory and run workflows on PR synchronize",
+  "body": "## Summary\\n- make DCO check advisory (non-blocking) so missing sign-offs don't fail PRs\\n- ensure PR triggers for core workflows\\n- add PR-safe validation paths for release/stale/reminder workflows\\n\\n## Why\\n- current DCO failures are blocking contributor PRs\\n- all workflows should run automatically on PR pushes\\n\\n## Validation\\n- YAML parse check for all workflow files <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Expanded pull request event handling across CI workflows to respond to more PR lifecycle events. * Made DCO and other quality checks advisory (non-blocking) with clearer summaries and warnings. * Added PR Do\u2026",
+  "created_at": "2026-02-10T06:47:28Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123",
+  "state": "closed",
+  "merged_at": "2026-02-10T06:53:07Z",
+  "user": {
+   "login": "aviralgarg05"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 138,
+  "changed_files": 5,
+  "additions": 503,
+  "deletions": 1485,
+  "title": "refactor: load embedding model asynchronously",
+  "body": "## Summary Refactors `SemanticCache.initialize_model()` to avoid blocking the main thread by loading the SentenceTransformer model asynchronously in a background worker thread. ### What Changed? - Added async/threaded model initialization for `SemanticCache` - `vectorize()` triggers model loading without blocking - Uses fallback vectorization while the embedding model is still loading ### Why? Previously, `initialize_model()` loaded the SentenceTransformer synchronously, which could block the main thread during first use (especially on startup / first EXPLAIN call). This change keeps the CLI responsive and avoids startup delays. ## Type of Change - [ ] Bug fix (non-breaking change fixing an\u2026",
+  "created_at": "2026-02-13T14:48:41Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "Anisha-45"
+  }
+ }
+}

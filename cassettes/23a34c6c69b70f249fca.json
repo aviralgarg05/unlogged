@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 128,
+  "changed_files": 1,
+  "additions": 1,
+  "deletions": 2,
+  "title": "ci: disable PR auto commenter on pull requests",
+  "body": "## Summary - disable PR Auto Commenter on pull requests - keep it manual only via workflow_dispatch <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Updated GitHub Actions workflow configuration to use manual triggering instead of automatic invocation on pull requests. <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+  "created_at": "2026-02-10T17:03:23Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/128",
+  "state": "closed",
+  "merged_at": "2026-02-10T17:03:32Z",
+  "user": {
+   "login": "aviralgarg05"
+  }
+ }
+}

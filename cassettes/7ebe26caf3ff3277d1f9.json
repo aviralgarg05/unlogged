@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 179,
+  "changed_files": 1,
+  "additions": 9,
+  "deletions": 9,
+  "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+  "body": "Bumps the rust-minor-patch group with 2 updates: [serde_json](https://github.com/serde-rs/json) and [log](https://github.com/rust-lang/log). Updates `serde_json` from 1.0.149 to 1.0.150 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/serde-rs/json/releases\">serde_json's releases</a>.</em></p> <blockquote> <h2>v1.0.150</h2> <ul> <li>Reject non-string enum object keys (<a href=\"https://redirect.github.com/serde-rs/json/issues/1324\">#1324</a>, thanks <a href=\"https://github.com/puneetdixit200\"><code>@\u200bpuneetdixit200</code></a>)</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/serde-rs/json/c\u2026",
+  "created_at": "2026-05-25T10:51:46Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/179",
+  "state": "closed",
+  "merged_at": "2026-05-25T10:51:56Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

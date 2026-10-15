@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 177,
+  "changed_files": 1,
+  "additions": 7,
+  "deletions": 7,
+  "title": "chore(deps): bump tokio from 1.52.1 to 1.52.3 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [tokio](https://github.com/tokio-rs/tokio). Updates `tokio` from 1.52.1 to 1.52.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.52.3</h2> <h1>1.52.3 (May 8th, 2026)</h1> <h3>Fixed</h3> <ul> <li>sync: fix underflow in mpsc channel <code>len()</code> (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8062\">#8062</a>)</li> <li>sync: notify receivers in mpsc <code>OwnedPermit::release()</code> method (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8075\">#8075</a>)</li> <li>sync: require that an <code>R\u2026",
+  "created_at": "2026-05-11T09:36:38Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/177",
+  "state": "closed",
+  "merged_at": "2026-05-11T09:36:59Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

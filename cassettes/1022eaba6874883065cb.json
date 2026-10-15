@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 164,
+  "changed_files": 1,
+  "additions": 10,
+  "deletions": 10,
+  "title": "chore(deps): bump pyo3 from 0.28.1 to 0.28.2",
+  "body": "Bumps [pyo3](https://github.com/pyo3/pyo3) from 0.28.1 to 0.28.2. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.28.2</h2> <p>This patch release contains a soundness fix for subclassing native types such as <code>PyList</code> with the <code>abi3</code> feature enabled when targeting a minimum version of Python 3.12 or higher. (Support for doing such subclassing was newly added in PyO3 0.28.0.)</p> <p>PyO3 0.28.0 and 0.28.1 will be yanked.</p> <p>This release also contains a correction to the FFI definition <code>PyType_GetTypeDataSize</code> and incorrectly-generated <code>\u2026",
+  "created_at": "2026-02-20T16:23:51Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/164",
+  "state": "closed",
+  "merged_at": "2026-02-20T16:24:04Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

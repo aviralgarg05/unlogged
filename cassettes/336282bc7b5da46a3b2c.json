@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 178,
+  "changed_files": 2,
+  "additions": 3,
+  "deletions": 3,
+  "title": "chore(deps): bump sqlparser from 0.61.0 to 0.62.0",
+  "body": "Bumps [sqlparser](https://github.com/apache/datafusion-sqlparser-rs) from 0.61.0 to 0.62.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/3dd0e30d8bb1d2a6775f62d2b84839b60133effb\"><code>3dd0e30</code></a> chore: Bump version to 0.62.0 and add changelog (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2331\">#2331</a>)</li> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/9833c033bc44c487b4425272cc8cea80971b5239\"><code>9833c03</code></a> feat(clickhouse): support PARTITION BY after ORDER BY and ARRAY JOIN (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/\u2026",
+  "created_at": "2026-05-11T09:36:43Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/178",
+  "state": "closed",
+  "merged_at": "2026-05-11T09:36:57Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

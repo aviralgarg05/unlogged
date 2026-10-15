@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 168,
+  "changed_files": 1,
+  "additions": 27,
+  "deletions": 0,
+  "title": "docs: add SQL support matrix to README",
+  "body": "## Summary Adds a comprehensive SQL Support Matrix table to the README, addressing #140. ### What this adds - A clear feature matrix table placed between the Features section and Project Structure - Status for all implemented SQL features: CREATE TABLE, INSERT, SELECT (projection/aliases), WHERE operators (comparison, logical, LIKE, IN, BETWEEN), ORDER BY, LIMIT, UPDATE, DELETE, SHOW TABLES, DESCRIBE, DROP TABLE, ASK - Status for planned features: JOIN, Subqueries, DISTINCT, Aggregates, GROUP BY/HAVING, UNION/INTERSECT/EXCEPT - Version tags showing when each feature was introduced - Links from planned items to ROADMAP.md - Consistent status labels (Implemented / Planned) with emoji indicato\u2026",
+  "created_at": "2026-02-25T07:12:19Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/168",
+  "state": "closed",
+  "merged_at": "2026-02-25T07:41:35Z",
+  "user": {
+   "login": "vasilytrofimchuk"
+  }
+ }
+}

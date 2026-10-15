@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 130,
+  "changed_files": 1,
+  "additions": 30,
+  "deletions": 12,
+  "title": "docs: add practical examples for advanced SQL operators in README",
+  "body": "## Summary This PR enhances the README by adding practical, beginner-friendly examples for advanced SQL operators to improve documentation clarity and real-world usability. Closes #86 <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? Added multiple practical examples for: - LIKE with different wildcard patterns (%, _) - IN with different value types - BETWEEN with numeric ranges - ORDER BY with multiple columns - Combined advanced queries using multiple operators together Used sql markdown code blocks to properly format and display all query examples Ensured examples follow existing README style and formatting ### Why? The README previously introduced these o\u2026",
+  "created_at": "2026-02-10T20:33:52Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130",
+  "state": "closed",
+  "merged_at": "2026-02-11T13:42:51Z",
+  "user": {
+   "login": "kunalhemnani1"
+  }
+ }
+}

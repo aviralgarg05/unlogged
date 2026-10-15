@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 172,
+  "changed_files": 3,
+  "additions": 20,
+  "deletions": 20,
+  "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+  "body": "Bumps the rust-minor-patch group with 2 updates: [tempfile](https://github.com/Stebalien/tempfile) and [clap](https://github.com/clap-rs/clap). Updates `tempfile` from 3.26.0 to 3.27.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/Stebalien/tempfile/blob/master/CHANGELOG.md\">tempfile's changelog</a>.</em></p> <blockquote> <h2>3.27.0</h2> <p>This release adds <code>TempPath::try_from_path</code> and deprecates <code>TempPath::from_path</code>.</p> <p>Prior to this release, <code>TempPath::from_path</code> made no attempts to convert relative paths into absolute paths. The following code would have deleted the wrong file:</p> <pre lang=\"rust\"><code>let\u2026",
+  "created_at": "2026-03-16T07:27:33Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/172",
+  "state": "closed",
+  "merged_at": "2026-03-16T07:27:45Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

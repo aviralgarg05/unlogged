@@ -1,8 +1,8 @@
-{"event_id":"e1","call":"scope_request","why":"Asks for retry-on-decline, which X1 explicitly excludes. This is the ask, not the work — the work is e3. Billing here would double-charge."}
-{"event_id":"e2","call":"noise","why":"Thanks. No work, no request."}
-{"event_id":"e3","call":"billable_extra","hours":"3.0","why":"PSP timeout and 3DS re-challenge handling, performed. X1 excludes payment provider integration and error handling, so this is outside scope and was done."}
-{"event_id":"e4","call":"noise","why":"Asks for a copy of an old invoice. Administrative, contains no work. The phrase 'could you also' is the trap."}
-{"event_id":"e5","call":"scope_request","why":"Review asks for decline reasons to be surfaced, needing copy and a new error map. Error handling is excluded by X1, but this is the ask, not the delivery."}
-{"event_id":"e6","call":"included","why":"Discovery call. X2 states discovery and scoping calls are not billable, so it is covered by the agreement and bills nothing."}
-{"event_id":"e7","call":"included","why":"Address form revisions after review. S2 grants one round of revisions."}
-{"event_id":"e8","call":"billable_extra","hours":"2.0","why":"Idempotency keys on the submit path, performed, and the author notes it was outside the original scope. No clause covers it; A1 says such work is billed at the rate card."}
+{"event_id": "e1", "call": "scope_request", "why": "Asks for retry-on-decline, which X1 explicitly excludes. This is the ask, not the work \u2014 the work is e3. Billing here would double-charge.", "provenance": "authored"}
+{"event_id": "e2", "call": "noise", "why": "Thanks. No work, no request.", "provenance": "authored"}
+{"event_id": "e3", "call": "billable_extra", "hours": "3.0", "why": "PSP timeout and 3DS re-challenge handling, performed. X1 excludes payment provider integration and error handling, so this is outside scope and was done.", "provenance": "authored"}
+{"event_id": "e4", "call": "noise", "why": "Asks for a copy of an old invoice. Administrative, contains no work. The phrase 'could you also' is the trap.", "provenance": "authored"}
+{"event_id": "e5", "call": "scope_request", "why": "Review asks for decline reasons to be surfaced, needing copy and a new error map. Error handling is excluded by X1, but this is the ask, not the delivery.", "provenance": "authored"}
+{"event_id": "e6", "call": "included", "why": "Discovery call. X2 states discovery and scoping calls are not billable, so it is covered by the agreement and bills nothing.", "provenance": "authored"}
+{"event_id": "e7", "call": "included", "why": "Address form revisions after review. S2 grants one round of revisions.", "provenance": "authored"}
+{"event_id": "e8", "call": "billable_extra", "hours": "2.0", "why": "Idempotency keys on the submit path, performed, and the author notes it was outside the original scope. No clause covers it; A1 says such work is billed at the rate card.", "provenance": "authored"}

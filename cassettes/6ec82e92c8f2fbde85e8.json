@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 2603514612,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) To support a more accurate type hint for the `get_stats` method, `Union` will be needed from the `typing` module. This is necessary to correctly type the mixed integer and float values in the dictionary returned by `get_stats`. ```suggestion from typing import Dict, Optional, Union ```",
+   "created_at": "2025-12-09T16:58:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2603514612",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603514615,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The return type hint `Dict[str, float]` is not entirely accurate, as the dictionary returned by this function contains both `int` and `float` values (e.g., `q_table_size` is an `int`). To make the type hint precise and compliant with PEP 484, it's better to use `Union[int, float]`. You'll also need to import `Union` from `typing`. ```suggestion def get_stats(self) -> Dict[str, Union[int, float]]: ```",
+   "created_at": "2025-12-09T16:58:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2603514615",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603523211,
+   "body": "![critical](https://www.gstatic.com/codereviewagent/critical.svg) The `pyo3` crate is locked to version `0.24.2`, but this version does not appear to be available on the public crates.io registry. This will likely cause build failures for other developers or in CI environments when they try to fetch this dependency. Please verify the version and source of this crate. If it's a private or forked version, the source should be configured accordingly in `Cargo.toml`. If it's a typo, it should be corrected in `Cargo.toml` and `Cargo.lock` should be regenerated. The latest public version on crates.io is `0.22.1`.",
+   "created_at": "2025-12-09T17:01:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#discussion_r2603523211",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603523214,
+   "body": "![high](https://www.gstatic.com/codereviewagent/high-priority.svg) The `sled` crate, which this project depends on, is no longer actively maintained. The author has stated they are working on a successor and will not be merging new features or fixing non-critical bugs. Relying on an unmaintained database engine can pose a significant long-term risk regarding bugs, security vulnerabilities, and compatibility with future Rust versions. It is highly recommended to consider migrating to an actively maintained alternative, such as `rocksdb` (via a crate like `rust-rocksdb`) or another embedded database solution.",
+   "created_at": "2025-12-09T17:01:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#discussion_r2603523214",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2603523218,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The `sqlparser` crate is locked to version `0.39.0`, which is significantly outdated. The latest version on crates.io is `0.50.0`. Older versions may be missing important bug fixes, performance improvements, and security patches. It is recommended to update this dependency to a more recent version by running `cargo update -p sqlparser` and then regenerating the `Cargo.lock` file.",
+   "created_at": "2025-12-09T17:01:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#discussion_r2603523218",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2604009886,
+   "body": "fix this",
+   "created_at": "2025-12-09T19:14:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#discussion_r2604009886",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2604010207,
+   "body": "fix this as well",
+   "created_at": "2025-12-09T19:14:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/35#discussion_r2604010207",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 2604116861,
+   "body": "![critical](https://www.gstatic.com/codereviewagent/critical.svg) The `divide` function currently does not handle division by zero, which will raise a `ZeroDivisionError`. This is a critical correctness issue that should be addressed to prevent application crashes. Consider adding a check for `b == 0` and raising an appropriate error or returning a specific value. ```suggestion if b == 0: raise ValueError(\"Cannot divide by zero\") return a / b ```",
+   "created_at": "2025-12-09T19:53:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604116861",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2604116868,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) The `calculate_sum` function can be simplified and made more Pythonic by using the built-in `sum()` function, which is also more efficient for this operation. ```suggestion return sum(numbers) ```",
+   "created_at": "2025-12-09T19:53:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604116868",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2604116873,
+   "body": "![medium](https://www.gstatic.com/codereviewagent/medium-priority.svg) Similar to `calculate_sum`, the `find_max` function can be made more concise and efficient by utilizing Python's built-in `max()` function. This avoids manual iteration and potential off-by-one errors. ```suggestion return max(numbers) ```",
+   "created_at": "2025-12-09T19:53:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604116873",
+   "user": {
+    "login": "gemini-code-assist[bot]"
+   }
+  },
+  {
+   "id": 2604119616,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Add type hints and use built-in `sum()` for clarity.** The function lacks type hints (PEP 484 compliance) and reimplements the built-in `sum()` function unnecessarily. Apply this diff: ```diff -def calculate_sum(numbers): - \"\"\"Calculate the sum of a list of numbers.\"\"\" - total = 0 - for n in numbers: - total = total + n - return total +def calculate_sum(numbers: list[int | float]) -> int | float: + \"\"\"Calculate the sum of a list of numbers.\"\"\" + return sum(numbers) ``` <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In tests/test_coderabbit_verification.py around lines 4 to 9, the calculate_sum function lacks type hints and reimplements Python's built-in\u2026",
+   "created_at": "2025-12-09T19:54:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604119616",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2604119620,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Add type hints and use built-in `max()` for clarity.** The function lacks type hints (PEP 484 compliance) and reimplements the built-in `max()` function unnecessarily. Apply this diff: ```diff -def find_max(numbers): - \"\"\"Find the maximum value in a list.\"\"\" - if len(numbers) == 0: - return None - max_val = numbers[0] - for n in numbers: - if n > max_val: - max_val = n - return max_val +def find_max(numbers: list[int | float]) -> int | float | None: + \"\"\"Find the maximum value in a list.\"\"\" + return max(numbers) if numbers else None ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code b\u2026",
+   "created_at": "2025-12-09T19:54:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604119620",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2604119634,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Add error handling for division by zero.** The TODO comment acknowledges missing error handling, but `divide(a, 0)` will raise an unhandled `ZeroDivisionError` at runtime. Apply this diff to handle the edge case: ```diff -def divide(a, b): - \"\"\"Divide two numbers.\"\"\" - return a / b +def divide(a: int | float, b: int | float) -> int | float: + \"\"\"Divide two numbers. + + Raises: + ValueError: If divisor is zero. + \"\"\" + if b == 0: + raise ValueError(\"Cannot divide by zero\") + return a / b ``` <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In tests/test_coderabbit_verification.py around lines 22 to 24, the divide(a, b) function lacks handling for\u2026",
+   "created_at": "2025-12-09T19:54:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604119634",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2604128006,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove the stale TODO comment.** The TODO comment states \"Add error handling for edge cases,\" but the `divide` function below already implements division-by-zero handling (lines 35-36). This comment is now misleading and should be removed. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In tests/test_coderabbit_verification.py around line 21, remove the stale TODO comment \"# TODO: Add error handling for edge cases\" because the divide function already handles division-by-zero; simply delete that line so the test file no longer contains misleading TODOs and update the test commit/message accordingly. ``` </details> <!-- fingerprinting:phantom:poseido\u2026",
+   "created_at": "2025-12-09T19:57:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604128006",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2604128011,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Add type hints for PEP 484 compliance.** The function lacks type hints, which are required per the coding guidelines for Python code quality and PEP 484 compliance. Apply this diff: ```diff -def multiply(a, b): +def multiply(a: int | float, b: int | float) -> int | float: \"\"\"Multiply two numbers.\"\"\" return a * b ``` As per coding guidelines, check type hints usage for Python code. <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly\u2026",
+   "created_at": "2025-12-09T19:57:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/42#discussion_r2604128011",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605176773,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cat -n .github/workflows/ci.yml | sed -n '80,100p' ``` Repository: aviralgarg05/NexumDB Length of output: 257 --- \ud83c\udfc1 Script executed: ```shell cat .github/workflows/ci.yml ``` Repository: aviralgarg05/NexumDB Length of output: 257 --- \ud83c\udf10 Web query: `actions/setup-python v5 cache parameter documentation github actions` \ud83d\udca1 Result: Short answer \u2014 what the cache input does and how to use it: - cache is an optional input (off by default) that enables built\u2011in dependency caching in actions/setup-python (uses @actions/cache under the hood). [1][2] - Supported values: \"pip\", \"pipenv\", \"poetry\"\u2026",
+   "created_at": "2025-12-10T04:47:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#discussion_r2605176773",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605176775,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Clarify where to run `pip-compile` so the lock file lands in the right place** The steps are good but don\u2019t say that `pip-compile` should be run in the `nexum_ai/` directory, which can lead to a lock file being generated in the wrong location. Suggest clarifying step 2 like this: ```diff -1. Install pip-tools: `pip install pip-tools` -2. Update the lock file: `pip-compile requirements.txt -o requirements-lock.txt` -3. Commit the updated `requirements-lock.txt` to the repo +1. Install pip-tools: `pip install pip-tools` +2. In the `nexum_ai/` directory (where `requirements.txt` lives), update the lock file: + `pip-compile requirements.txt -o requirements-lock.txt`\u2026",
+   "created_at": "2025-12-10T04:47:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#discussion_r2605176775",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605176779,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Align lockfile Python version with CI and avoid manual edits** This looks like a standard `pip-compile` output, which is good, but the header states it was generated with Python 3.14 while CI installs it under Python 3.10. That mismatch can lead to subtle issues if any dependencies have Python-version-specific constraints. I recommend: - Regenerating the lockfile using the same Python version as CI (3.10) so the header and constraints match your runtime. - Continuing to treat this file as fully autogenerated: always update it via `pip-compile`, never by hand. Example (from the repo root): ```bash cd nexum_ai pip-compile --output-file=requirements-lock.txt require\u2026",
+   "created_at": "2025-12-10T04:47:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/40#discussion_r2605176779",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605241309,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Python version mismatch between CI and lockfile.** The CI is configured to use Python 3.10 (line 77), but `nexum_ai/requirements-lock.txt` was generated for Python 3.14 (as noted in the file header at line 2). This mismatch will likely cause installation failures or incompatibilities. Resolve this by either: 1. **Regenerate the lockfile for Python 3.10**: Run `pip-compile` under Python 3.10 environment and update the lockfile 2. **Update CI to use Python 3.14**: Change line 77 to `python-version: '3.14'` if your project requires 3.14 Verify which Python version your project officially supports, then ensure both the lockfile and CI configuratio\u2026",
+   "created_at": "2025-12-10T05:22:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2605241309",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605241310,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider modernizing typing imports and annotations** Ruff is flagging `typing.List` / `typing.Dict` as deprecated aliases; since this project targets modern Python, consider: - Importing only `Optional` and `Any` from `typing`. - Switching annotations from `List[...]` / `Dict[...]` to builtin generics `list[...]` / `dict[...]` across this module. This will align with current typing best practices and silence the UP035 warnings. Please confirm your target Python version and, if it is \u22653.9, run your linter (e.g., Ruff) after replacing `List`/`Dict` with builtin generics to ensure the file still passes all checks. <details> <summary>\ud83e\uddf0 Tools</summary> <details> <sum\u2026",
+   "created_at": "2025-12-10T05:22:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2605241310",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605241314,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Modernize typing to builtin generics and `|` unions** Given the project targets modern Python, you can align with Ruff\u2019s suggestions by: - Dropping `Dict`/`List` from the `typing` import and using builtin generics `dict[...]` / `list[...]` in annotations. - Updating `get_stats` from `Dict[str, Union[int, float]]` to something like `dict[str, int | float]` (and keeping only `Optional` and `Union` as needed, or even replacing `Union` with `|` where appropriate). This will reduce typing-module alias usage and make hints more idiomatic. After switching to builtin generics and `|` unions, please rerun your type checker and linter (e.g., Ruff) to ensure no remaining UP\u2026",
+   "created_at": "2025-12-10T05:22:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2605241314",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605258689,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Use builtin generics instead of `List`/`Dict` now that you\u2019re on Python 3.10+** The new type hints are good, but Ruff is right that you can modernize to builtin generics for consistency with current Python: ```diff -from typing import Optional, List, Dict, Any +from typing import Any, Optional @@ - self.cache: List[Dict] = [] + self.cache: list[dict[str, Any]] = [] @@ - def vectorize(self, text: str) -> List[float]: + def vectorize(self, text: str) -> list[float]: @@ - def _fallback_vectorize(self, text: str) -> List[float]: + def _fallback_vectorize(self, text: str) -> list[float]: @@ - def cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:\u2026",
+   "created_at": "2025-12-10T05:32:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2605258689",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605258692,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Modernize type hints to builtin generics and `|` unions** The explicit return types are a nice improvement. To align with modern Python and Ruff hints, you can: ```diff -from typing import Dict, Optional, Union +from typing import Optional @@ - self.state_file: str = \"q_table.pkl\" - ) -> None: + self.state_file: str = \"q_table.pkl\" + ) -> None: @@ - self.q_table: Dict[str, Dict[str, float]] = {} + self.q_table: dict[str, dict[str, float]] = {} @@ - def get_stats(self) -> Dict[str, Union[int, float]]: + def get_stats(self) -> dict[str, int | float]: @@ - def save_state(self, filepath: Optional[str] = None) -> None: + def save_state(self, filepath: str | None = Non\u2026",
+   "created_at": "2025-12-10T05:32:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2605258692",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605260599,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix duplicate `run` keys causing YAML syntax error.** Lines 44 and 47 both use the `run` key in the same step mapping, which is invalid YAML syntax. This will cause the CI workflow to fail. Apply this diff to use a single `run` with a conditional check: ```diff - name: Install cargo-audit - - run: cargo install cargo-audit --locked - - run: - if ! command -v cargo-audit &> /dev/null; then - cargo install cargo-audit --locked - + run: | + if ! command -v cargo-audit &> /dev/null; then + cargo install cargo-audit --locked + fi ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code\u2026",
+   "created_at": "2025-12-10T05:33:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2605260599",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605260603,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove duplicate security audit step.** The security audit is run twice (lines 61-68 and lines 70-71), which is redundant and wastes CI time. Apply this diff to keep only one instance: ```diff - name: Build documentation run: cargo doc --workspace --no-deps env: RUSTDOCFLAGS: -D warnings - - name: Security audit run: cargo audit - - - name: Security audit - run: cargo audit ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test &\u2026",
+   "created_at": "2025-12-10T05:33:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2605260603",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605260608,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix misplaced cache configuration causing YAML syntax error.** Lines 91-92 (`cache` and `cache-dependency-path`) are incorrectly positioned after the \"Lint Python\" step. They should be part of the \"Set up Python\" step's `with` block. Apply this diff: ```diff - name: Set up Python uses: actions/setup-python@v5 with: - python-version: '3.10' + cache: \"pip\" + cache-dependency-path: nexum_ai/requirements.txt + - name: Install ruff run: pip install ruff - + - name: Lint Python run: ruff check nexum_ai/ - - cache: \"pip\" - cache-dependency-path: nexum_ai/requirements.txt - name: Install dependencies run: pip install -r nexum_ai/requirements.txt - - name: Insta\u2026",
+   "created_at": "2025-12-10T05:33:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2605260608",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605270781,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical YAML syntax error: Fix the indentation.** The YAML syntax error flagged by the linter is due to incorrect indentation of the `key:` line. Line 40 appears to be part of the key definition but is improperly formatted. Apply this diff to fix the YAML syntax: ```diff - key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }} - - restore-keys: ${{ runner.os }}-cargo- + key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }} + restore-keys: ${{ runner.os }}-cargo- ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately re\u2026",
+   "created_at": "2025-12-10T05:38:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2605270781",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605270783,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove duplicate python-version line.** Line 80 contains a duplicate `python-version: \"3.10\"` declaration that appears orphaned from the previous `Set up Python` step. This is redundant and should be removed. Apply this diff to remove the duplicate: ```diff - python-version: \"3.10\" - ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion ``` </details> <!-- s\u2026",
+   "created_at": "2025-12-10T05:38:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2605270783",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605915318,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Check PyPI for version information and release dates echo \"=== Checking pytest version info ===\" curl -s https://pypi.org/pypi/pytest/json | jq '{version: .info.version, released: .info.last_modified}' echo \"=== Checking pytest-cov version info ===\" curl -s https://pypi.org/pypi/pytest-cov/json | jq '{version: .info.version, released: .info.last_modified}' echo \"=== Checking pytest-mock version info ===\" curl -s https://pypi.org/pypi/pytest-mock/json | jq '{version: .info.version, released: .info.last_modified}' echo \"=== Checking release history for specified versions ==\u2026",
+   "created_at": "2025-12-10T09:42:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2605915318",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605933376,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix duplicate `token` key in Codecov action.** Line 89 and 90 both define the `token` key, causing a YAML syntax error. This will cause the workflow to fail during execution. Apply this diff to remove the duplicate: ```diff flags: python name: nexum_ai-coverage - token: ${{ secrets.CODECOV_TOKEN }} - token: ${{ secrets.CODECOV_TOKEN }} + token: ${{ secrets.CODECOV_TOKEN }} if: always() ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Th\u2026",
+   "created_at": "2025-12-10T09:48:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2605933376",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2605954542,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `llama_cpp Llama model loading exceptions error types` \ud83d\udca1 Result: Brief summary \u2014 common llama_cpp model-loading errors, what they mean, and quick checks: - ValueError: Failed to load model from file: <path> - High-level Python wrapper raised when underlying llama.cpp fails to load the GGUF/ggml file. Check the llama.cpp error lines printed right before this exception for the real cause. ([llama-cpp-python.readthedocs.io](https://llama-cpp-python.readthedocs.io/en/latest/api-reference/?utm_source=openai)) - \"llama_model_load: error loading model: missing tensor '...'\" - A tensor expected by the model (e.g.,\u2026",
+   "created_at": "2025-12-10T09:54:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2605954542",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606020170,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Ruff integration looks good; consolidate Python byte-compilation** The new Python steps correctly: - Set up Python 3.10. - `pip install ruff`. - Run `ruff check nexum_ai/`. - Install dependencies from `nexum_ai/requirements-lock.txt`. However, you now have two byte-compilation steps: - New: `Byte-compile nexum_ai` (`python -m compileall nexum_ai`). - Existing: `Byte-compile nexum_ai (syntax check)` (`python -m compileall -q nexum_ai` at lines 108\u2013109). Running both is redundant. Keeping a single compileall invocation is enough for syntax checking. For example, remove the new step and rely on the existing one: ```diff - name: Install Python dependencies run: pip i\u2026",
+   "created_at": "2025-12-10T10:12:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2606020170",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606020177,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Trim extra blank line flagged by YAMLlint** YAMLlint is complaining about \u201ctoo many blank lines\u201d around line 110. Removing the trailing blank line after the last `Byte-compile nexum_ai (syntax check)` step will quiet that warning: ```diff - name: Byte-compile nexum_ai (syntax check) run: python -m compileall -q nexum_ai - ``` Purely a style/lint clean-up, but it keeps CI linting green. <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test\u2026",
+   "created_at": "2025-12-10T10:12:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2606020177",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606060635,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix broken string interpolation.** The f-string prefix was removed, so this will print the literal text `{self.models_dir}` instead of the actual directory path. Apply this diff to restore the f-string: ```diff - print(\"ModelManager initialized with directory: {self.models_dir}\") + print(f\"ModelManager initialized with directory: {self.models_dir}\") ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to\u2026",
+   "created_at": "2025-12-10T10:23:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2606060635",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606093434,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Remove duplicate byte-compile step.** Lines 96\u201397 and lines 99\u2013100 both execute `python -m compileall nexum_ai`. The earlier step (lines 96\u201397) lacks the `-q` flag used in lines 99\u2013100. Consolidate to a single step. ```diff - - name: Byte-compile nexum_ai - run: python -m compileall nexum_ai - - name: Byte-compile nexum_ai (syntax check) run: python -m compileall -q nexum_ai ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly t\u2026",
+   "created_at": "2025-12-10T10:32:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2606093434",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606093439,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove excess blank line.** YAMLlint reports too many blank lines at line 101. ```diff run: python -m compileall -q nexum_ai - ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion run: python -m compileall -q nexum_ai ``` </details> <!-- suggestion_end --> <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b YAMLlint (1.37.1)</summary> [error] 101-101:\u2026",
+   "created_at": "2025-12-10T10:32:25Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2606093439",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606112898,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **YAML syntax error: Invalid structure of Python setup and installation steps.** The workflow has a critical YAML syntax error. Lines 95\u201396 contain `cache:` and `cache-dependency-path:` keys that appear orphaned after the `run:` key of the \"Install Python dependencies\" step. These keys are invalid in this context and should be part of the `with:` block of the \"Set up Python\" action instead. Additionally, the two separate install steps (lines 92\u201393 and 98\u201399) appear redundant\u2014one installs from the lock file and the other from the base requirements file. Apply this diff to fix the YAML syntax and consolidate the setup: ```diff - name: Set up Python uses: ac\u2026",
+   "created_at": "2025-12-10T10:37:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/36#discussion_r2606112898",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606158900,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove duplicate and redundant byte-compile step.** Lines 120-121 and 124-125 both byte-compile the same `nexum_ai` directory, with the only difference being the `-q` (quiet) flag. This duplication is unnecessary; retain only one byte-compile step. Additionally, line 126 has excessive blank lines. Apply this diff: ```diff - name: Install Python dependencies run: pip install -r nexum_ai/requirements-lock.txt - - name: Byte-compile nexum_ai - run: python -m compileall nexum_ai - - name: Byte-compile nexum_ai (syntax check) - run: python -m compileall -q nexum_ai - + run: python -m compileall nexum_ai ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committ\u2026",
+   "created_at": "2025-12-10T10:49:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2606158900",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606261221,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Trim unnecessary blank lines in Python workflow section.** The Python job has extra blank lines at 100\u2013101 and 104 that add visual clutter. Consolidate to a single blank line between logical groups: ```diff - name: Lint Python run: ruff check nexum_ai/ - - - name: Install Python dependencies run: pip install -r nexum_ai/requirements-lock.txt - ``` <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In .github/workflows/ci.yml around lines 100 to 104, remove the extra blank lines in the Python job section so there is only a single blank line between logical groups; consolidate the spacing by deleting the blank lines at 100\u2013101 and 104 so the \"Install Python de\u2026",
+   "created_at": "2025-12-10T11:21:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2606261221",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606261223,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Include path information in error message.** The error message lacks the expected file path, making it harder to debug download issues. Including the path would improve observability. Apply this diff to restore path information: ```diff - print(\"Model download completed but file not found at expected location\") + print(f\"Model download completed but file not found at expected location: {final_path}\") ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with ind\u2026",
+   "created_at": "2025-12-10T11:21:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2606261223",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606291531,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `numpy 2.3.5 python version requirements support` \ud83d\udca1 Result: NumPy 2.3.5 supports Python 3.11 through 3.14 (release 2.3.5 published Nov 16, 2025). [1][2] Sources: [1] NumPy 2.3.5 release notes. [2] NumPy GitHub releases \u2014 2.3.5 (Nov 16, 2025). --- </details> **CRITICAL: numpy 2.3.5 requires Python 3.11 or higher; CI is using Python 3.10.** The pipeline fails because numpy 2.3.5 only supports Python 3.11\u20133.14. The CI environment running Python 3.10 cannot install this version. Either downgrade numpy to a version compatible with Python 3.10, or upgrade the CI to use Python 3.11 or later. <details> <s\u2026",
+   "created_at": "2025-12-10T11:31:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2606291531",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606483571,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Fix coverage file path mismatch.** The pytest command on line 101 runs `pytest --cov=. --cov-report=xml` from the repository root, which generates `coverage.xml` at the repo root by default. However, the Codecov action on line 106 looks for the file at `./nexum_ai/coverage.xml`, causing the upload to fail. Apply one of these solutions: **Solution 1 (Recommended): Specify the output path explicitly in pytest** ```diff - name: Run pytest run: | - pytest --cov=. --cov-report=xml --cov-report=term-missing + pytest --cov=. --cov-report=xml:nexum_ai/coverage.xml --cov-report=term-missing ``` **Solution 2: Update the Codecov file path** ```diff - name: Upload\u2026",
+   "created_at": "2025-12-10T12:30:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2606483571",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2606507893,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove duplicate byte-compile step.** Lines 96\u201397 and 111\u2013112 both byte-compile the `nexum_ai` module. This redundancy was flagged in the previous review. Keep the first step (without the `-q` flag for visibility in CI output) and remove the second. Apply this diff to remove the duplicate: ```diff - name: Byte-compile nexum_ai (syntax check) - run: python -m compileall -q nexum_ai ``` Also applies to: 111-112 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` .github/workflows/ci.yml around lines 96\u201397 and 111\u2013112: the workflow contains a duplicate byte-compile step for the nexum_ai module; keep the first occurrence at lines 96\u201397 (python -m compileal\u2026",
+   "created_at": "2025-12-10T12:38:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/39#discussion_r2606507893",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189347,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove duplicate `Build documentation` step in Rust job.** The Rust job runs an identical `Build documentation` step twice (lines 58\u201362 and 76\u201379), both with `cargo doc --workspace --no-deps` and `RUSTDOCFLAGS: -D warnings`. Keep one and remove the duplicate to avoid redundant CI work. Apply this diff to remove the first duplicate: ```diff - name: tests run: cargo test --workspace -- --test-threads=1 - - - name: Build documentation - run: cargo doc --workspace --no-deps - env: - RUSTDOCFLAGS: -D warnings - - name: Install cargo-llvm-cov ``` Also applies to: 76-79 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` .github/workflows/ci.yml around lines\u2026",
+   "created_at": "2025-12-10T15:44:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2607189347",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189351,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Trim excessive blank lines to pass YAMLlint.** Remove extra blank lines at 101\u2013102, 105, 111\u2013112, and 136 for cleaner formatting: ```diff - name: Lint Python run: ruff check nexum_ai/ - - - name: Install Python dependencies run: pip install -r nexum_ai/requirements-lock.txt - - name: Byte-compile nexum_ai (syntax check) run: python -m compileall -q nexum_ai - - cache: 'pip' cache: 'python' with: [] - ``` Also applies to: 105-105, 111-112, 136-136 <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In .github/workflows/ci.yml around lines 101-102 (and also at 105, 111-112, and 136), there are excessive blank lines that cause YAMLlint failures; remove th\u2026",
+   "created_at": "2025-12-10T15:44:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2607189351",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189355,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove redundant byte-compilation steps in Python job.** The Python job now has three byte-compile invocations: - Lines 106\u2013107: `python -m compileall nexum_ai` - Lines 109\u2013110: `python -m compileall -q nexum_ai` - Lines 121\u2013122: `python -m compileall nexum_ai` (duplicate of first) This is redundant. A single byte-compile step is sufficient for syntax checking. Consolidate to a single step after dependencies are installed (prefer the `-q` variant for quiet output). Apply this diff to consolidate: ```diff - name: Byte-compile nexum_ai run: python -m compileall nexum_ai - - name: Byte-compile nexum_ai (syntax check) - run: python -m compileall -q nexum_ai -\u2026",
+   "created_at": "2025-12-10T15:44:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2607189355",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189356,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical YAML structure error: Move `cache: 'pip'` into the `Set up Python` step's `with:` block.** The `cache: 'pip'` line is orphaned and floating outside the step definition\u2014it should be nested under the `Set up Python` step's `with:` block at line 94. This breaks the workflow YAML structure and must be fixed. Apply this diff to fix the structure: ```diff - name: Set up Python uses: actions/setup-python@v5 with: python-version: '3.10' + cache: 'pip' - name: Install ruff run: pip install ruff - name: Lint Python run: ruff check nexum_ai/ - - - name: Install Python dependencies run: pip install -r nexum_ai/requirements-lock.txt - - name: Byte-compile n\u2026",
+   "created_at": "2025-12-10T15:44:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2607189356",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189365,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Remove redundant imports that break error handling.** Two import issues in `load_state`: 1. **Critical**: Line 205 imports `joblib` unconditionally, which will raise an `ImportError` if joblib is not installed\u2014before the try-except block at lines 207-211 can handle it gracefully. This defeats the purpose of the error handling. 2. **Minor**: Line 213 re-imports `os`, which is already imported at the module level (line 8). The `save_state` method (lines 178-184) shows the correct pattern: import joblib only inside the try-except block. Apply this diff to remove the redundant imports: ```diff def load_state(self, filepath: Optional[str] = None) -> None: \"\"\u2026",
+   "created_at": "2025-12-10T15:44:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2607189365",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189690,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Duplicate `cache` key causes YAML syntax error.** Line 88 already defines `cache: 'pip'`, and lines 90-92 duplicate this key with additional configuration. YAML does not allow duplicate keys in the same mapping, which will cause workflow parsing to fail. Apply this diff to consolidate the cache configuration: ```diff - name: Set up Python uses: actions/setup-python@v5 with: python-version: \"3.10\" - cache: 'pip' - - - cache: \"pip\" - cache-dependency-path: nexum_ai/requirements.txt - + cache: \"pip\" + cache-dependency-path: nexum_ai/requirements.txt ``` > Committable suggestion skipped: line range outside the PR's diff. <details> <summary>\ud83e\uddf0 Tools\u2026",
+   "created_at": "2025-12-10T15:44:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2607189690",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189699,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Remove duplicate dependency installation step.** This step is redundant with the more comprehensive installation at lines 97-101, which upgrades pip and installs both runtime and test dependencies. Running duplicate installations wastes CI resources and could cause version conflicts. Apply this diff to remove the duplicate: ```diff - - name: Install dependencies - run: pip install -r nexum_ai/requirements.txt - - name: Install dependencies ``` > Committable suggestion skipped: line range outside the PR's diff. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In .github/workflows/ci.yml around lines 94 to 95, remove the duplicate \"Install dependencie\u2026",
+   "created_at": "2025-12-10T15:44:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2607189699",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607189707,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove excess blank line.** YAML formatting rules flag this as having too many blank lines. Apply this diff: ```diff token: ${{ secrets.CODECOV_TOKEN }} if: always() - ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion token: ${{ secrets.CODECOV_TOKEN }} if: always() ``` </details> <!-- suggestion_end --> <details> <summary>\ud83e\uddf0 Tools</summary> <details> <su\u2026",
+   "created_at": "2025-12-10T15:44:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2607189707",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2607218756,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Remove excessive blank lines.** Line 152 contains too many consecutive blank lines, which violates YAML formatting conventions. Apply this diff to remove the extra blank line: ```diff token: ${{ secrets.CODECOV_TOKEN }} if: always() - ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion token: ${{ secrets.CODECOV_TOKEN }} if: always() ``` </details> <!-- su\u2026",
+   "created_at": "2025-12-10T15:51:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2607218756",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2609222376,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Unresolved merge conflict markers block workflow parsing.** Lines 40\u201343 contain merge conflict markers (`<<<<<<< HEAD`, `=======`, `>>>>>>>`). These prevent YAML parsing and must be resolved before the workflow can run. Resolve the conflict by choosing or reconciling the appropriate version of the cache configuration. <details> <summary>\ud83e\uddf0 Tools</summary> <details> <summary>\ud83e\ude9b actionlint (1.7.9)</summary> 40-40: could not parse as YAML: could not find expected ':' (syntax-check) </details> <details> <summary>\ud83e\ude9b YAMLlint (1.37.1)</summary> [error] 42-42: syntax error: could not find expected ':' (syntax) </details> </details> <details> <summary>\ud83e\udd16\u2026",
+   "created_at": "2025-12-11T05:37:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2609222376",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2609222378,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical: Extensive unresolved merge conflicts in Python job setup.** Lines 91\u2013117 contain unresolved merge conflict markers that span the entire Python dependency setup. The conflicts involve: - Duplicate `python-version` specifications - Conflicting cache and dependency-path configurations - Two different dependency installation approaches (requirements-lock.txt vs requirements.txt) - Duplicate byte-compile steps These conflicts prevent YAML parsing. Resolve by: 1. Choosing a single, authoritative Python version 2. Consolidating cache configuration (eliminate duplicates) 3. Selecting one dependency installation approach 4. Removing duplicate build ste\u2026",
+   "created_at": "2025-12-11T05:37:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/37#discussion_r2609222378",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2609323405,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, verify the requirement files exist and show their content echo \"=== Checking requirement files ===\" fd -type f -name 'requirements*' | sort echo -e \"\\n=== Content of requirements files ===\" for file in $(fd -type f -name 'requirements*' | sort); do echo \"--- $file ---\" head -10 \"$file\" echo \"... ($(wc -l < \"$file\") lines total)\" echo \"\" done ``` Repository: aviralgarg05/NexumDB Length of output: 496 --- \ud83c\udfc1 Script executed: ```shell # Verify the actual .github/workflows/ci.yml content at lines 88-96 echo \"=== Verifying .github/workflows/ci.yml lines 85-100 ===\" sed -n '85,100\u2026",
+   "created_at": "2025-12-11T06:19:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2609323405",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2609339156,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cat nexum_ai/requirements.txt ``` Repository: aviralgarg05/NexumDB Length of output: 187 --- \ud83c\udfc1 Script executed: ```shell cat nexum_ai/requirements-lock.txt | head -80 ``` Repository: aviralgarg05/NexumDB Length of output: 1649 --- \ud83c\udfc1 Script executed: ```shell git log --oneline -20 -- nexum_ai/requirements-lock.txt ``` Repository: aviralgarg05/NexumDB Length of output: 113 --- \ud83c\udfc1 Script executed: ```shell git show d94801b --stat ``` Repository: aviralgarg05/NexumDB Length of output: 3511 --- \ud83c\udfc1 Script executed: ```shell git log --all --oneline -- nexum_ai/requirements-lock.txt | head -10 `\u2026",
+   "created_at": "2025-12-11T06:27:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2609339156",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610342236,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `scipy numpy 1.26.4 compatibility latest version` \ud83d\udca1 Result: Yes \u2014 NumPy 1.26.4 is compatible with recent SciPy releases. NumPy 1.26.4 is the latest 1.26.x maintenance release. [1] SciPy 1.16.x series supports NumPy versions >=1.25 (and the SciPy toolchain docs show support for recent 1.23+ / 1.25+ ranges), so SciPy 1.16.x works with NumPy 1.26.4. [2][3] Sources: - NumPy 1.26.4 release notes. [1] - SciPy toolchain / release notes showing supported NumPy ranges and SciPy 1.16.x requirements. [2][3] --- \ud83c\udfc1 Script executed: ```shell cat nexum_ai/requirements-lock.txt | head -100 ``` Repository: aviralgarg\u2026",
+   "created_at": "2025-12-11T12:08:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2610342236",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610372308,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udf10 Web query: `scipy 1.16.2 release date PyPI` \ud83d\udca1 Result: SciPy 1.16.2 was released on September 11, 2025 (available on PyPI). [1][2] Sources: - SciPy news release. [1] - SciPy announcement on the Scientific Python forum (links to the PyPI release). [2] --- \ud83c\udf10 Web query: `scipy 1.16.3 release date` \ud83d\udca1 Result: SciPy 1.16.3 was released on October 28, 2025. [1][2] Sources: [1] SciPy news (release list). [2] SciPy GitHub releases (v1.16.3). --- \ud83c\udf10 Web query: `scipy numpy 1.26.4 compatibility` \ud83d\udca1 Result: Short answer: NumPy 1.26.4 is within the supported NumPy range for modern SciPy releases (SciPy 1.11+ and later patch re\u2026",
+   "created_at": "2025-12-11T12:18:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2610372308",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610396578,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # First, let's read the requirements-lock.txt file to confirm the scipy version head -80 nexum_ai/requirements-lock.txt | tail -10 ``` Repository: aviralgarg05/NexumDB Length of output: 278 --- \ud83c\udfc1 Script executed: ```shell # Also get context around line 76 and the numpy line mentioned sed -n '40,80p' nexum_ai/requirements-lock.txt ``` Repository: aviralgarg05/NexumDB Length of output: 903 --- \ud83c\udf10 Web query: `scipy release history version 1.11.4 1.16.3 release date 2024 2025` \ud83d\udca1 Result: - SciPy 1.11.4 \u2014 released November 18, 2023. [1] - SciPy 1.16.3 \u2014 released October 28, 2025. [2] Sources:\u2026",
+   "created_at": "2025-12-11T12:27:09Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/33#discussion_r2610396578",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610621938,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Symmetric `cost_nested_loop` makes join-order decisions impossible.** With `return left_rows * right_rows`, `cost_nested_loop(A, B)` and `cost_nested_loop(B, A)` are always equal. As a result, `choose_best_join` in `nexum_ai/optimizer.py` can never distinguish join orders and degenerates to a fixed plan, which defeats the purpose of cost-based join ordering. Consider making the cost directional so the planner can prefer, for example, the smaller table as the outer: ```diff -def cost_nested_loop(left_rows, right_rows): - return left_rows * right_rows +def cost_nested_loop(outer_rows, inner_rows): + \"\"\" + Simple nested-loop cost model: + - scan outer once +\u2026",
+   "created_at": "2025-12-11T13:37:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610621938",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610621942,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Selectivity/cardinality helpers work but are stubby and untyped.** `estimate_selectivity` currently ignores `column_stats` and always returns `0.1`, and both functions lack type hints even though this module otherwise uses typing extensively. This is fine as a first placeholder, but you might want to: - Add type hints, e.g.: ```python from typing import Any def estimate_selectivity(column_stats: Any) -> float: ... def estimate_cardinality(table_stats: \"TableStats\", selectivity: float) -> float: ... ``` - Start wiring in real stats, e.g. deriving selectivity from `TableStats.distinct` or histograms once available, so these functions actually use their inputs. That\u2026",
+   "created_at": "2025-12-11T13:37:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610621942",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610621957,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Fix package imports and turn this into an actual test instead of a side-effectful script.** Two issues here: 1. **Imports likely point to the wrong package.** The production modules are under `nexum_ai/` and `nexum_ai/optimizer.py` uses relative imports (`from .stats import analyze`). Importing `from optimizer.stats` / `from optimizer.optimizer` will fail unless there is a separate top-level `optimizer` package. Please align these with the real package layout, e.g. `from nexum_ai.stats import analyze` / `from nexum_ai.optimizer import explain` or relative imports if appropriate for your test runner. 2. **Not structured as a test and runs on import.** Becau\u2026",
+   "created_at": "2025-12-11T13:37:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610621957",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610758357,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Add type hints for parameters and return values.** Per the coding guidelines, Python code should include type hints. Both `cost_scan` and `cost_filter` lack type annotations. Apply this diff to add type hints: ```diff -def cost_scan(rows): +def cost_scan(rows: int) -> int: \"\"\"Cost for scanning a table\"\"\" return rows -def cost_filter(rows): +def cost_filter(rows: int) -> int: \"\"\"Cost for filtering rows\"\"\" return rows ``` As per coding guidelines, Python code should use type hints. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In nexum_ai/cost_model.py around lines 2 to 8, both functions lack type annotations; update their signatures to include\u2026",
+   "created_at": "2025-12-11T14:16:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610758357",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610758362,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Asymmetric cost model now enables meaningful join-order decisions.** The updated implementation correctly treats the first parameter as the outer table, making `cost_nested_loop(A, B)` different from `cost_nested_loop(B, A)`. This resolves the previous concern about symmetric costs. However, add type hints and input validation: ```diff -def cost_nested_loop(outer_rows, inner_rows): +def cost_nested_loop(outer_rows: int, inner_rows: int) -> int: \"\"\" Simple nested-loop cost model: - scan outer once - for each outer row, scan all inner rows => cost ~ outer_rows + outer_rows * inner_rows \"\"\" + if outer_rows < 0 or inner_rows < 0: + raise ValueError(\"Row co\u2026",
+   "created_at": "2025-12-11T14:16:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610758362",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610758380,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove duplicate import.** `Any` is already imported from `typing` on line 6. ```diff -from typing import Any - ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contains no missing lines, and has no issues with indentation. Thoroughly test & benchmark the code to ensure it meets the requirements. ```suggestion ``` </details> <!-- suggestion_end --> <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In nexum_ai/optimizer.py around line 12, there's a duplicate import \"Any\" from typing; remove this redunda\u2026",
+   "created_at": "2025-12-11T14:16:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610758380",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610758390,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Add type hints and docstring to `choose_best_join`.** The function logic is correct and now works properly with the asymmetric cost model. However, it lacks type hints and a docstring. ```diff -def choose_best_join(A_stats, B_stats): +def choose_best_join(A_stats: \"TableStats\", B_stats: \"TableStats\") -> tuple[str, float]: + \"\"\" + Choose the best join order between two tables based on cost. + + Args: + A_stats: Statistics for table A + B_stats: Statistics for table B + + Returns: + Tuple of (plan_string, estimated_cost) + \"\"\" # The first argument is treated as the outer table cost1 = cost_nested_loop(A_stats.row_count, B_stats.row_count) cost2 = cost_ne\u2026",
+   "created_at": "2025-12-11T14:16:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610758390",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610758394,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Test structure improved but assertions remain minimal.** The refactoring addresses previous concerns\u2014imports are correct and the code is now properly wrapped in a test function. However, the assertions only verify types without checking optimizer correctness. Consider strengthening the test: ```diff def test_explain_output(): + \"\"\"Test that optimize returns a valid plan with reasonable cost.\"\"\" # Setup in-memory tables class Table: def __init__(self, name, rows): self.name = name self.rows = rows A = Table(\"A\", [{\"x\": i} for i in range(100)]) B = Table(\"B\", [{\"y\": i} for i in range(10)]) # Analyze tables stats = {\"A\": analyze(A), \"B\": analyze(B)} # Create a fake\u2026",
+   "created_at": "2025-12-11T14:16:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610758394",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610812607,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Cardinality helpers are still mostly placeholders; consider tightening types and using real stats.** Right now `estimate_selectivity` ignores `column_stats` and always returns `0.1`, and `estimate_cardinality` takes `table_stats: Any` even though a `TableStats` type exists elsewhere. This is fine for a first cut, but to move toward a more meaningful cost model you might: - Narrow the type of `table_stats` to `\"TableStats\"` (or the actual stats type) instead of `Any`. - Start deriving selectivity from available stats (e.g., distinct counts or simple histograms) rather than a constant, with a safe fallback to `0.1` when data is missing. That keeps the public API st\u2026",
+   "created_at": "2025-12-11T14:30:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2610812607",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610909464,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell cat nexum_ai/rl_agent.py | head -50 ``` Repository: aviralgarg05/NexumDB Length of output: 1557 --- \ud83c\udfc1 Script executed: ```shell grep -n \"^import\\|^from\" nexum_ai/rl_agent.py | head -20 ``` Repository: aviralgarg05/NexumDB Length of output: 120 --- \ud83c\udfc1 Script executed: ```shell sed -n '195,240p' nexum_ai/rl_agent.py ``` Repository: aviralgarg05/NexumDB Length of output: 1686 --- \ud83c\udfc1 Script executed: ```shell # Check if os module is imported anywhere or used in the file rg \"import os|os\\\\.path\" nexum_ai/rl_agent.py ``` Repository: aviralgarg05/NexumDB Length of output: 100 --- \ud83c\udfc1 Script ex\u2026",
+   "created_at": "2025-12-11T14:55:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2610909464",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2610928379,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Critical indentation error + missing joblib import.** The `load_state` method has two critical issues: 1. **Indentation**: The entire method definition (lines 203-223) is incorrectly indented, making it a nested function inside `save_state` rather than a class method. This makes `load_state` inaccessible via `agent.load_state()` and will cause an `AttributeError` at runtime. 2. **Missing import**: Line 210 uses `joblib.load()` but `joblib` is never imported in this version. This will cause a `NameError` if the code is somehow reached. Apply this diff to fix the indentation and add proper joblib import handling: ```diff - def load_state(self, filepath: O\u2026",
+   "created_at": "2025-12-11T14:59:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2610928379",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2619741822,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Convert to proper unit test with assertions instead of print-based verification.** This test module still has several critical structural issues: 1. **No test framework**: The code doesn't use `unittest`, `pytest`, or any testing framework. Tests should be discoverable and runnable by standard test runners. 2. **Executes on import**: All code runs at module level, which means it executes whenever the module is imported. This breaks test discovery and makes the module have side effects. 3. **Zero assertions**: There are no `assert` statements. Expected values are only documented in comments (lines 14-16, 20), but nothing actually validates correctness. A te\u2026",
+   "created_at": "2025-12-15T14:48:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2619741822",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2619764565,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider adding higher-level optimizer tests (join order / cost model / Q-learning)** These helper tests are solid but only validate low-level selectivity/cardinality math. Given the PR\u2019s goals (cost-based join ordering, `optimize()`/`explain()`, and Q-learning), consider adding separate tests that: - Build small in-memory schemas/queries and assert chosen join order and plan shape. - Check that `optimize()` returns lower-cost plans when statistics change. - Verify that Q-learning updates actually influence subsequent plan choices. This would better exercise the end-to-end optimizer behavior beyond these helpers. <!-- fingerprinting:phantom:poseidon:olive --> <!-\u2026",
+   "created_at": "2025-12-15T14:55:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2619764565",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2619824789,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider excluding coverage.xml from version control** This Cobertura report is a large, host\u2011specific build artifact (including an absolute Windows path in `<source>`). It\u2019s usually cleaner to generate it in CI and ignore it in the repo (e.g., via `.gitignore`) unless you have a specific requirement to track coverage reports in Git. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` nexum_ai/coverage.xml lines 1-7: this Cobertura coverage.xml is a host-specific build artifact (contains an absolute Windows path) and should not be checked into source control; remove coverage.xml from the repository (git rm --cached if you need to preserve history), add an ent\u2026",
+   "created_at": "2025-12-15T15:10:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/38#discussion_r2619824789",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2625760414,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Remove auto-generated coverage report from version control.** This is a generated coverage artifact that should not be committed. Generated files like coverage reports change with every test run, pollute the Git history, and should be excluded from the repository. **Action:** Add `coverage.xml` to `.gitignore` and regenerate coverage metrics via CI/CD pipeline instead of storing in the repo. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In nexum_ai/coverage.xml lines 1-990: this is an auto-generated coverage report that should not be committed; remove it from version control, add coverage.xml (or a pattern like coverage*.xml) to .gitignore, commit the .\u2026",
+   "created_at": "2025-12-17T06:26:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2625760414",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2625760416,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Expand test coverage to validate end-to-end optimizer behavior beyond helpers.** The test suite properly validates helper functions (`estimate_selectivity`, `estimate_cardinality`) with correct assertions and structure. However, the PR objectives specify join order optimization, `optimize()`, and `explain()` functionality, but no tests verify these higher-level features. Prior review feedback suggested adding tests for join ordering and plan selection; these remain unaddressed. Consider adding: ```python def test_optimize_joins_smaller_table_first(self): \"\"\"Verify optimizer chooses cheaper join order.\"\"\" # Setup: Table A (100 rows), Table B (10 rows) # Expected:\u2026",
+   "created_at": "2025-12-17T06:26:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2625760416",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2625830519,
+   "body": "Thanks for the suggestion. This PR intentionally focuses on validating optimizer helper functions (estimate_selectivity and estimate_cardinality), which are foundational pieces. End-to-end tests for optimize(), explain(), and join ordering will be added in a follow-up PR once those APIs and plan representations are implemented and stabilized.",
+   "created_at": "2025-12-17T06:55:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2625830519",
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "id": 2625832423,
+   "body": "<details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ``` #!/bin/bash # Check if optimize() and explain() functions are implemented in optimizer.py echo \"=== Checking for optimize() and explain() in nexum_ai/optimizer.py ===\" if [ -f nexum_ai/optimizer.py ]; then echo \"File exists, searching for function definitions...\" rg -n \"^def (optimize|explain)\\(\" nexum_ai/optimizer.py else echo \"File not found\" fi echo \"\" echo \"=== Getting more context on these functions ===\" ast-grep --pattern 'def optimize($$$) { $$$ }' nexum_ai/optimizer.py 2>/dev/null || true ast-grep --pattern 'def explain($$$) { $$$ }' nexum_ai/optimizer.py 2>/dev/null || true ``` Length of output: 219 --- </details>\u2026",
+   "created_at": "2025-12-17T06:56:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/43#discussion_r2625832423",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766637,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ **Remove invalid `--output-format json` flag.** Criterion.rs `--output-format` supports only \"criterion\" and \"bencher\" values, not \"json\". Replace with `--noplot` to skip plot generation. Criterion.rs automatically saves JSON files (estimates.json, sample.json, tukey.json) to `target/criterion/<benchmark>/new/`, but these are private implementation details that may change. For stable machine-readable JSON output in CI, use cargo-criterion with the `--message-format=json` argument instead of `cargo bench`. ```diff - name: Run benchmarks on current branch run: | cd nexum_core - cargo bench --bench storage_bench -- --output-format json | tee current_bench.js\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766637",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766644,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Benchmarks may not exist on main branch, causing CI failure.** If this PR introduces the benchmark files for the first time, checking out `origin/main` and running the benchmarks will fail because: 1. The benchmark files (`storage_bench.rs`, etc.) won't exist on main 2. The Criterion dev-dependency may not be in `Cargo.toml` on main Consider adding error handling or conditionally skipping the main branch comparison if benchmarks don't exist: <details> <summary>\ud83d\udd0e Suggested fix (graceful fallback):</summary> ```diff - name: Checkout main branch - run: git checkout origin/main + run: git checkout origin/main || echo \"Could not checkout main\" - name: Run bench\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766644",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766656,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Comparison step doesn't actually compare results.** The step titled \"Compare benchmark results\" only writes static completion messages without parsing or comparing the JSON/text output from either branch. This defeats the purpose of running benchmarks on both branches. Consider using a tool like `critcmp` or parsing the Criterion output to provide actual performance regression detection: <details> <summary>\ud83d\udd0e Example using critcmp for actual comparison:</summary> ```diff - name: Compare benchmark results run: | + cargo install critcmp || true echo \"## Benchmark Results\" >> $GITHUB_STEP_SUMMARY echo \"\" >> $GITHUB_STEP_SUMMARY - echo \"Benchmarks completed suc\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766656",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766662,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **INSERT benchmark pre-populates unnecessary data.** Line 131 pre-populates 1,000 records before benchmarking INSERT operations. This affects cache behavior and may not accurately represent INSERT performance on empty or smaller tables. Consider testing both scenarios: <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff fn executor_insert_benchmark(c: &mut Criterion) { let mut group = c.benchmark_group(\"executor_insert\"); for batch_size in [1, 10, 100, 1000].iter() { group.throughput(Throughput::Elements(*batch_size as u64)); // Generate INSERT statement with multiple rows let mut values = Vec::new(); for i in 0..*batch_size { values.push(format!(\"({}, 'NewUser\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766662",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766667,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **parse_where_clause panic message could be more helpful.** Line 29 panics with a generic message. For debugging failed benchmarks, it would be helpful to know which SQL fragment failed to parse. <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff fn parse_where_clause(sql: &str) -> Expr { let dialect = GenericDialect {}; let ast = Parser::parse_sql(&dialect, &format!(\"SELECT * FROM t WHERE {}\", sql)).unwrap(); if let Statement::Query(query) = &ast[0] { if let sqlparser::ast::SetExpr::Select(select) = &*query.body { if let Some(where_expr) = &select.selection { return where_expr.clone(); } } } - panic!(\"Failed to parse WHERE clause\"); + panic!(\"Failed to parse\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766667",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766673,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider rephrasing \"very large SQL statements\".** As suggested by static analysis, \"very large\" is a weak intensifier. Consider being more specific, such as \"SQL statements with 10,000+ rows\" (which aligns with the actual benchmark implementation). <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff -- **Large Queries**: Performance with very large SQL statements +- **Large Queries**: Performance with large SQL statements (10,000+ rows) ``` </details> <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately replaces the highlighted code, contain\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766673",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766677,
+   "body": "_\ud83d\udee0\ufe0f Refactor suggestion_ | _\ud83d\udfe0 Major_ **Fix markdown formatting issues for better rendering.** Multiple headings lack blank lines before/after, and some fenced code blocks are missing language specifiers or blank lines. This affects rendering quality in various Markdown viewers. As per coding guidelines, documentation formatting should be consistent and correct. <details> <summary>\ud83d\udd0e Key areas to fix:</summary> 1. Add blank lines around headings (lines 29, 36, 44, 52, 83, 94) 2. Add blank lines around fenced code blocks (lines 84, 95) 3. Add language specifier to the code fence at line 95 (should be `bash`) Example fix for lines 52-56: ```diff - **Batch Evaluation**: Filter performance across\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766677",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766679,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Fix code block formatting in the example.** The example benchmark structure uses emphasis (bold) for section comments instead of proper code comments, which may confuse readers trying to copy the example. <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff ### Example Benchmark Structure ```rust fn my_new_benchmark(c: &mut Criterion) { let mut group = c.benchmark_group(\"my_feature\"); for size in [100, 1000, 10000].iter() { group.throughput(Throughput::Elements(*size as u64)); group.bench_with_input( BenchmarkId::new(\"operation\", size), size, |b, &size| { b.iter_batched( - || setup_test_data(size), + || setup_test_data(size), // Setup phase |data| black_box(pe\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766679",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766682,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Error handling benchmark doesn't measure useful performance.** This benchmark measures the performance of error handling, but the implementation has a flaw: it only checks `is_err()` without actually consuming the error. This may not reflect real-world error handling costs where errors are propagated or logged. Consider updating to measure actual error consumption: <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff fn parse_error_handling(c: &mut Criterion) { let mut group = c.benchmark_group(\"sql_parse_errors\"); let invalid_statements = vec![ \"INVALID SQL STATEMENT\", \"SELECT * FROM\", \"INSERT INTO users VALUES\", \"CREATE TABLE ()\", \"SELECT * FROM users\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766682",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766688,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Large query benchmark has excessive setup overhead.** The benchmark generates a 10,000-row INSERT statement inside the hot path (lines 144-152), which means string allocation and formatting costs are included in the parsing measurement. This should be moved to setup. <details> <summary>\ud83d\udd0e Apply this diff to isolate setup:</summary> ```diff fn parse_large_query_benchmark(c: &mut Criterion) { let mut group = c.benchmark_group(\"sql_parse_large\"); - // Generate a very large INSERT statement - let mut large_values = Vec::new(); - for i in 0..10000 { - large_values.push(format!(\"({}, 'User{}', {}, 'email{}@example.com')\", - i, i, 20 + (i % 50), i)); - } - let lar\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766688",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766691,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **run_benchmark function should preserve exit code.** The function currently returns 1 on failure (line 39), but this could mask the actual benchmark exit code, which might be useful for debugging. <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff run_benchmark() { local bench_name=$1 local description=$2 echo \"\ud83d\udd27 Running $description...\" echo \" Benchmark: $bench_name\" # Run the benchmark and capture output - if cargo bench --bench \"$bench_name\" 2>&1 | tee \"$RESULTS_DIR/${bench_name}_output.log\"; then + local exit_code=0 + cargo bench --bench \"$bench_name\" 2>&1 | tee \"$RESULTS_DIR/${bench_name}_output.log\" || exit_code=$? + + if [ $exit_code -eq 0 ]; then echo\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766691",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630766695,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Summary generation should handle git command failures gracefully.** Lines 68-69 use `|| echo \"Unknown\"` to handle git failures, but stderr from git commands will still be displayed. This could create noise in the summary when git is not available or the directory isn't a git repository. <details> <summary>\ud83d\udd0e Apply this diff:</summary> ```diff # Generate summary echo \"\ud83d\udccb Generating benchmark summary...\" cat > \"$RESULTS_DIR/summary.md\" << EOF # NexumDB Core Benchmark Results **Run Date:** $(date) -**Git Commit:** $(git rev-parse HEAD 2>/dev/null || echo \"Unknown\") -**Git Branch:** $(git branch --show-current 2>/dev/null || echo \"Unknown\") +**Git Commit:** $(git rev-p\u2026",
+   "created_at": "2025-12-18T11:57:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630766695",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630798205,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider handling potential git stash edge cases.** `git stash` may behave unexpectedly if there are untracked files or if Criterion's output files are generated during the PR benchmark run. Consider using `git stash push --include-untracked` or cleaning the workspace before checkout: ```diff - name: Run benchmarks on main branch (if they exist) if: steps.check_main.outputs.benchmarks_exist == 'true' run: | - git stash + git stash push --include-untracked || true git checkout origin/main ``` <!-- suggestion_start --> <details> <summary>\ud83d\udcdd Committable suggestion</summary> > \u203c\ufe0f **IMPORTANT** > Carefully review the code before committing. Ensure that it accurately re\u2026",
+   "created_at": "2025-12-18T12:07:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630798205",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630798209,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Summary step provides status but no actual performance comparison.** The current implementation writes a static summary. For regression detection, consider integrating `critcmp` or parsing Criterion's output to detect actual performance changes: ```bash cargo install critcmp critcmp nexum_core/target/criterion/ --threshold 5 ``` This would surface regressions >5% automatically. However, the current approach of directing users to logs and artifacts is acceptable for a first iteration. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` .github/workflows/ci.yml around lines 130 to 151: the current summary step only writes a static message and does not surface r\u2026",
+   "created_at": "2025-12-18T12:07:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630798209",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630798211,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe0 Major_ **Generated coverage file should not be committed to the repository.** This `coverage.xml` file is a generated artifact from `coverage.py` and should be excluded from version control: 1. **Exposes local paths** \u2013 Line 6 contains an absolute Windows path (`C:\\Users\\shekh\\NexumDB\\nexum_ai`) which leaks developer machine information. 2. **Merge conflicts** \u2013 Generated files with timestamps and line-hit data change frequently, causing unnecessary conflicts. 3. **Repository bloat** \u2013 Coverage reports should be generated in CI and uploaded to services like Codecov (which your CI already does). Consider adding this file to `.gitignore` and removing it from this PR:\u2026",
+   "created_at": "2025-12-18T12:07:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630798211",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630845480,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udd34 Critical_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Explore repository structure to understand how StorageEngine and Executor work find . -type f -name \"*.rs\" | grep -E \"(storage|executor)\" | head -20 ``` Repository: aviralgarg05/NexumDB Length of output: 310 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for StorageEngine and Executor implementations rg -l \"struct StorageEngine|impl StorageEngine\" --type=rs | head -5 rg -l \"struct Executor|impl Executor\" --type=rs | head -5 ``` Repository: aviralgarg05/NexumDB Length of output: 117 --- \ud83c\udfc1 Script executed: ```shell #!/bin/bash # Search for key formatting patterns i\u2026",
+   "created_at": "2025-12-18T12:21:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630845480",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630845484,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Small sample size may reduce statistical reliability.** Line 239 sets `sample_size(10)`, which is much smaller than Criterion's default (100). This may result in: - Wide confidence intervals - Reduced ability to detect performance regressions - Less reliable benchmark results Additionally, the comment on line 241 mentions reducing dataset sizes for CI, but the current sizes (10k, 25k) are significantly smaller than the \"50,000+ records\" mentioned in the PR description. <details> <summary>\ud83d\udd0e Consider increasing the sample size:</summary> ```diff - group.sample_size(10); + group.sample_size(20); // or 30 for better statistical significance ``` </details> <!--\u2026",
+   "created_at": "2025-12-18T12:21:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630845484",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2630845490,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Benchmark name misleading: uses filtered query, not full table scan.** Line 254 executes `SELECT * FROM users WHERE age > 30`, which includes a WHERE filter, but the benchmark ID on line 246 is named `\"full_table_scan\"`. This creates confusion about what's being measured. <details> <summary>\ud83d\udd0e Consider renaming for clarity:</summary> ```diff group.bench_with_input( - BenchmarkId::new(\"full_table_scan\", dataset_size), + BenchmarkId::new(\"filtered_scan\", dataset_size), dataset_size, ``` </details> > Committable suggestion skipped: line range outside the PR's diff. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In nexum_core/benches/executor_bench.rs\u2026",
+   "created_at": "2025-12-18T12:21:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2630845490",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631161862,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider using `LargeInput` batch size for larger data sizes.** `BatchSize::SmallInput` creates a new setup per iteration, which is appropriate for small tests but may add significant overhead for the 100,000-element case. For large data sizes, consider using `BatchSize::LargeInput` or `BatchSize::PerIteration` to reduce setup frequency and get more accurate throughput measurements. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In nexum_core/benches/storage_bench.rs around lines 17 to 29, the benchmark uses criterion::BatchSize::SmallInput which recreates the storage engine for every iteration and will skew results for large sizes (e.g., 100,000 element\u2026",
+   "created_at": "2025-12-18T13:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2631161862",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631161864,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Consider adding `Throughput` for consistent metrics.** Unlike other benchmark functions, this one doesn't configure `Throughput`. Adding `group.throughput(Throughput::Elements(*prefix_size as u64))` would enable reporting scanned items per second, consistent with the other benchmarks. <details> <summary>\ud83d\udd0e Suggested fix:</summary> ```diff fn storage_scan_prefix(c: &mut Criterion) { let mut group = c.benchmark_group(\"storage_scan\"); for prefix_size in [10, 100, 1000].iter() { + group.throughput(Throughput::Elements(*prefix_size as u64)); + group.bench_with_input( BenchmarkId::new(\"prefix_scan\", prefix_size), ``` </details> <!-- suggestion_start --> <details> <summa\u2026",
+   "created_at": "2025-12-18T13:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2631161864",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2631161870,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ <details> <summary>\ud83e\udde9 Analysis chain</summary> \ud83c\udfc1 Script executed: ```shell # Check if the file exists and get context around line 8 head -20 nexum_core/src/executor/mod.rs # Check the filter module structure ls -la nexum_core/src/executor/ # Check if filter.rs has documentation head -30 nexum_core/src/executor/filter.rs | cat -n # Check for public items in filter module grep -n \"^pub \" nexum_core/src/executor/filter.rs | head -20 # Check benchmark usage find . -name \"filter_bench.rs\" -o -name \"*bench*.rs\" 2>/dev/null | head -10 ``` Repository: aviralgarg05/NexumDB Length of output: 2221 --- \ud83c\udfc1 Script executed: ```shell # First, verify the file exists and check\u2026",
+   "created_at": "2025-12-18T13:44:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/44#discussion_r2631161870",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637100555,
+   "body": "_\ud83e\uddf9 Nitpick_ | _\ud83d\udd35 Trivial_ **Clarify naming: `new_with_cache_disabled` disables result cache, not semantic cache.** Both branches call `.with_cache()` which enables the semantic cache. This is correct behavior, but the naming could be confusing. Consider adding a brief comment clarifying that `new_with_cache_disabled` only disables the file-based result cache, while `.with_cache()` enables the semantic cache layer. <details> <summary>\ud83e\udd16 Prompt for AI Agents</summary> ``` In nexum_cli/src/main.rs around lines 19 to 23, the constructor name new_with_cache_disabled is misleading because it only disables the file-based result cache while the subsequent .with_cache() call still enables the semanti\u2026",
+   "created_at": "2025-12-20T12:54:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#discussion_r2637100555",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 2637100556,
+   "body": "_\u26a0\ufe0f Potential issue_ | _\ud83d\udfe1 Minor_ **Doc example has incorrect API signature.** The example shows `cache.get(\"SELECT * FROM users\", &data_hash)?` passing `data_hash` by reference, but the actual method signature takes `data_hash: u64` by value. <details> <summary>\ud83d\udd0e Proposed fix</summary> ```diff -//! if let Some(result) = cache.get(\"SELECT * FROM users\", &data_hash)? { +//! if let Some(result) = cache.get(\"SELECT * FROM users\", data_hash)? { //! return result; //! } //! //! // Execute query and cache result //! let result = execute_query(); -//! cache.put(\"SELECT * FROM users\", &data_hash, &result)?; +//! cache.put(\"SELECT * FROM users\", data_hash, &result)?; ``` </details> <!-- suggestion_st\u2026",
+   "created_at": "2025-12-20T12:54:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/54#discussion_r2637100556",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  }
+ ]
+}

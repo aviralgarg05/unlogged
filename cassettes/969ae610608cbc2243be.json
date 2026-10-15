@@ -1,0 +1,1205 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "number": 199,
+   "title": "chore(deps): bump tokio from 1.53.1 to 1.53.2 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [tokio](https://github.com/tokio-rs/tokio). Updates `tokio` from 1.53.1 to 1.53.2 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.53.2</h2> <h1>1.53.2 (October 3rd, 2026)</h1> <h3>Fixed</h3> <ul> <li>fs: handle integer overflow in buffered relative seek (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8574\">#8574</a>)</li> <li>io: revert &quot;always cleanup <code>AsyncFd</code> registration list on deregister&quot; (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8540\">#8540</a>)</li> <li>process:\u2026",
+   "created_at": "2026-10-12T22:20:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/199",
+   "state": "closed",
+   "merged_at": "2026-10-12T22:21:06Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 198,
+   "title": "chore(deps): bump comfy-table from 7.2.2 to 8.0.1",
+   "body": "Bumps [comfy-table](https://github.com/nukesor/comfy-table) from 7.2.2 to 8.0.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/nukesor/comfy-table/releases\">comfy-table's releases</a>.</em></p> <blockquote> <h2>v8.0.0</h2> <h2>[8.0.0] - 05.08.2026</h2> <h3>Breaking Changes</h3> <ul> <li> <p>The following types and functions have been removed:</p> <ul> <li><code>TableComponent</code> enum</li> <li>The <code>modifiers</code> module and <code>Table::apply_modifier</code> have been removed.</li> <li><code>Table::current_style_as_preset</code></li> <li><code>Table::set_style</code></li> <li><code>Table::style</code></li> <li><code>Table::remove_style<\u2026",
+   "created_at": "2026-10-05T07:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/198",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 197,
+   "title": "chore(deps): bump pyo3 from 0.29.2 to 0.29.3 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [pyo3](https://github.com/pyo3/pyo3). Updates `pyo3` from 0.29.2 to 0.29.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.29.3</h2> <p>This release is a series of fixes worth landing to the PyO3 0.29 series; the PyO3 0.30 release is planned to follow within a few weeks, however during the development cycle a number of rough edges were discovered which were deemed worth a backport.</p> <p>The patch broadly includes:</p> <ul> <li>a further fix the to the opt-out of <code>raw-dylib</code> linking for Windows introduced in PyO3 0.2\u2026",
+   "created_at": "2026-10-05T07:24:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/197",
+   "state": "closed",
+   "merged_at": "2026-10-05T07:24:23Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 196,
+   "title": "chore(deps): bump thiserror from 1.0.69 to 2.0.21",
+   "body": "Bumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.69 to 2.0.21. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/thiserror/releases\">thiserror's releases</a>.</em></p> <blockquote> <h2>2.0.21</h2> <ul> <li>Fix parsing of generic unit variants in display expressions (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/459\">#459</a>)</li> </ul> <h2>2.0.20</h2> <ul> <li>Suppress redundant_field_names clippy lint in generated code (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/454\">#454</a>)</li> </ul> <h2>2.0.19</h2> <ul> <li>Update to syn 3</li> </ul> <h2>2.0.18</h2> <ul> <li>Make compatible with projec\u2026",
+   "created_at": "2026-09-28T07:24:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/196",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 195,
+   "title": "chore(deps): bump sqlparser from 0.62.0 to 0.63.0",
+   "body": "Bumps [sqlparser](https://github.com/apache/datafusion-sqlparser-rs) from 0.62.0 to 0.63.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/85b1a6f2223bf95d98cf1bc504971abd191dc869\"><code>85b1a6f</code></a> chore: Bump version to 0.63.0 and add changelog (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2481\">#2481</a>)</li> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/dc8f0c4fe539e4d5504d88761097ee697d10c21a\"><code>dc8f0c4</code></a> Update sqlparser_derive to syn 3.0 (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2483\">#2483</a>)</li> <li><a href=\u2026",
+   "created_at": "2026-09-21T07:24:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/195",
+   "state": "closed",
+   "merged_at": "2026-09-21T07:24:41Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 194,
+   "title": "chore(deps): bump clap from 4.6.6 to 4.6.7 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [clap](https://github.com/clap-rs/clap). Updates `clap` from 4.6.6 to 4.6.7 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/clap-rs/clap/releases\">clap's releases</a>.</em></p> <blockquote> <h2>v4.6.7</h2> <h2>[4.6.7] - 2026-09-14</h2> <h3>Features</h3> <ul> <li><em>(derive)</em> Add <code>#[command(defer = &lt;bool&gt;)]</code> attribute to opt-in to lazy initialisation of subcommands</li> </ul> </blockquote> </details> <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/clap-rs/clap/blob/main/CHANGELOG.md\">clap's changelog</a>.</em></p> <blockquote> <h2>[4.6.7] - 2\u2026",
+   "created_at": "2026-09-21T07:24:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/194",
+   "state": "closed",
+   "merged_at": "2026-09-21T07:24:32Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 193,
+   "title": "chore(deps): bump log from 0.4.33 to 0.4.34 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [log](https://github.com/rust-lang/log). Updates `log` from 0.4.33 to 0.4.34 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/log/releases\">log's releases</a>.</em></p> <blockquote> <h2>0.4.34</h2> <h2>What's Changed</h2> <ul> <li>doc: Add context-logger utility to README by <a href=\"https://github.com/alekseysidorov\"><code>@\u200balekseysidorov</code></a> in <a href=\"https://redirect.github.com/rust-lang/log/pull/735\">rust-lang/log#735</a></li> <li>Add alloc support for boxed loggers by <a href=\"https://github.com/malezjaa\"><code>@\u200bmalezjaa</code></a> in <a href=\"https://redirect.github.com/rust-\u2026",
+   "created_at": "2026-08-31T07:22:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/193",
+   "state": "closed",
+   "merged_at": "2026-08-31T07:22:54Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 192,
+   "title": "chore(deps): bump thiserror from 1.0.69 to 2.0.20",
+   "body": "Bumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.69 to 2.0.20. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/thiserror/releases\">thiserror's releases</a>.</em></p> <blockquote> <h2>2.0.20</h2> <ul> <li>Suppress redundant_field_names clippy lint in generated code (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/454\">#454</a>)</li> </ul> <h2>2.0.19</h2> <ul> <li>Update to syn 3</li> </ul> <h2>2.0.18</h2> <ul> <li>Make compatible with project-level <code>needless_lifetimes = &quot;forbid&quot;</code> (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/443\">#443</a>, thanks <a href=\"https://github.com/\u2026",
+   "created_at": "2026-08-17T07:24:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/192",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 191,
+   "title": "chore(deps): bump comfy-table from 7.2.2 to 8.0.0",
+   "body": "Bumps [comfy-table](https://github.com/nukesor/comfy-table) from 7.2.2 to 8.0.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/nukesor/comfy-table/releases\">comfy-table's releases</a>.</em></p> <blockquote> <h2>v8.0.0</h2> <h2>[8.0.0] - 05.08.2026</h2> <h3>Breaking Changes</h3> <ul> <li> <p>The following types and functions have been removed:</p> <ul> <li><code>TableComponent</code> enum</li> <li>The <code>modifiers</code> module and <code>Table::apply_modifier</code> have been removed.</li> <li><code>Table::current_style_as_preset</code></li> <li><code>Table::set_style</code></li> <li><code>Table::style</code></li> <li><code>Table::remove_style<\u2026",
+   "created_at": "2026-08-10T07:24:24Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/191",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 190,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [pyo3](https://github.com/pyo3/pyo3) and [clap](https://github.com/clap-rs/clap). Updates `pyo3` from 0.29.0 to 0.29.2 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.29.2</h2> <p>This patch fixes a regression in PyO3 0.29.1 which broke PyPy 3.11 compatibility (<code>#[pyclass]</code> types would crash PyPy on instance deletion).</p> <p>A few further fixes have also landed with similar themes to PyO3 0.29.1: fixes to minor reference counting bugs, rough edges which would cause crashes, issues which would cause failed builds, an\u2026",
+   "created_at": "2026-08-10T07:24:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/190",
+   "state": "closed",
+   "merged_at": "2026-08-10T07:24:28Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 189,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [tokio](https://github.com/tokio-rs/tokio) and [clap](https://github.com/clap-rs/clap). Updates `tokio` from 1.53.0 to 1.53.1 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.53.1</h2> <h1>1.53.1 (July 20th, 2026)</h1> <h3>Fixed</h3> <ul> <li>signal: restore MSRV by removing <code>OnceLock::wait</code> from the Windows handler (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8300\">#8300</a>)</li> </ul> <h3>Fixed (unstable)</h3> <ul> <li>time: fix alt timer cancellation and insertion race (<a href=\"https://redi\u2026",
+   "created_at": "2026-07-27T07:24:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/189",
+   "state": "closed",
+   "merged_at": "2026-07-27T07:24:58Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 188,
+   "title": "chore(deps): bump thiserror from 1.0.69 to 2.0.19",
+   "body": "Bumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.69 to 2.0.19. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/thiserror/releases\">thiserror's releases</a>.</em></p> <blockquote> <h2>2.0.19</h2> <ul> <li>Update to syn 3</li> </ul> <h2>2.0.18</h2> <ul> <li>Make compatible with project-level <code>needless_lifetimes = &quot;forbid&quot;</code> (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/443\">#443</a>, thanks <a href=\"https://github.com/LucaCappelletti94\"><code>@\u200bLucaCappelletti94</code></a>)</li> </ul> <h2>2.0.17</h2> <ul> <li>Use differently named __private module per patch release (<a href=\"https://redirec\u2026",
+   "created_at": "2026-07-20T07:25:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/188",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 187,
+   "title": "chore(deps): bump the rust-minor-patch group with 6 updates",
+   "body": "Bumps the rust-minor-patch group with 6 updates: | Package | From | To | | --- | --- | --- | | [anyhow](https://github.com/dtolnay/anyhow) | `1.0.103` | `1.0.104` | | [tokio](https://github.com/tokio-rs/tokio) | `1.52.3` | `1.53.0` | | [serde](https://github.com/serde-rs/serde) | `1.0.228` | `1.0.229` | | [serde_json](https://github.com/serde-rs/json) | `1.0.150` | `1.0.151` | | [regex](https://github.com/rust-lang/regex) | `1.13.0` | `1.13.1` | | [clap](https://github.com/clap-rs/clap) | `4.6.1` | `4.6.2` | Updates `anyhow` from 1.0.103 to 1.0.104 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em><\u2026",
+   "created_at": "2026-07-20T07:25:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/187",
+   "state": "closed",
+   "merged_at": "2026-07-20T07:25:32Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 186,
+   "title": "chore(deps): bump regex from 1.12.4 to 1.13.0 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [regex](https://github.com/rust-lang/regex). Updates `regex` from 1.12.4 to 1.13.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/regex/blob/master/CHANGELOG.md\">regex's changelog</a>.</em></p> <blockquote> <h1>1.13.0 (2026-07-09)</h1> <p>This release includes a new API, a <code>regex!</code> macro, for lazy compilation of a regex from a string literal. If you use regexes a lot, it's likely you've already written one exactly like it. The new macro can be used like this:</p> <pre lang=\"rust\"><code>use regex::regex; <p>fn is_match(line: &amp;str) -&gt; bool {<br /> // The regex will be compiled a\u2026",
+   "created_at": "2026-07-13T07:24:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/186",
+   "state": "closed",
+   "merged_at": "2026-07-13T07:24:43Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 185,
+   "title": "chore(deps): bump indicatif from 0.18.4 to 0.18.6 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [indicatif](https://github.com/console-rs/indicatif). Updates `indicatif` from 0.18.4 to 0.18.6 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/console-rs/indicatif/releases\">indicatif's releases</a>.</em></p> <blockquote> <h2>0.18.6</h2> <h2>What's Changed</h2> <ul> <li>fix: correctly detect dumb terminal on Windows by <a href=\"https://github.com/ugur-eren\"><code>@\u200bugur-eren</code></a> in <a href=\"https://redirect.github.com/console-rs/indicatif/pull/818\">console-rs/indicatif#818</a></li> </ul> <h2>0.18.5</h2> <h2>What's Changed</h2> <ul> <li>Upgrade to rand 0.10 by <a href=\"https://github.com/djc\"><\u2026",
+   "created_at": "2026-07-06T07:24:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/185",
+   "state": "closed",
+   "merged_at": "2026-07-06T07:24:43Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 184,
+   "title": "chore(deps): bump anyhow from 1.0.102 to 1.0.103 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [anyhow](https://github.com/dtolnay/anyhow). Updates `anyhow` from 1.0.102 to 1.0.103 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em></p> <blockquote> <h2>1.0.103</h2> <ul> <li>Fix Stacked Borrows violation (UB) in <code>Error::downcast_mut</code> (<a href=\"https://redirect.github.com/dtolnay/anyhow/issues/451\">#451</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/452\">#452</a>)</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/dtolnay/anyhow/commit/5bdb0e24db3994be119d42f18f\u2026",
+   "created_at": "2026-06-29T07:24:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/184",
+   "state": "closed",
+   "merged_at": "2026-06-29T07:24:23Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 183,
+   "title": "chore(deps): bump log from 0.4.32 to 0.4.33 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [log](https://github.com/rust-lang/log). Updates `log` from 0.4.32 to 0.4.33 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/log/blob/master/CHANGELOG.md\">log's changelog</a>.</em></p> <blockquote> <h2>[0.4.33] - 2026-06-20</h2> <h2>What's Changed</h2> <ul> <li>Fixed key comparison by <a href=\"https://github.com/matteo-zeggiotti-ok\"><code>@\u200bmatteo-zeggiotti-ok</code></a> in <a href=\"https://redirect.github.com/rust-lang/log/pull/732\">rust-lang/log#732</a></li> </ul> <h2>New Contributors</h2> <ul> <li><a href=\"https://github.com/matteo-zeggiotti-ok\"><code>@\u200bmatteo-zeggiotti-ok</code></a> made the\u2026",
+   "created_at": "2026-06-22T07:24:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/183",
+   "state": "closed",
+   "merged_at": "2026-06-22T07:24:27Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 182,
+   "title": "chore(deps): bump regex from 1.12.3 to 1.12.4 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [regex](https://github.com/rust-lang/regex). Updates `regex` from 1.12.3 to 1.12.4 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/regex/blob/master/CHANGELOG.md\">regex's changelog</a>.</em></p> <blockquote> <h1>1.12.4 (2025-06-09)</h1> <p>This release includes a performance optimization for compilation of regexes with very large character classes.</p> <p>Improvements:</p> <ul> <li><a href=\"https://redirect.github.com/rust-lang/regex/pull/1308\">#1308</a>: Avoid re-canonicalizing the entire interval set when pushing new class ranges.</li> </ul> </blockquote> </details> <details> <summary>Commits<\u2026",
+   "created_at": "2026-06-15T07:25:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/182",
+   "state": "closed",
+   "merged_at": "2026-06-15T07:26:18Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 181,
+   "title": "chore(deps): bump pyo3 from 0.28.3 to 0.29.0",
+   "body": "Bumps [pyo3](https://github.com/pyo3/pyo3) from 0.28.3 to 0.29.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.29.0</h2> <p>This release is a relatively large release with improvements across many areas of PyO3's API.</p> <h3>Build and packaging changes</h3> <p>This release brings full support for Python 3.15 beta. We encourage downstream projects to begin testing and distributing Python 3.15 beta wheels so that the ecosystem can prepare for the 3.15 final release later in the year.</p> <p>Alongside Python 3.15 support comes support for its new &quot;abi3t&quot; stable ABI\u2026",
+   "created_at": "2026-06-12T19:40:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/181",
+   "state": "closed",
+   "merged_at": "2026-06-12T19:40:59Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 180,
+   "title": "chore(deps): bump log from 0.4.30 to 0.4.32 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [log](https://github.com/rust-lang/log). Updates `log` from 0.4.30 to 0.4.32 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/rust-lang/log/releases\">log's releases</a>.</em></p> <blockquote> <h2>0.4.32</h2> <h2>What's Changed</h2> <ul> <li>Support <code>Value</code> -&gt; string conversions with <code>kv</code> + <code>std</code> features instead of <code>kv_std</code> by <a href=\"https://github.com/tisonkun\"><code>@\u200btisonkun</code></a> in <a href=\"https://redirect.github.com/rust-lang/log/pull/729\">rust-lang/log#729</a></li> <li>Prepare for 0.4.32 release by <a href=\"https://github.com/KodrAus\"><code\u2026",
+   "created_at": "2026-06-08T07:24:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/180",
+   "state": "closed",
+   "merged_at": "2026-06-08T07:24:56Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 179,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [serde_json](https://github.com/serde-rs/json) and [log](https://github.com/rust-lang/log). Updates `serde_json` from 1.0.149 to 1.0.150 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/serde-rs/json/releases\">serde_json's releases</a>.</em></p> <blockquote> <h2>v1.0.150</h2> <ul> <li>Reject non-string enum object keys (<a href=\"https://redirect.github.com/serde-rs/json/issues/1324\">#1324</a>, thanks <a href=\"https://github.com/puneetdixit200\"><code>@\u200bpuneetdixit200</code></a>)</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/serde-rs/json/c\u2026",
+   "created_at": "2026-05-25T10:51:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/179",
+   "state": "closed",
+   "merged_at": "2026-05-25T10:51:56Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 178,
+   "title": "chore(deps): bump sqlparser from 0.61.0 to 0.62.0",
+   "body": "Bumps [sqlparser](https://github.com/apache/datafusion-sqlparser-rs) from 0.61.0 to 0.62.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/3dd0e30d8bb1d2a6775f62d2b84839b60133effb\"><code>3dd0e30</code></a> chore: Bump version to 0.62.0 and add changelog (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2331\">#2331</a>)</li> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/9833c033bc44c487b4425272cc8cea80971b5239\"><code>9833c03</code></a> feat(clickhouse): support PARTITION BY after ORDER BY and ARRAY JOIN (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/\u2026",
+   "created_at": "2026-05-11T09:36:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/178",
+   "state": "closed",
+   "merged_at": "2026-05-11T09:36:57Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 177,
+   "title": "chore(deps): bump tokio from 1.52.1 to 1.52.3 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [tokio](https://github.com/tokio-rs/tokio). Updates `tokio` from 1.52.1 to 1.52.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.52.3</h2> <h1>1.52.3 (May 8th, 2026)</h1> <h3>Fixed</h3> <ul> <li>sync: fix underflow in mpsc channel <code>len()</code> (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8062\">#8062</a>)</li> <li>sync: notify receivers in mpsc <code>OwnedPermit::release()</code> method (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8075\">#8075</a>)</li> <li>sync: require that an <code>R\u2026",
+   "created_at": "2026-05-11T09:36:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/177",
+   "state": "closed",
+   "merged_at": "2026-05-11T09:36:59Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 176,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [tokio](https://github.com/tokio-rs/tokio) and [clap](https://github.com/clap-rs/clap). Updates `tokio` from 1.51.1 to 1.52.1 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.52.1</h2> <h1>1.52.1 (April 16th, 2026)</h1> <h2>Fixed</h2> <ul> <li>runtime: revert <a href=\"https://redirect.github.com/tokio-rs/tokio/issues/7757\">#7757</a> to fix [a regression]<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8056\">#8056</a> that causes <code>spawn_blocking</code> to hang (<a href=\"https://redirect.github.com/tokio-rs/\u2026",
+   "created_at": "2026-04-27T08:06:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/176",
+   "state": "closed",
+   "merged_at": "2026-04-27T08:06:53Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 175,
+   "title": "chore(deps): bump tokio from 1.51.0 to 1.51.1 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [tokio](https://github.com/tokio-rs/tokio). Updates `tokio` from 1.51.0 to 1.51.1 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.51.1</h2> <h1>1.51.1 (April 8th, 2026)</h1> <h3>Fixed</h3> <ul> <li>sync: fix semaphore reopens after forget (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8021\">#8021</a>)</li> <li>net: surface errors from <code>SO_ERROR</code> on <code>recv</code> for UDP sockets on Linux (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8001\">#8001</a>)</li> </ul> <h3>Fixed (unstable)\u2026",
+   "created_at": "2026-04-13T07:37:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/175",
+   "state": "closed",
+   "merged_at": "2026-04-13T07:38:09Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 174,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [pyo3](https://github.com/pyo3/pyo3) and [tokio](https://github.com/tokio-rs/tokio). Updates `pyo3` from 0.28.2 to 0.28.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.28.3</h2> <p>This patch contains several fixes for stability of the PyO3 0.28.x series:</p> <ul> <li><code>Python::attach</code> and <code>Python::try_attach</code> will no longer return before the thread initializing the interpreter has finished runnning <code>site.py</code> when using the <code>auto-initialize</code> feature.</li> <li>Fix unsoundness in <code\u2026",
+   "created_at": "2026-04-06T07:33:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/174",
+   "state": "closed",
+   "merged_at": "2026-04-06T07:33:21Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 173,
+   "title": "feat(cli): add command history and auto-completion",
+   "body": "## Summary Closes #52 Enhances the CLI REPL experience with persistent command history and tab auto-completion by replacing the raw `stdin.read_line()` loop with `rustyline::Editor`. ## Changes ### New Dependencies (`nexum_cli/Cargo.toml`) - `rustyline = \"15\"` \u2014 readline-style editing, history, and completion - `dirs = \"6\"` \u2014 cross-platform `~/.nexumdb_history` path resolution ### CLI REPL Rewrite (`nexum_cli/src/main.rs`) - **`NexumCompleter`** struct implementing rustyline's `Helper` traits with: - SQL keyword completion (SELECT, INSERT, CREATE, etc.) - Table name completion from the live catalog - Column name completion when table context is detected (e.g. after `FROM users`) - **`rustyl\u2026",
+   "created_at": "2026-03-21T18:42:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/173",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "hargunsiingh"
+   }
+  },
+  {
+   "number": 172,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [tempfile](https://github.com/Stebalien/tempfile) and [clap](https://github.com/clap-rs/clap). Updates `tempfile` from 3.26.0 to 3.27.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/Stebalien/tempfile/blob/master/CHANGELOG.md\">tempfile's changelog</a>.</em></p> <blockquote> <h2>3.27.0</h2> <p>This release adds <code>TempPath::try_from_path</code> and deprecates <code>TempPath::from_path</code>.</p> <p>Prior to this release, <code>TempPath::from_path</code> made no attempts to convert relative paths into absolute paths. The following code would have deleted the wrong file:</p> <pre lang=\"rust\"><code>let\u2026",
+   "created_at": "2026-03-16T07:27:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/172",
+   "state": "closed",
+   "merged_at": "2026-03-16T07:27:45Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 171,
+   "title": "refactor(storage): implement typed error system with error codes and \u2026",
+   "body": "\u2026thiserror ## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Implemented error handling with `thiserror` module, replaced anyhow with typed errors. Closes #23 <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> Changed `nexum_core/src` module with necessary\u2026",
+   "created_at": "2026-03-11T13:39:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/171",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "number": 170,
+   "title": "chore(deps): bump tokio from 1.49.0 to 1.50.0 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [tokio](https://github.com/tokio-rs/tokio). Updates `tokio` from 1.49.0 to 1.50.0 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.50.0</h2> <h1>1.50.0 (Mar 3rd, 2026)</h1> <h3>Added</h3> <ul> <li>net: add <code>TcpStream::set_zero_linger</code> (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/7837\">#7837</a>)</li> <li>rt: add <code>is_rt_shutdown_err</code> (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/7771\">#7771</a>)</li> </ul> <h3>Changed</h3> <ul> <li>io: add optimizer hint that <code>memchr<\u2026",
+   "created_at": "2026-03-09T07:28:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/170",
+   "state": "closed",
+   "merged_at": "2026-03-09T07:29:06Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 169,
+   "title": "chore(deps): bump tempfile from 3.25.0 to 3.26.0 in the rust-minor-patch group",
+   "body": "Bumps the rust-minor-patch group with 1 update: [tempfile](https://github.com/Stebalien/tempfile). Updates `tempfile` from 3.25.0 to 3.26.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/Stebalien/tempfile/blob/master/CHANGELOG.md\">tempfile's changelog</a>.</em></p> <blockquote> <h2>3.26.0</h2> <ul> <li>Support <code>NamedTempFile::persist</code> on RedoxOS (<a href=\"https://redirect.github.com/Stebalien/tempfile/issues/393\">#393</a>) (thanks to <a href=\"https://github.com/Andy-Python-Programmer\"><code>@\u200bAndy-Python-Programmer</code></a>).</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li>See full diff in <a href=\"https\u2026",
+   "created_at": "2026-03-02T07:30:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/169",
+   "state": "closed",
+   "merged_at": "2026-03-02T07:31:01Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 168,
+   "title": "docs: add SQL support matrix to README",
+   "body": "## Summary Adds a comprehensive SQL Support Matrix table to the README, addressing #140. ### What this adds - A clear feature matrix table placed between the Features section and Project Structure - Status for all implemented SQL features: CREATE TABLE, INSERT, SELECT (projection/aliases), WHERE operators (comparison, logical, LIKE, IN, BETWEEN), ORDER BY, LIMIT, UPDATE, DELETE, SHOW TABLES, DESCRIBE, DROP TABLE, ASK - Status for planned features: JOIN, Subqueries, DISTINCT, Aggregates, GROUP BY/HAVING, UNION/INTERSECT/EXCEPT - Version tags showing when each feature was introduced - Links from planned items to ROADMAP.md - Consistent status labels (Implemented / Planned) with emoji indicato\u2026",
+   "created_at": "2026-02-25T07:12:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/168",
+   "state": "closed",
+   "merged_at": "2026-02-25T07:41:35Z",
+   "user": {
+    "login": "vasilytrofimchuk"
+   }
+  },
+  {
+   "number": 167,
+   "title": "feat: add autolabeler for issue and PR for label OSCG",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary Added a workflow file that automatically add labels as OSCG26 for issues and PR Closes #166 <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> ### Why? <!-- Explain the motivation behind these changes --> ## Type of Change <!-- Check all that apply --> - [ ] Bug fix (non-breaking change fixing an i\u2026",
+   "created_at": "2026-02-24T08:01:16Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/167",
+   "state": "closed",
+   "merged_at": "2026-02-25T05:27:45Z",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "number": 165,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [anyhow](https://github.com/dtolnay/anyhow) and [clap](https://github.com/clap-rs/clap). Updates `anyhow` from 1.0.101 to 1.0.102 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em></p> <blockquote> <h2>1.0.102</h2> <ul> <li>Remove backtrace dependency (<a href=\"https://redirect.github.com/dtolnay/anyhow/issues/438\">#438</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/439\">#439</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/440\">#440</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/441\">#441</a>, <a href=\u2026",
+   "created_at": "2026-02-23T07:33:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/165",
+   "state": "closed",
+   "merged_at": "2026-02-23T07:33:14Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 164,
+   "title": "chore(deps): bump pyo3 from 0.28.1 to 0.28.2",
+   "body": "Bumps [pyo3](https://github.com/pyo3/pyo3) from 0.28.1 to 0.28.2. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.28.2</h2> <p>This patch release contains a soundness fix for subclassing native types such as <code>PyList</code> with the <code>abi3</code> feature enabled when targeting a minimum version of Python 3.12 or higher. (Support for doing such subclassing was newly added in PyO3 0.28.0.)</p> <p>PyO3 0.28.0 and 0.28.1 will be yanked.</p> <p>This release also contains a correction to the FFI definition <code>PyType_GetTypeDataSize</code> and incorrectly-generated <code>\u2026",
+   "created_at": "2026-02-20T16:23:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/164",
+   "state": "closed",
+   "merged_at": "2026-02-20T16:24:04Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 163,
+   "title": "ci: add guard to fail builds on tracked generated/system files",
+   "body": "This PR adds a CI guard step to fail builds if generated/system junk files are committed (e.g. .DS_Store, .coverage, htmlcov). The check runs early in both Rust and Python jobs to ensure repository hygiene and prevent accidental artifact commits. Closes #150 <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * CI now fails early if common junk files are tracked; a repository-hygiene check was added and applied across CI paths, including benchmarks and PR flows. * Rust-change detection added to skip Rust-specific work when no Rust files changed. * All Rust tooling and checks (format, lint, build, test, coverage, docs, audits, benc\u2026",
+   "created_at": "2026-02-17T11:38:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/163",
+   "state": "closed",
+   "merged_at": "2026-02-19T06:40:24Z",
+   "user": {
+    "login": "nacholiya"
+   }
+  },
+  {
+   "number": 162,
+   "title": "chore(deps): bump indicatif from 0.17.11 to 0.18.4",
+   "body": "[//]: # (dependabot-start) \u26a0\ufe0f **Dependabot is rebasing this PR** \u26a0\ufe0f Rebasing might not happen immediately, so don't worry if this takes some time. Note: if you make any changes to this PR yourself, they will take precedence over the rebase. --- [//]: # (dependabot-end) Bumps [indicatif](https://github.com/console-rs/indicatif) from 0.17.11 to 0.18.4. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/console-rs/indicatif/releases\">indicatif's releases</a>.</em></p> <blockquote> <h2>0.18.4</h2> <h2>What's Changed</h2> <ul> <li>initial draft oft hold_max with heuristic by <a href=\"https://github.com/djugei\"><code>@\u200bdjugei</code></a> in <a href=\"https://\u2026",
+   "created_at": "2026-02-16T07:29:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/162",
+   "state": "closed",
+   "merged_at": "2026-02-16T07:31:35Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 161,
+   "title": "chore(deps): bump pyo3 from 0.24.2 to 0.28.1",
+   "body": "[//]: # (dependabot-start) \u26a0\ufe0f **Dependabot is rebasing this PR** \u26a0\ufe0f Rebasing might not happen immediately, so don't worry if this takes some time. Note: if you make any changes to this PR yourself, they will take precedence over the rebase. --- [//]: # (dependabot-end) Bumps [pyo3](https://github.com/pyo3/pyo3) from 0.24.2 to 0.28.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.28.1</h2> <p>This patch contains a number of minor compile-time fixes for PyO3 0.28.0.</p> <p>Thank you to the following contributors for the improvements:</p> <p><a href=\"https://github.com/davidhe\u2026",
+   "created_at": "2026-02-16T07:29:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/161",
+   "state": "closed",
+   "merged_at": "2026-02-16T07:30:48Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 160,
+   "title": "chore(deps): bump sqlparser from 0.39.0 to 0.61.0",
+   "body": "Bumps [sqlparser](https://github.com/apache/datafusion-sqlparser-rs) from 0.39.0 to 0.61.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/272c25ed83b97cce5a217f601e8b00e9117ce51f\"><code>272c25e</code></a> Fix changelog (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2206\">#2206</a>)</li> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/09deb9456a354c57f0b9f5052865a054ee3271b3\"><code>09deb94</code></a> Prepare to release sqlparser <code>0.61.0</code> and sqlparser_derive <code>0.5.0</code> (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2195\">#2195</a\u2026",
+   "created_at": "2026-02-16T07:29:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/160",
+   "state": "closed",
+   "merged_at": "2026-02-16T07:29:49Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 159,
+   "title": "chore(deps): bump colored from 2.2.0 to 3.1.1",
+   "body": "Bumps [colored](https://github.com/mackwic/colored) from 2.2.0 to 3.1.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/mackwic/colored/releases\">colored's releases</a>.</em></p> <blockquote> <h2>v3.1.1</h2> <p>No release notes provided.</p> <h2>v3.1.0</h2> <p>No release notes provided.</p> <h2>v3.0.0</h2> <ul> <li><strong>[BREAKING CHANGE]:</strong> Upgrade MSRV to 1.80 and remove the then unnecessary lazy_static dependency.</li> </ul> </blockquote> </details> <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/colored-rs/colored/blob/master/CHANGELOG.md\">colored's changelog</a>.</em></p> <blockquote> <h1>Unrele\u2026",
+   "created_at": "2026-02-16T07:29:27Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/159",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 158,
+   "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+   "body": "Bumps the rust-minor-patch group with 2 updates: [tempfile](https://github.com/Stebalien/tempfile) and [clap](https://github.com/clap-rs/clap). Updates `tempfile` from 3.24.0 to 3.25.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/Stebalien/tempfile/blob/master/CHANGELOG.md\">tempfile's changelog</a>.</em></p> <blockquote> <h2>3.25.0</h2> <ul> <li>Allow <code>getrandom</code> 0.4.x while retaining support for <code>getrandom</code> 0.3.x.</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li>See full diff in <a href=\"https://github.com/Stebalien/tempfile/commits\">compare view</a></li> </ul> </details> <br /> Updates `clap`\u2026",
+   "created_at": "2026-02-16T07:29:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/158",
+   "state": "closed",
+   "merged_at": "2026-02-16T07:29:29Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 157,
+   "title": "chore(deps): bump packaging from 25.0 to 26.0 in /nexum_ai",
+   "body": "Bumps [packaging](https://github.com/pypa/packaging) from 25.0 to 26.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pypa/packaging/releases\">packaging's releases</a>.</em></p> <blockquote> <h2>26.0</h2> <p>Read about the performance improvements here: <a href=\"https://iscinumpy.dev/post/packaging-faster\">https://iscinumpy.dev/post/packaging-faster</a>.</p> <h2>What's Changed</h2> <p>Features:</p> <ul> <li>PEP 751: support pylock by <a href=\"https://github.com/sbidoul\"><code>@\u200bsbidoul</code></a> in <a href=\"https://redirect.github.com/pypa/packaging/pull/900\">pypa/packaging#900</a></li> <li>PEP 794: import name metadata by <a href=\"https://githu\u2026",
+   "created_at": "2026-02-16T07:29:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/157",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 156,
+   "title": "chore(ci): bump actions/checkout from 4 to 6",
+   "body": "Bumps [actions/checkout](https://github.com/actions/checkout) from 4 to 6. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/actions/checkout/releases\">actions/checkout's releases</a>.</em></p> <blockquote> <h2>v6.0.0</h2> <h2>What's Changed</h2> <ul> <li>Update README to include Node.js 24 support details and requirements by <a href=\"https://github.com/salmanmkc\"><code>@\u200bsalmanmkc</code></a> in <a href=\"https://redirect.github.com/actions/checkout/pull/2248\">actions/checkout#2248</a></li> <li>Persist creds to a separate file by <a href=\"https://github.com/ericsciple\"><code>@\u200bericsciple</code></a> in <a href=\"https://redirect.github.com/actions/check\u2026",
+   "created_at": "2026-02-16T07:29:03Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/156",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 155,
+   "title": "refactor(ai): replace print statements with structured logging",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary Replaced all user facing print statements with logging in the files nexum_ai/translator.py and nexum_ai/model_manager.py. Closes #142 ### What Changed? -Added module-level logger using logging.getLogger(__name__) -Replaced print statements with appropriate logger levels (info, warning, error, exception) - Kept warning/error semantics equivalent ### Why? Mixed stdout pr\u2026",
+   "created_at": "2026-02-15T20:21:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155",
+   "state": "closed",
+   "merged_at": "2026-02-19T07:04:03Z",
+   "user": {
+    "login": "Subhayoni"
+   }
+  },
+  {
+   "number": 139,
+   "title": "feat: implement TTL",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary Implement time-to-live (TTL) eviction for cache entries in `SemanticCache`. The `set_cache_expiration` method was previously a placeholder that only logged a message. This PR makes it fully functional \u2014 entries are now timestamped on creation, expired entries are transparently skipped during lookups, and the TTL setting persists across save/load cycles. Closes #117 ###\u2026",
+   "created_at": "2026-02-14T08:45:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/139",
+   "state": "closed",
+   "merged_at": "2026-02-22T09:16:17Z",
+   "user": {
+    "login": "AvaneeshKesavan"
+   }
+  },
+  {
+   "number": 138,
+   "title": "refactor: load embedding model asynchronously",
+   "body": "## Summary Refactors `SemanticCache.initialize_model()` to avoid blocking the main thread by loading the SentenceTransformer model asynchronously in a background worker thread. ### What Changed? - Added async/threaded model initialization for `SemanticCache` - `vectorize()` triggers model loading without blocking - Uses fallback vectorization while the embedding model is still loading ### Why? Previously, `initialize_model()` loaded the SentenceTransformer synchronously, which could block the main thread during first use (especially on startup / first EXPLAIN call). This change keeps the CLI responsive and avoids startup delays. ## Type of Change - [ ] Bug fix (non-breaking change fixing an\u2026",
+   "created_at": "2026-02-13T14:48:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/138",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "Anisha-45"
+   }
+  },
+  {
+   "number": 137,
+   "title": "feat: add transaction support (BEGIN/COMMIT/ROLLBACK) with WAL recovery",
+   "body": "## Summary - add transaction SQL support for `BEGIN`, `BEGIN TRANSACTION`, `COMMIT`, and `ROLLBACK` - implement executor transaction state with transaction ID tracking and single active transaction guard - add WAL-backed snapshot recovery: - write snapshot on `BEGIN` - restore snapshot on `ROLLBACK` - recover uncommitted transaction snapshot on startup - wire CLI help and output formatting (human/json) for transaction events - extend tests for parser, executor transaction flow, rollback/commit behavior, and recovery - fix storage batch key removal to use `key.as_slice()` for sled compatibility ## Testing - `cargo fmt --all -- --check` - `cargo +stable-x86_64-pc-windows-gnu clippy --workspac\u2026",
+   "created_at": "2026-02-13T12:21:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/137",
+   "state": "closed",
+   "merged_at": "2026-02-13T14:41:39Z",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "number": 136,
+   "title": "chore(deps): bump the pip group across 1 directory with 2 updates",
+   "body": "Bumps the pip group with 2 updates in the /nexum_ai directory: [filelock](https://github.com/tox-dev/py-filelock) and [pillow](https://github.com/python-pillow/Pillow). Updates `filelock` from 3.20.0 to 3.20.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tox-dev/py-filelock/releases\">filelock's releases</a>.</em></p> <blockquote> <h2>3.20.3</h2> <!-- raw HTML omitted --> <h2>What's Changed</h2> <ul> <li>Fix TOCTOU symlink vulnerability in SoftFileLock by <a href=\"https://github.com/gaborbernat\"><code>@\u200bgaborbernat</code></a> in <a href=\"https://redirect.github.com/tox-dev/filelock/pull/465\">tox-dev/filelock#465</a></li> </ul> <p><strong>Full Cha\u2026",
+   "created_at": "2026-02-11T17:59:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/136",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 135,
+   "title": "Implement SQL aggregate functions (COUNT, SUM, AVG, MIN, MAX)",
+   "body": "## Issues Fixed Fixes # (#126) # Implement SQL Aggregate Functions (COUNT, SUM, AVG, MIN, MAX) ## Summary Added support for standard SQL aggregate functions: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`. ## Description This PR implements aggregation logic in the query executor and updates the SQL parser to support aggregate functions in `SELECT` statements. ### Changes - **Core Types**: Added `AggregateType` enum and updated `SelectItem` to support aggregation. - **SQL Parser**: Updated parser to recognize aggregate functions (e.g., `SELECT COUNT(*) FROM table`). - **Query Executor**: Implemented logic to scan filtered rows and compute aggregate results. - **Tests**: Added integration tests in [test\u2026",
+   "created_at": "2026-02-11T15:57:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "Adithyakp86"
+   }
+  },
+  {
+   "number": 134,
+   "title": "Feat/performance benchmarks",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary Introduced a comprehensive performance benchmarking suite using the `Criterion` framework. This PR establishes a baseline for comparing NexumDB's LSM-tree-based storage engine against SQLite and measures the current overhead of the AI-native execution layer. Closes #90 ### What Changed? - Added `nexum_core/benches/db_comparison.rs` featuring `INSERT` and `SELECT` (Cold\u2026",
+   "created_at": "2026-02-11T13:12:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "number": 133,
+   "title": "feat: implement the Parser function to support the drop table ",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary Athough a PR had added the storage concerns solve for drop statement but yet the parser implementation is missing whihc will be full filled now Closes #132 <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> ### Why? <!-- Explain the motivation behind these changes --> ## Type of Change <!-- Check a\u2026",
+   "created_at": "2026-02-11T11:07:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/133",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "number": 132,
+   "title": "feat: implement DROP TABLE and verify storage wipe logic",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary I was assigned the DROP TABLE task and found that the core implementation was already present in the source. I have taken ownership of the Validation Phase by: - Developing and passing test_verify_physical_deletion to confirm the storage engine actually purges data. - Resolving critical Windows/Python 3.13 build issues that were preventing the project from compiling. -\u2026",
+   "created_at": "2026-02-11T10:53:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "number": 131,
+   "title": "feat: add EXPLAIN query plan command",
+   "body": "## Overview This PR implements the EXPLAIN query plan command feature requested in Issue #66. ## Problem Statement Users needed a way to understand how NexumDB would execute their SQL queries, including cache analysis, query optimization insights, and execution strategy recommendations. ## Solution Implemented a comprehensive EXPLAIN command that provides: - SQL query parsing and structure analysis - Query complexity calculation (0-10 scale) - Clause detection (WHERE, JOIN, ORDER BY, GROUP BY) - Semantic cache analysis with similarity scoring - RL agent Q-values and optimization recommendations - Execution strategy suggestions ## Implementation Details ### Modified Files #### nexum_ai/optim\u2026",
+   "created_at": "2026-02-11T07:27:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131",
+   "state": "closed",
+   "merged_at": "2026-02-11T11:04:27Z",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "number": 130,
+   "title": "docs: add practical examples for advanced SQL operators in README",
+   "body": "## Summary This PR enhances the README by adding practical, beginner-friendly examples for advanced SQL operators to improve documentation clarity and real-world usability. Closes #86 <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? Added multiple practical examples for: - LIKE with different wildcard patterns (%, _) - IN with different value types - BETWEEN with numeric ranges - ORDER BY with multiple columns - Combined advanced queries using multiple operators together Used sql markdown code blocks to properly format and display all query examples Ensured examples follow existing README style and formatting ### Why? The README previously introduced these o\u2026",
+   "created_at": "2026-02-10T20:33:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130",
+   "state": "closed",
+   "merged_at": "2026-02-11T13:42:51Z",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "number": 129,
+   "title": "tests: add comprehensive error handling tests",
+   "body": "## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Closes #87 ## Changes - \u2705 Added 47 new test cases covering various error scenarios - \u2705 Tests for CREATE TABLE syntax errors (missing columns, invalid data types) - \u2705 Tests for INSERT statement errors (missing values, malformed syntax, invalid formats) - \u2705 Tests for SELECT edge cases (missing FROM, invalid projections, unsupported expressions) - \u2705 Tests for UPDATE/DELETE incomplete statements - \u2705 Tests for WHERE clause and ORDER BY errors - \u2705 Tests for management statement errors (DESCRIBE, DROP TABLE) - \u2705 Tests for general syntax errors (unclosed strings, mixed quotes, unbalanced parenthe\u2026",
+   "created_at": "2026-02-10T17:08:31Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "number": 128,
+   "title": "ci: disable PR auto commenter on pull requests",
+   "body": "## Summary - disable PR Auto Commenter on pull requests - keep it manual only via workflow_dispatch <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Updated GitHub Actions workflow configuration to use manual triggering instead of automatic invocation on pull requests. <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2026-02-10T17:03:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/128",
+   "state": "closed",
+   "merged_at": "2026-02-10T17:03:32Z",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "number": 127,
+   "title": "ci: disable PR auto commenter on pull requests",
+   "body": "## Summary - disable PR Auto Commenter for pull request events - keep workflow manual-only via workflow_dispatch ## Why - requested to remove auto commenter from all PRs <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Updated GitHub Actions workflow configuration to require manual triggering instead of automatic execution on pull requests. <!-- end of auto-generated comment: release notes by coderabbit.ai -->",
+   "created_at": "2026-02-10T17:01:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/127",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "number": 125,
+   "title": "chore(main): release 0.7.0",
+   "body": ":robot: I have created a release *beep* *boop* --- ## [0.7.0](https://github.com/aviralgarg05/NexumDB/compare/v0.6.0...v0.7.0) (2026-02-25) ### Features * add EXPLAIN query plan command ([#131](https://github.com/aviralgarg05/NexumDB/issues/131)) ([33e6094](https://github.com/aviralgarg05/NexumDB/commit/33e60941f0c1ef051d29532f4401fae4e47daec4)) * add transaction support (BEGIN/COMMIT/ROLLBACK) with WAL recovery ([#137](https://github.com/aviralgarg05/NexumDB/issues/137)) ([1713219](https://github.com/aviralgarg05/NexumDB/commit/17132193cbd9355392b53caa691801e40d2e1ef6)) * **cli:** add colorized output and improved formatting ([#101](https://github.com/aviralgarg05/NexumDB/issues/101)) ([ab\u2026",
+   "created_at": "2026-02-10T12:17:19Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/125",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "number": 124,
+   "title": "feat: configurable AI Embedding Model",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Closes #(issue_number) <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> ### Why? <!-- Explain the motivation behind these changes --> ## Type of Change <!-- Check all that apply --> - [ ] Bug fix (non-bre\u2026",
+   "created_at": "2026-02-10T12:06:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "number": 123,
+   "title": "ci: make DCO advisory and run workflows on PR synchronize",
+   "body": "## Summary\\n- make DCO check advisory (non-blocking) so missing sign-offs don't fail PRs\\n- ensure PR triggers for core workflows\\n- add PR-safe validation paths for release/stale/reminder workflows\\n\\n## Why\\n- current DCO failures are blocking contributor PRs\\n- all workflows should run automatically on PR pushes\\n\\n## Validation\\n- YAML parse check for all workflow files <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Chores** * Expanded pull request event handling across CI workflows to respond to more PR lifecycle events. * Made DCO and other quality checks advisory (non-blocking) with clearer summaries and warnings. * Added PR Do\u2026",
+   "created_at": "2026-02-10T06:47:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123",
+   "state": "closed",
+   "merged_at": "2026-02-10T06:53:07Z",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "number": 122,
+   "title": "refactor: replace print statements with logging",
+   "body": "## Summary This PR replaces `print()` statements in `nexum_ai/optimizer.py` with Python\u2019s standard `logging` module to improve observability and align with production-ready best practices. Closes #121 --- ### What Changed? - Added a module-level logger using `logging.getLogger(__name__)` - Replaced existing `print()` statements with `logger.info()` - Kept behavior unchanged while enabling configurable logging - No functional, API, or output-structure changes --- ### Why? Using `print()` statements limits control over verbosity and makes it difficult to integrate with structured logging systems. Migrating to Python\u2019s built-in `logging` module: - Follows established Python best practices - Im\u2026",
+   "created_at": "2026-02-09T17:36:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122",
+   "state": "closed",
+   "merged_at": "2026-02-10T12:59:57Z",
+   "user": {
+    "login": "SAILESH4406"
+   }
+  },
+  {
+   "number": 116,
+   "title": "chore(deps): bump torch from 2.9.1 to 2.10.0 in /nexum_ai",
+   "body": "Bumps [torch](https://github.com/pytorch/pytorch) from 2.9.1 to 2.10.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pytorch/pytorch/releases\">torch's releases</a>.</em></p> <blockquote> <h1>PyTorch 2.10.0 Release Notes</h1> <ul> <li><a href=\"https://github.com/pytorch/pytorch/blob/HEAD/#highlights\">Highlights</a></li> <li><a href=\"https://github.com/pytorch/pytorch/blob/HEAD/#backwards-incompatible-changes\">Backwards Incompatible Changes</a></li> <li><a href=\"https://github.com/pytorch/pytorch/blob/HEAD/#deprecations\">Deprecations</a></li> <li><a href=\"https://github.com/pytorch/pytorch/blob/HEAD/#new-features\">New Features</a></li> <li><a href\u2026",
+   "created_at": "2026-02-09T07:42:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/116",
+   "state": "closed",
+   "merged_at": "2026-02-09T07:43:02Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 115,
+   "title": "chore(deps): bump tqdm from 4.67.1 to 4.67.3 in /nexum_ai",
+   "body": "Bumps [tqdm](https://github.com/tqdm/tqdm) from 4.67.1 to 4.67.3. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tqdm/tqdm/releases\">tqdm's releases</a>.</em></p> <blockquote> <h2>tqdm v4.67.3 stable</h2> <ul> <li>fix py3.7 dependencies (<a href=\"https://redirect.github.com/tqdm/tqdm/issues/1706\">#1706</a> &lt;- <a href=\"https://redirect.github.com/tqdm/tqdm/issues/1705\">#1705</a>)</li> </ul> <h2>tqdm v4.67.2 stable</h2> <ul> <li>support <code>pandas&gt;=3</code> (<a href=\"https://redirect.github.com/tqdm/tqdm/issues/1703\">#1703</a> &lt;- <a href=\"https://redirect.github.com/tqdm/tqdm/issues/1701\">#1701</a>, <a href=\"https://redirect.github.com/tq\u2026",
+   "created_at": "2026-02-09T07:42:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/115",
+   "state": "closed",
+   "merged_at": "2026-02-09T07:42:45Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 114,
+   "title": "chore(deps): bump the rust-minor-patch group with 5 updates",
+   "body": "Bumps the rust-minor-patch group with 5 updates: | Package | From | To | | --- | --- | --- | | [anyhow](https://github.com/dtolnay/anyhow) | `1.0.100` | `1.0.101` | | [tokio](https://github.com/tokio-rs/tokio) | `1.48.0` | `1.49.0` | | [serde_json](https://github.com/serde-rs/json) | `1.0.145` | `1.0.149` | | [regex](https://github.com/rust-lang/regex) | `1.12.2` | `1.12.3` | | [tempfile](https://github.com/Stebalien/tempfile) | `3.23.0` | `3.24.0` | Updates `anyhow` from 1.0.100 to 1.0.101 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em></p> <blockquote> <h2>1.0.101</h2> <ul> <li>Add #[inline] to\u2026",
+   "created_at": "2026-02-09T07:42:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/114",
+   "state": "closed",
+   "merged_at": "2026-02-09T07:42:39Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 113,
+   "title": "chore(deps): bump joblib from 1.5.2 to 1.5.3 in /nexum_ai",
+   "body": "Bumps [joblib](https://github.com/joblib/joblib) from 1.5.2 to 1.5.3. <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/joblib/joblib/blob/main/CHANGES.rst\">joblib's changelog</a>.</em></p> <blockquote> <h2>Release 1.5.3 - 2025/12/15</h2> <ul> <li> <p>The <code>Memory</code> object won't overwrite an already existing <code>.gitignore</code> file in its cache directory anymore. <a href=\"https://redirect.github.com/joblib/joblib/pull/1742\">joblib/joblib#1742</a></p> </li> <li> <p>Harden the safety checks in <code>eval_expr(pre_dispatch)</code> to prevent excessive memory allocation and potential crashes by limiting the allowed length of the expression and\u2026",
+   "created_at": "2026-02-09T07:42:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/113",
+   "state": "closed",
+   "merged_at": "2026-02-09T07:42:25Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 112,
+   "title": "chore(deps): bump urllib3 from 2.6.1 to 2.6.3 in /nexum_ai",
+   "body": "Bumps [urllib3](https://github.com/urllib3/urllib3) from 2.6.1 to 2.6.3. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/urllib3/urllib3/releases\">urllib3's releases</a>.</em></p> <blockquote> <h2>2.6.3</h2> <h2>\ud83d\ude80 urllib3 is fundraising for HTTP/2 support</h2> <p><a href=\"https://sethmlarson.dev/urllib3-is-fundraising-for-http2-support\">urllib3 is raising ~$40,000 USD</a> to release HTTP/2 support and ensure long-term sustainable maintenance of the project after a sharp decline in financial support. If your company or organization uses Python and would benefit from HTTP/2 support in Requests, pip, cloud SDKs, and thousands of other projects <a href\u2026",
+   "created_at": "2026-02-09T07:41:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/112",
+   "state": "closed",
+   "merged_at": "2026-02-10T06:50:47Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 111,
+   "title": "chore(ci): bump github/codeql-action from 3 to 4",
+   "body": "Bumps [github/codeql-action](https://github.com/github/codeql-action) from 3 to 4. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/github/codeql-action/releases\">github/codeql-action's releases</a>.</em></p> <blockquote> <h2>v3.32.2</h2> <ul> <li>Update default CodeQL bundle version to <a href=\"https://github.com/github/codeql-action/releases/tag/codeql-bundle-v2.24.1\">2.24.1</a>. <a href=\"https://redirect.github.com/github/codeql-action/pull/3460\">#3460</a></li> </ul> <h2>v3.32.1</h2> <ul> <li>A warning is now shown in Default Setup workflow logs if a <a href=\"https://docs.github.com/en/code-security/how-tos/secure-at-scale/configure-organization-\u2026",
+   "created_at": "2026-02-09T07:41:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/111",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 110,
+   "title": "chore(deps): bump sentence-transformers from 5.1.2 to 5.2.2 in /nexum_ai",
+   "body": "Bumps [sentence-transformers](https://github.com/huggingface/sentence-transformers) from 5.1.2 to 5.2.2. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/huggingface/sentence-transformers/releases\">sentence-transformers's releases</a>.</em></p> <blockquote> <h2>v5.2.2 - Replace mandatory <code>requests</code> dependency with optional <code>httpx</code> dependency</h2> <p>This patch release replaces mandatory <code>requests</code> dependency with an optional <code>httpx</code> dependency.</p> <p>Install this version with</p> <pre lang=\"bash\"><code># Training + Inference pip install sentence-transformers[train]==5.2.2 <h1>Inference only, use one of:</\u2026",
+   "created_at": "2026-02-09T07:41:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/110",
+   "state": "closed",
+   "merged_at": "2026-02-09T07:42:08Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 109,
+   "title": "chore(deps): bump certifi from 2025.11.12 to 2026.1.4 in /nexum_ai",
+   "body": "Bumps [certifi](https://github.com/certifi/python-certifi) from 2025.11.12 to 2026.1.4. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/certifi/python-certifi/commit/c64d9f3a8496c0195548697f2080e716af66dd6a\"><code>c64d9f3</code></a> 2026.01.04 (<a href=\"https://redirect.github.com/certifi/python-certifi/issues/389\">#389</a>)</li> <li><a href=\"https://github.com/certifi/python-certifi/commit/4ac232f05a547071543d2fb069aa3c62b1dc79f3\"><code>4ac232f</code></a> Bump actions/download-artifact from 6.0.0 to 7.0.0 (<a href=\"https://redirect.github.com/certifi/python-certifi/issues/387\">#387</a>)</li> <li><a href=\"https://github.com/certifi/python-certifi/commit/95ae4b20e8a\u2026",
+   "created_at": "2026-02-09T07:41:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/109",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 108,
+   "title": "chore(ci): bump actions/upload-artifact from 4 to 6",
+   "body": "Bumps [actions/upload-artifact](https://github.com/actions/upload-artifact) from 4 to 6. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/actions/upload-artifact/releases\">actions/upload-artifact's releases</a>.</em></p> <blockquote> <h2>v6.0.0</h2> <h2>v6 - What's new</h2> <blockquote> <p>[!IMPORTANT] actions/upload-artifact@v6 now runs on Node.js 24 (<code>runs.using: node24</code>) and requires a minimum Actions Runner version of 2.327.1. If you are using self-hosted runners, ensure they are updated before upgrading.</p> </blockquote> <h3>Node.js 24</h3> <p>This release updates the runtime to Node.js 24. v5 had preliminary support for Node.js 24,\u2026",
+   "created_at": "2026-02-09T07:41:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108",
+   "state": "open",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 107,
+   "title": "chore(ci): bump amannn/action-semantic-pull-request from 5 to 6",
+   "body": "Bumps [amannn/action-semantic-pull-request](https://github.com/amannn/action-semantic-pull-request) from 5 to 6. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/amannn/action-semantic-pull-request/releases\">amannn/action-semantic-pull-request's releases</a>.</em></p> <blockquote> <h2>v6.0.0</h2> <h2><a href=\"https://github.com/amannn/action-semantic-pull-request/compare/v5.5.3...v6.0.0\">6.0.0</a> (2025-08-13)</h2> <h3>\u26a0 BREAKING CHANGES</h3> <ul> <li>Upgrade action to use Node.js 24 and ESM (<a href=\"https://redirect.github.com/amannn/action-semantic-pull-request/issues/287\">#287</a>)</li> </ul> <h3>Features</h3> <ul> <li>Upgrade action to use Node\u2026",
+   "created_at": "2026-02-09T07:41:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/107",
+   "state": "closed",
+   "merged_at": "2026-02-10T12:17:17Z",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 106,
+   "title": "fixed",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Closes #(issue_number) <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> ### Why? <!-- Explain the motivation behind these changes --> ## Type of Change <!-- Check all that apply --> - [ ] Bug fix (non-bre\u2026",
+   "created_at": "2026-02-08T14:18:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Abhrxdip"
+   }
+  },
+  {
+   "number": 105,
+   "title": "feat: error messages improved",
+   "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary <!-- Provide a clear and concise description of what this PR changes and why it's needed --> Closes #(issue_number) <!-- Link related issues with \"Closes #123\" or \"Fixes #456\" --> ### What Changed? <!-- Describe the changes in this PR --> ### Why? <!-- Explain the motivation behind these changes --> ## Type of Change <!-- Check all that apply --> - [ ] Bug fix (non-bre\u2026",
+   "created_at": "2026-02-08T13:33:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "number": 104,
+   "title": "chore(deps): bump urllib3 from 2.6.1 to 2.6.3 in /nexum_ai in the pip group across 1 directory",
+   "body": "Bumps the pip group with 1 update in the /nexum_ai directory: [urllib3](https://github.com/urllib3/urllib3). Updates `urllib3` from 2.6.1 to 2.6.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/urllib3/urllib3/releases\">urllib3's releases</a>.</em></p> <blockquote> <h2>2.6.3</h2> <h2>\ud83d\ude80 urllib3 is fundraising for HTTP/2 support</h2> <p><a href=\"https://sethmlarson.dev/urllib3-is-fundraising-for-http2-support\">urllib3 is raising ~$40,000 USD</a> to release HTTP/2 support and ensure long-term sustainable maintenance of the project after a sharp decline in financial support. If your company or organization uses Python and would benefit from HTTP/2 sup\u2026",
+   "created_at": "2026-02-08T06:46:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/104",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 103,
+   "title": "chore(deps): bump filelock from 3.20.0 to 3.20.3 in /nexum_ai in the pip group across 1 directory",
+   "body": "Bumps the pip group with 1 update in the /nexum_ai directory: [filelock](https://github.com/tox-dev/py-filelock). Updates `filelock` from 3.20.0 to 3.20.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tox-dev/py-filelock/releases\">filelock's releases</a>.</em></p> <blockquote> <h2>3.20.3</h2> <!-- raw HTML omitted --> <h2>What's Changed</h2> <ul> <li>Fix TOCTOU symlink vulnerability in SoftFileLock by <a href=\"https://github.com/gaborbernat\"><code>@\u200bgaborbernat</code></a> in <a href=\"https://redirect.github.com/tox-dev/filelock/pull/465\">tox-dev/filelock#465</a></li> </ul> <p><strong>Full Changelog</strong>: <a href=\"https://github.com/tox-dev/fi\u2026",
+   "created_at": "2026-02-08T06:46:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/103",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 102,
+   "title": "feat(storage): improve error messages with actionable suggestions",
+   "body": "## Summary Improved error messages to be more user-friendly and actionable, following the issue requirements. Closes #89 ### What Changed? - \u2705 Added NXM-STOR-xxx error codes for programmatic handling - \u2705 Included context-aware suggestions for common errors - \u2705 Implemented \"Did you mean?\" feature using Levenshtein distance algorithm - \u2705 Updated error formatting for better readability - \u2705 Fixed table lookup errors to use proper error code (NXM-STOR-104 instead of 103) - \u2705 Integrated fuzzy matching for table name suggestions - \u2705 Maintained backward compatibility with existing codebas ## Type of Change <!-- Check all that apply --> - [ ] Bug fix (non-breaking change fixing an issue) - [ ] New f\u2026",
+   "created_at": "2026-02-08T04:59:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102",
+   "state": "closed",
+   "merged_at": "2026-02-10T12:17:00Z",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "number": 101,
+   "title": "feat(cli): add colorized output and improved formatting",
+   "body": "## Description Add colorized output and better formatting to the CLI as requested in #92. ## Changes Made - **Colored output**: Errors (red), success (green), warnings (yellow), info (cyan) - **Table formatting**: Pretty ASCII tables for SELECT results using comfy-table - **Progress indicators**: Spinners during initialization and NL translation using indicatif - **--json flag**: JSON output format option via clap - **Improved help**: ASCII banner and organized command reference ## Files Modified - \\ exum_cli/Cargo.toml\\ - Added 5 new dependencies - \\ exum_cli/src/main.rs\\ - Complete rewrite (~480 lines) ## Testing - All existing tests pass (\\cargo test -- --test-threads=1\\) - Manually test\u2026",
+   "created_at": "2026-02-07T18:52:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101",
+   "state": "closed",
+   "merged_at": "2026-02-10T19:37:51Z",
+   "user": {
+    "login": "hargunsiingh"
+   }
+  },
+  {
+   "number": 100,
+   "title": "docs: add examples for advanced SQL operators to README",
+   "body": "Closes #85 Added detailed runnable examples with expected outputs for: - LIKE operator (multiple patterns) - IN operator (numeric and string) - BETWEEN operator (numbers and dates) - ORDER BY with multiple columns - Combined operator usage All examples are properly formatted and cover common use cases. <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **Documentation** * Added comprehensive advanced SQL operator examples section featuring runnable code samples and expected query outputs. Includes practical examples for LIKE, IN, BETWEEN, ORDER BY operators, and combining multiple operators for complex queries. <!-- end of auto-generated co\u2026",
+   "created_at": "2026-02-07T11:48:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/100",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 99,
+   "title": "docs: add examples for advanced SQL operators to README",
+   "body": "Closes #85 Added detailed runnable examples for: - LIKE operator (multiple patterns) - IN operator (numeric and string) - BETWEEN operator (numbers and dates) - ORDER BY with multiple columns - Combined operator usage Each example includes expected output and proper markdown formatting. <!-- This is an auto-generated comment: release notes by coderabbit.ai --> ## Summary by CodeRabbit * **New Features** * Added semantic cache persistence to save and load query results across sessions. * Introduced EXPLAIN command for query execution plan analysis and optimization insights. * Added Docker Compose support for simplified local deployment. * **Documentation** * Enhanced contribution guidelines\u2026",
+   "created_at": "2026-02-07T11:00:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/99",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Jagriti-student"
+   }
+  },
+  {
+   "number": 98,
+   "title": "fix: implement LRU eviction for semantic cache",
+   "body": "## Summary Fixes unbounded cache growth in SemanticCache that could cause out-of-memory (OOM) errors on long-running instances. ## Problem The SemanticCache class had no eviction policy, causing the cache to grow indefinitely. On long-running database instances with many queries, this would eventually consume all available memory and crash the application. ## Solution Implemented an LRU (Least Recently Used) eviction policy with the following features: ### Key Changes - **Max cache size limit**: Configurable `max_cache_size` parameter (default: 1000 entries) - **Automatic LRU eviction**: `_evict_lru()` method removes least recently used entries when cache is full - **Timestamp tracking**: E\u2026",
+   "created_at": "2026-02-07T10:32:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Abhrxdip"
+   }
+  },
+  {
+   "number": 97,
+   "title": "Fixed the semantic cache lru evicition",
+   "body": "## Summary Fixes unbounded cache growth in SemanticCache that could cause out-of-memory (OOM) errors on long-running instances. ## Problem The SemanticCache class had no eviction policy, causing the cache to grow indefinitely. On long-running database instances with many queries, this would eventually consume all available memory and crash the application. ## Solution Implemented an LRU (Least Recently Used) eviction policy with the following features: ### Key Changes - **Max cache size limit**: Configurable `max_cache_size` parameter (default: 1000 entries) - **Automatic LRU eviction**: `_evict_lru()` method removes least recently used entries when cache is full - **Timestamp tracking**: E\u2026",
+   "created_at": "2026-02-07T10:22:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/97",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "Abhrxdip"
+   }
+  },
+  {
+   "number": 93,
+   "title": "chore(main): release 0.6.0",
+   "body": ":robot: I have created a release *beep* *boop* --- ## [0.6.0](https://github.com/aviralgarg05/NexumDB/compare/v0.5.0...v0.6.0) (2026-02-06) ### Features * align templates and README with OSCG'26 guidelines ([79bb239](https://github.com/aviralgarg05/NexumDB/commit/79bb239c88fe4a434d7dc0ecc04d700d5363c19a)) * enhance PR review automation with comprehensive workflows ([ad3fda1](https://github.com/aviralgarg05/NexumDB/commit/ad3fda1a4bc26bfc125f42870028acec06d02a05)) ### Bug Fixes * correct Release Please conditional syntax to single line ([d1382ba](https://github.com/aviralgarg05/NexumDB/commit/d1382ba086254a525a62f42d244a69c06b2833e4)) * release only on direct pushes, not PR merges ([8d4ab16]\u2026",
+   "created_at": "2026-02-06T16:58:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/93",
+   "state": "closed",
+   "merged_at": "2026-02-06T18:09:24Z",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "number": 84,
+   "title": "chore(main): release 0.5.0",
+   "body": ":robot: I have created a release *beep* *boop* --- ## [0.5.0](https://github.com/aviralgarg05/NexumDB/compare/v0.4.0...v0.5.0) (2026-02-06) ### Features * add comprehensive OSS automation and community features ([cf22f4b](https://github.com/aviralgarg05/NexumDB/commit/cf22f4bff1996f9d2bc5b28a19d652c680b0b148)) * Add DELETE statement support ([17974b8](https://github.com/aviralgarg05/NexumDB/commit/17974b87cdda4544ebd102891c73d3c1a321464a)), closes [#45](https://github.com/aviralgarg05/NexumDB/issues/45) * Add DELETE statement support with WHERE clause filtering ([44bedae](https://github.com/aviralgarg05/NexumDB/commit/44bedaed335c233b8b4effae52fc8bc2c19f5aa0)) * Add UPDATE statement support\u2026",
+   "created_at": "2026-02-06T16:29:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/84",
+   "state": "closed",
+   "merged_at": "2026-02-06T16:50:17Z",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "number": 83,
+   "title": "chore(deps): bump criterion from 0.5.1 to 0.8.2",
+   "body": "Bumps [criterion](https://github.com/criterion-rs/criterion.rs) from 0.5.1 to 0.8.2. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/criterion-rs/criterion.rs/releases\">criterion's releases</a>.</em></p> <blockquote> <h2>criterion-plot-v0.8.2</h2> <h3>Other</h3> <ul> <li>Update Readme</li> </ul> <h2>criterion-v0.8.2</h2> <h3>Fixed</h3> <ul> <li>don't build alloca on unsupported targets</li> </ul> <h3>Other</h3> <ul> <li><em>(deps)</em> bump crate-ci/typos from 1.40.0 to 1.43.0</li> <li>Fix panic with uniform iteration durations in benchmarks</li> <li>Update Readme</li> <li>Exclude development scripts from published package</li> </ul> <h2>criterion-\u2026",
+   "created_at": "2026-02-06T13:42:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/83",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 82,
+   "title": "chore(deps): bump pyo3 from 0.24.2 to 0.28.0",
+   "body": "Bumps [pyo3](https://github.com/pyo3/pyo3) from 0.24.2 to 0.28.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.28.0</h2> <p>This release contains many improvements across PyO3's feature set:</p> <ul> <li>Proper support for <code>__init__</code> methods for <code>#[pyclass]</code> types</li> <li>Support for <code>#[deleter]</code>s to complement the existing <code>#[getter]</code> and <code>#[setter]</code> attributes when implementing class &quot;properties&quot;.</li> <li>Support for subclassing many Python types with the <code>abi3</code> feature (requires Python 3.12+).\u2026",
+   "created_at": "2026-02-06T13:42:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/82",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 81,
+   "title": "chore(deps): bump thiserror from 1.0.69 to 2.0.18",
+   "body": "Bumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.69 to 2.0.18. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/thiserror/releases\">thiserror's releases</a>.</em></p> <blockquote> <h2>2.0.18</h2> <ul> <li>Make compatible with project-level <code>needless_lifetimes = &quot;forbid&quot;</code> (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/443\">#443</a>, thanks <a href=\"https://github.com/LucaCappelletti94\"><code>@\u200bLucaCappelletti94</code></a>)</li> </ul> <h2>2.0.17</h2> <ul> <li>Use differently named __private module per patch release (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/434\">#434</a>)\u2026",
+   "created_at": "2026-02-06T13:42:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/81",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 80,
+   "title": "chore(deps): bump sqlparser from 0.39.0 to 0.60.0",
+   "body": "Bumps [sqlparser](https://github.com/apache/datafusion-sqlparser-rs) from 0.39.0 to 0.60.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/0dbb9c9f9a3876303d6d8cf8d246867441fe4b57\"><code>0dbb9c9</code></a> Fix verification script for new sqlparser_derive version (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2119\">#2119</a>)</li> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/29d88fe9145c937c3798d799b4ea320d82776d73\"><code>29d88fe</code></a> Prepare for 0.60.0: Changelog and update version (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2116\">#2116\u2026",
+   "created_at": "2026-02-06T13:41:55Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/80",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 79,
+   "title": "chore(deps): bump the rust-minor-patch group with 5 updates",
+   "body": "Bumps the rust-minor-patch group with 5 updates: | Package | From | To | | --- | --- | --- | | [anyhow](https://github.com/dtolnay/anyhow) | `1.0.100` | `1.0.101` | | [tokio](https://github.com/tokio-rs/tokio) | `1.48.0` | `1.49.0` | | [serde_json](https://github.com/serde-rs/json) | `1.0.145` | `1.0.149` | | [regex](https://github.com/rust-lang/regex) | `1.12.2` | `1.12.3` | | [tempfile](https://github.com/Stebalien/tempfile) | `3.23.0` | `3.24.0` | Updates `anyhow` from 1.0.100 to 1.0.101 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em></p> <blockquote> <h2>1.0.101</h2> <ul> <li>Add #[inline] to\u2026",
+   "created_at": "2026-02-06T13:41:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/79",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 78,
+   "title": "chore(deps): bump regex from 2025.11.3 to 2026.1.15 in /nexum_ai",
+   "body": "Bumps [regex](https://github.com/mrabarnett/mrab-regex) from 2025.11.3 to 2026.1.15. <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/mrabarnett/mrab-regex/blob/hg/changelog.txt\">regex's changelog</a>.</em></p> <blockquote> <p>Version: 2026.1.15</p> <pre><code>Re-uploaded. </code></pre> <p>Version: 2026.1.14</p> <pre><code>Git issue 596: Specifying {e&lt;=0} causes ca 210\u00d7 slow-down. <p>Added RISC-V wheels.<br /> </code></pre></p> <p>Version: 2025.11.3</p> <pre><code>Git issue 594: Support relative PARNO in recursive subpatterns. </code></pre> <p>Version: 2025.10.23</p> <pre><code>'setup.py' was missing from the source distribution. </code></pre> <p>Ver\u2026",
+   "created_at": "2026-02-06T13:41:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/78",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 77,
+   "title": "chore(deps): bump networkx from 3.4.2 to 3.6.1 in /nexum_ai",
+   "body": "Bumps [networkx](https://github.com/networkx/networkx) from 3.4.2 to 3.6.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/networkx/networkx/releases\">networkx's releases</a>.</em></p> <blockquote> <h2>NetworkX 3.6.1</h2> <h1>networkx 3.6.1</h1> <p>We're happy to announce the release of networkx 3.6.1!</p> <h2>API Changes</h2> <ul> <li>Add spectral bipartition community finding and greedy bipartition using node swaps (<a href=\"https://redirect.github.com/networkx/networkx/pull/8347\">#8347</a>).</li> </ul> <h2>Enhancements</h2> <ul> <li>Nodelists for <code>from_biadjacency_matrix</code> (<a href=\"https://redirect.github.com/networkx/networkx/pull/7\u2026",
+   "created_at": "2026-02-06T13:41:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/77",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 76,
+   "title": "chore(deps): bump tokenizers from 0.22.1 to 0.22.2 in /nexum_ai",
+   "body": "Bumps [tokenizers](https://github.com/huggingface/tokenizers) from 0.22.1 to 0.22.2. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/huggingface/tokenizers/releases\">tokenizers's releases</a>.</em></p> <blockquote> <h2>Release v0.22.2</h2> <h2>What's Changed</h2> <p>Okay mostly doing the release for these PR:</p> <ul> <li>Update deserialize of added tokens by <a href=\"https://github.com/ArthurZucker\"><code>@\u200bArthurZucker</code></a> in <a href=\"https://redirect.github.com/huggingface/tokenizers/pull/1891\">huggingface/tokenizers#1891</a></li> <li>update stub for typing by <a href=\"https://github.com/ArthurZucker\"><code>@\u200bArthurZucker</code></a> in <a\u2026",
+   "created_at": "2026-02-06T13:41:32Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/76",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 75,
+   "title": "chore(deps): bump numpy from 1.26.4 to 2.4.2 in /nexum_ai",
+   "body": "Bumps [numpy](https://github.com/numpy/numpy) from 1.26.4 to 2.4.2. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/numpy/numpy/releases\">numpy's releases</a>.</em></p> <blockquote> <h2>2.4.2 (Feb 1, 2026)</h2> <h1>NumPy 2.4.2 Release Notes</h1> <p>The NumPy 2.4.2 is a patch release that fixes bugs discovered after the 2.4.1 release. Highlights are:</p> <ul> <li>Fixes memory leaks</li> <li>Updates OpenBLAS to fix hangs</li> </ul> <p>This release supports Python versions 3.11-3.14</p> <h2>Contributors</h2> <p>A total of 9 people contributed to this release. People with a &quot;+&quot; by their names contributed a patch for the first time.</p> <ul> <\u2026",
+   "created_at": "2026-02-06T13:41:28Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/75",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 74,
+   "title": "chore(ci): bump codecov/codecov-action from 4 to 5",
+   "body": "Bumps [codecov/codecov-action](https://github.com/codecov/codecov-action) from 4 to 5. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/codecov/codecov-action/releases\">codecov/codecov-action's releases</a>.</em></p> <blockquote> <h2>v5.0.0</h2> <h2>v5 Release</h2> <p><code>v5</code> of the Codecov GitHub Action will use the <a href=\"https://github.com/codecov/wrapper\">Codecov Wrapper</a> to encapsulate the <a href=\"https://github.com/codecov/codecov-cli\">CLI</a>. This will help ensure that the Action gets updates quicker.</p> <h3>Migration Guide</h3> <p>The <code>v5</code> release also coincides with the opt-out feature for tokens for public reposi\u2026",
+   "created_at": "2026-02-06T13:41:21Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/74",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 73,
+   "title": "chore(ci): bump actions/setup-python from 5 to 6",
+   "body": "Bumps [actions/setup-python](https://github.com/actions/setup-python) from 5 to 6. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/actions/setup-python/releases\">actions/setup-python's releases</a>.</em></p> <blockquote> <h2>v6.0.0</h2> <h2>What's Changed</h2> <h3>Breaking Changes</h3> <ul> <li>Upgrade to node 24 by <a href=\"https://github.com/salmanmkc\"><code>@\u200bsalmanmkc</code></a> in <a href=\"https://redirect.github.com/actions/setup-python/pull/1164\">actions/setup-python#1164</a></li> </ul> <p>Make sure your runner is on version v2.327.1 or later to ensure compatibility with this release. <a href=\"https://github.com/actions/runner/releases/tag/v\u2026",
+   "created_at": "2026-02-06T13:41:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/73",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 72,
+   "title": "chore(ci): bump actions/stale from 9 to 10",
+   "body": "Bumps [actions/stale](https://github.com/actions/stale) from 9 to 10. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/actions/stale/releases\">actions/stale's releases</a>.</em></p> <blockquote> <h2>v10.0.0</h2> <h2>What's Changed</h2> <h3>Breaking Changes</h3> <ul> <li>Upgrade to node 24 by <a href=\"https://github.com/salmanmkc\"><code>@\u200bsalmanmkc</code></a> in <a href=\"https://redirect.github.com/actions/stale/pull/1279\">actions/stale#1279</a> Make sure your runner is on version v2.327.1 or later to ensure compatibility with this release. <a href=\"https://github.com/actions/runner/releases/tag/v2.327.1\">Release Notes</a></li> </ul> <h3>Enhancement<\u2026",
+   "created_at": "2026-02-06T13:41:14Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/72",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "number": 71,
+   "title": "Issue 69 improve cli history highlighting",
+   "body": "- Fixes #69 ## Summary - **What does this PR change?** Replaces the basic `stdin` input loop in `nexum_cli` with `rustyline` and implements persistent command history stored at `~/.nexum_history`. - **Why is it needed?** Significantly improves developer experience and usability by enabling command history navigation (arrow keys) and in-line editing, which were missing in the previous implementation. ## Testing - [x] `cargo fmt --all -- --check` - [x] `cargo clippy --workspace --all-targets -- -D warnings` - [x] `cargo test --workspace -- --test-threads=1` - [x] `python -m compileall nexum_ai` ## Checklist - [x] Linked issue (or explained why not) - [] Docs updated (README/CHANGELOG/inline)\u2026",
+   "created_at": "2026-01-12T01:44:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/71",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "jaideepkathiresan"
+   }
+  },
+  {
+   "number": 62,
+   "title": "Add configurable logging levels and structured logging",
+   "body": "## Description This PR implements configurable logging levels and structured logging for NexumDB, addressing issue #50. The implementation provides a production-ready logging infrastructure with support for multiple output formats and fine-grained control over log verbosity. ## Changes Made ### 1. Dependencies Added - **env_logger 0.11**: Simple log level configuration via environment variables - **tracing 0.1**: Modern structured logging framework - **tracing-subscriber 0.3**: Log formatting and filtering with env-filter and json features ### 2. CLI Implementation (`nexum_cli/src/main.rs`) - Added `init_logging()` function to configure logging on startup - Integrated tracing throughout the\u2026",
+   "created_at": "2026-01-08T16:02:52Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/62",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "1234-ad"
+   }
+  },
+  {
+   "number": 61,
+   "title": "refractor: introduce typed error handling across core modules",
+   "body": "## Summary - What does this PR change? This PR introduces error-handling strategy across `nexum_core` library. It replaces loosely typed errors with structured error types. - Why is it needed? - The previous error handling mixed anyhow with implicit conversions. This enables callers to reliably distinguish error cases. Fixes #23 ## Testing - [x] `cargo fmt --all -- --check` - [x] `cargo clippy --workspace --all-targets -- -D warnings` - [x] `cargo test --workspace -- --test-threads=1` - [x] `python -m compileall nexum_ai` - [ ] Other (describe): ## Checklist - [x] Linked issue (or explained why not) - [ ] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [x] Follows Code\u2026",
+   "created_at": "2026-01-03T19:39:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/61",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "number": 60,
+   "title": "refractor: introduce typed error handling across core modules",
+   "body": "## Summary - What does this PR change? This PR introduces error-handling strategy across `nexum_core` library. It replaces loosely typed errors with structured error types. - Why is it needed? - The previous error handling mixed anyhow with implicit conversions. This enables callers to reliably distinguish error cases. Fixes #23 ## Testing - [x] `cargo fmt --all -- --check` - [x] `cargo clippy --workspace --all-targets -- -D warnings` - [x] `cargo test --workspace -- --test-threads=1` - [x] `python -m compileall nexum_ai` - [ ] Other (describe): ## Checklist - [x] Linked issue (or explained why not) - [ ] Docs updated (README/CHANGELOG/inline) - [ ] Added or updated tests - [x] Follows Code\u2026",
+   "created_at": "2025-12-25T18:42:22Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/60",
+   "state": "closed",
+   "merged_at": null,
+   "user": {
+    "login": "dharapandya85"
+   }
+  },
+  {
+   "number": 59,
+   "title": "feat: Add UPDATE statement support",
+   "body": "## Summary Implements SQL UPDATE statement support to allow users to modify existing rows in tables. ## Changes - **Parser**: Added parsing for `UPDATE table SET col = val, ... WHERE ...` syntax - **Types**: Added `Update` variant to `Statement` enum with table, assignments, and where_clause fields - **Planner**: Added `Update` variant to `Plan` enum - **Executor**: Implemented two-phase atomic update execution with WHERE clause filtering ## Features - \u2705 Parse UPDATE statements correctly - \u2705 Support SET clause with multiple columns - \u2705 Execute update operations with WHERE clause support - \u2705 Type checking for updated values - \u2705 Atomic updates (collect then apply) to prevent partial updates o\u2026",
+   "created_at": "2025-12-25T13:31:53Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/59",
+   "state": "closed",
+   "merged_at": "2026-01-17T07:09:29Z",
+   "user": {
+    "login": "sshekhar563"
+   }
+  }
+ ]
+}

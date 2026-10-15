@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 156,
+  "changed_files": 7,
+  "additions": 9,
+  "deletions": 9,
+  "title": "chore(ci): bump actions/checkout from 4 to 6",
+  "body": "Bumps [actions/checkout](https://github.com/actions/checkout) from 4 to 6. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/actions/checkout/releases\">actions/checkout's releases</a>.</em></p> <blockquote> <h2>v6.0.0</h2> <h2>What's Changed</h2> <ul> <li>Update README to include Node.js 24 support details and requirements by <a href=\"https://github.com/salmanmkc\"><code>@\u200bsalmanmkc</code></a> in <a href=\"https://redirect.github.com/actions/checkout/pull/2248\">actions/checkout#2248</a></li> <li>Persist creds to a separate file by <a href=\"https://github.com/ericsciple\"><code>@\u200bericsciple</code></a> in <a href=\"https://redirect.github.com/actions/check\u2026",
+  "created_at": "2026-02-16T07:29:03Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/156",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

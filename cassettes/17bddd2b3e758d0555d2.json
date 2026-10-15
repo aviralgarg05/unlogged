@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 158,
+  "changed_files": 2,
+  "additions": 11,
+  "deletions": 11,
+  "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+  "body": "Bumps the rust-minor-patch group with 2 updates: [tempfile](https://github.com/Stebalien/tempfile) and [clap](https://github.com/clap-rs/clap). Updates `tempfile` from 3.24.0 to 3.25.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/Stebalien/tempfile/blob/master/CHANGELOG.md\">tempfile's changelog</a>.</em></p> <blockquote> <h2>3.25.0</h2> <ul> <li>Allow <code>getrandom</code> 0.4.x while retaining support for <code>getrandom</code> 0.3.x.</li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li>See full diff in <a href=\"https://github.com/Stebalien/tempfile/commits\">compare view</a></li> </ul> </details> <br /> Updates `clap`\u2026",
+  "created_at": "2026-02-16T07:29:18Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/158",
+  "state": "closed",
+  "merged_at": "2026-02-16T07:29:29Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

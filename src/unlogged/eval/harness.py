@@ -27,12 +27,29 @@ from unlogged.scope.models import Call, Engagement, Verdict, WorkEvent
 
 
 class Gold(BaseModel):
-    """A hand label. `why` is for the reader of the eval report, not the model."""
+    """A label. `why` is for the reader of the eval report, not the model.
+
+    `provenance` is the part that decides how much the label is worth:
+
+    * `ruling`  — someone on the thread said, at the time, which side of the line this fell
+      on. Nobody writing it knew it would ever be used as ground truth, which makes it the
+      only kind of label here that cannot have been fitted to the answer.
+    * `brief`   — nobody ruled, so the label follows from the agreement's own text: the work
+      is in the task list, or it is absent from it.
+    * `authored` — written for this repository. Honest, and much weaker: the same person
+      wrote the events, the labels and the arm being measured.
+
+    A report that mixes them without saying so is claiming the strength of the first for all
+    three, which is the specific dishonesty this field exists to prevent.
+    """
 
     event_id: str
     call: Call
     hours: Decimal | None = None
     why: str = ""
+    provenance: str = "authored"
+    evidence: str = ""
+    evidence_url: str = ""
 
 
 class Adjudicates(Protocol):
@@ -45,6 +62,10 @@ class Adjudicates(Protocol):
 class Result:
     arm: str
     n: int = 0
+    # Set when no label in the set carries hours, which is the case for any corpus drawn
+    # from work nobody was paid for. The money columns are then not weak evidence, they are
+    # no evidence, and are printed as "—" rather than as $0.00.
+    priced: bool = True
     # Correct calls, by class.
     correct: int = 0
     # The expensive mistake: billing for something that was not a billable extra.
@@ -83,6 +104,12 @@ class Result:
     correct_billable: int = 0
 
     def table_row(self) -> str:
+        if not self.priced:
+            return (
+                f"| {self.arm} | {self.accuracy:.0%} | {self.precision:.0%} | {self.recall:.0%} "
+                f"| {len(self.overbilled)} | {len(self.missed)} | {len(self.uncited)} "
+                f"| — | — | — | — |"
+            )
         return (
             f"| {self.arm} | {self.accuracy:.0%} | {self.precision:.0%} | {self.recall:.0%} "
             f"| {len(self.overbilled)} | {len(self.missed)} | {len(self.uncited)} "
@@ -101,7 +128,7 @@ def score(
 ) -> Result:
     g = {x.event_id: x for x in gold}
     verdicts = {v.event_id: v for v in arm.adjudicate(events)}
-    r = Result(arm=arm.name, n=len(gold))
+    r = Result(arm=arm.name, n=len(gold), priced=any(x.hours is not None for x in gold))
 
     for ev in events:
         want, got = g.get(ev.id), verdicts.get(ev.id)
@@ -153,6 +180,34 @@ def report(results: list[Result], engagement: Engagement, gold: list[Gold]) -> s
         "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     lines += [r.table_row() for r in results]
+
+    by_provenance: dict[str, int] = {}
+    for x in gold:
+        by_provenance[x.provenance] = by_provenance.get(x.provenance, 0) + 1
+    lines += [
+        "",
+        "## What the labels are worth",
+        "",
+        "A label is only as good as where it came from, and these are not equal:",
+        "",
+        "| provenance | labels | what it means |",
+        "|---|---|---|",
+    ]
+    meaning = {
+        "ruling": (
+            "someone on the thread said so at the time, not knowing it would be used this way"
+        ),
+        "brief": "follows from the agreement's own text, written before the work",
+        "authored": "written for this repository by the author of the arm being measured",
+    }
+    for name, count in sorted(by_provenance.items(), key=lambda kv: -kv[1]):
+        lines.append(f"| {name} | {count} | {meaning.get(name, '—')} |")
+    if by_provenance.get("authored"):
+        lines += [
+            "",
+            f"**{by_provenance['authored']} of {len(gold)} labels were written for this "
+            "repository.** An arm scoring well against those has agreed with its own author.",
+        ]
     lines += ["", "## Where each arm went wrong", ""]
     for r in results:
         lines.append(f"**{r.arm}**")

@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 155,
+  "changed_files": 3,
+  "additions": 43,
+  "deletions": 36,
+  "title": "refactor(ai): replace print statements with structured logging",
+  "body": "## \ud83d\ude80 OSCG'26 Contributor Notice **NexumDB participates in the Open Source Contributor Games 2026!** High-quality PRs earn you points, recognition, and networking opportunities. Please follow our [contribution guidelines](../CONTRIBUTING.md) for maximum impact and ensure your submission meets OSCG quality standards. ## Summary Replaced all user facing print statements with logging in the files nexum_ai/translator.py and nexum_ai/model_manager.py. Closes #142 ### What Changed? -Added module-level logger using logging.getLogger(__name__) -Replaced print statements with appropriate logger levels (info, warning, error, exception) - Kept warning/error semantics equivalent ### Why? Mixed stdout pr\u2026",
+  "created_at": "2026-02-15T20:21:00Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/155",
+  "state": "closed",
+  "merged_at": "2026-02-19T07:04:03Z",
+  "user": {
+   "login": "Subhayoni"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 190,
+  "changed_files": 1,
+  "additions": 14,
+  "deletions": 14,
+  "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+  "body": "Bumps the rust-minor-patch group with 2 updates: [pyo3](https://github.com/pyo3/pyo3) and [clap](https://github.com/clap-rs/clap). Updates `pyo3` from 0.29.0 to 0.29.2 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/pyo3/pyo3/releases\">pyo3's releases</a>.</em></p> <blockquote> <h2>PyO3 0.29.2</h2> <p>This patch fixes a regression in PyO3 0.29.1 which broke PyPy 3.11 compatibility (<code>#[pyclass]</code> types would crash PyPy on instance deletion).</p> <p>A few further fixes have also landed with similar themes to PyO3 0.29.1: fixes to minor reference counting bugs, rough edges which would cause crashes, issues which would cause failed builds, an\u2026",
+  "created_at": "2026-08-10T07:24:18Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/190",
+  "state": "closed",
+  "merged_at": "2026-08-10T07:24:28Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

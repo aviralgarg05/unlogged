@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 170,
+  "changed_files": 2,
+  "additions": 3,
+  "deletions": 3,
+  "title": "chore(deps): bump tokio from 1.49.0 to 1.50.0 in the rust-minor-patch group",
+  "body": "Bumps the rust-minor-patch group with 1 update: [tokio](https://github.com/tokio-rs/tokio). Updates `tokio` from 1.49.0 to 1.50.0 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.50.0</h2> <h1>1.50.0 (Mar 3rd, 2026)</h1> <h3>Added</h3> <ul> <li>net: add <code>TcpStream::set_zero_linger</code> (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/7837\">#7837</a>)</li> <li>rt: add <code>is_rt_shutdown_err</code> (<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/7771\">#7771</a>)</li> </ul> <h3>Changed</h3> <ul> <li>io: add optimizer hint that <code>memchr<\u2026",
+  "created_at": "2026-03-09T07:28:55Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/170",
+  "state": "closed",
+  "merged_at": "2026-03-09T07:29:06Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

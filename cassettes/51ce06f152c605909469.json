@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 165,
+  "changed_files": 1,
+  "additions": 6,
+  "deletions": 6,
+  "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+  "body": "Bumps the rust-minor-patch group with 2 updates: [anyhow](https://github.com/dtolnay/anyhow) and [clap](https://github.com/clap-rs/clap). Updates `anyhow` from 1.0.101 to 1.0.102 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em></p> <blockquote> <h2>1.0.102</h2> <ul> <li>Remove backtrace dependency (<a href=\"https://redirect.github.com/dtolnay/anyhow/issues/438\">#438</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/439\">#439</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/440\">#440</a>, <a href=\"https://redirect.github.com/dtolnay/anyhow/issues/441\">#441</a>, <a href=\u2026",
+  "created_at": "2026-02-23T07:33:03Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/165",
+  "state": "closed",
+  "merged_at": "2026-02-23T07:33:14Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

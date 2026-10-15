@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 176,
+  "changed_files": 2,
+  "additions": 12,
+  "deletions": 12,
+  "title": "chore(deps): bump the rust-minor-patch group with 2 updates",
+  "body": "Bumps the rust-minor-patch group with 2 updates: [tokio](https://github.com/tokio-rs/tokio) and [clap](https://github.com/clap-rs/clap). Updates `tokio` from 1.51.1 to 1.52.1 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tokio-rs/tokio/releases\">tokio's releases</a>.</em></p> <blockquote> <h2>Tokio v1.52.1</h2> <h1>1.52.1 (April 16th, 2026)</h1> <h2>Fixed</h2> <ul> <li>runtime: revert <a href=\"https://redirect.github.com/tokio-rs/tokio/issues/7757\">#7757</a> to fix [a regression]<a href=\"https://redirect.github.com/tokio-rs/tokio/issues/8056\">#8056</a> that causes <code>spawn_blocking</code> to hang (<a href=\"https://redirect.github.com/tokio-rs/\u2026",
+  "created_at": "2026-04-27T08:06:40Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/176",
+  "state": "closed",
+  "merged_at": "2026-04-27T08:06:53Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

@@ -110,8 +110,40 @@ def test_the_report_table_header_matches_the_row_width():
     from unlogged.eval.harness import report
 
     out = report([Result(arm="a")], _engagement(), [Gold(event_id="e", call=Call.NOISE)])
-    header, rule, row = (line for line in out.splitlines() if line.startswith("|"))
+    # The arm table is the first one; the report now also breaks the labels down by where
+    # they came from, which is a second table and not what this is checking.
+    header, rule, row = [line for line in out.splitlines() if line.startswith("|")][:3]
     assert header.count("|") == rule.count("|") == row.count("|")
+
+
+def test_an_unpriced_corpus_reports_no_money_rather_than_zero_money():
+    """Labels drawn from work nobody was paid for carry no hours. Printing $0.00 overbilled
+    would read as a perfect score on a question that was never asked."""
+    from unlogged.eval.harness import report
+
+    out = report(
+        [Result(arm="a", priced=False)],
+        _engagement(),
+        [Gold(event_id="e", call=Call.NOISE, provenance="ruling")],
+    )
+    row = next(line for line in out.splitlines() if line.startswith("| a |"))
+    assert "$0.00" not in row
+    assert row.count("—") == 4
+
+
+def test_the_report_says_how_many_labels_its_own_author_wrote():
+    from unlogged.eval.harness import report
+
+    out = report(
+        [Result(arm="a")],
+        _engagement(),
+        [
+            Gold(event_id="e1", call=Call.NOISE, provenance="authored"),
+            Gold(event_id="e2", call=Call.NOISE, provenance="ruling"),
+        ],
+    )
+    assert "1 of 2 labels were written for this repository" in out
+    assert "not knowing it would be used this way" in out
 
 
 # -- 2. the .env file the README promises --------------------------------------------------

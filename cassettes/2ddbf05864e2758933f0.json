@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 160,
+  "changed_files": 2,
+  "additions": 87,
+  "deletions": 3,
+  "title": "chore(deps): bump sqlparser from 0.39.0 to 0.61.0",
+  "body": "Bumps [sqlparser](https://github.com/apache/datafusion-sqlparser-rs) from 0.39.0 to 0.61.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/272c25ed83b97cce5a217f601e8b00e9117ce51f\"><code>272c25e</code></a> Fix changelog (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2206\">#2206</a>)</li> <li><a href=\"https://github.com/apache/datafusion-sqlparser-rs/commit/09deb9456a354c57f0b9f5052865a054ee3271b3\"><code>09deb94</code></a> Prepare to release sqlparser <code>0.61.0</code> and sqlparser_derive <code>0.5.0</code> (<a href=\"https://redirect.github.com/apache/datafusion-sqlparser-rs/issues/2195\">#2195</a\u2026",
+  "created_at": "2026-02-16T07:29:34Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/160",
+  "state": "closed",
+  "merged_at": "2026-02-16T07:29:49Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

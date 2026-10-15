@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 187,
+  "changed_files": 1,
+  "additions": 42,
+  "deletions": 31,
+  "title": "chore(deps): bump the rust-minor-patch group with 6 updates",
+  "body": "Bumps the rust-minor-patch group with 6 updates: | Package | From | To | | --- | --- | --- | | [anyhow](https://github.com/dtolnay/anyhow) | `1.0.103` | `1.0.104` | | [tokio](https://github.com/tokio-rs/tokio) | `1.52.3` | `1.53.0` | | [serde](https://github.com/serde-rs/serde) | `1.0.228` | `1.0.229` | | [serde_json](https://github.com/serde-rs/json) | `1.0.150` | `1.0.151` | | [regex](https://github.com/rust-lang/regex) | `1.13.0` | `1.13.1` | | [clap](https://github.com/clap-rs/clap) | `4.6.1` | `4.6.2` | Updates `anyhow` from 1.0.103 to 1.0.104 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/anyhow/releases\">anyhow's releases</a>.</em><\u2026",
+  "created_at": "2026-07-20T07:25:20Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/187",
+  "state": "closed",
+  "merged_at": "2026-07-20T07:25:32Z",
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

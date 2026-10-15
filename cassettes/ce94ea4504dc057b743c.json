@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 136,
+  "changed_files": 1,
+  "additions": 2,
+  "deletions": 2,
+  "title": "chore(deps): bump the pip group across 1 directory with 2 updates",
+  "body": "Bumps the pip group with 2 updates in the /nexum_ai directory: [filelock](https://github.com/tox-dev/py-filelock) and [pillow](https://github.com/python-pillow/Pillow). Updates `filelock` from 3.20.0 to 3.20.3 <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/tox-dev/py-filelock/releases\">filelock's releases</a>.</em></p> <blockquote> <h2>3.20.3</h2> <!-- raw HTML omitted --> <h2>What's Changed</h2> <ul> <li>Fix TOCTOU symlink vulnerability in SoftFileLock by <a href=\"https://github.com/gaborbernat\"><code>@\u200bgaborbernat</code></a> in <a href=\"https://redirect.github.com/tox-dev/filelock/pull/465\">tox-dev/filelock#465</a></li> </ul> <p><strong>Full Cha\u2026",
+  "created_at": "2026-02-11T17:59:26Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/136",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

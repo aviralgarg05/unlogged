@@ -1,0 +1,905 @@
+{
+ "status": 200,
+ "body": [
+  {
+   "id": 3864357858,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Documentation-only update to README.md that adds runnable SQL examples for advanced operators including LIKE, IN, BETWEEN, ORDER BY, and combined operator usage, with expected outputs. No code changes. ## Changes |Cohort / File(s)|Summary| |---|---| |**Documentation** <br> `README.md`|Added Detailed Advanced SQL Operator Examples section with runnable SQL examples for LIKE, IN, BETWEEN, and ORDER BY operators, including examples combining multiple operators with expected outputs.| ## Estimated code review effort \ud83c\udfaf 1 (Trivial) | \u23f1\ufe0f ~5 minutes ## Possibly related issues - **#86** \u2014\u2026",
+   "created_at": "2026-02-07T11:48:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/100#issuecomment-3864357858",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3864899610,
+   "body": "Hi aviral , I\u2019d like to work on this issue for OSGC 2026. If it\u2019s available, could you please assign it to me? Thanks!",
+   "created_at": "2026-02-07T17:24:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/92#issuecomment-3864899610",
+   "user": {
+    "login": "hargunsiingh"
+   }
+  },
+  {
+   "id": 3865013328,
+   "body": "@coderabbitai full review",
+   "created_at": "2026-02-07T18:07:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#issuecomment-3865013328",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3865013546,
+   "body": "<!-- This is an auto-generated reply by CodeRabbit --> <details> <summary>\u2705 Actions performed</summary> Full review triggered. </details>",
+   "created_at": "2026-02-07T18:08:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/98#issuecomment-3865013546",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3865089075,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds five runtime dependencies and replaces the simple CLI with a clap-based REPL featuring colored output, progress spinners, JSON output option, ASK/EXPLAIN commands, SQL execution, formatted/tabled result rendering, and minor core changes to Value formatting. ## Changes |Cohort / File(s)|Summary| |---|---| |**Dependency Management** <br> `nexum_cli/Cargo.toml`|Added dependencies: `colored = \"2.1\"`, `comfy-table = \"7.1\"`, `indicatif = \"0.17\"`, `clap = { version = \"4.5\", features = [\"derive\"] }`, `serde_json = \"1.0\"`.| |**CLI Implementation** <br> `nexum_cli/src/main.rs`|Replace\u2026",
+   "created_at": "2026-02-07T18:52:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/101#issuecomment-3865089075",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3866160230,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: rate limited by coderabbit.ai --> > [!WARNING] > ## Rate limit exceeded > > `@aviralgarg05` has exceeded the limit for the number of commits that can be reviewed per hour. Please wait **23 minutes and 45 seconds** before requesting another review. > > <details> > <summary>\u231b How to resolve this issue?</summary> > > After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR. > > We recommend that you space out your commits to avoid hitting the rate limit. > > </details> > > > <details\u2026",
+   "created_at": "2026-02-08T04:59:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#issuecomment-3866160230",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3866176409,
+   "body": "Hi! I'd like to work on this issue. I've been going through the parser code and noticed there's good coverage for successful parsing cases, but adding error handling tests would make the codebase more robust. I plan to add comprehensive tests for malformed SQL statements to ensure users get clear, actionable error messages. My approach: Test syntax errors (missing keywords, invalid tokens, etc.) Test malformed INSERT statements (mismatched columns/values, invalid data types) Test invalid WHERE clauses (unsupported operators, malformed expressions) Test edge cases in SELECT (empty projections, invalid table names) Verify that error messages are descriptive and helpful I have experience with\u2026",
+   "created_at": "2026-02-08T05:08:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/87#issuecomment-3866176409",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3866326906,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-08T06:47:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/103#issuecomment-3866326906",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3866326950,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/tox-dev/filelock\"> pip/filelock </a></td><td>3.20.3</td> <td> Unknown</td><td>Unknown</td></tr> </table><h2>Scanned Files</h2> <ul><li>nexum_ai/requirements-lock.txt</li></ul> <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-02-08T06:47:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/103#issuecomment-3866326950",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3866327053,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-08T06:47:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/104#issuecomment-3866327053",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3866327107,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/urllib3/urllib3\"> pip/urllib3 </a></td><td>2.6.3</td> <td>:green_circle: 8.6</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Binary-Artifacts</td><td>:green_circle: 10</td><td>no binaries found in the repo</td></tr><tr><td>Branch-Protection</td><td>:green_circle: 5</td><td>branch protection is not maximal on development and all release branches</td></tr><tr><td>CI-Tests</td><td>:green_circle:\u2026",
+   "created_at": "2026-02-08T06:47:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/104#issuecomment-3866327107",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3866345520,
+   "body": "This pull request was built based on a group rule. Closing it will not ignore any of these versions in future pull requests. To ignore these dependencies, configure [ignore rules](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#ignore) in dependabot.yml",
+   "created_at": "2026-02-08T07:02:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/103#issuecomment-3866345520",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3866345526,
+   "body": "This pull request was built based on a group rule. Closing it will not ignore any of these versions in future pull requests. To ignore these dependencies, configure [ignore rules](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#ignore) in dependabot.yml",
+   "created_at": "2026-02-08T07:02:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/104#issuecomment-3866345526",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3866419603,
+   "body": "Hi! I'd like to work on this issue. Could you assign it to me?",
+   "created_at": "2026-02-08T07:37:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/91#issuecomment-3866419603",
+   "user": {
+    "login": "HakanVardarr"
+   }
+  },
+  {
+   "id": 3867013878,
+   "body": "Hi \ud83d\udc4b @aviralgarg05 I\u2019d like to take ownership of this issue and work on improving the error messages to make them more user-friendly, actionable, and developer-friendly. Here\u2019s how I plan to approach it: - Review the existing error definitions and messages in nexum_core/src/storage/error.rs to understand current coverage and patterns. - Improve error messages by: - Adding clearer descriptions of what went wrong and why. - Including relevant context (e.g., operation being performed, resource involved). - For common errors (such as \u201cTable not found\u201d), add helpful suggestions where possible (e.g., \u201cDid you mean X?\u201d or guidance on how to resolve the issue). - Introduce structured error codes to\u2026",
+   "created_at": "2026-02-08T11:11:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/88#issuecomment-3867013878",
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "id": 3867180530,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough This pull request aligns GitHub issue templates, pull request template, contributor documentation, and README with OSCG'26 program guidelines, introduces new quality standards checkboxes and sections across templates, updates version to 0.6.0, and makes minor whitespace adjustments to a benchmarks script. ## Changes |Cohort / File(s)|Summary| |---|---| |**GitHub Issue & PR Templates** <br> `.github/ISSUE_TEMPLATE/bug_report.yml`, `.github/ISSUE_TEMPLATE/feature_request.yml`, `.github/ISSUE_TEMPLATE/config.yml`, `.github/PULL_REQUEST_TEMPLATE.md`|Added OSCG'26 branding, welcome me\u2026",
+   "created_at": "2026-02-08T13:34:00Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/105#issuecomment-3867180530",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3867287236,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough This PR enhances the SemanticCache class with configurable size limits, LRU-based eviction, disk persistence coordination, and extended statistics. Additionally, it removes the Dockerfile and ROADMAP.md, updates .gitignore with cache-related rules, and expands test coverage for the new cache management functionality. ## Changes |Cohort / File(s)|Summary| |---|---| |**Build & Configuration** <br> `.gitignore`, `Dockerfile`|Added cache/ directory and *.cache.json ignore rules; removed entire Dockerfile (two-stage build process).| |**Documentation** <br> `ROADMAP.md`|Removed project\u2026",
+   "created_at": "2026-02-08T14:18:34Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/106#issuecomment-3867287236",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3869878867,
+   "body": "### Labels The following labels could not be found: `ci`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-09T07:41:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/107#issuecomment-3869878867",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3869879076,
+   "body": "### Labels The following labels could not be found: `ci`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-09T07:41:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108#issuecomment-3869879076",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3869879555,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:41:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/107#issuecomment-3869879555",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879584,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/amannn/action-semantic-pull-request\"> actions/amannn/action-semantic-pull-request </a></td><td>6.*.*</td> <td>:green_circle: 4.6</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 4</td><td>Found 11/23 approved changesets -- score normalized to 4</td></tr><tr><td>Packaging</td><td>:warning: -1</td><td>packaging workflow not detected</td></tr><tr><td>Binary-Arti\u2026",
+   "created_at": "2026-02-09T07:41:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/107#issuecomment-3869879584",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879602,
+   "body": "### Labels The following labels could not be found: `ci`. Please create it before Dependabot can add it to a pull request. Please fix the above issues or remove invalid values from `dependabot.yml`.",
+   "created_at": "2026-02-09T07:41:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/111#issuecomment-3869879602",
+   "user": {
+    "login": "dependabot[bot]"
+   }
+  },
+  {
+   "id": 3869879631,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-09T07:41:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/107#issuecomment-3869879631",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879743,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:41:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108#issuecomment-3869879743",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879776,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/actions/upload-artifact\"> actions/actions/upload-artifact </a></td><td>6.*.*</td> <td>:green_circle: 6.2</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Packaging</td><td>:warning: -1</td><td>packaging workflow not detected</td></tr><tr><td>Dangerous-Workflow</td><td>:green_circle: 10</td><td>no dangerous workflow patterns detected</td></tr><tr><td>Token-Permissions</td><td>:warning: 0</td><t\u2026",
+   "created_at": "2026-02-09T07:41:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108#issuecomment-3869879776",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879806,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-09T07:41:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108#issuecomment-3869879806",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879910,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/certifi/python-certifi\"> pip/certifi </a></td><td>2026.1.4</td> <td>:green_circle: 6.9</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 5</td><td>Found 1/2 approved changesets -- score normalized to 5</td></tr><tr><td>Security-Policy</td><td>:green_circle: 10</td><td>security policy file detected</td></tr><tr><td>Binary-Artifacts</td><td>:green_circle: 10</td\u2026",
+   "created_at": "2026-02-09T07:42:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/109#issuecomment-3869879910",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879932,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/109#issuecomment-3869879932",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869879912,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-09T07:42:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/109#issuecomment-3869879912",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880206,
+   "body": "\u26a0\ufe0f This is a major version update. Please review changes carefully before merging.",
+   "created_at": "2026-02-09T07:42:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/111#issuecomment-3869880206",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880265,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/110#issuecomment-3869880265",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880299,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/huggingface/sentence-transformers\"> pip/sentence-transformers </a></td><td>5.2.2</td> <td> Unknown</td><td>Unknown</td></tr> </table><h2>Scanned Files</h2> <ul><li>nexum_ai/requirements-lock.txt</li></ul> <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-02-09T07:42:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/110#issuecomment-3869880299",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880351,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:07Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/111#issuecomment-3869880351",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880527,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/github/codeql-action\"> actions/github/codeql-action/analyze </a></td><td>4.*.*</td> <td> Unknown</td><td>Unknown</td></tr> <tr><td><a href=\"https://github.com/github/codeql-action\"> actions/github/codeql-action/init </a></td><td>4.*.*</td> <td> Unknown</td><td>Unknown</td></tr> </table><h2>Scanned Files</h2> <ul><li>.github/workflows/codeql.yml</li></ul> <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-02-09T07:42:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/111#issuecomment-3869880527",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880686,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:12Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/112#issuecomment-3869880686",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869880819,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/urllib3/urllib3\"> pip/urllib3 </a></td><td>2.6.3</td> <td>:green_circle: 8.6</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Binary-Artifacts</td><td>:green_circle: 10</td><td>no binaries found in the repo</td></tr><tr><td>Branch-Protection</td><td>:green_circle: 5</td><td>branch protection is not maximal on development and all release branches</td></tr><tr><td>CI-Tests</td><td>:green_circle:\u2026",
+   "created_at": "2026-02-09T07:42:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/112#issuecomment-3869880819",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869881297,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/113#issuecomment-3869881297",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869881708,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/joblib/joblib\"> pip/joblib </a></td><td>1.5.3</td> <td>:green_circle: 7</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>11 commit(s) and 4 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Security-Policy</td><td>:green_circle: 10</td><td>security policy file detected</td></tr><tr><td>Dangerous-Workflow</td><td>:gr\u2026",
+   "created_at": "2026-02-09T07:42:29Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/113#issuecomment-3869881708",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869881952,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/dtolnay/anyhow\"> cargo/anyhow </a></td><td>1.0.101</td> <td>:green_circle: 5.5</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Packaging</td><td>:warning: -1</td><td>packaging workflow not detected</td></tr><tr><td>Maintained</td><td>:green_circle: 10</td><td>21 commit(s) and 0 issue activity found in the last 90 days -- score normalized to 10</td></tr><tr><td>Code-Review</td><td>:warning: 0<\u2026",
+   "created_at": "2026-02-09T07:42:33Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/114#issuecomment-3869881952",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869882376,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 3 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/114#issuecomment-3869882376",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869882481,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_ai/requirements-lock.txt</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td><a href=\"https://github.com/tqdm/tqdm\">tqdm</a></td><td>4.67.3</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://git\u2026",
+   "created_at": "2026-02-09T07:42:43Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/115#issuecomment-3869882481",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869882811,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:42:48Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/115#issuecomment-3869882811",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869883769,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_ai/requirements-lock.txt</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td><a href=\"https://github.com/pytorch/pytorch\">torch</a></td><td>2.10.0</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"http\u2026",
+   "created_at": "2026-02-09T07:42:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/116#issuecomment-3869883769",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869883854,
+   "body": "## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-09T07:43:01Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/116#issuecomment-3869883854",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3869890714,
+   "body": "hi I would like to work on this issue. Could you assign to me?",
+   "created_at": "2026-02-09T07:44:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/91#issuecomment-3869890714",
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "id": 3870422315,
+   "body": "> hi I would like to work on this issue. Could you assign to me? This issue is already assigned, please choose another issue",
+   "created_at": "2026-02-09T09:21:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/91#issuecomment-3870422315",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3871417351,
+   "body": "Hi \ud83d\udc4b @aviralgarg05 I\u2019d like to take ownership of this issue and work on making the embedding model configurable instead of hardcoded. My planned approach is: - Refactor nexum_ai/optimizer.py to remove the hardcoded all-MiniLM-L6-v2 model reference. - Introduce an environment variable (e.g., NEXUM_EMBEDDING_MODEL) to allow users to specify the HuggingFace embedding model at runtime. - Provide a sensible default (current model) when the environment variable is not set, to maintain backward compatibility. - Ensure compatibility with other HuggingFace sentence-transformer models by validating model loading and handling errors gracefully. - Update documentation and inline comments to clearly exp\u2026",
+   "created_at": "2026-02-09T12:26:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/70#issuecomment-3871417351",
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "id": 3871852938,
+   "body": "Hi. can you assign this task to me? I would like to work on this issue?",
+   "created_at": "2026-02-09T13:52:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/90#issuecomment-3871852938",
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "id": 3871892954,
+   "body": "I would like to work on this as well. Could you please assign it to me.",
+   "created_at": "2026-02-09T13:59:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/68#issuecomment-3871892954",
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "id": 3872992808,
+   "body": "Hi! @aviralgarg05 I\u2019d like to take this issue. I\u2019ll enhance the existing README by adding clear, practical examples for LIKE with different patterns, IN with various data types, BETWEEN for numbers and dates, and ORDER BY with multiple columns, along with a few combined queries to show real-world usage. Please can you assign this to me.",
+   "created_at": "2026-02-09T17:33:26Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/86#issuecomment-3872992808",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "id": 3873010583,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Replaces print statements in `nexum_ai/optimizer.py` with module-level structured logging (`logger = logging.getLogger(__name__)`) and swaps prints for `logger.info`, `logger.warning`, `logger.debug`, and `logger.exception`. Functional behavior and public APIs remain unchanged. ## Changes |Cohort / File(s)|Summary| |---|---| |**Logging refactor** <br> `nexum_ai/optimizer.py`|Replaced `print()` calls with `logging` calls; added `logger = logging.getLogger(__name__)`. Diagnostic, cache, persistence, migration, and test/demo messages now use `logger.info`, `logger.warning`, `logger.\u2026",
+   "created_at": "2026-02-09T17:36:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#issuecomment-3873010583",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3873143099,
+   "body": "Thanks for the review! \ud83d\ude4f I\u2019ve updated the log levels (warning/error/exception) and applied lazy formatting as suggested. Please let me know if anything else needs adjustment.",
+   "created_at": "2026-02-09T18:04:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/122#issuecomment-3873143099",
+   "user": {
+    "login": "SAILESH4406"
+   }
+  },
+  {
+   "id": 3873160048,
+   "body": "@aviralgarg05 should i raise a new PR or inform you here once everything is done?",
+   "created_at": "2026-02-09T18:07:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#issuecomment-3873160048",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3873255750,
+   "body": "> @aviralgarg05 should i raise a new PR or inform you here once everything is done? just fix here in this branch and push the changes",
+   "created_at": "2026-02-09T18:26:54Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#issuecomment-3873255750",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3873321927,
+   "body": "@aviralgarg05 dco check is failing again and again although I am signing all the commits. I am verifying this through git log -1 and commits are signed. Can you please check or guide me what is the issue.",
+   "created_at": "2026-02-09T18:41:06Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#issuecomment-3873321927",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3873329750,
+   "body": "@aviralgarg05 <img width=\"842\" height=\"643\" alt=\"image\" src=\"https://github.com/user-attachments/assets/e8fc246d-bd76-476e-8355-4623dc4fd75e\" /> They run successfully on my local machine. Can you check why here it is a problem",
+   "created_at": "2026-02-09T18:42:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/102#issuecomment-3873329750",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3873588550,
+   "body": "Hey @aviralgarg05, I was able to write and run several advanced queries on NexumDB successfully. However, I noticed that the line showing \u201cQuery executed in X ms\u201d is not appearing after query execution. Is there any configuration or way to enable this output?",
+   "created_at": "2026-02-09T20:11:04Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/86#issuecomment-3873588550",
+   "user": {
+    "login": "kunalhemnani1"
+   }
+  },
+  {
+   "id": 3875689072,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href=\"https://github.com/actions/checkout\"> actions/actions/checkout </a></td><td>4.*.*</td> <td>:green_circle: 6.4</td><td><details><summary>Details</summary><table><tr><th>Check</th><th>Score</th><th>Reason</th></tr><tr><td>Code-Review</td><td>:green_circle: 10</td><td>all changesets reviewed</td></tr><tr><td>Maintained</td><td>:green_circle: 5</td><td>7 commit(s) and 0 issue activity found in the last 90 days -- score normalized to 5</td></tr><tr><td>Dangerous-Workflow</td><\u2026",
+   "created_at": "2026-02-10T06:47:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#issuecomment-3875689072",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3875689088,
+   "body": "<!-- nexum-pr-auto-comment --> ## Thank you for your contribution, @aviralgarg05! ### PR Analysis **Files Changed:** 11 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-10T06:47:38Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#issuecomment-3875689088",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3875689371,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: failure by coderabbit.ai --> > [!CAUTION] > ## Review failed > > The pull request is closed. <!-- end of auto-generated comment: failure by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Extends many GitHub Actions workflows to trigger on additional pull_request event types (opened, reopened, synchronize), adds PR-specific validation jobs and conditional gating between PR vs non-PR runs, converts the DCO check to an advisory (non-blocking) mode, and updates PR commenter logic to update existing bot comments. ## Changes |Cohort / File(s)|Summary| |---|---| |**Core PR tr\u2026",
+   "created_at": "2026-02-10T06:47:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/123#issuecomment-3875689371",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3875708358,
+   "body": "\ud83e\udd16 Created releases: - [v0.6.0](https://github.com/aviralgarg05/NexumDB/releases/tag/v0.6.0) :sunflower:",
+   "created_at": "2026-02-10T06:53:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/93#issuecomment-3875708358",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3875709310,
+   "body": "<!-- nexum-pr-auto-comment --> ## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-10T06:53:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/111#issuecomment-3875709310",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3875710374,
+   "body": "<!-- nexum-pr-auto-comment --> ## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-10T06:53:56Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/109#issuecomment-3875710374",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3875710412,
+   "body": "<!-- nexum-pr-auto-comment --> ## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-10T06:53:57Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/108#issuecomment-3875710412",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3875710832,
+   "body": "<!-- nexum-pr-auto-comment --> ## Thank you for your contribution, @dependabot[bot]! ### PR Analysis **Files Changed:** 1 **Components:** - CI/CD workflow changes ### Quick Checks Before requesting review, please ensure: - [ ] All CI checks are passing - [ ] PR template checkboxes are completed - [ ] Linked related issue(s) - [ ] Added/updated tests for changes - [ ] Documentation updated if needed --- **Tip:** CodeRabbit will automatically review your PR. Address any feedback before requesting human review. New to contributing? Check out [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidelines.",
+   "created_at": "2026-02-10T06:54:05Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/107#issuecomment-3875710832",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3877198828,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Replaces the SemanticCache pickle/JSON backend with SQLite (default), adding automatic migration of legacy JSON/PKL caches. Adds optional HuggingFace AutoTokenizer/AutoModel embedding path alongside SentenceTransformer, with guarded fallbacks and in-memory fallback if SQLite is unavailable. ## Changes |Cohort / File(s)|Summary| |---|---| |**Core optimizer & cache** <br> `nexum_ai/optimizer.py`|Switches persistence default to SQLite, implements SQLite schema, WAL mode, meta table, legacy JSON/PKL migration, DB read/write/migration helpers, memory-lean loading, expiration/optimizat\u2026",
+   "created_at": "2026-02-10T12:07:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#issuecomment-3877198828",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3877313845,
+   "body": "Hi \ud83d\udc4b @aviralgarg05 I\u2019d like to take ownership of this enhancement and work on persisting the semantic cache using SQLite instead of the current JSON/Pickle-based backend. Here\u2019s how I plan to approach it: - Review the existing semantic cache implementation to understand the current data model, read/write patterns, and lifecycle. - Design a lightweight SQLite schema that efficiently stores embeddings, keys, metadata, and timestamps, optimized for lookup and updates. - Replace the JSON/Pickle persistence layer with a SQLite-backed implementation, using a single local database file for durability and scalability. - Ensure atomic writes and safe concurrent access where applicable, improving rel\u2026",
+   "created_at": "2026-02-10T12:32:17Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/118#issuecomment-3877313845",
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "id": 3877368201,
+   "body": "> Hey [@aviralgarg05](https://github.com/aviralgarg05), I was able to write and run several advanced queries on NexumDB successfully. However, I noticed that the line showing \u201cQuery executed in X ms\u201d is not appearing after query execution. Is there any configuration or way to enable this output? You\u2019re also absolutely right about the \u201cQuery executed in X ms\u201d line: in the current state of the project, that output is not shown in normal CLI execution. Right now it exists as debug-level internal logging, and there is no user-facing config/flag to enable it directly. For this issue, let\u2019s keep scope to the README docs update only: - LIKE examples (different patterns) - IN examples (different va\u2026",
+   "created_at": "2026-02-10T12:43:35Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/86#issuecomment-3877368201",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3877560568,
+   "body": "@aviralgarg05 if this issue is open to take I would like to take it under OSCG'26",
+   "created_at": "2026-02-10T13:20:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/85#issuecomment-3877560568",
+   "user": {
+    "login": "noor05-creator"
+   }
+  },
+  {
+   "id": 3879374301,
+   "body": "\ud83d\udc4b Thanks for opening your first issue in NexumDB! We appreciate your contribution to this project. A maintainer will review your issue soon. In the meantime, please make sure you've provided: - A clear description of the issue - Steps to reproduce (if applicable) - Your environment details Check out our [Contributing Guide](https://github.com/aviralgarg05/NexumDB/blob/main/CONTRIBUTING.md) to learn more about how to contribute.",
+   "created_at": "2026-02-10T16:58:42Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/126#issuecomment-3879374301",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3879374794,
+   "body": "assign this issue under the OSCG",
+   "created_at": "2026-02-10T16:58:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/126#issuecomment-3879374794",
+   "user": {
+    "login": "Adithyakp86"
+   }
+  },
+  {
+   "id": 3879375854,
+   "body": "<!-- This is an auto-generated issue plan by CodeRabbit --> <details> <summary>\u26a0\ufe0f Possible Duplicate Issue(s)</summary> - https://github.com/aviralgarg05/NexumDB/issues/49 </details> <details> <summary>\ud83d\udd17 Related PRs</summary> aviralgarg05/NexumDB#44 - Add comprehensive criterion benchmarks for nexum_core [merged] aviralgarg05/NexumDB#59 - feat: Add UPDATE statement support [merged] </details> --- <details> <summary>\ud83d\udcdd Issue Planner</summary> <sub>Check the box below or use the `@coderabbitai plan` command to generate an implementation plan and prompts that you can use with your favorite coding assistant.</sub> - [ ] <!-- {\"checkboxId\": \"8d4f2b9c-3e1a-4f7c-a9b2-d5e8f1c4a7b9\"} --> Create Plan\u2026",
+   "created_at": "2026-02-10T16:58:51Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/126#issuecomment-3879375854",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3879403827,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Modified the GitHub Actions workflow trigger in the PR commenter workflow file. Changed from automatic triggering on pull request open and reopen events to manual triggering via workflow dispatch, requiring explicit invocation to run. ## Changes |Cohort / File(s)|Summary| |---|---| |**GitHub Actions Configuration** <br> `.github/workflows/pr-commenter.yml`|Changed workflow trigger from automatic PR events (`opened`, `reopened`) to `workflow_dispatch` for manual triggering.| ## Estimated code review effort \ud83c\udfaf 1 (Trivial) | \u23f1\ufe0f ~3 minutes <!-- walkthrough_end --> <!-- pre_merge_check\u2026",
+   "created_at": "2026-02-10T17:01:58Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/127#issuecomment-3879403827",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3879420524,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>Scanned Files</h2> None <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-02-10T17:03:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/128#issuecomment-3879420524",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3879420803,
+   "body": "Superseded by #128 (merged).",
+   "created_at": "2026-02-10T17:03:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/127#issuecomment-3879420803",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  },
+  {
+   "id": 3879420730,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: failure by coderabbit.ai --> > [!CAUTION] > ## Review failed > > The pull request is closed. <!-- end of auto-generated comment: failure by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Modified the GitHub Actions workflow trigger for pr-commenter from pull_request events (opened, reopened, synchronize) to workflow_dispatch, enabling manual workflow invocation instead of automatic triggering on PR events. ## Changes |Cohort / File(s)|Summary| |---|---| |**GitHub Actions Workflow Configuration** <br> `.github/workflows/pr-commenter.yml`|Changed trigger mechanism from p\u2026",
+   "created_at": "2026-02-10T17:03:39Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/128#issuecomment-3879420730",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3879421089,
+   "body": "## Merge Conflict Detected This PR has merge conflicts with the `main` branch that must be resolved before it can be merged. ### How to Resolve: **Option 1: Update from main** ```bash git checkout main git pull origin main git checkout main git merge main # Resolve conflicts in your editor git add . git commit -m \"chore: resolve merge conflicts with main\" git push ``` **Option 2: Rebase (advanced)** ```bash git checkout main git fetch origin git rebase origin/main # Resolve conflicts in your editor git add . git rebase --continue git push --force-with-lease ``` --- Need help? Check out [GitHub's guide on resolving merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-\u2026",
+   "created_at": "2026-02-10T17:03:41Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/124#issuecomment-3879421089",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3879428400,
+   "body": "<h1>Dependency Review</h1> \u2705 No vulnerabilities or license issues or OpenSSF Scorecard issues found.<h2>Scanned Files</h2> None <!-- dependency-review-pr-comment-marker -->",
+   "created_at": "2026-02-10T17:04:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/125#issuecomment-3879428400",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3879468359,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Added a comprehensive unit test suite to the SQL parser covering multiple error scenarios including empty input, invalid syntax, missing components, malformed statements, and dialect-specific edge cases. No functional changes to the parser implementation. ## Changes |Cohort / File(s)|Summary| |---|---| |**SQL Parser Error Handling Tests** <br> `nexum_core/src/sql/parser.rs`|Added 317 lines of unit tests for `Parser::parse` covering error scenarios: empty/whitespace input, missing tables/columns, invalid data types, syntax mismatches, incomplete statements, invalid keywords, and e\u2026",
+   "created_at": "2026-02-10T17:08:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/129#issuecomment-3879468359",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3880560583,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough README.md updated: replaced prose-style performance examples with concrete, commented SQL code blocks demonstrating LIKE, IN, BETWEEN, NOT IN, NOT BETWEEN, ORDER BY, LIMIT, combined WHERE clauses, and a consolidated combined-queries section; removed timing and row-count commentary. (50 words) ## Changes |Cohort / File(s)|Summary| |---|---| |**Documentation Examples** <br> `README.md`|Replaced narrative performance/timing examples with explicit SQL code blocks showing usage of LIKE, IN, BETWEEN, NOT IN, NOT BETWEEN, ORDER BY, LIMIT, and combined WHERE clauses; removed previous tim\u2026",
+   "created_at": "2026-02-10T20:34:11Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/130#issuecomment-3880560583",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3881654302,
+   "body": "Assign this under the OSCG",
+   "created_at": "2026-02-11T01:41:47Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/126#issuecomment-3881654302",
+   "user": {
+    "login": "NavanChakravarthiHS"
+   }
+  },
+  {
+   "id": 3881991665,
+   "body": "Hi @aviralgarg05 I would like to work on this issue under *OSCG26*. The EXPLAIN query plan feature will improve transparency and debugging in NexumDB, and I\u2019m confident I can implement the required functionality (parsed SQL structure, cache status with similarity score, and RL execution path with Q-values). Please assign this issue to me. I\u2019ll begin working on it and share updates soon. Thank you!",
+   "created_at": "2026-02-11T03:59:36Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/66#issuecomment-3881991665",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "id": 3882793687,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- This is an auto-generated comment: review paused by coderabbit.ai --> > [!NOTE] > ## Reviews paused > > It looks like this branch is under active development. To avoid overwhelming you with review comments due to an influx of new commits, CodeRabbit has automatically paused this review. You can configure this behavior by changing the `reviews.auto_review.auto_pause_after_reviewed_commits` setting. > > Use the following commands to manage reviews: > - `@coderabbitai resume` to resume automatic reviews. > - `@coderabbitai review` to trigger a single review. > > Use the checkboxes below for quick actions: > - [ ] <!--\u2026",
+   "created_at": "2026-02-11T07:27:20Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#issuecomment-3882793687",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3883379517,
+   "body": "Thanks for reviewing. Latest fixes are pushed (4ff7ed9) and CodeRabbit is complete. Could you please approve workflows so CI can run?",
+   "created_at": "2026-02-11T09:53:50Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#issuecomment-3883379517",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "id": 3883572136,
+   "body": "Hi @aviralgarg05 , if this issue is unresolved i would like to work upon this .",
+   "created_at": "2026-02-11T10:33:15Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/88#issuecomment-3883572136",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3883577937,
+   "body": "Hi @aviralgarg05 i would like to work upon this . if this is still unresolvd",
+   "created_at": "2026-02-11T10:34:13Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/68#issuecomment-3883577937",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3883674931,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds DROP TABLE handling and tests: parser now converts DROP TABLE into internal statements; executor tests validate error on missing table and physical deletion of data; benchmarking and visualization assets for DB comparisons were added; minor formatting change in storage module. ## Changes |Cohort / File(s)|Summary| |---|---| |**Core: DROP handling & tests** <br> `nexum_core/src/executor/mod.rs`, `nexum_core/src/sql/parser.rs`, `nexum_core/src/storage/mod.rs`|Adds two executor unit tests (`test_drop_non_existent_table_fails`, `test_verify_physical_deletion`); centralizes DROP\u2026",
+   "created_at": "2026-02-11T10:54:08Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/132#issuecomment-3883674931",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3883736772,
+   "body": "@aviralgarg05",
+   "created_at": "2026-02-11T11:07:30Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/133#issuecomment-3883736772",
+   "user": {
+    "login": "Adez017"
+   }
+  },
+  {
+   "id": 3883737522,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Extend the SQL parser to convert sqlparser DROP statements for tables into `Statement::DropTable`, extracting the table name and `if_exists` flag; adds tests covering basic DROP TABLE forms and quoted identifiers. ## Changes |Cohort / File(s)|Summary| |---|---| |**DROP TABLE Parser Support** <br> `nexum_core/src/sql/parser.rs`|Added conversion for `sqlparser` `DROP` statements where `object_type` is `Table` and exactly one name is provided, producing `Statement::DropTable` with extracted name and `if_exists`; added tests for basic DROP TABLE, `IF EXISTS`, quoted identifiers, and\u2026",
+   "created_at": "2026-02-11T11:07:40Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/133#issuecomment-3883737522",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3884363486,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds a comparative benchmarking suite (Criterion) and visualization for NexumDB vs SQLite, updates benchmark docs and Cargo.toml, introduces new benchmark files and a Python visualizer, makes the storage engine module public, and adds two executor tests verifying DROP behavior and physical deletion. ## Changes |Cohort / File(s)|Summary| |---|---| |**Cargo / Bench config** <br> `nexum_core/Cargo.toml`|Added `rusqlite` as a dev-dependency and new bench targets (`db_comparison`, `sql_bench`, `executor_bench`, `filter_bench`) with `harness = false`.| |**DB Comparison Bench** <br> `ne\u2026",
+   "created_at": "2026-02-11T13:12:46Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/134#issuecomment-3884363486",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3885178350,
+   "body": "hi. I would like to work on this. Please assign it to me.",
+   "created_at": "2026-02-11T15:27:49Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/19#issuecomment-3885178350",
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "id": 3885188525,
+   "body": "hi. can you assign this to me. I would like to work on this task.",
+   "created_at": "2026-02-11T15:29:23Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/119#issuecomment-3885188525",
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "id": 3885364979,
+   "body": "<!-- This is an auto-generated comment: summarize by coderabbit.ai --> <!-- walkthrough_start --> ## Walkthrough Adds SQL aggregate support (COUNT, SUM, AVG, MIN, MAX): new AggregateType and SelectItem::Aggregate, parser recognition/validation for aggregates, planner projection handling, executor aggregate path (execute_aggregate, resolve_column_index, calculate_min_max), and end-to-end tests. ## Changes |Cohort / File(s)|Summary| |---|---| |**Type Definitions** <br> `nexum_core/src/sql/types.rs`|Adds `AggregateType` and `SelectItem::Aggregate { func, column, alias }`; updates derives to include `PartialEq`, `Serialize`, `Deserialize`.| |**Parser Logic** <br> `nexum_core/src/sql/parser.rs`|\u2026",
+   "created_at": "2026-02-11T15:58:02Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/135#issuecomment-3885364979",
+   "user": {
+    "login": "coderabbitai[bot]"
+   }
+  },
+  {
+   "id": 3886028543,
+   "body": "<h1>Dependency Review</h1> The following issues were found:<ul><li>\u2705 0 vulnerable package(s)</li><li>\u2705 0 package(s) with incompatible licenses</li><li>\u2705 0 package(s) with invalid SPDX license definitions</li><li>\u26a0\ufe0f 1 package(s) with unknown licenses.</li></ul> See the Details below.<h2>License Issues</h2> <h4><em>nexum_ai/requirements-lock.txt</em></h4> <table><tr><td>Package</td><td>Version</td><td>License</td><td>Issue Type</td></tr><tr><td><a href=\"https://github.com/python-pillow/Pillow\">pillow</a></td><td>12.1.1</td><td>Null</td><td>Unknown License</td></tr></table> <h2>OpenSSF Scorecard</h2> <table><tr><th>Package</th><th>Version</th><th>Score</th><th>Details</th></tr> <tr><td><a href\u2026",
+   "created_at": "2026-02-11T17:59:37Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/136#issuecomment-3886028543",
+   "user": {
+    "login": "github-actions[bot]"
+   }
+  },
+  {
+   "id": 3888324036,
+   "body": "@aviralgarg05 can you please lable this pr under OSCG26",
+   "created_at": "2026-02-12T02:28:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/pull/131#issuecomment-3888324036",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "id": 3889672214,
+   "body": "Hi I made a pull request. Can u review and let me know if any changes are needed?",
+   "created_at": "2026-02-12T09:14:18Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/90#issuecomment-3889672214",
+   "user": {
+    "login": "crimson17-debug"
+   }
+  },
+  {
+   "id": 3890379212,
+   "body": "Hi \ud83d\udc4b I\u2019d like to work on this issue under *OSCG26*. I\u2019m planning to implement transaction support in phases: 1\ufe0f\u20e3 Start with a basic Transaction Manager supporting *BEGIN*, *COMMIT*, and *ROLLBACK* using a write-set approach. 2\ufe0f\u20e3 Add Write-Ahead Logging (WAL) to ensure durability. 3\ufe0f\u20e3 Implement transaction ID tracking and basic isolation (initially via simple locking). 4\ufe0f\u20e3 Finally, add crash recovery from WAL. Please let me know if there are any architectural constraints or design preferences I should follow before starting. Thanks!",
+   "created_at": "2026-02-12T11:31:59Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/22#issuecomment-3890379212",
+   "user": {
+    "login": "samarjeet818"
+   }
+  },
+  {
+   "id": 3891395317,
+   "body": "@aviralgarg05 What happened? Is the changes I made does not solve the issue?",
+   "created_at": "2026-02-12T14:49:10Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/88#issuecomment-3891395317",
+   "user": {
+    "login": "bibhupradhanofficial"
+   }
+  },
+  {
+   "id": 3893929027,
+   "body": "Hi @aviralgarg05, I\u2019d like to work on this issue. I can refactor initialize_model so SentenceTransformer loading does not block the main thread by offloading the model initialization to a background worker thread. I\u2019ll implement a safe shared-state approach (model = None until ready), and ensure queries either (1) wait briefly, or (2) fallback gracefully when the embedding model is not yet loaded. I\u2019ll also add a small test / logging to confirm the CLI remains responsive during startup. Please assign this issue to me under OSCG\u201926.",
+   "created_at": "2026-02-12T23:19:45Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/120#issuecomment-3893929027",
+   "user": {
+    "login": "Anisha-45"
+   }
+  },
+  {
+   "id": 3895451853,
+   "body": "> Hi \ud83d\udc4b I\u2019d like to work on this issue under _OSCG26_. > > I\u2019m planning to implement transaction support in phases: > > 1\ufe0f\u20e3 Start with a basic Transaction Manager supporting _BEGIN_, _COMMIT_, and _ROLLBACK_ using a write-set approach. 2\ufe0f\u20e3 Add Write-Ahead Logging (WAL) to ensure durability. 3\ufe0f\u20e3 Implement transaction ID tracking and basic isolation (initially via simple locking). 4\ufe0f\u20e3 Finally, add crash recovery from WAL. > > Please let me know if there are any architectural constraints or design preferences I should follow before starting. > > Thanks! No constraints as such, just go through the contribution guidelines and do everything according to it",
+   "created_at": "2026-02-13T07:52:44Z",
+   "html_url": "https://github.com/aviralgarg05/NexumDB/issues/22#issuecomment-3895451853",
+   "user": {
+    "login": "aviralgarg05"
+   }
+  }
+ ]
+}

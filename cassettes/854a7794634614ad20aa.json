@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 192,
+  "changed_files": 2,
+  "additions": 6,
+  "deletions": 6,
+  "title": "chore(deps): bump thiserror from 1.0.69 to 2.0.20",
+  "body": "Bumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.69 to 2.0.20. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/dtolnay/thiserror/releases\">thiserror's releases</a>.</em></p> <blockquote> <h2>2.0.20</h2> <ul> <li>Suppress redundant_field_names clippy lint in generated code (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/454\">#454</a>)</li> </ul> <h2>2.0.19</h2> <ul> <li>Update to syn 3</li> </ul> <h2>2.0.18</h2> <ul> <li>Make compatible with project-level <code>needless_lifetimes = &quot;forbid&quot;</code> (<a href=\"https://redirect.github.com/dtolnay/thiserror/issues/443\">#443</a>, thanks <a href=\"https://github.com/\u2026",
+  "created_at": "2026-08-17T07:24:10Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/192",
+  "state": "closed",
+  "merged_at": null,
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}

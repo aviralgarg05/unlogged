@@ -1,0 +1,18 @@
+{
+ "status": 200,
+ "body": {
+  "number": 159,
+  "changed_files": 2,
+  "additions": 4,
+  "deletions": 11,
+  "title": "chore(deps): bump colored from 2.2.0 to 3.1.1",
+  "body": "Bumps [colored](https://github.com/mackwic/colored) from 2.2.0 to 3.1.1. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/mackwic/colored/releases\">colored's releases</a>.</em></p> <blockquote> <h2>v3.1.1</h2> <p>No release notes provided.</p> <h2>v3.1.0</h2> <p>No release notes provided.</p> <h2>v3.0.0</h2> <ul> <li><strong>[BREAKING CHANGE]:</strong> Upgrade MSRV to 1.80 and remove the then unnecessary lazy_static dependency.</li> </ul> </blockquote> </details> <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/colored-rs/colored/blob/master/CHANGELOG.md\">colored's changelog</a>.</em></p> <blockquote> <h1>Unrele\u2026",
+  "created_at": "2026-02-16T07:29:27Z",
+  "html_url": "https://github.com/aviralgarg05/NexumDB/pull/159",
+  "state": "open",
+  "merged_at": null,
+  "user": {
+   "login": "dependabot[bot]"
+  }
+ }
+}
