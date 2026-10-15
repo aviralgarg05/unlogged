@@ -34,6 +34,14 @@ Written so a judge does not have to find any of this out by reading the source.
   a clause and quotes the span it relied on, and that it separates the request (`e1`) from the
   work that answered it (`e3`) — the distinction the baseline cannot make and the one that
   causes double-billing. A real engagement of 40-60 events is what would make this a result.
+- **A real corpus was attempted twice and is not here.** Fourteen engagements were built
+  from real briefs and real pull request threads in another repository, and every one of them
+  failed the independent reader whose job was to break it. The full account, with the defect
+  counts and the one error that was mine rather than the labellers', is in
+  [`CORPUS.md`](CORPUS.md). The short version: labelling real scope disputes is hard enough
+  that two adversarial rounds could not produce a set worth standing behind, so the accuracy
+  in this repository is still measured against eight authored events and the table says so.
+
 - **The events can be real; the agreement still is not.** `unlogged pull-github` pulls a
   genuine thread out of a repository, which removes the worst circularity — that one person
   wrote the events, the labels and the arm. It does not remove the other one: the scope

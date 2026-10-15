@@ -501,3 +501,28 @@ def test_a_clause_in_force_is_not_flagged():
     )
 
     assert r.anachronistic == []
+
+
+def test_two_labels_for_one_event_is_an_error_not_a_silent_overwrite():
+    """Building the lookup as a dict kept the last label and dropped the first, so a set with
+    two opinions about an event scored as though it had one — against a label no reader of the
+    file could tell was the one in use. A real corpus build produced exactly this.
+    """
+    import pytest
+
+    eng = _engagement()
+    ev = WorkEvent(
+        id="x1", source="github", author="dev", text="work", occurred_at="2026-10-03T00:00:00Z"
+    )
+    got = Verdict(event_id="x1", call=Call.NOISE, reason="none")
+
+    with pytest.raises(ValueError, match="more than one label for: x1"):
+        score(
+            FixedArm([got]),
+            [ev],
+            [
+                Gold(event_id="x1", call=Call.INCLUDED),
+                Gold(event_id="x1", call=Call.BILLABLE_EXTRA),
+            ],
+            eng,
+        )

@@ -130,6 +130,13 @@ def money(d: Decimal) -> str:
 def score(
     arm: Adjudicates, events: list[WorkEvent], gold: list[Gold], engagement: Engagement
 ) -> Result:
+    seen: set[str] = set()
+    doubled = sorted({x.event_id for x in gold if x.event_id in seen or seen.add(x.event_id)})
+    if doubled:
+        # Dict-building silently kept the last one, so a set with two opinions about an event
+        # scored as though it had one — and the arm was measured against a label nobody could
+        # see in the file. One event, one label, or say which.
+        raise ValueError(f"more than one label for: {', '.join(doubled)}")
     g = {x.event_id: x for x in gold}
     verdicts = {v.event_id: v for v in arm.adjudicate(events)}
     r = Result(arm=arm.name, n=len(gold), priced=any(x.hours is not None for x in gold))

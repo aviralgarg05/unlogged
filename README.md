@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 108 tests, no credentials needed
+uv run pytest -q                       # 109 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -109,6 +109,14 @@ What a real thread cannot supply is the agreement. The scope clauses are the fix
 verdict is measured against, and inventing them after reading the work would make the labels
 circular in the other direction. `docs/HONESTY.md` is where any scope written retrospectively
 gets labelled as such.
+
+This was tried properly, on a repository where the briefs were written before the work and
+people ruled on scope in the thread at the time. Fourteen engagements were built and every one
+of them failed an independent reader whose only job was to break it —
+[`docs/CORPUS.md`](docs/CORPUS.md) is the account, including the error that was mine: citing
+two rules against pull requests written two months before those rules existed. **Not
+fabricated text, but fabricated authority.** It is worth reading before the table above is
+taken at face value, and it is why there is no real-data accuracy number here.
 
 ### Running it with your own keys
 
@@ -226,7 +234,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 108 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 109 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 
