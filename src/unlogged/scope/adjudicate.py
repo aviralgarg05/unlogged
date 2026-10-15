@@ -10,8 +10,11 @@ baseline, which is also the evaluation's ablation arm.
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 from decimal import Decimal
+from pathlib import Path
 
 import structlog
 
@@ -21,6 +24,8 @@ log = structlog.get_logger(__name__)
 
 # Function calling is available on the Responses API for this model, not on Chat Completions.
 MODEL = "gpt-6.1-sol"
+
+CASSETTES = Path(__file__).resolve().parents[3] / "cassettes"
 
 SYSTEM = """You adjudicate whether work found on a project's real work surface falls inside \
 an agreed scope of work or outside it.
@@ -82,11 +87,18 @@ SCHEMA = {
 class Adjudicator:
     name = MODEL
 
-    def __init__(self, engagement: Engagement, api_key: str):
-        from openai import OpenAI  # imported lazily so the package works without the extra
-
+    def __init__(self, engagement: Engagement, api_key: str | None = None):
         self.e = engagement
-        self.client = OpenAI(api_key=api_key)
+        # No key is needed to replay recorded verdicts, which is the point of recording them:
+        # a judge with no OpenAI account still sees this arm. The client is only constructed
+        # when a live call is actually going to happen.
+        self._api_key = api_key
+        self._client = None
+        # Recorded verdicts, keyed on everything that determines one. A judge with no key
+        # replays these and sees the model arm beat the baseline; nobody pays for the same
+        # eight calls twice. Same contract as the PayPal cassettes in paypal/client.py.
+        self.cassettes = CASSETTES
+        self.replay = os.environ.get("UNLOGGED_REPLAY", "1") not in ("0", "false", "False", "")
 
     def _context(self) -> str:
         clauses = "\n".join(f"[{c.id}] ({c.kind}) {c.text}" for c in self.e.clauses)
@@ -99,7 +111,39 @@ class Adjudicator:
             + (f"; {rates}" if rates else "")
         )
 
+    @property
+    def client(self):
+        if self._client is None:
+            if not self._api_key:
+                raise RuntimeError(
+                    "a live call needs OPENAI_API_KEY; set UNLOGGED_REPLAY=1 to replay"
+                )
+            from openai import OpenAI
+
+            self._client = OpenAI(api_key=self._api_key)
+        return self._client
+
+    @classmethod
+    def recorded_for(cls, engagement: Engagement, events: list[WorkEvent]) -> bool:
+        """Whether every one of these events already has a recorded verdict."""
+        probe = cls(engagement)
+        return all((probe.cassettes / f"verdict-{probe._key(e)}.json").exists() for e in events)
+
+    def _key(self, event: WorkEvent) -> str:
+        """Everything that changes the answer: the model, the agreement, and the event."""
+        clauses = "|".join(f"{c.id}:{c.text}" for c in self.e.clauses)
+        blob = f"{MODEL}\x00{clauses}\x00{event.id}\x00{event.text}"
+        return hashlib.sha256(blob.encode()).hexdigest()[:20]
+
     def adjudicate_one(self, event: WorkEvent) -> Verdict:
+        cassette = self.cassettes / f"verdict-{self._key(event)}.json"
+        if cassette.exists():
+            return Verdict.model_validate_json(cassette.read_text())
+        if self.replay:
+            raise RuntimeError(
+                f"No recorded verdict for {event.id} ({cassette.name}). Set UNLOGGED_REPLAY=0 "
+                f"with an OPENAI_API_KEY to record one."
+            )
         resp = self.client.responses.create(
             model=MODEL,
             input=[
@@ -124,7 +168,7 @@ class Adjudicator:
             },
         )
         data = json.loads(resp.output_text)
-        return Verdict(
+        verdict = Verdict(
             event_id=event.id,
             call=Call(data["call"]),
             clause_id=data["clause_id"],
@@ -135,6 +179,9 @@ class Adjudicator:
             hours=Decimal(str(data["hours"])) if data["hours"] is not None else None,
             confidence=float(data["confidence"]),
         )
+        self.cassettes.mkdir(parents=True, exist_ok=True)
+        cassette.write_text(verdict.model_dump_json(indent=1))
+        return verdict
 
     def adjudicate(self, events: list[WorkEvent]) -> list[Verdict]:
         return [self.adjudicate_one(e) for e in events]

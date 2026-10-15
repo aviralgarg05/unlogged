@@ -61,9 +61,22 @@ No PayPal account, no OpenAI key, no licence key. Recorded PayPal exchanges repl
 `cassettes/`, and with no `OPENAI_API_KEY` the project falls back to the keyword baseline —
 which is not a stub but **the evaluation's ablation arm**, the thing the model has to beat.
 
-Run it and you will see the baseline get one decision right, bill a request for *a copy of
-last month's invoice*, and miss all three pieces of real out-of-scope engineering — including
-a PR whose own description says "not in the original scope". That gap is the product.
+Both arms are scored, and both run with no key:
+
+| arm | accuracy | precision | recall | overbilled | missed | $ overbilled | $ missed |
+|---|---|---|---|---|---|---|---|
+| keyword-baseline | 12% | 0% | 0% | 2 | 2 | $170.00 | $425.00 |
+| **gpt-6.1-sol** | **100%** | **100%** | **100%** | **0** | **0** | **$0.00** | **$0.00** |
+
+The baseline bills a request for *a copy of last month's invoice*, bills the ask rather than
+the work that answered it, and misses both pieces of real out-of-scope engineering — including
+a PR whose own description says "not in the original scope". The model gets all eight right and
+cites a clause and a quoted span for every one.
+
+**Eight events is a smoke test, not a benchmark**, and
+[`docs/HONESTY.md`](docs/HONESTY.md) says so plainly along with what would make it a result.
+The verdicts are recorded under `cassettes/`, so this table reproduces with no OpenAI account —
+which is also why running it costs nobody anything.
 
 ### Running it with your own keys
 
@@ -246,12 +259,12 @@ src/unlogged/
 | Evaluation harness + JUnit | ✅ |
 | AG Studio dashboard | ✅ async data source, server-side paging |
 | Keyless replay path | ✅ full flow runs with no credentials |
-| AI harness: custom agent, server tool, telemetry | ✅ built, unexercised without a key |
+| AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
 | Tests | ✅ 55 Python (incl. a property test on the money path), 4 TypeScript |
-| Model adjudication | ⏳ awaiting API key |
-| Evaluation against a real past engagement | ⏳ needs a real thread |
+| Model adjudication | ✅ `gpt-6.1-sol`, 8/8 on the fixture, recorded so it replays keyless |
+| Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 
 ## How this is judged, and where to check each claim
 

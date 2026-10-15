@@ -1,0 +1,11 @@
+{
+ "event_id": "e5",
+ "call": "scope_request",
+ "clause_id": "X1",
+ "quoted_span": "can we also surface the decline reason to the user rather than a generic error? Needs copy and a new error map.",
+ "reason": "The client requests decline-specific error handling, which X1 explicitly excludes. This event asks for the work but does not show it being performed.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}

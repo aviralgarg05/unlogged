@@ -25,11 +25,15 @@ Written so a judge does not have to find any of this out by reading the source.
 
 ## Not yet true
 
-- **Model adjudication is not yet measured.** `scope/adjudicate.py` is written against the
-  Responses API but has not been run: there is no API key on this project yet. Every number
-  published so far is the keyword baseline's, and the baseline exists to lose.
-- **The fixture engagement is authored.** `fixtures/events.jsonl` and `fixtures/gold.jsonl` were
-  written for this repo. They are a reasonable thread, but they are not evidence, and a labelled
+- **The model scores 100% on eight events, and eight events is not a benchmark.** It is a
+  smoke test that the arm works end to end, and it should be read as nothing more. The honest
+  reading: on a set this small, with two positives, a single different judgement would move
+  precision by a third. What it does establish is that the arm runs, that every verdict cites
+  a clause and quotes the span it relied on, and that it separates the request (`e1`) from the
+  work that answered it (`e3`) — the distinction the baseline cannot make and the one that
+  causes double-billing. A real engagement of 40-60 events is what would make this a result.
+- **The fixture engagement is authored, and that limits the 100% above more than its size does.**
+  `fixtures/events.jsonl` and `fixtures/gold.jsonl` were written for this repo. They are a reasonable thread, but they are not evidence, and a labelled
   set written by the same person who writes the adjudicator is worth very little. The intended
   corpus is a real past engagement — the real thread, the real commits, and the invoice that was
   actually sent at the time — because that invoice predates this product and so cannot have been

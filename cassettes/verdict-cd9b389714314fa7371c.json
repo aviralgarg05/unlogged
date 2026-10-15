@@ -1,0 +1,11 @@
+{
+ "event_id": "e6",
+ "call": "included",
+ "clause_id": "X2",
+ "quoted_span": "Discovery call: Q4 roadmap and scoping. 60 minutes.",
+ "reason": "Discovery and scoping calls are explicitly non-billable under X2.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 1.0
+}

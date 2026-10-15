@@ -1,0 +1,11 @@
+{
+ "event_id": "e8",
+ "call": "billable_extra",
+ "clause_id": "X1",
+ "quoted_span": "add idempotency keys to the submit path so a double-click cannot double-charge.",
+ "reason": "The PR implements payment-processing safeguards outside the checkout UI scope. Idempotency handling falls under the excluded payment integration and retry/error-handling logic; its safety purpose does not make it included.",
+ "work_description": "Prevent double-charges on checkout double-click",
+ "category": "engineering",
+ "hours": "1.5",
+ "confidence": 0.94
+}

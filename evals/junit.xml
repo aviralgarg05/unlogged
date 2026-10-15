@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="unlogged-eval" tests="5" failures="4">
+<testsuite name="unlogged-eval" tests="6" failures="4">
   <testcase classname="keyword-baseline" name="no_overbill_e1"><failure message="billed a non-extra"/></testcase>
   <testcase classname="keyword-baseline" name="no_overbill_e4"><failure message="billed a non-extra"/></testcase>
   <testcase classname="keyword-baseline" name="no_miss_e3"><failure message="missed a billable extra"/></testcase>
   <testcase classname="keyword-baseline" name="no_miss_e8"><failure message="missed a billable extra"/></testcase>
   <testcase classname="keyword-baseline" name="scored"/>
+  <testcase classname="gpt-6.1-sol" name="scored"/>
 </testsuite>

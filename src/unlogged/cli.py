@@ -164,12 +164,18 @@ def evaluate(
     ]
 
     arms = [KeywordBaseline(eng)]
-    if s.openai_api_key:
-        from unlogged.scope.adjudicate import Adjudicator
+    from unlogged.scope.adjudicate import Adjudicator
 
+    # The model arm is scored whenever it can answer: live with a key, or replayed from
+    # recorded verdicts without one. That is the point of recording them — a judge with no
+    # OpenAI account still sees both arms, and nobody pays for the same calls twice.
+    if s.model_ready or Adjudicator.recorded_for(eng, evs):
         arms.append(Adjudicator(eng, s.openai_api_key))
     else:
-        typer.secho("No OPENAI_API_KEY — scoring the baseline arm only.", fg=typer.colors.YELLOW)
+        typer.secho(
+            "No OPENAI_API_KEY and no recorded verdicts — scoring the baseline arm only.",
+            fg=typer.colors.YELLOW,
+        )
 
     results = [score(a, evs, labels, eng) for a in arms]
     md = report(results, eng, labels)

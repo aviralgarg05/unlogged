@@ -64,3 +64,33 @@ def test_junit_marks_each_mistake_as_a_failing_case(tmp_path: Path):
     xml = (tmp_path / "junit.xml").read_text()
     assert 'failures="4"' in xml
     assert "no_overbill_e1" in xml and "no_miss_e3" in xml
+
+
+def test_the_model_arm_replays_without_a_key():
+    """The recorded verdicts exist so a judge with no OpenAI account still sees both arms.
+
+    Without this, the only arm a keyless judge can run is the one built to lose — which is
+    the opposite of what the evaluation is for.
+    """
+    from unlogged.scope.adjudicate import Adjudicator
+
+    eng, evs, gold = load()
+    assert Adjudicator.recorded_for(eng, evs), "a verdict is missing from cassettes/"
+
+    r = score(Adjudicator(eng), evs, gold, eng)
+    assert r.precision == 1.0
+    assert r.recall == 1.0
+    assert r.overbilled == [] and r.missed == []
+    # Every billed verdict must cite the clause and the span it relied on.
+    assert r.uncited == []
+
+
+def test_the_model_separates_the_ask_from_the_work():
+    """The distinction the baseline cannot make, and the one that causes double-billing."""
+    from unlogged.scope.adjudicate import Adjudicator
+
+    eng, evs, _ = load()
+    by = {v.event_id: v for v in Adjudicator(eng).adjudicate(evs)}
+    assert by["e1"].call is Call.SCOPE_REQUEST, "e1 asks for the work; e3 is the work"
+    assert by["e3"].call is Call.BILLABLE_EXTRA
+    assert by["e3"].work_description, "a billable line must describe the work for the client"

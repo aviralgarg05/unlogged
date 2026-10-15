@@ -1,0 +1,11 @@
+{
+ "event_id": "e4",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "Could you also send me last month's invoice again? Lost it.",
+ "reason": "Administrative request to resend an existing invoice, not a request for additional project work billable under A1.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.99
+}

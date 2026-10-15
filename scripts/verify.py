@@ -46,6 +46,7 @@ def run(*cmd: str, cwd: Path = ROOT) -> tuple[int, str]:
 def _why(code: int, out: str) -> str:
     """A failure should say what went wrong, not just that something did."""
     import re as _re
+
     m = _re.search(r"No cassette for ([^\n]*)", out)
     if m:
         return f"exit {code}: missing {m.group(1)[:80]}"
@@ -86,12 +87,24 @@ def offline() -> None:
         "--gold",
         "fixtures/gold.jsonl",
     )
-    row = next((line for line in out.splitlines() if line.startswith("| keyword")), "")
+    rows = {
+        line.split("|")[1].strip(): line.strip()
+        for line in out.splitlines()
+        if line.startswith("| keyword") or line.startswith("| gpt-")
+    }
     expected = "| keyword-baseline | 12% | 0% | 0% | 2 | 2 | 0 | $170.00 | $425.00 |"
     check(
-        "evaluation reproduces exactly",
-        PASS if row.strip() == expected else FAIL,
-        row.strip()[:60] or "no row produced",
+        "baseline reproduces exactly",
+        PASS if rows.get("keyword-baseline") == expected else FAIL,
+        (rows.get("keyword-baseline") or "no row")[:58],
+    )
+    # The model arm must replay from recorded verdicts, or a judge with no OpenAI account
+    # only ever sees the arm built to lose.
+    model = next((v for k, v in rows.items() if k.startswith("gpt-")), "")
+    check(
+        "model arm replays without a key",
+        PASS if "100%" in model else FAIL,
+        model[:58] or "model arm absent",
     )
 
     code, out = run(

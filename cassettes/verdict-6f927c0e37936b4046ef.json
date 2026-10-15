@@ -1,0 +1,11 @@
+{
+ "event_id": "e1",
+ "call": "scope_request",
+ "clause_id": "X1",
+ "quoted_span": "Can you also just add the retry logic when the card declines?",
+ "reason": "The client requested retry logic, which X1 explicitly excludes. No implementation was performed in this event.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 1.0
+}

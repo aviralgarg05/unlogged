@@ -1,0 +1,11 @@
+{
+ "event_id": "e2",
+ "call": "noise",
+ "clause_id": "A1",
+ "quoted_span": "Thanks so much, you're a legend",
+ "reason": "A thank-you only; no work is requested or performed, so there is no outside-scope work to bill under A1.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 1.0
+}

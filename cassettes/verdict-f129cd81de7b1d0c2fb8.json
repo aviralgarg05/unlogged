@@ -1,0 +1,11 @@
+{
+ "event_id": "e7",
+ "call": "included",
+ "clause_id": "S2",
+ "quoted_span": "Pushed the address form revisions you asked for in review.",
+ "reason": "Completed address form revisions after review fall within the included round of checkout page revisions. There is no evidence this exceeds that round.",
+ "work_description": null,
+ "category": null,
+ "hours": null,
+ "confidence": 0.97
+}

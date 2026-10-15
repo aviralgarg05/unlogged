@@ -1,0 +1,11 @@
+{
+ "event_id": "e3",
+ "call": "billable_extra",
+ "clause_id": "X1",
+ "quoted_span": "PR #312: handle PSP timeout and 3DS re-challenge on checkout submit. 4 files changed, +211 -18.",
+ "reason": "The PR records completed payment-provider timeout and retry handling, which X1 explicitly excludes. Estimated engineering effort: 3 hours.",
+ "work_description": "PSP timeout handling and 3DS re-challenge",
+ "category": "engineering",
+ "hours": "3",
+ "confidence": 0.96
+}
