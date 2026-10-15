@@ -1,5 +1,8 @@
 # unlogged
 
+[![ci](https://github.com/aviralgarg05/unlogged/actions/workflows/ci.yml/badge.svg)](https://github.com/aviralgarg05/unlogged/actions/workflows/ci.yml)
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+
 **The work you never wrote down is the work you never got paid for.**
 
 You agree a scope. Then the work arrives anyway — in a Slack thread, a PR review, a call
