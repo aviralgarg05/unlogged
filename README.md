@@ -142,6 +142,20 @@ strictly worse than none, because a trial can expire and nothing here can.
 
 ---
 
+<table>
+<tr>
+<td width="33%"><img src="docs/img/dashboard-thread.jpg" alt="The thread: every message, commit and call on the engagement"></td>
+<td width="33%"><img src="docs/img/dashboard-decisions.jpg" alt="Each event placed against the agreed scope, beside the evidence card"></td>
+<td width="33%"><img src="docs/img/dashboard-bill.jpg" alt="What reached the bill: totals, a per-line chart, and the append-only ledger"></td>
+</tr>
+<tr>
+<td><em>The thread, paged from the server.</em></td>
+<td><em>Each event against the agreed scope. The baseline's two billings are
+drawn as defects because neither cites a clause.</em></td>
+<td><em>What reached the bill, and the one button that puts it there.</em></td>
+</tr>
+</table>
+
 ## How this is judged, and where to check each claim
 
 Five equally weighted criteria. For each one, a command that runs with **no credentials**, and

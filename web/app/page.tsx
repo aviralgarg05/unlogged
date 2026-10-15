@@ -56,6 +56,7 @@ export default function Home() {
             width={800}
             height={563}
             className="rounded-lg border border-pp-border"
+            priority
           />
         </div>
         <figcaption className="mt-3 text-sm leading-relaxed text-pp-muted">
