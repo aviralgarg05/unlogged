@@ -40,6 +40,22 @@ Three undocumented behaviours cost a day each and are written up in `docs/VERIFI
 `amount.value` you just read; `generate-qr-code` returns `multipart/form-data`, not `image/png`;
 and exactly three top-level invoice properties are readOnly, not the six commonly assumed.
 
+## Four things filed upstream
+
+Each one was found by building on the platform, each is reproducible from the repo, and each is
+written up in `docs/UPSTREAM.md` rather than kept as a talking point:
+
+1. **The documented discount path is accepted and not stored.** Created, sent, re-read fresh —
+   four term/date combinations, absent every time, total never moving off the list price.
+   `POST /conditional-rules` returns 500 for every payload shape its own spec suggests.
+2. **`generate-qr-code` returns a base64 multipart envelope, not an image.** HTTP 200 and a
+   plausible payload that is not a PNG. Reproducible in one curl.
+3. **The APIMatic-generated Server SDK ships no Invoicing controller** — six controllers, none
+   of them invoicing — which is why every invoice call here goes through httpx.
+4. **A public AG Studio custom widget cannot declare `formatShape`.** The callback is handed
+   `{ api, context }`, `ag-studio` exports no shape builder, and returning a plain object throws
+   inside `hydrateWidget` and takes the dashboard down.
+
 ## Challenges
 
 PayPal's documented discount path does not work. `early_payment_discount` is accepted with
@@ -53,11 +69,21 @@ Reproduction script and a suggested fix: `docs/UPSTREAM.md`.
 
 ## Accomplishments
 
-The evaluation is the part worth pointing at. The keyword baseline — what people actually fall
-back on — scores **0% precision and 0% recall** on the fixture engagement: it bills a request and
-an administrative message, and misses both pieces of real out-of-scope engineering, including a PR
-whose own description says "not in the original scope". That gap is the product, and it is a
-number a judge can reproduce rather than a claim.
+The evaluation is the part worth pointing at, because both arms run and both are scored:
+
+| arm | accuracy | precision | recall | $ overbilled | $ missed |
+|---|---|---|---|---|---|
+| keyword triage | 12% | 0% | 0% | $170.00 | $425.00 |
+| **gpt-6.1-sol** | **100%** | **100%** | **100%** | **$0.00** | **$0.00** |
+
+The baseline — what people actually fall back on — bills a request for a copy of an old invoice,
+bills the ask rather than the work that answered it, and misses both pieces of real out-of-scope
+engineering, including a PR whose own description says "not in the original scope". The model gets
+all eight right and cites a clause and a quoted span for every one.
+
+**Eight events is a smoke test, not a benchmark**, and `docs/HONESTY.md` says so along with what
+would make it a result. The verdicts are recorded as cassettes, so a judge with no OpenAI account
+reproduces the whole comparison in twenty seconds and it costs nobody anything.
 
 ## What I learned
 
@@ -68,9 +94,9 @@ lets the payer type any amount. The mechanism survived; the problem it was point
 
 ## What's next
 
-Measuring the model arm against a real past engagement — the real thread, the real commits, and
-the invoice that was actually sent at the time. That invoice predates this product, so it is the
-one ground truth that cannot have been shaped by it.
+A real past engagement — the real thread, the real commits, and the invoice that was actually
+sent at the time. That invoice predates this product, so it is the one ground truth that cannot
+have been shaped by it, and it is what turns eight events into a result.
 
 ## Built with
 

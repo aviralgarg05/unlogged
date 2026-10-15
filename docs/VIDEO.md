@@ -33,9 +33,12 @@ span that decided it. Linger on three rows and say only what is on screen:
 - `could you also send me last month's invoice` → `noise` — *"that one is phrasing, not work."*
 
 **1:10–1:35 — the ablation, on screen, not in the README.**
-Flip to the eval. Keyword baseline beside the model, same events, same labels. Read the two
-columns that matter out loud: *"The keyword pass bills two things it shouldn't and misses
-$425 of real work."* Then the model's row. Say the number; do not editorialise.
+Run `uv run unlogged evaluate`. Two rows appear: keyword triage at 0% precision and 0% recall,
+$170 billed that should not have been and $425 of real work missed; then `gpt-6.1-sol` at 100%
+on all three. Read the two columns that matter out loud and say nothing else — the table is the
+argument. Add one sentence of honesty, because a judge will think it: *"Eight events is a smoke
+test, not a benchmark. The repo says so."* Both rows run with no API key, which is why this beat
+is reproducible rather than narrated.
 
 **1:35–2:05 — money moves, on PayPal's page.**
 One continuous take, no cut, because a cut is where a judge assumes a trick. Click apply. The
