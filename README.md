@@ -88,6 +88,28 @@ cites a clause and a quoted span for every one.
 The verdicts are recorded under `cassettes/`, so this table reproduces with no OpenAI account —
 which is also why running it costs nobody anything.
 
+### Where the events can come from instead
+
+The sharpest objection to the table above is not its size. It is that one person wrote the
+events, the labels and the arm being measured, which makes 100% a fact about the author rather
+than about the model. So the thread does not have to be authored:
+
+```bash
+uv run unlogged pull-github --repo OWNER/NAME --out fixtures/events-real.jsonl
+```
+
+That reads pull requests, issues, review comments and issue comments and emits the same event
+shape the adjudicator already takes, with each event keeping who said it, when, and the words
+verbatim — the three things a verdict needs to be auditable. Read-only, no write scope, and a
+public repository answers with no token at all; set `GITHUB_TOKEN` (`$(gh auth token)` works)
+for a private one. Review bots and coverage reporters are dropped by default, because a client
+thread has no coderabbit in it and left in they outnumber the humans.
+
+What a real thread cannot supply is the agreement. The scope clauses are the fixed point every
+verdict is measured against, and inventing them after reading the work would make the labels
+circular in the other direction. `docs/HONESTY.md` is where any scope written retrospectively
+gets labelled as such.
+
 ### Running it with your own keys
 
 Nothing below is required to evaluate the project — the commands above work with none of it.

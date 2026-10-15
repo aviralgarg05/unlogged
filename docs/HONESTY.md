@@ -34,6 +34,13 @@ Written so a judge does not have to find any of this out by reading the source.
   a clause and quotes the span it relied on, and that it separates the request (`e1`) from the
   work that answered it (`e3`) — the distinction the baseline cannot make and the one that
   causes double-billing. A real engagement of 40-60 events is what would make this a result.
+- **The events can be real; the agreement still is not.** `unlogged pull-github` pulls a
+  genuine thread out of a repository, which removes the worst circularity — that one person
+  wrote the events, the labels and the arm. It does not remove the other one: the scope
+  clauses a verdict cites still have to come from somewhere, and a scope written after
+  reading the work is a scope fitted to the answer. Any engagement in this repo whose clauses
+  were written retrospectively is labelled here, in this file, by name.
+
 - **The seeded ledger is fixture data.** `data/seed/eng-checkout-001.jsonl` holds two lines
   from an invented earlier billing period, so the page titled "Every line this system added to
   the live PayPal invoice" is not blank on a fresh clone. They are labelled with a
