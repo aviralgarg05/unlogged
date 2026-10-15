@@ -300,3 +300,79 @@ def test_a_unit_only_one_reader_saw_carries_no_agreement_and_is_dropped():
     from unlogged.eval.agreement import alpha_over_units
 
     assert alpha_over_units([["A", "A"], ["B"]]) == alpha_over_units([["A", "A"]])
+
+
+# -- the blind panel ------------------------------------------------------------------------
+
+
+def _panel():
+    from unlogged.eval.agreement import panel
+
+    return panel({n: _published(f"blind-{n}") for n in "abcd"}, model=_published("model"))
+
+
+def test_four_blind_readers_reproduce_the_published_panel_figures():
+    """The numbers quoted in docs/CORPUS.md and the README.
+
+    These four saw one frozen instruction and nothing else: not each other, not the earlier
+    passes, not any critique, not this repository. That is what makes their agreement a
+    statement about the task rather than about a shared starting point.
+    """
+    result = _panel()
+
+    assert result.n == 31
+    assert len(result.readers) == 4
+    assert round(result.alpha, 3) == 0.797
+    assert result.unanimous == 25
+    assert round(result.ceiling, 3) == 0.943
+    assert round(result.model, 3) == 0.613
+
+
+def test_the_model_sits_well_below_a_ceiling_that_was_measured_not_assumed():
+    """The comparison that matters: not "is the model right", which needs a truth nobody has,
+    but "does the model agree with a panel as well as a member of that panel does"."""
+    result = _panel()
+
+    assert result.ceiling - result.model > 0.3
+
+
+def test_the_clean_protocol_beats_the_contaminated_one_it_replaced():
+    """The first attempt compared a pass with its own informed revision and reached 0.721.
+    Four readers who had seen nothing reach 0.797 — so the contaminated figure understated the
+    task rather than flattering it, which is the opposite of the usual direction and worth
+    stating."""
+    contaminated = score(_published("round1"), _published("round2")).alpha
+
+    assert _panel().alpha > contaminated
+
+
+def test_every_blind_reader_labelled_every_event():
+    """A reader who skips the hard events makes agreement look better than it is, so the
+    guideline requires a call on all of them and this checks it was given."""
+    for n in "abcd":
+        assert len(_published(f"blind-{n}")) == 31
+
+
+def test_the_panel_disagreements_concentrate_on_one_reader_and_one_boundary():
+    """Five of the six splits are one reader calling included or noise where the other three
+    see work, or a request for work, outside the task list — the model's failure in milder
+    form, from a reader who could not see the model."""
+    readers = {n: _published(f"blind-{n}") for n in "abcd"}
+    events = sorted(readers["a"])
+
+    split = [e for e in events if len({readers[n][e] for n in "abcd"}) > 1]
+    assert len(split) == 6
+
+    lone_dissenter = [
+        e
+        for e in split
+        if len({readers[n][e] for n in "bcd"}) == 1 and readers["a"][e] != readers["b"][e]
+    ]
+    assert len(lone_dissenter) == 4
+    # And always in the same direction.
+    assert {readers["a"][e] for e in lone_dissenter} <= {"included", "noise"}
+
+    import collections
+
+    calls = collections.Counter(readers["a"].values())
+    assert calls["scope_request"] == 0 and calls["billable_extra"] == 0

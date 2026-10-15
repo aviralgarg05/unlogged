@@ -318,6 +318,22 @@ def agreement(
             "scored only on those. Compare two rows only when the `events` column matches."
         )
 
+    # A panel is the thing a model should be measured against. Readers whose names begin
+    # "blind-" saw the frozen guideline and nothing else: not each other, not the earlier
+    # passes, not any critique. They are the only sets here whose agreement means what the
+    # word usually means.
+    from unlogged.eval.agreement import panel as panel_score
+
+    blind = {k: v for k, v in sets.items() if k.startswith("blind-")}
+    if len(blind) >= 3:
+        result = panel_score(blind, model=sets.get("model"))
+        typer.echo("\n" + result.table())
+        typer.echo(
+            "\nThe ceiling is leave-one-out: how often one reader matches the majority of the\n"
+            "others. It is the same question asked of the model, which is the only fair one\n"
+            "when there is no ground truth to be right about."
+        )
+
     names = list(sets)
     first = sets[names[0]]
     typer.echo("\nWhere the readers split, by call:")

@@ -115,6 +115,80 @@ def krippendorff_alpha(pairs: list[tuple[str, str]]) -> float:
     return alpha_over_units([[a, b] for a, b in pairs])
 
 
+@dataclass
+class Panel:
+    """Several readers over one set of events."""
+
+    readers: list[str]
+    n: int
+    alpha: float
+    unanimous: int
+    ceiling: float
+    model: float | None = None
+    split: dict[str, int] = field(default_factory=dict)
+
+    def table(self) -> str:
+        lines = [
+            "| measure | value |",
+            "|---|---|",
+            f"| readers | {len(self.readers)} |",
+            f"| events every reader labelled | {self.n} |",
+            f"| Krippendorff's alpha across the panel | {self.alpha:.3f} |",
+            f"| events all of them called the same way | {self.unanimous} of {self.n} |",
+            f"| one reader against the rest (the ceiling) | {self.ceiling:.1%} |",
+        ]
+        if self.model is not None:
+            lines.append(f"| the model against the same majority | {self.model:.1%} |")
+        return "\n".join(lines)
+
+
+def panel(readings: dict[str, dict[str, str]], model: dict[str, str] | None = None) -> Panel:
+    """Agreement across a panel, and the ceiling a model should be measured against.
+
+    The ceiling is leave-one-out: for each reader, how often they match the majority of the
+    others. That is the right comparison for a model, because it is the same question asked of
+    a human — not "is the model right", which needs a truth nobody has, but "does the model
+    agree with a panel as well as a member of that panel does".
+    """
+    names = sorted(readings)
+    shared = sorted(set.intersection(*(set(r) for r in readings.values()))) if readings else []
+    units = [[readings[n][e] for n in names] for e in shared]
+
+    def majority(calls: list[str]) -> str | None:
+        counts = Counter(calls)
+        top, n_top = counts.most_common(1)[0]
+        return top if list(counts.values()).count(n_top) == 1 else None
+
+    hits = total = 0
+    for e in shared:
+        for held_out in names:
+            rest = [readings[n][e] for n in names if n != held_out]
+            winner = majority(rest)
+            if winner is not None:
+                total += 1
+                hits += readings[held_out][e] == winner
+
+    model_hits = model_total = 0
+    if model:
+        for e in shared:
+            if e not in model:
+                continue
+            winner = majority([readings[n][e] for n in names])
+            if winner is not None:
+                model_total += 1
+                model_hits += model[e] == winner
+
+    return Panel(
+        readers=names,
+        n=len(shared),
+        alpha=alpha_over_units(units),
+        unanimous=sum(1 for u in units if len(set(u)) == 1),
+        ceiling=hits / total if total else 0.0,
+        model=(model_hits / model_total) if model_total else None,
+        split=dict(Counter(c for u in units for c in u)),
+    )
+
+
 def score(first: dict[str, str], second: dict[str, str], *, bootstrap: int = 2000) -> Agreement:
     """Compare two label sets over whatever events they both cover.
 

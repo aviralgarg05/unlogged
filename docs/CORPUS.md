@@ -77,64 +77,91 @@ Two more product defects came out of the same pass:
   silently replaced the first and the arm was measured against a label no reader of the file
   could identify. It now raises.
 
-## How much the two passes actually agreed
+## Four blind readers
 
-"Fourteen attempts failed" is a story, not a measurement. It cannot tell a reader whether the
-task is hard, whether the labellers were careless, or whether the disagreements were one
-judgement repeating. So the two passes were scored against each other on the five threads both
-of them labelled:
+The first attempt at this measured the wrong thing. Two passes were compared, but the second
+had been shown a critique of the first before it started — an informed revision, not a second
+opinion — and the reliability literature is clear that such a design cannot produce a
+reproducibility figure at all.
+
+So it was done properly. The instruction was frozen into [`LABELLING.md`](LABELLING.md), which
+contains no examples from these threads, no counts, and no hint of how often any call should
+appear, because any of those would steer readers toward each other and inflate exactly the
+number they are there to measure. Four readers then labelled all 31 events under that one
+instruction, in parallel, having seen neither each other, nor the earlier passes, nor any
+critique, nor this repository.
+
+That last part is checkable rather than asserted: every tool call the four made is in the run
+transcript, and all of it is `gh api` against the NexumDB repository from a scratch directory.
+None of them opened a file in this project.
 
 ```bash
 uv run unlogged agreement
 ```
 
-| pair | events | raw | Krippendorff's alpha (95% CI) | Cohen's kappa | Gwet's AC1 |
-|---|---|---|---|---|---|
-| first pass vs second pass | 31 | 80.6% | 0.721 (0.50 to 0.91) | 0.719 | 0.749 |
+| measure | value |
+|---|---|
+| readers | 4 |
+| events every reader labelled | 31 |
+| **Krippendorff's alpha across the panel** | **0.797** |
+| events all four called the same way | 25 of 31 |
+| **one reader against the majority of the others** | **94.3%** |
+| **the model against that same majority** | **61.3%** |
 
-Three coefficients, for three different reasons, and the reporting rule is that all of them
-were chosen before the number was seen rather than after it disappointed.
+### What that says
 
-* **Krippendorff's alpha** is the primary one. It is what the reliability literature asks for
-  when the number of raters per item varies, which is the case across a corpus where different
-  readers took different threads. On two raters with complete data and two categories it
-  coincides with kappa — the textbook 2×2 example gives 0.400 for both, which is the check in
-  `tests/test_agreement.py`.
-* **Cohen's kappa** is here because a reader will look for it.
-* **Gwet's AC1** is here because kappa has a documented failure, the *kappa paradox*, where a
-  dominant category inflates the chance-correction term and collapses the coefficient although
-  the raters agree on nearly everything. About half of every thread is `noise`, so the skew
-  that triggers it is present.
+**The task is reproducible.** Four independent readers given one written instruction agree at
+α = 0.80 and call four events in five identically. The earlier figure of 0.72, from the
+contaminated pair, turns out to have *understated* what a clean protocol reaches.
 
-**No verbal band is attached to any of them.** The familiar "substantial / almost perfect"
-labels were derived for two-category problems and are not recommended for a four-way nominal
-judgement, and quoting one would be borrowing authority the number does not carry.
+**The ceiling is 94.3%, and it is measured rather than assumed.** Leave one reader out, take
+the majority of the rest, and ask whether the held-out reader matches it. That is the same
+question the model gets asked, and it is the only fair one when there is no ground truth to be
+right about: not "is the model correct" but "does the model agree with a panel as well as a
+member of that panel does".
 
-The interval matters more than the point estimate. At 31 events it spans nearly half the scale,
-which is the honest reading: the data constrains the figure loosely, and 0.72 should not be
-treated as precise.
+**The model is 33 points below it.** 61.3% against 94.3%. Against each individual reader it
+scores 58–61%, alpha 0.28 to 0.35 — the lower bounds of those intervals touch zero.
 
-### What this number is not
+No verbal band is attached to any coefficient. The familiar "substantial / almost perfect"
+labels were derived for two-category problems, are explicitly not recommended for a four-way
+nominal judgement, and would be borrowing authority the number does not carry. Three
+coefficients are reported — alpha as the primary, because the number of readers per item
+varies across the corpus; Cohen's kappa because a reader will look for it; Gwet's AC1 because
+about half of every thread is `noise` and that skew is what triggers the documented kappa
+paradox — and all three were chosen before the numbers were seen.
 
-It is not inter-annotator agreement between independent readers, and it should not be read as
-one. The second pass was shown a critique of the first before it started, which makes it an
-*informed revision* rather than a second opinion. That pushes in both directions at once —
-shared framing raises agreement, and the corrections the critic named lower it on exactly those
-events — and it means the figure cannot stand as a reproducibility statistic for the labelling
-scheme. A clean number needs a reader who has seen neither the first pass nor its critique, and
-there has not been one.
+### The six events the panel split on
 
-### Where the two readers split, by call
+| event | the four readers |
+|---|---|
+| #7 comment-3628789451 | included / scope_request / scope_request / scope_request |
+| #7 comment-3628907319 | included / scope_request / scope_request / scope_request |
+| #7 comment-3628920440 | noise / billable_extra / billable_extra / billable_extra |
+| #7 comment-3628925741 | included / scope_request / noise / noise |
+| #10 comment-3629161421 | noise / billable_extra / billable_extra / billable_extra |
+| #11 comment-3635423731 | noise / noise / noise / billable_extra |
 
-| call | first pass | second pass | agreed when either used it |
-|---|---|---|---|
-| included | 7 | 5 | 29% |
-| billable_extra | 2 | 6 | 17% |
-| scope_request | 7 | 6 | 56% |
-| noise | 15 | 14 | 81% |
+Four of the six are the same reader dissenting alone against a unanimous other three, always
+in the same direction: calling `included` or `noise` where the others see work, or a request
+for work, outside the task list. That reader labelled no `scope_request` and no
+`billable_extra` on any of the 31 events. Of the remaining two, one is a different reader
+dissenting alone and one is a genuine three-way split.
 
-The pooled 80.6% is carried by `noise`. On `billable_extra` — the call that puts money on an
-invoice — the two readers agreed on one event in six.
+Which is the model's failure, in milder form, from a reader who could not see the model. It is
+evidence that the request-versus-work boundary is genuinely the hard part of this task rather
+than a quirk of one arm — and also that three readers in four get it anyway.
+
+### The earlier passes, scored against the blind consensus
+
+| pass | agrees with the blind majority | alpha |
+|---|---|---|
+| first pass | 80.6% | 0.685 |
+| second pass (informed revision) | 74.2% | 0.596 |
+| the model | 61.3% | 0.346 |
+
+The contaminated passes were decent readings. The revision was not an improvement on the one
+it revised, which is worth knowing about a protocol built on criticism.
 
 ### And then the model was given the same 31 events
 
