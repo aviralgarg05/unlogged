@@ -1,0 +1,20 @@
+{
+  "id": "eng-checkout-001",
+  "client_name": "Northwind Labs",
+  "client_email": "sb-client@personal.example.com",
+  "invoicer_name": "Aviral Garg",
+  "currency": "USD",
+  "cap": "1200.00",
+  "rate_card": {
+    "default_rate": "85.00",
+    "currency": "USD",
+    "by_category": {"design": "65.00", "engineering": "85.00", "discovery": "0.00"}
+  },
+  "clauses": [
+    {"id": "S1", "kind": "scope", "text": "Build the checkout page: cart summary, address form, and card entry, to the agreed Figma."},
+    {"id": "S2", "kind": "scope", "text": "One round of revisions on the checkout page after review."},
+    {"id": "X1", "kind": "exclusion", "text": "Payment provider integration, retry and error-handling logic are not included."},
+    {"id": "X2", "kind": "exclusion", "text": "Discovery and scoping calls are not billable."},
+    {"id": "A1", "kind": "approval", "text": "Work outside this scope is billed at the rate card and itemised on the invoice."}
+  ]
+}

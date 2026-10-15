@@ -1,0 +1,144 @@
+"""unlogged — open an engagement, discover work, watch the bill itemise itself."""
+
+from __future__ import annotations
+
+import json
+from decimal import Decimal
+from pathlib import Path
+
+import typer
+
+from unlogged.config import Settings
+from unlogged.ledger import Entry, Ledger, now
+from unlogged.paypal import Invoices, LineItem, PayPalClient
+from unlogged.paypal.invoices import total_of
+from unlogged.scope.baseline import KeywordBaseline
+from unlogged.scope.models import Engagement, WorkEvent
+
+app = typer.Typer(add_completion=False, help=__doc__)
+DATA = Path("data")
+
+
+def _engagement(path: Path) -> Engagement:
+    return Engagement.model_validate_json(path.read_text())
+
+
+def _adjudicator(eng: Engagement, settings: Settings):
+    """The model when a key exists, the keyword baseline when it does not.
+
+    The baseline is not a placeholder — it is the evaluation's ablation arm, and the
+    project is expected to run and be judged on both.
+    """
+    if settings.openai_api_key:
+        from unlogged.scope.adjudicate import Adjudicator
+
+        return Adjudicator(eng, settings.openai_api_key)
+    typer.secho("No OPENAI_API_KEY — using the keyword baseline.", fg=typer.colors.YELLOW)
+    return KeywordBaseline(eng)
+
+
+@app.command()
+def open_engagement(
+    engagement: Path = typer.Option(..., help="Engagement JSON"),
+    invoice_date: str = typer.Option(..., help="YYYY-MM-DD"),
+) -> None:
+    """Issue the one invoice the client will keep for the whole engagement."""
+    s = Settings.from_env()
+    eng = _engagement(engagement)
+    with PayPalClient(s) as c:
+        inv = Invoices(c)
+        opening = [
+            LineItem(
+                name=cl.text[:120],
+                quantity=Decimal("1"),
+                unit_price=Decimal("0.00"),
+                currency=eng.currency,
+                unit_of_measure="QUANTITY",
+            )
+            for cl in eng.clauses
+            if cl.kind == "scope"
+        ]
+        created = inv.create(
+            items=opening,
+            invoicer_name=eng.invoicer_name,
+            recipient_email=eng.client_email,
+            reference=eng.id,
+            note=eng.payer_note(),
+            currency=eng.currency,
+            invoice_date=invoice_date,
+        )
+        iid = created["id"]
+        inv.send(iid, notify=False)
+        typer.echo(json.dumps({"invoice_id": iid, "payer_url": inv.payer_url(iid)}, indent=2))
+
+
+@app.command()
+def discover(
+    engagement: Path = typer.Option(...),
+    events: Path = typer.Option(..., help="JSONL of WorkEvent"),
+    invoice_id: str = typer.Option(...),
+    apply: bool = typer.Option(False, "--apply", help="Write the billable extras to PayPal"),
+) -> None:
+    """Adjudicate work events, then itemise the billable extras onto the live invoice."""
+    s = Settings.from_env()
+    eng = _engagement(engagement)
+    evs = [WorkEvent.model_validate_json(l) for l in events.read_text().splitlines() if l.strip()]
+    verdicts = _adjudicator(eng, s).adjudicate(evs)
+    by_id = {e.id: e for e in evs}
+
+    billable = [v for v in verdicts if v.is_billable()]
+    for v in verdicts:
+        mark = {"billable_extra": "+", "included": "=", "noise": " "}[v.call.value]
+        typer.echo(f" {mark} [{v.call.value:14}] {by_id[v.event_id].text[:70]}")
+        if v.quoted_span:
+            typer.echo(f"      cites {v.clause_id}: \"{v.quoted_span[:60]}\"")
+
+    if not apply:
+        typer.echo(f"\n{len(billable)} billable extra(s). Re-run with --apply to write them.")
+        raise typer.Exit()
+
+    with PayPalClient(s) as c:
+        inv = Invoices(c)
+        items, ledger = [], Ledger(DATA / f"{eng.id}.jsonl")
+        for v in billable:
+            ev = by_id[v.event_id]
+            rate = eng.rate_card.rate_for(v.category)
+            items.append(
+                LineItem(
+                    name=v.reason[:120],
+                    quantity=v.hours,
+                    unit_price=rate,
+                    currency=eng.currency,
+                    provenance=ev.provenance,
+                )
+            )
+        updated = inv.add_items(invoice_id, items, notify=True)
+        total = total_of(updated)
+        for v, item in zip(billable, items):
+            ledger.append(
+                Entry(
+                    at=now(),
+                    invoice_id=invoice_id,
+                    event_id=v.event_id,
+                    clause_id=v.clause_id,
+                    line_name=item.display_name,
+                    hours=v.hours,
+                    unit_price=item.unit_price,
+                    total_after=total,
+                    adjudicator=_adjudicator(eng, s).name,
+                    confidence=v.confidence,
+                )
+            )
+        typer.echo(f"\nTotal now {eng.currency} {total}")
+        typer.echo(f"Client's page: {inv.payer_url(invoice_id)}")
+
+
+@app.command()
+def show(engagement: Path = typer.Option(...)) -> None:
+    """Print the append-only change ledger for an engagement."""
+    eng = _engagement(engagement)
+    typer.echo(json.dumps(Ledger(DATA / f"{eng.id}.jsonl").summary(), indent=2))
+
+
+if __name__ == "__main__":
+    app()

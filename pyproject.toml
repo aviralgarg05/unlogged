@@ -1,0 +1,32 @@
+[project]
+name = "unlogged"
+version = "0.1.0"
+description = "The work you never wrote down is the work you never got paid for."
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "pydantic>=2.9",
+    "structlog>=24.4",
+    "typer>=0.15",
+]
+
+[project.optional-dependencies]
+ai = ["openai>=1.60"]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "hypothesis>=6.112", "ruff>=0.7"]
+
+[project.scripts]
+unlogged = "unlogged.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unlogged"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
