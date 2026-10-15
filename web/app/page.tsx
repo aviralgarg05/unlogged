@@ -52,7 +52,7 @@ export default function Home() {
           />
           <Image
             src="/payer-after.jpg"
-            alt="The same invoice at $945.00, with two discovered lines added, each naming its source"
+            alt="The same invoice at $902.50, with two discovered lines added, each naming its source"
             width={800}
             height={563}
             className="rounded-lg border border-pp-border"
@@ -60,7 +60,7 @@ export default function Home() {
           />
         </div>
         <figcaption className="mt-3 text-sm leading-relaxed text-pp-muted">
-          The same live PayPal invoice, before and after. <strong>$520.00 → $945.00.</strong> Same
+          The same live PayPal invoice, before and after. <strong>$520.00 → $902.50.</strong> Same
           invoice id, same payer link, same QR — PayPal emailed the client that it changed. Nothing
           was reissued and nothing was voided.
         </figcaption>
