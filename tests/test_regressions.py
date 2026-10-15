@@ -526,3 +526,46 @@ def test_two_labels_for_one_event_is_an_error_not_a_silent_overwrite():
             ],
             eng,
         )
+
+
+# -- 7. the guard that actually stops a second charge ---------------------------------------
+
+
+def test_the_documented_apply_command_refuses_to_bill_the_same_work_twice(tmp_path, monkeypatch):
+    """PayPal accepts PayPal-Request-Id on an invoice PUT and ignores it.
+
+    Verified live on 2026-10-15: the identical write sent twice under one key took a sandbox
+    invoice from $225.00 to $250.00. The CLI had no other guard and its own comment claimed
+    the opposite — so running the documented command twice charged the client twice for one
+    piece of work, which is the worst thing this product can do.
+    """
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+    argv = [
+        "discover",
+        "--engagement",
+        str(HERE / "fixtures" / "engagement.json"),
+        "--events",
+        str(HERE / "fixtures" / "events.jsonl"),
+        "--invoice-id",
+        invoice_id,
+        "--apply",
+    ]
+
+    first = CliRunner().invoke(cli.app, argv)
+    assert first.exit_code == 0, first.output
+    assert "902.50" in first.output
+
+    second = CliRunner().invoke(cli.app, argv)
+    assert second.exit_code == 1
+    assert "Already billed" in second.output
+    # And it names what it refused, rather than failing silently.
+    assert "e3" in second.output and "e8" in second.output

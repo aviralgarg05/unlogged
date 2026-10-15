@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 121 tests, no credentials needed
+uv run pytest -q                       # 122 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -226,11 +226,13 @@ the file that implements it — so nothing has to be taken on trust.
 simulated, and what is not yet true — including that eight events is a smoke test rather than a
 benchmark, and that the fixture engagement was written for this repo.
 
-Four findings are filed upstream rather than kept as talking points, in
+Five findings are filed upstream rather than kept as talking points, in
 [`docs/UPSTREAM.md`](docs/UPSTREAM.md): PayPal's documented discount path is accepted and not
 stored, `generate-qr-code` returns a base64 multipart envelope rather than an image, the generated
 Server SDK ships no Invoicing controller, and a public AG Studio custom widget cannot declare
-`formatShape` at all. Each one is reproducible from this repo.
+`formatShape` at all, and `PayPal-Request-Id` is accepted on an invoice PUT and ignored — the
+retry bills the client a second time, which is why the guard here is an append-only ledger and
+not that header. Each one is reproducible from this repo.
 
 ## Status
 
@@ -247,7 +249,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 121 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 122 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

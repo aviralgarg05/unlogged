@@ -211,3 +211,49 @@ behaviour is inspectable without credentials.
 ## Not claimed
 
 Sandbox only, one merchant, `action: "pay"` at 500×500. Live mode untested.
+
+---
+
+# Fifth report: `PayPal-Request-Id` is accepted on an invoice PUT and ignored
+
+**Severity: a client can be charged twice for one piece of work.**
+
+`PUT /v2/invoicing/invoices/{id}` accepts the `PayPal-Request-Id` header — it is not rejected,
+and no error or warning comes back — but it has no effect. The identical write sent twice under
+one key applies twice.
+
+## Reproduce
+
+Create an invoice, send it, then add the same item twice under one key:
+
+```
+before      : 200.00
+after one   : 225.00      PUT, PayPal-Request-Id: items-INV2-…-fixed-probe-key
+after retry : 250.00      the same PUT, the same header, byte for byte
+```
+
+Run live on the sandbox on 2026-10-15. Invoice `INV2-4VB5-L27M-WJLF-YLMB`.
+
+## Why it matters
+
+The header is documented under idempotency for `POST` endpoints, and it does not appear in the
+parameters of the invoice update operation at all — so this may well be intended. If it is, the
+documentation does not say so, and the failure mode is silent. An integration that retries a PUT
+after a lost response, which is the exact case idempotency exists for, bills the work twice, and
+nothing in the second response distinguishes it from the first.
+
+There is no concurrency primitive either. The invoice resource carries no ETag and the update
+operation accepts no `If-Match`, so read-modify-write on an invoice is last-writer-wins with no
+way to detect that a write was lost.
+
+## Suggested fix
+
+Honour the header on the update operation, or reject it with an explicit error so an integration
+learns that the protection it believes it has does not exist. Either beats accepting it silently.
+
+## What this project does instead
+
+An append-only ledger of what has already been billed to each invoice, consulted before every
+write, in both `src/unlogged/cli.py` and `src/unlogged/web.py`. The header is still sent — it
+costs nothing and may one day work — but nothing depends on it. The test that proves the second
+apply is refused is `test_the_documented_apply_command_refuses_to_bill_the_same_work_twice`.

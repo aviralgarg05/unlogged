@@ -159,10 +159,16 @@ class Invoices:
         upd["amount"] = {"currency_code": current["detail"]["currency_code"]}
 
         # Derived from what is being ADDED, never from the resulting document. Hashing the
-        # result means a retry after a lost response reads a longer invoice, produces a
-        # different digest, and bills the work twice — the one failure this product cannot
-        # have. Callers that know the originating events pass their ids instead, so the key
-        # stays stable even if the line text is later reworded.
+        # result means a retry after a lost response reads a longer invoice and produces a
+        # different digest. Callers that know the originating events pass their ids instead,
+        # so the key stays stable even if the line text is later reworded.
+        #
+        # None of which PayPal honours. Verified live on 2026-10-15: the identical PUT sent
+        # twice with the same PayPal-Request-Id took a sandbox invoice from $225.00 to
+        # $250.00. The header is documented for POST and does not appear in the invoice PUT
+        # reference at all. It is still sent — it costs nothing and may one day work — but
+        # the guard against double-billing is the ledger in cli.py and web.py, not this.
+        # See docs/UPSTREAM.md.
         if idempotency_key is None:
             idempotency_key = hashlib.sha256(
                 "".join(i.display_name for i in new).encode()

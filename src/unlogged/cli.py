@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import typer
@@ -27,7 +28,10 @@ MARK: dict[Call, str] = {
     Call.NOISE: " ",
 }
 assert set(MARK) == set(Call), "every Call needs a mark"
-DATA = Path("data")
+# Overridable so a verification run gets a ledger of its own: the apply flow is now guarded
+# by what has already been billed, so replaying it against a ledger that already contains the
+# demo is correctly refused, and a check meant to exercise the flow would be testing the guard.
+DATA = Path(os.environ.get("UNLOGGED_DATA", "data"))
 
 
 def _engagement(path: Path) -> Engagement:
@@ -116,9 +120,23 @@ def discover(
         typer.echo(f"\n{len(billable)} billable extra(s). Re-run with --apply to write them.")
         raise typer.Exit()
 
+    ledger = Ledger(DATA / f"{eng.id}.jsonl")
+    already = {e.event_id for e in ledger if e.invoice_id == invoice_id}
+    repeats = sorted({v.event_id for v in billable} & already)
+    if repeats:
+        # The only guard that works. PayPal accepts PayPal-Request-Id on an invoice PUT and
+        # ignores it: verified live on 2026-10-15, where the identical write sent twice took
+        # a sandbox invoice from $225.00 to $250.00. The header is still sent, because it
+        # costs nothing and may start working, but nothing may depend on it.
+        typer.secho(
+            f"Already billed to {invoice_id}: {', '.join(repeats)}. Nothing written.",
+            fg=typer.colors.YELLOW,
+        )
+        raise typer.Exit(1)
+
     with PayPalClient(s) as c:
         inv = Invoices(c)
-        items, ledger = [], Ledger(DATA / f"{eng.id}.jsonl")
+        items = []
         for v in billable:
             ev = by_id[v.event_id]
             rate = eng.rate_card.rate_for(v.category)
@@ -131,8 +149,9 @@ def discover(
                     provenance=ev.provenance,
                 )
             )
-        # Keyed on the events, not the resulting document: re-running this command after a
-        # lost response must not bill the same work twice.
+        # Keyed on the events rather than the resulting document, so a retry produces the
+        # same digest. That is necessary and not sufficient: PayPal ignores the header on a
+        # PUT, so the ledger check above is what actually stops the second charge.
         key = hashlib.sha256(",".join(sorted(v.event_id for v in billable)).encode()).hexdigest()[
             :16
         ]

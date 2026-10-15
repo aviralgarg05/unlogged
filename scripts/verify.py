@@ -21,6 +21,7 @@ import subprocess
 import sys
 from datetime import date
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -45,7 +46,9 @@ EXPECTED_TOTAL = "902.50"
 BLANK = {"OPENAI_API_KEY": "", "PAYPAL_CLIENT_ID": "", "PAYPAL_CLIENT_SECRET": ""}
 
 
-def run(*cmd: str, cwd: Path = ROOT, keyless: bool = False) -> tuple[int, str]:
+def run(
+    *cmd: str, cwd: Path = ROOT, keyless: bool = False, data: str | None = None
+) -> tuple[int, str]:
     # This file runs under `uv run --script` in its own isolated environment, so VIRTUAL_ENV
     # points somewhere the project is not installed. A nested `uv run` inherits it and resolves
     # against the wrong environment, which surfaces as a missing cassette rather than as an
@@ -54,6 +57,8 @@ def run(*cmd: str, cwd: Path = ROOT, keyless: bool = False) -> tuple[int, str]:
     if keyless:
         # Whoever runs this most often is the one person whose machine has the credentials.
         env |= BLANK
+    if data:
+        env["UNLOGGED_DATA"] = data
     p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, env=env)
     return p.returncode, (p.stdout + p.stderr).strip()
 
@@ -138,6 +143,10 @@ def offline() -> None:
         DEMO_INVOICE,
         "--apply",
         keyless=True,
+        # Its own ledger: the apply flow refuses work already billed to this invoice, so a
+        # repeat run against the project's own ledger is correctly refused and this check
+        # would be exercising the guard instead of the flow.
+        data=TemporaryDirectory().name,
     )
     total = next((line for line in out.splitlines() if "Total now" in line), "")
     check(
