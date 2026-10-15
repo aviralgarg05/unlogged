@@ -13,6 +13,16 @@ const at = (xTrack: number, yTrack: number, xSpan: number, ySpan: number): AgWid
 });
 const title = (text: string) => ({ title: { enabled: true, text } });
 
+const sum = (id: string) => ({ id, aggregation: 'sum' as const });
+const countd = (id: string) => ({ id, aggregation: 'countd' as const });
+
+// A number worth its own tile is one a reader would otherwise have to compute by scanning rows.
+const kpi = (text: string, value: { id: string; aggregation?: 'sum' | 'countd' | 'max' }) => ({
+  type: 'value' as const,
+  dataMapping: { value: [value] },
+  format: { title: { enabled: true, text } },
+});
+
 export const PAGE_TITLES: Record<string, string> = {
   thread: 'The thread',
   calls: 'What was decided',
@@ -78,10 +88,28 @@ const calls: AgPageState<UnloggedRegistry> = {
   widgetLayout: { verdicts: at(0, 0, 14, 30), evidence: at(14, 0, 10, 30) },
 };
 
-// What actually moved money, append-only.
+// What actually moved money, append-only. The tiles answer the two questions a contractor
+// asks about a bill — how much, and how much of it was work nobody wrote down — and the chart
+// shows the thing the product is for: a bill that grows after it was sent.
 const bill: AgPageState<UnloggedRegistry> = {
   id: 'bill',
   widgets: {
+    // total_after is a RUNNING total, so the latest row is the answer and summing it
+    // double-counts every earlier write.
+    'kpi-total': kpi('Invoice total now', { id: 'ledger.total_after', aggregation: 'max' }),
+    'kpi-added': kpi('Added after sending', sum('ledger.unit_price')),
+    'kpi-lines': kpi('Lines discovered', countd('ledger.event_id')),
+    growth: {
+      type: 'column-chart-grouped',
+      dataMapping: {
+        categoryKey: [{ id: 'ledger.line_name' }],
+        valueKey: [sum('ledger.unit_price')],
+      },
+      format: {
+        ...title('What each discovered line added to the bill'),
+        style: { theme: { common: { legend: { enabled: false } } } },
+      },
+    },
     ledger: {
       type: 'grid',
       dataMapping: {
@@ -99,7 +127,13 @@ const bill: AgPageState<UnloggedRegistry> = {
       format: title('Every line this system added to the live PayPal invoice'),
     },
   },
-  widgetLayout: { ledger: at(0, 0, 24, 30) },
+  widgetLayout: {
+    'kpi-total': at(0, 0, 8, 7),
+    'kpi-added': at(8, 0, 8, 7),
+    'kpi-lines': at(16, 0, 8, 7),
+    growth: at(0, 7, 24, 18),
+    ledger: at(0, 25, 24, 20),
+  },
 };
 
 export const dashboardReport: AgReportState<UnloggedRegistry> = {

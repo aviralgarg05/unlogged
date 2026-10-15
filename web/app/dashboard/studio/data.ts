@@ -41,6 +41,7 @@ const VERDICT_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
 
 const LEDGER_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'at', name: 'Written at', format: 'dateTimeFormat' },
+  { id: 'event_id', name: 'From event', format: 'textFormat' },
   { id: 'line_name', name: 'Line added to the invoice', format: 'textFormat' },
   { id: 'clause_id', name: 'Clause', format: 'textFormat' },
   { id: 'hours', name: 'Hours', format: 'decimalFormat' },
