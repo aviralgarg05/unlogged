@@ -34,6 +34,40 @@ jobs:
           name: evaluation
           path: evals/
 
+  # Stage One of the hackathon is pass/fail on a judge being able to run this. That is a
+  # property of a clean checkout with no secrets, not of a developer machine, so it is
+  # verified as one — with every credential explicitly unset rather than merely absent.
+  judge-path:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with: { enable-cache: true }
+      - run: uv sync --extra dev
+      - name: LICENSE is present and detectable
+        run: test -f LICENSE && head -1 LICENSE | grep -q "MIT License"
+      - name: Tests, with no credentials
+        env: { PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '', OPENAI_API_KEY: '' }
+        run: uv run pytest -q
+      - name: The README's own commands, with no credentials
+        env: { PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '', OPENAI_API_KEY: '' }
+        run: |
+          uv run unlogged discover \
+            --engagement fixtures/engagement.json \
+            --events fixtures/events.jsonl \
+            --invoice-id INV2-DEMO
+          uv run unlogged evaluate \
+            --engagement fixtures/engagement.json \
+            --events fixtures/events.jsonl \
+            --gold fixtures/gold.jsonl
+      - name: The full apply flow replays from cassettes
+        env: { PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '', OPENAI_API_KEY: '' }
+        run: |
+          uv run unlogged discover \
+            --engagement fixtures/engagement.json \
+            --events fixtures/events.jsonl \
+            --invoice-id INV2-MSMM-CLAS-Z36Z-CXSH --apply
+
   web:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: web } }
