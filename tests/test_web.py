@@ -54,3 +54,28 @@ def test_webhook_accepts_a_simulated_event_and_marks_it_as_simulated():
     r = client.post("/webhook", json={"event_type": "INVOICING.INVOICE.PAID", "id": "WH-SIMULATED"})
     assert r.status_code == 200
     assert r.json() == {"ok": True, "verified": False, "simulated": True}
+
+
+def test_telemetry_round_trips_and_summarises(tmp_path, monkeypatch):
+    import unlogged.web as web
+
+    monkeypatch.setattr(web, "DATA", tmp_path)
+    posted = client.post(
+        "/api/telemetry",
+        json={
+            "events": [
+                {
+                    "at": "2026-10-15T00:00:00Z",
+                    "type": "tool_execution_finished",
+                    "tool": "read_verdicts",
+                },
+                {"at": "2026-10-15T00:00:01Z", "type": "run_finished"},
+            ]
+        },
+    )
+    assert posted.json() == {"ok": True, "recorded": 2}
+
+    body = client.get("/api/telemetry").json()
+    assert body["summary"]["events"] == 2
+    assert body["summary"]["tool_calls"] == 1
+    assert body["summary"]["tools_used"] == ["read_verdicts"]

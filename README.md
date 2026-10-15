@@ -51,8 +51,16 @@ with one deliberate departure. The boilerplate hands AG Studio a fully-materiali
 lets the engine filter, sort and page it in the browser. `app/dashboard/studio/data.ts` instead
 declares `capabilities: { pagination, filter, sort }`, so the engine sends `paging`, the applied
 filter tree and the sort order down to `getData`, trusts the returned window as-is, and never
-re-filters locally. **The rows stay in the Python service.** The one mutating tool runs
-server-side for the same reason: a PayPal credential has no business in a browser bundle.
+re-filters locally. **The rows stay in the Python service.**
+
+Four more things the surveyed entries leave untouched. A sixth agent owns the decision this
+product exists to make and hands layout work to AG's built-in five through `delegateTo`.
+`defaultToolCalls` seeds it with the scope, the adjudications and the changes already made
+*before its first turn*, so its opening reply is a decision rather than a question. The one
+tool that moves money is `kind: 'server'` — Studio advertises the schema and never runs it, so
+the PayPal write happens in our own route and the credential never enters the bundle. And an
+`AgAiTelemetryObserver` reads `api.getState()` synchronously in-loop, where it sees the exact
+post-mutation state a call produced, then batches to the backend for scoring.
 
 No AG Studio licence key. `validateLicense()` only ever sets a watermark message — no branch
 disables a feature — and `isDisplayWatermark()` returns false on localhost. A trial key is
@@ -146,7 +154,8 @@ src/unlogged/
 | Evaluation harness + JUnit | ✅ |
 | AG Studio dashboard | ✅ async data source, server-side paging |
 | Keyless replay path | ✅ full flow runs with no credentials |
-| Tests | ✅ 29 passing |
+| AI harness: custom agent, server tool, telemetry | ✅ built, unexercised without a key |
+| Tests | ✅ 30 Python, 4 TypeScript |
 | Model adjudication | ⏳ awaiting API key |
 | Evaluation against a real past engagement | ⏳ needs a real thread |
 

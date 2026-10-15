@@ -109,6 +109,42 @@ def read_ledger() -> dict[str, Any]:
     return {"summary": led.summary(), "rows": [e.model_dump(mode="json") for e in led]}
 
 
+class TelemetryBatch(BaseModel):
+    events: list[dict[str, Any]]
+
+
+@app.post("/api/telemetry")
+def telemetry(batch: TelemetryBatch) -> dict[str, Any]:
+    """Harness telemetry, appended for AgentUnit to score.
+
+    The observer on the dashboard side runs synchronously inside the agent loop, so it buffers
+    and posts here rather than awaiting anything. Nothing downstream of this is on a critical
+    path: a failure here must never affect a run.
+    """
+    DATA.mkdir(parents=True, exist_ok=True)
+    with (DATA / "telemetry.jsonl").open("a") as fh:
+        for e in batch.events:
+            fh.write(json.dumps(e) + "\n")
+    return {"ok": True, "recorded": len(batch.events)}
+
+
+@app.get("/api/telemetry")
+def read_telemetry() -> dict[str, Any]:
+    path = DATA / "telemetry.jsonl"
+    if not path.exists():
+        return {"rows": []}
+    rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    tools = [r for r in rows if r.get("tool")]
+    return {
+        "rows": rows,
+        "summary": {
+            "events": len(rows),
+            "tool_calls": len(tools),
+            "tools_used": sorted({r["tool"] for r in tools}),
+        },
+    }
+
+
 class ApplyRequest(BaseModel):
     invoice_id: str
     event_ids: list[str]

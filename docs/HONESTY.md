@@ -37,6 +37,16 @@ Written so a judge does not have to find any of this out by reading the source.
 - **Live mode is untested.** This PayPal account is registered in India, which is
   receive-and-withdraw only, so live-mode sending cannot be exercised. Sandbox accounts can be
   created in any country, which is what makes the cross-border case demonstrable at all.
+- **The `kind: 'server'` tool has not been exercised end to end.** `add_billable_work` is
+  declared to the model and its execution path (`web/lib/server-tools.ts`) is unit-tested in
+  four cases — unknown tool refused, malformed arguments refused before anything reaches the
+  money path, a well-formed call forwarded, a backend refusal surfaced rather than swallowed.
+  What has *not* happened is a real model emitting that call and the result flowing back into a
+  conversation, because that needs an API key this project does not have yet. The declaration
+  and the handler are both real; the join between them is untested.
+- **Telemetry has been round-tripped but not scored.** `/api/telemetry` accepts and summarises
+  batches, and the observer is registered on the harness. No AgentUnit evaluation consumes it
+  yet, because there are no runs to consume.
 - **Accuracy of hour estimates is unmeasured.** The adjudicator estimates hours for billable
   extras. Nothing yet checks those estimates against anything.
 
