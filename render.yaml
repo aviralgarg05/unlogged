@@ -14,3 +14,20 @@ services:
         value: "1"
       - key: PYTHON_VERSION
         value: "3.12"
+
+  - type: web
+    name: unlogged-web
+    runtime: node
+    plan: free
+    rootDir: web
+    buildCommand: npm ci && npm run build
+    startCommand: npx next start --port $PORT --hostname 0.0.0.0
+    envVars:
+      - key: UNLOGGED_API
+        fromService:
+          name: unlogged-api
+          type: web
+          property: hostport
+      - key: OPENAI_MODELS
+        value: gpt-6.1-sol,gpt-5.4-mini
+      # AG_STUDIO_OPENAI_API_KEY is set in the Render dashboard, never committed.

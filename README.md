@@ -41,9 +41,17 @@ a PR whose own description says "not in the original scope". That gap is the pro
 
 ### The dashboard
 
+One command, both halves, still no credentials:
+
 ```bash
-cd web && npm install && npm run build && npm start   # http://localhost:3000/dashboard
-uv run uvicorn unlogged.web:app --port 8000            # in another shell
+docker compose up        # dashboard on :3000/dashboard, API on :8000
+```
+
+Or without Docker:
+
+```bash
+uv run uvicorn unlogged.web:app --port 8000            # one shell
+cd web && npm install && npm run build && npm start    # another
 ```
 
 Built on PayPal's own [AG Studio boilerplate](https://github.com/paypaldev/hackathon-paypal-ag-grid-boilerplate),

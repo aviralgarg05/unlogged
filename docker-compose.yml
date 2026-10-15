@@ -1,0 +1,28 @@
+# One command, both halves, no credentials:
+#
+#     docker compose up
+#
+# The dashboard is on http://localhost:3000/dashboard and the API on :8000. PayPal responses
+# replay from cassettes/, so nothing here calls out and nothing can expire. To run it against
+# the live sandbox instead, put credentials in .env and set UNLOGGED_REPLAY=0.
+
+services:
+  api:
+    build: .
+    environment:
+      UNLOGGED_REPLAY: "${UNLOGGED_REPLAY:-1}"
+      PAYPAL_CLIENT_ID: "${PAYPAL_CLIENT_ID:-}"
+      PAYPAL_CLIENT_SECRET: "${PAYPAL_CLIENT_SECRET:-}"
+      PAYPAL_WEBHOOK_ID: "${PAYPAL_WEBHOOK_ID:-}"
+    ports: ["8000:8000"]
+
+  web:
+    build: ./web
+    environment:
+      # Inside the compose network the API answers on its service name.
+      UNLOGGED_API: "http://api:8000"
+      # Optional: with no key the dashboard renders and the grids work, the assistant is hidden.
+      AG_STUDIO_OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      OPENAI_MODELS: "gpt-6.1-sol,gpt-5.4-mini"
+    ports: ["3000:3000"]
+    depends_on: [api]
