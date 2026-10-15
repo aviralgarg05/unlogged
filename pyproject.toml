@@ -4,10 +4,12 @@ version = "0.1.0"
 description = "The work you never wrote down is the work you never got paid for."
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.143.1",
     "httpx>=0.27",
     "pydantic>=2.9",
     "structlog>=24.4",
     "typer>=0.15",
+    "uvicorn>=0.54.0",
 ]
 
 [project.optional-dependencies]

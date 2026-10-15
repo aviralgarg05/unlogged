@@ -21,7 +21,7 @@ from, rendered by PayPal on PayPal's own page.
 ```bash
 git clone https://github.com/aviralgarg05/unlogged && cd unlogged
 uv sync --extra dev
-uv run pytest -q                       # 17 tests, no credentials needed
+uv run pytest -q                       # 29 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -35,6 +35,25 @@ which is not a stub but **the evaluation's ablation arm**, the thing the model h
 Run it and you will see the baseline get one decision right, bill a request for *a copy of
 last month's invoice*, and miss all three pieces of real out-of-scope engineering — including
 a PR whose own description says "not in the original scope". That gap is the product.
+
+### The dashboard
+
+```bash
+cd web && npm install && npm run build && npm start   # http://localhost:3000/dashboard
+uv run uvicorn unlogged.web:app --port 8000            # in another shell
+```
+
+Built on PayPal's own [AG Studio boilerplate](https://github.com/paypaldev/hackathon-paypal-ag-grid-boilerplate),
+with one deliberate departure. The boilerplate hands AG Studio a fully-materialised array and
+lets the engine filter, sort and page it in the browser. `app/dashboard/studio/data.ts` instead
+declares `capabilities: { pagination, filter, sort }`, so the engine sends `paging`, the applied
+filter tree and the sort order down to `getData`, trusts the returned window as-is, and never
+re-filters locally. **The rows stay in the Python service.** The one mutating tool runs
+server-side for the same reason: a PayPal credential has no business in a browser bundle.
+
+No AG Studio licence key. `validateLicense()` only ever sets a watermark message — no branch
+disables a feature — and `isDisplayWatermark()` returns false on localhost. A trial key is
+strictly worse than none, because a trial can expire and nothing here can.
 
 ---
 
@@ -116,12 +135,17 @@ src/unlogged/
 
 | | |
 |---|---|
-| Mechanism verified live | ✅ 2026-10-15 |
-| Invoice engine | ✅ |
-| Keyword baseline + tests | ✅ 17 passing |
+| Mechanism verified live | ✅ 2026-10-15, `$520 → $690 → $817.50` |
+| Invoice engine | ✅ live sandbox, end to end |
+| Webhooks + signature verification | ✅ |
+| HTTP API + `/health` | ✅ |
+| Keyword baseline (the ablation arm) | ✅ scores 0% precision, 0% recall |
+| Evaluation harness + JUnit | ✅ |
+| AG Studio dashboard | ✅ async data source, server-side paging |
+| Keyless replay path | ✅ full flow runs with no credentials |
+| Tests | ✅ 29 passing |
 | Model adjudication | ⏳ awaiting API key |
-| Evaluation vs. a real past engagement | ⏳ |
-| AG Studio dashboard | ⏳ |
+| Evaluation against a real past engagement | ⏳ needs a real thread |
 
 ## Licence
 

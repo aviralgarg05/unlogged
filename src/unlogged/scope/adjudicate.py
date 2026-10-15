@@ -29,16 +29,20 @@ You are given the engagement's scope clauses verbatim, its rate card, and one wo
 (a message, a commit, a review thread, a calendar entry).
 
 Return exactly one verdict:
-- included: the work is covered by an existing scope clause. Cite that clause.
-- billable_extra: real work that no scope clause covers. Cite the clause it falls outside \
-of, estimate hours, and name a rate category.
-- noise: not work. Scheduling, acknowledgements, thanks, chatter.
+- included: covered by the agreement, or explicitly non-billable under it. Cite that clause.
+- billable_extra: work that was DONE and that no scope clause covers. Cite the clause it \
+falls outside of, estimate hours, and name a rate category.
+- scope_request: out-of-scope work was ASKED for here, but not performed here. Cite the \
+clause it falls outside of. Do NOT estimate hours — the money attaches to the work, not the ask.
+- noise: not work. Scheduling, acknowledgements, thanks, admin chatter.
 
 Rules you must follow:
 - Always cite the clause id you relied on, and quote the exact span of the event text that \
 decided it. A verdict that cannot quote its own evidence is worthless.
 - Being asked politely does not make something billable, and arriving without a request does \
 not make it unbillable. Judge the work, not the phrasing.
+- A request and the work that answers it are separate events. Bill the work once. If you bill \
+the ask as well, the client is charged twice for one thing.
 - If two readings are genuinely defensible, return the lower-revenue one and say so in reason. \
 This bills a real person.
 """
@@ -48,7 +52,10 @@ SCHEMA = {
     "additionalProperties": False,
     "required": ["call", "clause_id", "quoted_span", "reason", "category", "hours", "confidence"],
     "properties": {
-        "call": {"type": "string", "enum": ["included", "billable_extra", "noise"]},
+        "call": {
+            "type": "string",
+            "enum": ["included", "billable_extra", "scope_request", "noise"],
+        },
         "clause_id": {"type": ["string", "null"]},
         "quoted_span": {"type": ["string", "null"]},
         "reason": {"type": "string"},

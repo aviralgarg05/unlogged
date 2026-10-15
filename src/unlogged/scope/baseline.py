@@ -5,9 +5,11 @@ that sound like a new request. It runs with no API key, so the repo is useful be
 key exists, and it is the column the evaluation has to beat rather than a strawman —
 keyword triage over a thread is what people actually fall back on today.
 
-It is expected to be bad in two specific, measurable ways: it fires on polite phrasing
-that carries no work ("can you also send me the invoice"), and it misses work that
-arrives without a request at all (a commit, a review thread, a call that overran).
+It is expected to be bad in three specific, measurable ways: it fires on polite phrasing
+that carries no work ("could you also send me last month's invoice"), it misses work that
+arrives with no request at all (a commit, a review thread, a call that overran), and it
+cannot tell a request apart from the work that answers it, so where it does fire it bills
+the ask and then has nothing left to attach to the delivery.
 """
 
 from __future__ import annotations

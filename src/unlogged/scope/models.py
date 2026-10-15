@@ -16,9 +16,18 @@ from pydantic import BaseModel, Field
 
 
 class Call(StrEnum):
-    INCLUDED = "included"          # inside the agreed scope; bill nothing
-    BILLABLE_EXTRA = "billable_extra"  # real work, outside scope; becomes a line item
-    NOISE = "noise"                # not work at all
+    """What this event is.
+
+    SCOPE_REQUEST exists because a request and the work that answers it are two separate
+    events on the thread, and billing both double-charges the client. The obligation is
+    created when the client asks; the money attaches when the work is done. Keeping them
+    apart is the single most common way a naive pass gets this wrong.
+    """
+
+    INCLUDED = "included"              # covered by the agreement; bill nothing
+    BILLABLE_EXTRA = "billable_extra"  # work done outside scope; becomes a line item
+    SCOPE_REQUEST = "scope_request"    # out-of-scope work ASKED for; bill the work, not the ask
+    NOISE = "noise"                    # not work at all
 
 
 class Source(StrEnum):
@@ -81,6 +90,15 @@ class Verdict(BaseModel):
         return self.call is Call.BILLABLE_EXTRA and self.hours is not None
 
 
+class OpeningItem(BaseModel):
+    """The agreed work, as it appears on the invoice from day one."""
+
+    name: str
+    quantity: Decimal
+    unit_price: Decimal
+    unit_of_measure: str = "HOURS"
+
+
 class Engagement(BaseModel):
     id: str
     client_name: str
@@ -89,7 +107,12 @@ class Engagement(BaseModel):
     currency: str = "USD"
     cap: Decimal | None = Field(default=None, description="Agreed ceiling, stated to the payer")
     clauses: list[ScopeClause] = Field(default_factory=list)
+    opening: list[OpeningItem] = Field(default_factory=list)
     rate_card: RateCard
+
+    @property
+    def opening_total(self) -> Decimal:
+        return sum((i.quantity * i.unit_price for i in self.opening), Decimal("0"))
 
     def clause(self, clause_id: str | None) -> ScopeClause | None:
         return next((c for c in self.clauses if c.id == clause_id), None)

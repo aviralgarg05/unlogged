@@ -49,14 +49,13 @@ def open_engagement(
         inv = Invoices(c)
         opening = [
             LineItem(
-                name=cl.text[:120],
-                quantity=Decimal("1"),
-                unit_price=Decimal("0.00"),
+                name=o.name,
+                quantity=o.quantity,
+                unit_price=o.unit_price,
                 currency=eng.currency,
-                unit_of_measure="QUANTITY",
+                unit_of_measure=o.unit_of_measure,
             )
-            for cl in eng.clauses
-            if cl.kind == "scope"
+            for o in eng.opening
         ]
         created = inv.create(
             items=opening,
@@ -83,7 +82,8 @@ def discover(
     s = Settings.from_env()
     eng = _engagement(engagement)
     evs = [WorkEvent.model_validate_json(l) for l in events.read_text().splitlines() if l.strip()]
-    verdicts = _adjudicator(eng, s).adjudicate(evs)
+    judge = _adjudicator(eng, s)
+    verdicts = judge.adjudicate(evs)
     by_id = {e.id: e for e in evs}
 
     billable = [v for v in verdicts if v.is_billable()]
@@ -125,12 +125,45 @@ def discover(
                     hours=v.hours,
                     unit_price=item.unit_price,
                     total_after=total,
-                    adjudicator=_adjudicator(eng, s).name,
+                    adjudicator=judge.name,
                     confidence=v.confidence,
                 )
             )
         typer.echo(f"\nTotal now {eng.currency} {total}")
         typer.echo(f"Client's page: {inv.payer_url(invoice_id)}")
+
+
+@app.command()
+def evaluate(
+    engagement: Path = typer.Option(...),
+    events: Path = typer.Option(...),
+    gold: Path = typer.Option(..., help="JSONL of hand labels"),
+    out: Path = typer.Option(Path("evals"), help="Where to write the report"),
+) -> None:
+    """Score every available arm against the hand labels and write the report."""
+    from unlogged.eval.harness import Gold, report, score, write_junit
+
+    s = Settings.from_env()
+    eng = _engagement(engagement)
+    evs = [WorkEvent.model_validate_json(l) for l in events.read_text().splitlines() if l.strip()]
+    labels = [Gold.model_validate_json(l) for l in gold.read_text().splitlines() if l.strip()]
+
+    arms = [KeywordBaseline(eng)]
+    if s.openai_api_key:
+        from unlogged.scope.adjudicate import Adjudicator
+
+        arms.append(Adjudicator(eng, s.openai_api_key))
+    else:
+        typer.secho(
+            "No OPENAI_API_KEY — scoring the baseline arm only.", fg=typer.colors.YELLOW
+        )
+
+    results = [score(a, evs, labels, eng) for a in arms]
+    md = report(results, eng, labels)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "report.md").write_text(md)
+    write_junit(results, out / "junit.xml")
+    typer.echo(md)
 
 
 @app.command()

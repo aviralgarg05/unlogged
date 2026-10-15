@@ -9,3 +9,7 @@ dist/
 build/
 .DS_Store
 docs/*.png
+web/node_modules/
+web/.next/
+data/
+evals/
