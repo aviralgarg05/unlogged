@@ -36,7 +36,7 @@ function unqualify(rows: Record<string, unknown>[]): Row[] {
 
 // The engagement's live sandbox invoice. One per engagement is the whole point, so it is a
 // constant rather than something the reader has to find and paste.
-const DEMO_INVOICE = 'INV2-WNVT-XCTW-89NW-9SUE';
+const DEMO_INVOICE = 'INV2-DB9K-DK3X-WK8F-3E4N';
 
 const LABEL: Record<string, string> = {
   billable_extra: 'Billable extra',

@@ -207,3 +207,32 @@ def test_takes_are_ordered_numerically_not_lexically(tmp_path, monkeypatch):
     for n in ["", ".2", ".10"]:
         (tmp_path / f"{key}{n}.json").write_text("{}")
     assert [p.name for p in ppclient._takes(key)] == ["abc.json", "abc.2.json", "abc.10.json"]
+
+
+# -- 4. the clause a billed line cites has to reach the client ------------------------------
+
+
+def test_payer_terms_carry_every_clause_with_the_ids_the_verdicts_cite():
+    """The note holds one scope clause and the cap. The exclusions are what the billed lines
+    cite, and they were not on the client's page at all — so the invoice charged for work
+    justified by a sentence the payer had never been shown.
+    """
+    eng = _engagement()
+    terms = eng.payer_terms()
+
+    for clause in eng.clauses:
+        assert f"[{clause.id}]" in terms, f"{clause.id} missing from the payer's page"
+        assert clause.text in terms
+    # X1 is the one both billed extras rest on.
+    assert "Not included [X1]" in terms
+    assert "Agreed cap: USD 1,200.00." in terms
+    # PayPal truncates past 4000 characters, so the field must never be built longer.
+    assert len(terms) <= 4000
+
+
+def test_payer_terms_stay_within_paypals_field_limit():
+    from unlogged.scope.models import ScopeClause
+
+    eng = _engagement()
+    eng.clauses = [ScopeClause(id=f"S{i}", kind="scope", text="x" * 500) for i in range(20)]
+    assert len(eng.payer_terms()) == 4000

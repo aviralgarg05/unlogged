@@ -15,11 +15,13 @@ from typing import Any
 
 import structlog
 from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
+from unlogged.paypal.client import PayPalError
 from unlogged.paypal.invoices import total_of
 from unlogged.paypal.webhooks import Webhooks, is_simulated
 from unlogged.scope.baseline import KeywordBaseline
@@ -186,6 +188,29 @@ def read_telemetry() -> dict[str, Any]:
     }
 
 
+# An invoice in one of these cannot take another line, and PayPal rejects the write. Asking
+# first turns a 500 with a stack trace into an answer the caller can act on. PARTIALLY_PAID is
+# deliberately absent: a part-paid invoice does accept new items and keeps the payment, which
+# is checked live in scripts/_live_check.py.
+TERMINAL = {"PAID", "MARKED_AS_PAID", "CANCELLED", "REFUNDED"}
+
+
+@app.exception_handler(PayPalError)
+def paypal_error(request: Request, exc: PayPalError) -> JSONResponse:
+    """PayPal's own status, not a 500.
+
+    Without this every upstream refusal — a cancelled invoice, an expired token, a malformed
+    id — reached the caller as an internal server error, which says the fault is here and
+    throws away the one field PayPal's support will ask for.
+    """
+    status = exc.status if 400 <= exc.status < 600 else 502
+    log.warning("paypal_error", status=exc.status, debug_id=exc.debug_id)
+    return JSONResponse(
+        status_code=status,
+        content={"error": exc.body[:400], "paypal_status": exc.status, "debug_id": exc.debug_id},
+    )
+
+
 class ApplyRequest(BaseModel):
     invoice_id: str
     event_ids: list[str]
@@ -215,6 +240,9 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
 
     with PayPalClient(s) as c:
         inv = Invoices(c)
+        status = inv.get(req.invoice_id).get("status", "")
+        if status in TERMINAL:
+            raise HTTPException(409, f"invoice {req.invoice_id} is {status} and cannot take items")
         items = [
             LineItem(
                 name=line_name(v),

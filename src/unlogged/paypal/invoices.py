@@ -85,6 +85,7 @@ class Invoices:
         recipient_email: str | None,
         reference: str,
         note: str,
+        terms: str | None = None,
         currency: str = "USD",
         invoice_date: str,
         term_type: str = "NET_15",
@@ -92,7 +93,9 @@ class Invoices:
         """Create a DRAFT invoice.
 
         `note` is payer-visible — PayPal renders it as "Note from seller" — so the agreed
-        scope and cap live there, where the client can read them.
+        scope and cap live there, where the client can read them. `terms` is the full clause
+        list, carried in `detail.terms_and_conditions`, so the exclusion a billed line cites is
+        on the same page as the line.
         A recipient is optional: `invoice.required` is `["detail"]` only.
         """
         body: dict[str, Any] = {
@@ -106,6 +109,10 @@ class Invoices:
             "invoicer": {"business_name": invoicer_name},
             "items": [i.to_paypal() for i in items],
         }
+        if terms:
+            # Payer-visible and separate from `note`: PayPal renders it under its own heading,
+            # so the full clause list does not have to be squeezed into a one-line summary.
+            body["detail"]["terms_and_conditions"] = terms[:4000]
         if recipient_email:
             body["primary_recipients"] = [{"billing_info": {"email_address": recipient_email}}]
         return self.c.request(

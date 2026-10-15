@@ -77,6 +77,7 @@ def open_engagement(
             recipient_email=eng.client_email,
             reference=eng.id,
             note=eng.payer_note(),
+            terms=eng.payer_terms(),
             currency=eng.currency,
             invoice_date=invoice_date,
         )

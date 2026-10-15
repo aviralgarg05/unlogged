@@ -50,7 +50,7 @@ payer URL so you can open it yourself. A date in a README is worth less than a c
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 72 tests, no credentials needed
+uv run pytest -q                       # 77 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -203,7 +203,7 @@ Server SDK ships no Invoicing controller, and a public AG Studio custom widget c
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 72 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 77 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 
@@ -262,6 +262,23 @@ uv run unlogged discover --engagement fixtures/engagement.json \
 The client is notified by PayPal itself on every change — `send_to_recipient=true` on the
 update is PayPal's own machinery, not something invented here. The agreed scope and cap are
 written into `detail.note`, which PayPal renders to the payer as "Note from seller".
+
+Every clause goes into `detail.terms_and_conditions`, which PayPal renders under its own
+heading on the same page, each one labelled with the id the verdicts cite:
+
+```
+Terms and conditions
+In scope [S1]: Build the checkout page: cart summary, address form, and card entry, …
+Not included [X1]: Payment provider integration, retry and error-handling logic are not included.
+Not included [X2]: Discovery and scoping calls are not billable.
+Agreed [A1]: Work outside this scope is billed at the rate card and itemised on the invoice.
+```
+
+This is the part that makes the bill arguable rather than merely itemised. Both discovered
+lines cite `X1`, and `X1` is now on the client's page, three inches below the lines that cite
+it — so a client who disputes a charge is reading the same sentence the adjudicator did. The
+note alone held one scope clause and the cap; the exclusions, which are what the billed lines
+rest on, never reached the payer at all.
 
 **Three things this cost a day to find out.** They are written down in `docs/VERIFIED.md`
 with the raw exchanges, because the published docs do not say any of them:

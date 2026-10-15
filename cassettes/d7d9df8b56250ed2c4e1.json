@@ -1,0 +1,149 @@
+{
+ "status": 200,
+ "body": {
+  "id": "INV2-DB9K-DK3X-WK8F-3E4N",
+  "status": "SENT",
+  "detail": {
+   "reference": "eng-checkout-001",
+   "currency_code": "USD",
+   "note": "Agreed scope: Build the checkout page: cart summary, address form, and card entry, to the agreed Figma. Agreed cap USD 1,200.00. Extra work is itemised with its source.",
+   "terms_and_conditions": "In scope [S1]: Build the checkout page: cart summary, address form, and card entry, to the agreed Figma.\nIn scope [S2]: One round of revisions on the checkout page after review.\nNot included [X1]: Payment provider integration, retry and error-handling logic are not included.\nNot included [X2]: Discovery and scoping calls are not billable.\nAgreed [A1]: Work outside this scope is billed at the rate card and itemised on the invoice.\nAgreed cap: USD 1,200.00.",
+   "category_code": "SHIPPABLE",
+   "invoice_number": "0036",
+   "invoice_date": "2026-10-15",
+   "payment_term": {
+    "term_type": "NET_15",
+    "due_date": "2026-10-30"
+   },
+   "viewed_by_recipient": false,
+   "group_draft": false,
+   "metadata": {
+    "create_time": "2026-10-15T16:28:25Z",
+    "last_update_time": "2026-10-15T16:28:51Z",
+    "first_sent_time": "2026-10-15T16:28:51Z",
+    "last_sent_time": "2026-10-15T16:28:51Z",
+    "created_by_flow": "REGULAR_SINGLE",
+    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#DB9KDK3XWK8F3E4N",
+    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-DB9K-DK3X-WK8F-3E4N",
+    "caller_type": "API_V2_INVOICE",
+    "spam_info": {}
+   },
+   "archived": false
+  },
+  "invoicer": {
+   "business_name": "Aviral Garg"
+  },
+  "primary_recipients": [
+   {
+    "billing_info": {
+     "email_address": "sb-client@personal.example.com"
+    }
+   }
+  ],
+  "items": [
+   {
+    "id": "ITEM-2KH69182L8526181F",
+    "name": "Checkout page \u2014 agreed scope",
+    "quantity": "8",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "65.00"
+    },
+    "unit_of_measure": "HOURS"
+   },
+   {
+    "id": "ITEM-62G474934U932790C",
+    "name": "PSP timeout handling and 3DS re-challenge (github 03 Oct)",
+    "quantity": "3",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "85.00"
+    },
+    "unit_of_measure": "HOURS"
+   },
+   {
+    "id": "ITEM-24S098897K8286716",
+    "name": "Prevent double-charges on checkout double-click (github 09 Oct)",
+    "quantity": "1.5",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "85.00"
+    },
+    "unit_of_measure": "HOURS"
+   }
+  ],
+  "configuration": {
+   "tax_calculated_after_discount": false,
+   "tax_inclusive": false,
+   "allow_tip": false,
+   "allow_only_pay_by_bank": false,
+   "allow_vba_payments": false,
+   "save_item_for_future": true,
+   "template_id": "TEMP-7181852024373634C"
+  },
+  "amount": {
+   "breakdown": {
+    "item_total": {
+     "currency_code": "USD",
+     "value": "902.50"
+    },
+    "discount": {
+     "invoice_discount": {
+      "amount": {
+       "currency_code": "USD",
+       "value": "0.00"
+      }
+     },
+     "item_discount": {
+      "currency_code": "USD",
+      "value": "0.00"
+     }
+    },
+    "tax_total": {
+     "currency_code": "USD",
+     "value": "0.00"
+    }
+   },
+   "currency_code": "USD",
+   "value": "902.50"
+  },
+  "due_amount": {
+   "currency_code": "USD",
+   "value": "902.50"
+  },
+  "links": [
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-DB9K-DK3X-WK8F-3E4N",
+    "rel": "self",
+    "method": "GET"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-DB9K-DK3X-WK8F-3E4N",
+    "rel": "replace",
+    "method": "PUT"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-DB9K-DK3X-WK8F-3E4N/cancel",
+    "rel": "cancel",
+    "method": "POST"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-DB9K-DK3X-WK8F-3E4N/remind",
+    "rel": "remind",
+    "method": "POST"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-DB9K-DK3X-WK8F-3E4N/payments",
+    "rel": "record-payment",
+    "method": "POST"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-DB9K-DK3X-WK8F-3E4N/generate-qr-code",
+    "rel": "qr-code",
+    "method": "GET"
+   }
+  ],
+  "unilateral": false,
+  "settings": {}
+ }
+}

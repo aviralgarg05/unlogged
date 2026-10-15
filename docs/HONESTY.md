@@ -8,6 +8,7 @@ Written so a judge does not have to find any of this out by reading the source.
 |---|---|
 | An already-sent invoice can grow line items while its id, payer URL and QR stay valid | `$520.00 → $902.50` on 2026-10-15, reproducible offline from `cassettes/`. Re-run it live with `uv run scripts/verify.py --live` |
 | Each added line appears by name on PayPal's hosted payer page | `docs/img/payer-before.jpg` and `payer-after.jpg` — invoice #0035 at $520.00 and at $902.50, same id, same URL, shot minutes apart. Reproduce with `scripts/verify.py --live` |
+| Every scope clause reaches the payer, labelled with the id its verdicts cite | `detail.terms_and_conditions` rendered under its own heading — `docs/img/payer-after.jpg`, directly below the two lines that cite `X1` |
 | A recipient-less invoice is legal | `invoice.required` is `["detail"]` only, confirmed against the published schema |
 | Silent send lands on `UNPAID` with no email | `POST /{id}/send` with both notify flags false |
 | `early_payment_discount` is accepted with 201 and silently dropped | `scripts/repro_discount_defect.py`, four term/date combinations |

@@ -121,3 +121,41 @@ def test_health_never_claims_a_model_it_cannot_import(monkeypatch):
     assert body["model_configured"] is False
     assert body["adjudicator"].startswith("keyword-baseline")
     assert "not installed" in body["adjudicator"]
+
+
+def test_apply_refuses_an_invoice_that_can_no_longer_take_items(monkeypatch):
+    """Verified against the sandbox through this project's own dashboard: applying to a
+    MARKED_AS_PAID invoice returned 500 with a stack trace, which reads as a bug here rather
+    than as a closed invoice.
+    """
+    from unlogged.paypal import Invoices
+
+    monkeypatch.setattr(Invoices, "get", lambda self, iid: {"status": "MARKED_AS_PAID"})
+    r = client.post("/api/apply", json={"invoice_id": "INV2-X", "event_ids": ["e3"]})
+    assert r.status_code == 409
+    assert "MARKED_AS_PAID" in r.json()["detail"]
+
+
+def test_a_part_paid_invoice_still_accepts_items():
+    """PARTIALLY_PAID is not terminal — the live check adds to one and the payment survives,
+    so the guard must not refuse it."""
+    from unlogged.web import TERMINAL
+
+    assert "PARTIALLY_PAID" not in TERMINAL
+    assert "SENT" not in TERMINAL and "UNPAID" not in TERMINAL
+
+
+def test_a_paypal_refusal_keeps_paypals_status_and_debug_id(monkeypatch):
+    from unlogged.paypal import Invoices
+    from unlogged.paypal.client import PayPalError
+
+    def boom(self, iid):
+        raise PayPalError(422, '{"name":"UNPROCESSABLE_ENTITY"}', debug_id="abc123")
+
+    monkeypatch.setattr(Invoices, "get", boom)
+    r = client.post("/api/apply", json={"invoice_id": "INV2-X", "event_ids": ["e3"]})
+    assert r.status_code == 422
+    body = r.json()
+    assert body["paypal_status"] == 422
+    # The one field PayPal support asks for survives the round trip.
+    assert body["debug_id"] == "abc123"

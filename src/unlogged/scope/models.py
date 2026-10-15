@@ -127,6 +127,21 @@ class Engagement(BaseModel):
         cap = f" Agreed cap {self.currency} {self.cap:,.2f}." if self.cap is not None else ""
         return f"Agreed scope: {scope}{cap} Extra work is itemised with its source."
 
+    def payer_terms(self) -> str:
+        """Every clause, verbatim and labelled, for PayPal's `detail.terms_and_conditions`.
+
+        The note above holds one scope clause and the cap, which is all that fits in a line of
+        summary. It left the exclusions off the client's page entirely — and the exclusions are
+        what the billed lines cite. A client was being charged for work justified by a clause
+        they had never been shown, on an invoice built to be auditable. The clause ids here are
+        the same ones each verdict cites, so a disputed line can be traced to its sentence.
+        """
+        kinds = {"scope": "In scope", "exclusion": "Not included", "approval": "Agreed"}
+        lines = [f"{kinds.get(c.kind, c.kind.title())} [{c.id}]: {c.text}" for c in self.clauses]
+        if self.cap is not None:
+            lines.append(f"Agreed cap: {self.currency} {self.cap:,.2f}.")
+        return "\n".join(lines)[:4000]
+
 
 def line_name(verdict: Verdict) -> str:
     """What goes on the client's invoice line.
