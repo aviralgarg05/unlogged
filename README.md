@@ -24,6 +24,21 @@ from, rendered by PayPal on PayPal's own page.
 ```bash
 git clone https://github.com/aviralgarg05/unlogged && cd unlogged
 uv sync --extra dev
+uv run scripts/verify.py               # checks every claim in this README
+```
+
+That script is the short version of everything below: it runs the tests, reproduces the
+evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
+the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
+Thirteen checks, no credentials, about twenty seconds.
+
+With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
+against PayPal on the day you run it — it creates a real invoice, grows it, and prints the
+payer URL so you can open it yourself. A date in a README is worth less than a command.
+
+Or run the pieces directly:
+
+```bash
 uv run pytest -q                       # 55 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \

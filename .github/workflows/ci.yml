@@ -60,6 +60,9 @@ jobs:
             --engagement fixtures/engagement.json \
             --events fixtures/events.jsonl \
             --gold fixtures/gold.jsonl
+      - name: Every claim in the README, checked
+        env: { PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '', OPENAI_API_KEY: '' }
+        run: uv run scripts/verify.py
       - name: The full apply flow replays from cassettes
         env: { PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '', OPENAI_API_KEY: '' }
         run: |

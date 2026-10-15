@@ -15,3 +15,4 @@ data/
 evals/
 web/.env.local
 .env.local
+docs/verification.json

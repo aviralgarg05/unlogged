@@ -1,0 +1,114 @@
+{
+ "status": 201,
+ "body": {
+  "id": "INV2-W5ZN-SYXC-BN86-Q9XT",
+  "status": "DRAFT",
+  "detail": {
+   "reference": "verify-2026-10-15",
+   "currency_code": "USD",
+   "note": "Agreed scope: checkout page. Cap USD 1,200.00.",
+   "category_code": "SHIPPABLE",
+   "invoice_number": "0017",
+   "invoice_date": "2026-10-15",
+   "payment_term": {
+    "term_type": "NET_15",
+    "due_date": "2026-10-30"
+   },
+   "viewed_by_recipient": false,
+   "group_draft": false,
+   "metadata": {
+    "create_time": "2026-10-15T13:37:11Z",
+    "last_update_time": "2026-10-15T13:37:11Z",
+    "created_by_flow": "REGULAR_SINGLE",
+    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#W5ZNSYXCBN86Q9XT",
+    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-W5ZN-SYXC-BN86-Q9XT",
+    "caller_type": "API_V2_INVOICE",
+    "spam_info": {}
+   },
+   "archived": false
+  },
+  "invoicer": {
+   "business_name": "Aviral Garg"
+  },
+  "items": [
+   {
+    "id": "ITEM-88K63141N10969136",
+    "name": "Agreed scope",
+    "quantity": "8",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "65.00"
+    },
+    "unit_of_measure": "HOURS"
+   }
+  ],
+  "configuration": {
+   "tax_calculated_after_discount": false,
+   "tax_inclusive": false,
+   "allow_tip": false,
+   "allow_only_pay_by_bank": false,
+   "allow_vba_payments": false,
+   "save_item_for_future": true,
+   "template_id": "TEMP-7181852024373634C"
+  },
+  "amount": {
+   "breakdown": {
+    "item_total": {
+     "currency_code": "USD",
+     "value": "520.00"
+    },
+    "discount": {
+     "invoice_discount": {
+      "amount": {
+       "currency_code": "USD",
+       "value": "0.00"
+      }
+     },
+     "item_discount": {
+      "currency_code": "USD",
+      "value": "0.00"
+     }
+    },
+    "tax_total": {
+     "currency_code": "USD",
+     "value": "0.00"
+    }
+   },
+   "currency_code": "USD",
+   "value": "520.00"
+  },
+  "due_amount": {
+   "currency_code": "USD",
+   "value": "520.00"
+  },
+  "links": [
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-W5ZN-SYXC-BN86-Q9XT",
+    "rel": "self",
+    "method": "GET"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-W5ZN-SYXC-BN86-Q9XT/send",
+    "rel": "send",
+    "method": "POST"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-W5ZN-SYXC-BN86-Q9XT",
+    "rel": "replace",
+    "method": "PUT"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-W5ZN-SYXC-BN86-Q9XT",
+    "rel": "delete",
+    "method": "DELETE"
+   },
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-W5ZN-SYXC-BN86-Q9XT/payments",
+    "rel": "record-payment",
+    "method": "POST"
+   }
+  ],
+  "unilateral": false,
+  "settings": {}
+ }
+}

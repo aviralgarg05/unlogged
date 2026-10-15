@@ -81,6 +81,7 @@ def record(title: str, method: str, path: str, req, resp: httpx.Response) -> Non
 def summarise(inv: dict) -> str:
     def val(k):
         return (inv.get(k) or {}).get("value")
+
     disc = (((inv.get("amount") or {}).get("breakdown") or {}).get("discount") or {}).get(
         "invoice_discount", {}
     )
