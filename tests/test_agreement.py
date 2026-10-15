@@ -217,3 +217,60 @@ def test_the_model_never_returns_scope_request_on_the_december_events():
 
     # And it does use it once across the wider set, which is why the claim is scoped.
     assert collections.Counter(_published("model").values())["scope_request"] == 1
+
+
+def test_krippendorff_alpha_matches_kappa_on_the_textbook_two_by_two():
+    """With two raters, complete data and two categories the two coefficients coincide. A
+    statistic that disagreed with kappa here would be wrong, not interesting."""
+    from unlogged.eval.agreement import krippendorff_alpha
+
+    pairs = [("A", "A")] * 20 + [("A", "B")] * 5 + [("B", "A")] * 10 + [("B", "B")] * 15
+
+    assert round(krippendorff_alpha(pairs), 4) == 0.40
+
+
+def test_alpha_is_one_for_perfect_agreement_and_negative_for_systematic_opposition():
+    from unlogged.eval.agreement import krippendorff_alpha
+
+    assert krippendorff_alpha([("A", "A"), ("B", "B")]) == 1.0
+    assert krippendorff_alpha([("A", "B")] * 10 + [("B", "A")] * 10) < 0
+
+
+def test_the_interval_is_reported_because_thirty_one_events_is_not_many():
+    """0.72 quoted bare invites a reader to treat it as precise. At this sample size the
+    interval is nearly half the scale, and the model's agreement with the second reader
+    cannot be distinguished from chance at all."""
+    human = score(_published("round1"), _published("round2"))
+    lo, hi = human.alpha_ci
+
+    assert lo < human.alpha < hi
+    assert hi - lo > 0.3
+
+    model = score(_published("round2"), _published("model"))
+    assert model.alpha_ci[0] < 0 < model.alpha_ci[1]
+
+
+def test_the_interval_is_the_same_interval_every_time_it_is_published():
+    """Seeded, because a figure in a document has to be the figure a reader reproduces."""
+    first = score(_published("round1"), _published("round2")).alpha_ci
+    second = score(_published("round1"), _published("round2")).alpha_ci
+
+    assert first == second
+
+
+def test_per_category_agreement_exposes_what_the_pooled_number_hides():
+    """Both readers use scope_request; the pooled figure says nothing about whether they use
+    it on the same events, which is the only question that matters for the rare class."""
+    result = score(_published("round1"), _published("round2"))
+
+    assert set(result.per_category) == {"included", "billable_extra", "scope_request", "noise"}
+    assert result.per_category["noise"] > result.per_category["billable_extra"]
+
+
+def test_the_confusion_table_renders_square():
+    result = score(_published("round1"), _published("round2"))
+    rendered = result.confusion_table().splitlines()
+
+    header, rule, *rows = rendered
+    assert len(rows) == len(result.marginals)
+    assert header.count("|") == rule.count("|") == rows[0].count("|")

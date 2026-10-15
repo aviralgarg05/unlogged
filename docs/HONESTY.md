@@ -34,13 +34,22 @@ Written so a judge does not have to find any of this out by reading the source.
   a clause and quotes the span it relied on, and that it separates the request (`e1`) from the
   work that answered it (`e3`) — the distinction the baseline cannot make and the one that
   causes double-billing. A real engagement of 40-60 events is what would make this a result.
-- **A real corpus was attempted twice and is not here.** Fourteen engagements were built
-  from real briefs and real pull request threads in another repository, and every one of them
-  failed the independent reader whose job was to break it. The full account, with the defect
-  counts and the one error that was mine rather than the labellers', is in
-  [`CORPUS.md`](CORPUS.md). The short version: labelling real scope disputes is hard enough
-  that two adversarial rounds could not produce a set worth standing behind, so the accuracy
-  in this repository is still measured against eight authored events and the table says so.
+- **There is real data in this repository, and it says the model is worse than the headline.**
+  31 events from real pull-request threads, each labelled by two readers, are committed under
+  `fixtures/agreement/`, with the model's own calls beside them. The two readers agree 80.6% of
+  the time (Krippendorff's alpha 0.72, 95% CI 0.50 to 0.91). The model agrees with them 61.3%
+  and 48.4%, and across the 21 events whose agreements carry no written exclusion it never once
+  returns `scope_request` while both readers use it five times each. Run `uv run unlogged
+  agreement`. [`CORPUS.md`](CORPUS.md) is the full account, including the error that was mine.
+
+- **What is still missing is a usable gold set, not data.** None of the fourteen engagements
+  survived the independent reader whose job was to break it, so there is no labelled set to
+  score an arm against — which is why the accuracy table in the README is still eight authored
+  events, and why it now carries the real-data result beside it rather than below it.
+
+- **The agreement figure is not clean inter-annotator agreement.** The second reader was shown a
+  critique of the first, so it is a pass and its own informed revision. A reproducibility
+  statistic needs a reader who has seen neither, and there has not been one.
 
 - **The events can be real; the agreement still is not.** `unlogged pull-github` pulls a
   genuine thread out of a repository, which removes the worst circularity — that one person

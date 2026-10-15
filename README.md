@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 122 tests, no credentials needed
+uv run pytest -q                       # 128 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -73,8 +73,10 @@ Both arms are scored, and both run with no key:
 
 > **Read this beside the table, not after it.** Those eight events were written by the author
 > of the arm being measured. The same model was given 31 events from real pull-request threads
-> in another repository, alongside two human readers: the humans agree with each other 80.6%
-> of the time (κ=0.719), the model agrees with them 61.3% and 48.4%. It calls 18 of 31 events
+> in another repository, alongside two human readers: the humans agree with each other 80.6% of
+> the time, the model agrees with them 61.3% and 48.4%. Krippendorff's alpha, with a bootstrap
+> interval because 31 events is not many: **0.72 (0.50–0.91)** between the humans, **0.41** and
+> **0.25** for the model — and the model's interval against the second reader includes zero. It calls 18 of 31 events
 > `included` where the humans call 5 and 7 — it is not finding out-of-scope work at all.
 > Sharper still: on those 21 of the events where the agreement lists no exclusions, **the model
 > never once returns `scope_request`**, while both humans return it five times each. That is
@@ -249,7 +251,7 @@ not that header. Each one is reproducible from this repo.
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 122 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 128 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

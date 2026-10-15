@@ -301,11 +301,15 @@ def agreement(
         typer.secho(f"Need at least two label sets in {directory}", fg=typer.colors.RED)
         raise typer.Exit(1)
 
-    typer.echo("| pair | events | raw | Cohen's kappa | Gwet's AC1 |")
-    typer.echo("|---|---|---|---|---|")
+    typer.echo("| pair | events | raw | Krippendorff alpha (95% CI) | Cohen kappa | Gwet AC1 |")
+    typer.echo("|---|---|---|---|---|---|")
     for a, b in itertools.combinations(sets, 2):
         r = agreement_score(sets[a], sets[b])
-        typer.echo(f"| {a} vs {b} | {r.n} | {r.raw:.1%} | {r.kappa:.3f} | {r.ac1:.3f} |")
+        lo, hi = r.alpha_ci
+        typer.echo(
+            f"| {a} vs {b} | {r.n} | {r.raw:.1%} | {r.alpha:.3f} ({lo:.2f} to {hi:.2f}) "
+            f"| {r.kappa:.3f} | {r.ac1:.3f} |"
+        )
 
     spans = {len(r) for r in sets.values()}
     if len(spans) > 1:

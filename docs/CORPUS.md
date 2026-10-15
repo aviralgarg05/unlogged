@@ -88,30 +88,53 @@ of them labelled:
 uv run unlogged agreement
 ```
 
-| measure | value |
-|---|---|
-| events labelled by both passes | 31 |
-| raw agreement | 80.6% |
-| Cohen's kappa | 0.719 |
-| Gwet's AC1 | 0.749 |
+| pair | events | raw | Krippendorff's alpha (95% CI) | Cohen's kappa | Gwet's AC1 |
+|---|---|---|---|---|---|
+| first pass vs second pass | 31 | 80.6% | 0.721 (0.50 to 0.91) | 0.719 | 0.749 |
 
-Both statistics are given because kappa has a known failure — the *kappa paradox* — where a
-dominant category inflates the chance-correction term and collapses the score although the
-raters agree on nearly everything. These categories are skewed, about half of every thread
-being `noise`, so kappa alone would understate agreement in exactly the way that failure
-predicts. AC1 is the standard answer to it. The marginals are printed beside them so the skew
-is visible rather than asserted, and the implementation is checked against the textbook 2×2
-example in `tests/test_agreement.py` — a statistic a project computes about itself is worth
-nothing unless the arithmetic is right.
+Three coefficients, for three different reasons, and the reporting rule is that all of them
+were chosen before the number was seen rather than after it disappointed.
 
-**κ = 0.72 is substantial agreement by the usual convention.** That is the honest headline, and
-it is a different claim from "every engagement had a defect". Both are true: two readers agree
-on four events in five, and an error anywhere still invalidates an engagement's totals.
+* **Krippendorff's alpha** is the primary one. It is what the reliability literature asks for
+  when the number of raters per item varies, which is the case across a corpus where different
+  readers took different threads. On two raters with complete data and two categories it
+  coincides with kappa — the textbook 2×2 example gives 0.400 for both, which is the check in
+  `tests/test_agreement.py`.
+* **Cohen's kappa** is here because a reader will look for it.
+* **Gwet's AC1** is here because kappa has a documented failure, the *kappa paradox*, where a
+  dominant category inflates the chance-correction term and collapses the coefficient although
+  the raters agree on nearly everything. About half of every thread is `noise`, so the skew
+  that triggers it is present.
 
-One caveat that cuts the other way: the second pass was shown a critique of the first. That
-pushes in both directions — shared framing raises agreement, and targeted corrections lower it
-on exactly the events the critic named — so this figure is not clean inter-annotator agreement
-between independent readers. It is agreement between a pass and its own informed revision.
+**No verbal band is attached to any of them.** The familiar "substantial / almost perfect"
+labels were derived for two-category problems and are not recommended for a four-way nominal
+judgement, and quoting one would be borrowing authority the number does not carry.
+
+The interval matters more than the point estimate. At 31 events it spans nearly half the scale,
+which is the honest reading: the data constrains the figure loosely, and 0.72 should not be
+treated as precise.
+
+### What this number is not
+
+It is not inter-annotator agreement between independent readers, and it should not be read as
+one. The second pass was shown a critique of the first before it started, which makes it an
+*informed revision* rather than a second opinion. That pushes in both directions at once —
+shared framing raises agreement, and the corrections the critic named lower it on exactly those
+events — and it means the figure cannot stand as a reproducibility statistic for the labelling
+scheme. A clean number needs a reader who has seen neither the first pass nor its critique, and
+there has not been one.
+
+### Where the two readers split, by call
+
+| call | first pass | second pass | agreed when either used it |
+|---|---|---|---|
+| included | 7 | 5 | 29% |
+| billable_extra | 2 | 6 | 17% |
+| scope_request | 7 | 6 | 56% |
+| noise | 15 | 14 | 81% |
+
+The pooled 80.6% is carried by `noise`. On `billable_extra` — the call that puts money on an
+invoice — the two readers agreed on one event in six.
 
 ### And then the model was given the same 31 events
 
