@@ -10,7 +10,7 @@ import hashlib
 import json
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import httpx
 import structlog
@@ -111,11 +111,11 @@ class PayPalClient:
         log.debug("paypal", method=method, path=path, status=r.status_code)
 
         if r.status_code >= 400:
+            # PayPal returns a debug_id on most errors and it is the only thing their support
+            # will ask for, so it is worth pulling out — but an error body is not always JSON.
             debug_id = None
-            try:
+            if r.headers.get("content-type", "").startswith("application/json"):
                 debug_id = r.json().get("debug_id")
-            except Exception:
-                pass
             raise PayPalError(r.status_code, r.text, debug_id)
 
         if raw:
@@ -130,7 +130,7 @@ class PayPalClient:
     def close(self) -> None:
         self._http.close()
 
-    def __enter__(self) -> PayPalClient:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *exc: object) -> None:

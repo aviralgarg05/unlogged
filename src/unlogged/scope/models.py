@@ -24,10 +24,10 @@ class Call(StrEnum):
     apart is the single most common way a naive pass gets this wrong.
     """
 
-    INCLUDED = "included"              # covered by the agreement; bill nothing
+    INCLUDED = "included"  # covered by the agreement; bill nothing
     BILLABLE_EXTRA = "billable_extra"  # work done outside scope; becomes a line item
-    SCOPE_REQUEST = "scope_request"    # out-of-scope work ASKED for; bill the work, not the ask
-    NOISE = "noise"                    # not work at all
+    SCOPE_REQUEST = "scope_request"  # out-of-scope work ASKED for; bill the work, not the ask
+    NOISE = "noise"  # not work at all
 
 
 class Source(StrEnum):
@@ -112,7 +112,7 @@ class Engagement(BaseModel):
 
     @property
     def opening_total(self) -> Decimal:
-        return sum((i.quantity * i.unit_price for i in self.opening), Decimal("0"))
+        return sum((i.quantity * i.unit_price for i in self.opening), Decimal(0))
 
     def clause(self, clause_id: str | None) -> ScopeClause | None:
         return next((c for c in self.clauses if c.id == clause_id), None)

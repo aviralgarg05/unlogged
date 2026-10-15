@@ -1,12 +1,10 @@
 import os
-from pathlib import Path
 
-import pytest
 from fastapi.testclient import TestClient
 
 os.environ.setdefault("UNLOGGED_REPLAY", "1")
 
-from unlogged.web import app  # noqa: E402
+from unlogged.web import app
 
 client = TestClient(app)
 

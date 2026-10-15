@@ -83,9 +83,7 @@ class Webhooks:
             "webhook_id": webhook_id,
             "webhook_event": _json.loads(raw_body),
         }
-        resp = self.c.request(
-            "POST", "/v1/notifications/verify-webhook-signature", json_body=body
-        )
+        resp = self.c.request("POST", "/v1/notifications/verify-webhook-signature", json_body=body)
         ok = resp.get("verification_status") == "SUCCESS"
         if not ok:
             log.warning("webhook.verification_failed", status=resp.get("verification_status"))

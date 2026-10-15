@@ -1,0 +1,16 @@
+# Hosted demo. Judging runs 1-15 December, and the Devpost guidance is that a project must stay
+# testable free of charge until then — so the default path is cassette replay, which needs no
+# PayPal credentials and no model key and therefore cannot break or run out of credit.
+services:
+  - type: web
+    name: unlogged-api
+    runtime: python
+    plan: free
+    buildCommand: pip install uv && uv sync --frozen
+    startCommand: uv run uvicorn unlogged.web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: UNLOGGED_REPLAY
+        value: "1"
+      - key: PYTHON_VERSION
+        value: "3.12"

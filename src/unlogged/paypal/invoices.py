@@ -18,14 +18,16 @@ from __future__ import annotations
 
 import base64
 import hashlib
+from collections.abc import Iterable
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Any, Iterable
+from typing import Any
 
 from unlogged.paypal.client import PayPalClient
 
 # Verified against the published 557,403-byte schema: exactly three top-level invoice
-# properties carry readOnly. `status`, `due_amount` and `gratuity` do NOT, contrary to folklore.
+# properties carry readOnly. `status`, `due_amount` and `gratuity` do NOT,
+# contrary to folklore.
 READONLY = ("id", "parent_id", "links")
 # Writable per the schema, but server-computed; echoing them back on a PUT invites a 422.
 COMPUTED = (
@@ -40,7 +42,10 @@ COMPUTED = (
 
 @dataclass(frozen=True)
 class LineItem:
-    """One billable line. `provenance` is carried in the name so the payer sees where it came from."""
+    """One billable line.
+
+    `provenance` rides in the name so the payer can see where the work came from.
+    """
 
     name: str
     quantity: Decimal
@@ -140,9 +145,7 @@ class Invoices:
         upd["items"] = items
         upd["amount"] = {"currency_code": current["detail"]["currency_code"]}
 
-        digest = hashlib.sha256(
-            "".join(i["name"] for i in items).encode()
-        ).hexdigest()[:16]
+        digest = hashlib.sha256("".join(i["name"] for i in items).encode()).hexdigest()[:16]
         return self.c.request(
             "PUT",
             f"/v2/invoicing/invoices/{invoice_id}",

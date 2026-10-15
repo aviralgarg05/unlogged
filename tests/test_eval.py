@@ -11,14 +11,14 @@ FIX = Path(__file__).resolve().parents[1] / "fixtures"
 def load():
     eng = Engagement.model_validate_json((FIX / "engagement.json").read_text())
     evs = [
-        WorkEvent.model_validate_json(l)
-        for l in (FIX / "events.jsonl").read_text().splitlines()
-        if l.strip()
+        WorkEvent.model_validate_json(line)
+        for line in (FIX / "events.jsonl").read_text().splitlines()
+        if line.strip()
     ]
     gold = [
-        Gold.model_validate_json(l)
-        for l in (FIX / "gold.jsonl").read_text().splitlines()
-        if l.strip()
+        Gold.model_validate_json(line)
+        for line in (FIX / "gold.jsonl").read_text().splitlines()
+        if line.strip()
     ]
     return eng, evs, gold
 

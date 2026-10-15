@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from decimal import Decimal
 from pathlib import Path
 
 import typer
@@ -81,7 +80,11 @@ def discover(
     """Adjudicate work events, then itemise the billable extras onto the live invoice."""
     s = Settings.from_env()
     eng = _engagement(engagement)
-    evs = [WorkEvent.model_validate_json(l) for l in events.read_text().splitlines() if l.strip()]
+    evs = [
+        WorkEvent.model_validate_json(line)
+        for line in events.read_text().splitlines()
+        if line.strip()
+    ]
     judge = _adjudicator(eng, s)
     verdicts = judge.adjudicate(evs)
     by_id = {e.id: e for e in evs}
@@ -91,7 +94,7 @@ def discover(
         mark = {"billable_extra": "+", "included": "=", "noise": " "}[v.call.value]
         typer.echo(f" {mark} [{v.call.value:14}] {by_id[v.event_id].text[:70]}")
         if v.quoted_span:
-            typer.echo(f"      cites {v.clause_id}: \"{v.quoted_span[:60]}\"")
+            typer.echo(f'      cites {v.clause_id}: "{v.quoted_span[:60]}"')
 
     if not apply:
         typer.echo(f"\n{len(billable)} billable extra(s). Re-run with --apply to write them.")
@@ -114,7 +117,7 @@ def discover(
             )
         updated = inv.add_items(invoice_id, items, notify=True)
         total = total_of(updated)
-        for v, item in zip(billable, items):
+        for v, item in zip(billable, items, strict=True):
             ledger.append(
                 Entry(
                     at=now(),
@@ -145,8 +148,14 @@ def evaluate(
 
     s = Settings.from_env()
     eng = _engagement(engagement)
-    evs = [WorkEvent.model_validate_json(l) for l in events.read_text().splitlines() if l.strip()]
-    labels = [Gold.model_validate_json(l) for l in gold.read_text().splitlines() if l.strip()]
+    evs = [
+        WorkEvent.model_validate_json(line)
+        for line in events.read_text().splitlines()
+        if line.strip()
+    ]
+    labels = [
+        Gold.model_validate_json(line) for line in gold.read_text().splitlines() if line.strip()
+    ]
 
     arms = [KeywordBaseline(eng)]
     if s.openai_api_key:
@@ -154,9 +163,7 @@ def evaluate(
 
         arms.append(Adjudicator(eng, s.openai_api_key))
     else:
-        typer.secho(
-            "No OPENAI_API_KEY — scoring the baseline arm only.", fg=typer.colors.YELLOW
-        )
+        typer.secho("No OPENAI_API_KEY — scoring the baseline arm only.", fg=typer.colors.YELLOW)
 
     results = [score(a, evs, labels, eng) for a in arms]
     md = report(results, eng, labels)

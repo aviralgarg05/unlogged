@@ -5,18 +5,18 @@ from unlogged.ledger import Entry, Ledger, now
 
 
 def entry(**kw) -> Entry:
-    base = dict(
-        at=now(),
-        invoice_id="INV2-TEST",
-        event_id="e1",
-        clause_id="X1",
-        line_name="Retry logic (slack 02 Oct)",
-        hours=Decimal("2"),
-        unit_price=Decimal("85.00"),
-        total_after=Decimal("690.00"),
-        adjudicator="keyword-baseline",
-        confidence=0.5,
-    )
+    base = {
+        "at": now(),
+        "invoice_id": "INV2-TEST",
+        "event_id": "e1",
+        "clause_id": "X1",
+        "line_name": "Retry logic (slack 02 Oct)",
+        "hours": Decimal(2),
+        "unit_price": Decimal("85.00"),
+        "total_after": Decimal("690.00"),
+        "adjudicator": "keyword-baseline",
+        "confidence": 0.5,
+    }
     return Entry(**{**base, **kw})
 
 

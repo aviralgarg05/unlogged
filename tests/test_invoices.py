@@ -13,7 +13,7 @@ def test_line_item_totals_to_the_cent():
 def test_provenance_rides_in_the_name_so_the_payer_sees_it():
     li = LineItem(
         name="Retry logic on checkout",
-        quantity=Decimal("2"),
+        quantity=Decimal(2),
         unit_price=Decimal("85.00"),
         provenance="slack 14 Oct",
     )
@@ -22,7 +22,7 @@ def test_provenance_rides_in_the_name_so_the_payer_sees_it():
 
 
 def test_paypal_payload_shape():
-    li = LineItem(name="x", quantity=Decimal("2"), unit_price=Decimal("65.00"), currency="GBP")
+    li = LineItem(name="x", quantity=Decimal(2), unit_price=Decimal("65.00"), currency="GBP")
     p = li.to_paypal()
     assert p["unit_amount"] == {"currency_code": "GBP", "value": "65.00"}
     assert p["quantity"] == "2"
@@ -43,4 +43,4 @@ def test_computed_fields_are_stripped_not_echoed(field):
 
 def test_total_of_reads_the_amount_value():
     assert total_of({"amount": {"value": "817.50"}}) == Decimal("817.50")
-    assert total_of({}) == Decimal("0")
+    assert total_of({}) == Decimal(0)

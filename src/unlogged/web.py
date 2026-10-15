@@ -42,9 +42,9 @@ def engagement() -> Engagement:
 
 def events() -> list[WorkEvent]:
     return [
-        WorkEvent.model_validate_json(l)
-        for l in (FIXTURES / "events.jsonl").read_text().splitlines()
-        if l.strip()
+        WorkEvent.model_validate_json(line)
+        for line in (FIXTURES / "events.jsonl").read_text().splitlines()
+        if line.strip()
     ]
 
 
@@ -125,7 +125,9 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
         from unlogged.scope.adjudicate import Adjudicator
 
         arm = Adjudicator(eng, s.openai_api_key)
-    chosen = [v for v in arm.adjudicate(events()) if v.event_id in req.event_ids and v.is_billable()]
+    chosen = [
+        v for v in arm.adjudicate(events()) if v.event_id in req.event_ids and v.is_billable()
+    ]
     if not chosen:
         raise HTTPException(400, "none of the selected events are billable extras")
 
@@ -144,7 +146,7 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
         updated = inv.add_items(req.invoice_id, items, notify=req.notify)
         total = total_of(updated)
         led = Ledger(DATA / f"{eng.id}.jsonl")
-        for v, item in zip(chosen, items):
+        for v, item in zip(chosen, items, strict=True):
             led.append(
                 Entry(
                     at=now(),
@@ -152,7 +154,7 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
                     event_id=v.event_id,
                     clause_id=v.clause_id,
                     line_name=item.display_name,
-                    hours=v.hours or Decimal("0"),
+                    hours=v.hours or Decimal(0),
                     unit_price=item.unit_price,
                     total_after=total,
                     adjudicator=arm.name,
@@ -193,5 +195,7 @@ async def webhook(request: Request, paypal_transmission_id: str = Header(default
     )
     DATA.mkdir(parents=True, exist_ok=True)
     with (DATA / "webhooks.jsonl").open("a") as fh:
-        fh.write(json.dumps({"verified": verified, "simulated": simulated, "payload": payload}) + "\n")
+        fh.write(
+            json.dumps({"verified": verified, "simulated": simulated, "payload": payload}) + "\n"
+        )
     return {"ok": True, "verified": verified, "simulated": simulated}

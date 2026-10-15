@@ -54,8 +54,8 @@ class Result:
     # Right call, wrong class (e.g. called it included when it was noise). Harmless.
     misclassified: list[str] = field(default_factory=list)
     uncited: list[str] = field(default_factory=list)
-    money_overbilled: Decimal = Decimal("0")
-    money_missed: Decimal = Decimal("0")
+    money_overbilled: Decimal = Decimal(0)
+    money_missed: Decimal = Decimal(0)
 
     @property
     def accuracy(self) -> float:
@@ -108,10 +108,10 @@ def score(
 
         if got.call is Call.BILLABLE_EXTRA:
             r.overbilled.append(ev.id)
-            r.money_overbilled += (got.hours or Decimal("0")) * rate
+            r.money_overbilled += (got.hours or Decimal(0)) * rate
         elif want.call is Call.BILLABLE_EXTRA:
             r.missed.append(ev.id)
-            r.money_missed += (want.hours or Decimal("0")) * engagement.rate_card.rate_for(None)
+            r.money_missed += (want.hours or Decimal(0)) * engagement.rate_card.rate_for(None)
         else:
             r.misclassified.append(ev.id)
 
@@ -131,7 +131,8 @@ def report(results: list[Result], engagement: Engagement, gold: list[Gold]) -> s
         "comparable: **overbilled** means a client was charged for work that was inside scope or",
         "for a message containing no work, and **missed** means real work never reached the bill.",
         "",
-        "| arm | accuracy | precision | recall | overbilled | missed | uncited | $ overbilled | $ missed |",
+        "| arm | accuracy | precision | recall | overbilled | missed | uncited "
+        "| $ overbilled | $ missed |",
         "|---|---|---|---|---|---|---|---|---|",
     ]
     lines += [r.table_row() for r in results]

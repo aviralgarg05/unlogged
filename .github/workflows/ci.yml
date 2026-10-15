@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with: { enable-cache: true }
+      - run: uv sync --extra dev
+      - name: Lint
+        run: uv run ruff check src tests scripts
+      - name: Format
+        run: uv run ruff format --check src tests
+      - name: Tests
+        run: uv run pytest -q
+      - name: Evaluation
+        # The eval runs in CI with no credentials and no model key: the keyword arm is
+        # scored against the committed hand labels. Its failures are real and expected —
+        # that arm exists to lose — so the report is uploaded rather than gating the build.
+        run: uv run unlogged evaluate
+             --engagement fixtures/engagement.json
+             --events fixtures/events.jsonl
+             --gold fixtures/gold.jsonl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evaluation
+          path: evals/
+
+  web:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: web } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run build

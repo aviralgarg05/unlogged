@@ -9,10 +9,11 @@ one thing a bill that grows must never do is quietly forget a step.
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from collections.abc import Iterator
+from datetime import UTC, datetime
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -50,7 +51,7 @@ class Ledger:
                 yield Entry.model_validate_json(raw)
 
     def total_added(self) -> Decimal:
-        return sum((e.hours * e.unit_price for e in self), Decimal("0")).quantize(Decimal("0.01"))
+        return sum((e.hours * e.unit_price for e in self), Decimal(0)).quantize(Decimal("0.01"))
 
     def summary(self) -> dict[str, Any]:
         entries = list(self)
@@ -63,4 +64,4 @@ class Ledger:
 
 
 def now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)

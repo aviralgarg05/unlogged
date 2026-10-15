@@ -147,6 +147,23 @@ src/unlogged/
 | Model adjudication | ⏳ awaiting API key |
 | Evaluation against a real past engagement | ⏳ needs a real thread |
 
+## How this is judged, and where to check each claim
+
+Five equally weighted criteria. For each one, the screen that shows it and the file that
+implements it, so nothing has to be taken on trust.
+
+| Criterion | See it here | Implemented in |
+|---|---|---|
+| **Technological Implementation** | `uv run scripts/repro_discount_defect.py` — PayPal's documented discount path accepted with 201 and silently dropped, four ways | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
+| **Design** | `/dashboard` — three pages, rows fetched a page at a time, never materialised in the browser | [`studio/data.ts`](web/app/dashboard/studio/data.ts) |
+| **Potential Impact** | `uv run unlogged evaluate …` — $425 of real work the naive pass leaves off the bill | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
+| **Innovation** | The client's bookmarked PayPal page gaining named line items, same invoice id, same QR | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
+| **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page | — |
+
+**What is real, what is simulated, and what is not yet true:** [`docs/HONESTY.md`](docs/HONESTY.md).
+Read that before the rest. It says plainly that no model number has been published yet, that the
+fixture thread was authored for this repo, and why that matters.
+
 ## Licence
 
 MIT — see [LICENSE](LICENSE).

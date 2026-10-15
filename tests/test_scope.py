@@ -1,4 +1,3 @@
-import json
 from decimal import Decimal
 from pathlib import Path
 
@@ -14,9 +13,9 @@ def engagement() -> Engagement:
 
 def events() -> list[WorkEvent]:
     return [
-        WorkEvent.model_validate_json(l)
-        for l in (FIX / "events.jsonl").read_text().splitlines()
-        if l.strip()
+        WorkEvent.model_validate_json(line)
+        for line in (FIX / "events.jsonl").read_text().splitlines()
+        if line.strip()
     ]
 
 
