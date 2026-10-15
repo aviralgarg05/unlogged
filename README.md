@@ -5,6 +5,19 @@
 
 **The work you never wrote down is the work you never got paid for.**
 
+<table>
+<tr>
+<td width="50%"><img src="docs/img/payer-before.jpg" alt="The client's PayPal invoice at $520.00, one line: the agreed scope"></td>
+<td width="50%"><img src="docs/img/payer-after.jpg" alt="The same invoice, same URL, now $945.00 with two discovered lines added, each naming where the work came from"></td>
+</tr>
+<tr>
+<td><em>The invoice the client has had since day one. $520.00.</em></td>
+<td><em>The same invoice. Same id, same link, same QR. Two pieces of
+discovered work itemised onto it, each naming where it came from, and
+PayPal emailed the client that it changed.</em></td>
+</tr>
+</table>
+
 You agree a scope. Then the work arrives anyway — in a Slack thread, a PR review, a call
 that overran. Some of it is inside what you agreed and some of it isn't, and the part that
 isn't mostly never reaches the invoice, because writing it down at the time is the one
@@ -14,8 +27,6 @@ thing nobody does.
 falls on, and **itemises the billable extras onto an invoice the client already has** —
 same invoice id, same link they filed on day one, each line naming where the work came
 from, rendered by PayPal on PayPal's own page.
-
-> ⚠️ Work in progress. Private during development; this repo goes public before submission.
 
 ---
 
