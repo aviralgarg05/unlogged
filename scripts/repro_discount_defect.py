@@ -98,7 +98,11 @@ def main() -> int:
             ("DUE_ON_RECEIPT, end today", {"term_type": "DUE_ON_RECEIPT"}, TODAY),
             ("NET_30, end today", {"term_type": "NET_30"}, TODAY),
             ("NET_30, end +7d", {"term_type": "NET_30"}, SOON),
-            ("DUE_ON_DATE_SPECIFIED, +7d", {"term_type": "DUE_ON_DATE_SPECIFIED", "due_date": SOON}, SOON),
+            (
+                "DUE_ON_DATE_SPECIFIED, +7d",
+                {"term_type": "DUE_ON_DATE_SPECIFIED", "due_date": SOON},
+                SOON,
+            ),
         ]
         first_id = None
         for label, term, end in cases:
@@ -128,16 +132,18 @@ def main() -> int:
         attempts = [
             ("rules array (the spec's own rule shape)", {"rules": [RULE]}),
             ("bare rule object", RULE),
-            ("early_payment_discount shorthand", {"early_payment_discount": {"percent": "10", "discount_end_date": TODAY}}),
+            (
+                "early_payment_discount shorthand",
+                {"early_payment_discount": {"percent": "10", "discount_end_date": TODAY}},
+            ),
         ]
         for label, body in attempts:
             r = c.post(
                 f"{BASE}/v2/invoicing/invoices/{first_id}/conditional-rules", headers=h, json=body
             )
-            detail = ""
-            try:
+            if r.headers.get("content-type", "").startswith("application/json"):
                 detail = r.json().get("name", "") or r.text[:60]
-            except Exception:
+            else:
                 detail = r.text[:60]
             print(f"   {label:42} HTTP {r.status_code}  {detail[:46]}")
 
@@ -169,9 +175,9 @@ def main() -> int:
             json={"send_to_recipient": False, "send_to_invoicer": False},
         )
         fresh = c.get(f"{BASE}/v2/invoicing/invoices/{iid}", headers=h).json()
-        disc = (
-            ((fresh.get("amount") or {}).get("breakdown") or {}).get("discount") or {}
-        ).get("invoice_discount", {})
+        disc = (((fresh.get("amount") or {}).get("breakdown") or {}).get("discount") or {}).get(
+            "invoice_discount", {}
+        )
         print(
             f"   amount.breakdown.discount.invoice_discount  create {r.status_code} | "
             f"after a fresh GET: {json.dumps(disc)} | total "
