@@ -1,6 +1,6 @@
 # Upstream: the documented discount path does not work
 
-Prepared for [paypal/agent-toolkit](https://github.com/paypal/agent-toolkit). Reproduction script:
+Prepared for [paypal/agent-toolkit](https://github.com/paypal/agent-toolkit). Reproduction:
 [`scripts/repro_discount_defect.py`](../scripts/repro_discount_defect.py). Run against sandbox on
 2026-10-15; output below is verbatim.
 
@@ -11,44 +11,50 @@ Prepared for [paypal/agent-toolkit](https://github.com/paypal/agent-toolkit). Re
 capability fail, and one of them fails silently. An agent following the shipped guidance writes a
 discount, is told it succeeded, and charges the customer the undiscounted amount.
 
-## A. `early_payment_discount` on create is accepted and then dropped
+## A. `early_payment_discount` is accepted and not stored
 
-`detail.payment_term.conditional_rules.early_payment_discount` returns **HTTP 201** and is absent
-from the stored invoice. No error, no warning, and `effective_due_amount` stays `null`.
+`detail.payment_term.conditional_rules.early_payment_discount` returns **HTTP 201**. The invoice
+is then **sent** and **read back fresh** — not inspected in the create response, which would prove
+nothing about what was persisted:
 
-| case | result | `conditional_rules` stored | total |
-|---|---|---|---|
-| `DUE_ON_RECEIPT`, end date today | 201 | **false** | 100.00 |
-| `NET_30`, end date today | 201 | **false** | 100.00 |
-| `NET_30`, end date +7d | 201 | **false** | 100.00 |
-| `DUE_ON_DATE_SPECIFIED`, end date +7d | 201 | **false** | 100.00 |
+| case | create | send | in create body | in a fresh GET | total |
+|---|---|---|---|---|---|
+| `DUE_ON_RECEIPT`, end today | 201 | 200 | false | **false** | 100.00 |
+| `NET_30`, end today | 201 | 200 | false | **false** | 100.00 |
+| `NET_30`, end +7d | 201 | 200 | false | **false** | 100.00 |
+| `DUE_ON_DATE_SPECIFIED`, +7d | 201 | 200 | false | **false** | 100.00 |
 
 Four combinations across three payment-term types, with the discount end date both today and in
-the future, so this is not a term-type or date-validity problem. The returned `payment_term`
-contains only `term_type` and `due_date`.
+the future. No error at any point, and the total never moves off the list price.
 
-## B. `POST /conditional-rules` returns 500
+## B. `POST /conditional-rules` returns 500 for every payload shape
 
-```
-POST /v2/invoicing/invoices/{id}/conditional-rules -> HTTP 500
-{"name":"INTERNAL_SERVER_ERROR","message":"An internal server error has occurred.","debug_id":"f1146974bd9f4"}
-GET  /v2/invoicing/invoices/{id}/conditional-rules -> HTTP 200  {"invoice_id":"INV2-..."}
-```
+The published schema says the request body is `conditional_rules`, whose only non-`links`
+property `rules` is `readOnly: true, maxItems: 5` — which would mean no writable payload exists.
+Rather than rest the report on reading a spec, the endpoint was asked, including with the exact
+rule object the spec gives as its *own* worked example for the sibling `PUT` route:
 
-The published schema explains it. The request body is the `conditional_rules` schema, whose only
-non-`links` property is `rules` — and `rules` is `readOnly: true, maxItems: 5`. **There is no
-writable payload defined for this endpoint.** Verified by walking
-`developer.paypal.com/api/invoicing/v2/schema.json` (557,403 bytes, 132 schemas).
+| payload | result |
+|---|---|
+| `{"rules": [ … ]}` using the spec's own example rule | **HTTP 500** `INTERNAL_SERVER_ERROR` |
+| the bare rule object | **HTTP 500** `INTERNAL_SERVER_ERROR` |
+| `{"early_payment_discount": { … }}` | **HTTP 500** `INTERNAL_SERVER_ERROR` |
+| `GET` on the same path | 200, body `{"invoice_id": "INV2-…"}` and nothing else |
+
+So the endpoint is reachable and authorised, and fails on every shape its own specification
+suggests. Whether the cause is the readOnly marking or something behind it, the capability is not
+usable from outside.
 
 ## C. What does work
 
-`amount.breakdown.discount.invoice_discount.percent` persists, and PayPal computes the money:
+`amount.breakdown.discount.invoice_discount.percent`, verified the same way — created, sent, read
+back fresh:
 
 ```
-HTTP 201  total=80.00  stored={"percent": "20", "amount": {"currency_code": "USD", "value": "-20.00"}}
+total 80.00   discount {"percent": "20", "amount": {"currency_code": "USD", "value": "-20.00"}}
 ```
 
-$100.00 list, 20% off, settled server-side.
+$100.00 list, 20% off, still there after sending, with PayPal doing the arithmetic.
 
 ## Suggested fix
 
@@ -61,9 +67,9 @@ Happy to open the PR.
 
 ## Not claimed
 
-Sandbox only. Live behaviour untested — this account cannot send live-mode payments. Whether the
-drop is a gateway-side validation gap or an intentional gate on the capability is unknown from
-outside.
+Sandbox only; live behaviour untested, as this account cannot send live-mode payments. One
+sandbox merchant. Whether the drop is gateway-side validation or an intentional gate on the
+capability is not visible from outside, and this report does not guess.
 
 ---
 

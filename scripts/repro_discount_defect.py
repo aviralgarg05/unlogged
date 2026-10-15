@@ -2,26 +2,19 @@
 # requires-python = ">=3.11"
 # dependencies = ["httpx>=0.27"]
 # ///
-"""Reproduction: PayPal Invoicing v2 accepts an early-payment discount and silently drops it.
+"""Reproduction: PayPal Invoicing v2 accepts an early-payment discount and does not store it.
 
     export PAYPAL_CLIENT_ID=... PAYPAL_CLIENT_SECRET=...
     uv run scripts/repro_discount_defect.py
 
-What this shows, against api-m.sandbox.paypal.com:
+Each claim is checked against a FRESH GET of the stored invoice after sending it, not against
+the create response. That distinction matters: a representation echoed back on create would
+prove nothing about what PayPal persisted, and an earlier version of this script made exactly
+that mistake.
 
-  A. `detail.payment_term.conditional_rules.early_payment_discount` is accepted on create with
-     HTTP 201 and is then absent from the stored invoice. No error, no warning. Tried across
-     three payment term types and with the discount end date both today and in the future, so
-     it is not a term-type or date-validity problem.
-  B. `POST /v2/invoicing/invoices/{id}/conditional-rules` returns HTTP 500. The published
-     schema explains why: the only non-`links` property of its request body, `rules`, is
-     marked `readOnly`, so there is no writable payload to send.
-  C. The field that does work is `amount.breakdown.discount.invoice_discount.percent`.
-
-Why it matters beyond the API: the official agent toolkit's PROMPTS.md documents the discount
-capability only under `create_conditional_rules_for_invoice` / EARLY_PAYMENT_DISCOUNT — the path
-in A and B. An agent following the shipped guidance writes a discount, is told it succeeded, and
-charges the customer the undiscounted amount.
+The `rules` array is also POSTed for real rather than ruled out from the schema. It is marked
+`readOnly` in the published spec, but a spec can be wrong about its own endpoint, so the
+endpoint gets asked.
 """
 
 from __future__ import annotations
@@ -37,6 +30,18 @@ BASE = "https://api-m.sandbox.paypal.com"
 TODAY = date.today().isoformat()
 SOON = (date.today() + timedelta(days=7)).isoformat()
 
+# Exactly the shape the published spec gives as its own worked example for
+# PUT /v2/invoicing/invoices/{id}/conditional-rules/{conditional_rule_id}.
+RULE = {
+    "conditional_rule_type": "EARLY_PAYMENT_DISCOUNT",
+    "conditional_rule_value_type": "PERCENT",
+    "conditional_rule_value": "10",
+    "rule_expiry_terms": {
+        "rule_expiry_condition": "SEVEN_DAYS_AFTER_ISSUE_DATE",
+        "condition_rule_end_date": SOON,
+    },
+}
+
 
 def token(c: httpx.Client) -> str:
     cid, sec = os.environ.get("PAYPAL_CLIENT_ID"), os.environ.get("PAYPAL_CLIENT_SECRET")
@@ -51,7 +56,7 @@ def token(c: httpx.Client) -> str:
     return r.json()["access_token"]
 
 
-def invoice(term: dict, end_date: str) -> dict:
+def invoice_body(term: dict, end_date: str) -> dict:
     return {
         "detail": {
             "currency_code": "USD",
@@ -76,6 +81,10 @@ def invoice(term: dict, end_date: str) -> dict:
     }
 
 
+def stored_rules(inv: dict) -> dict | None:
+    return inv.get("detail", {}).get("payment_term", {}).get("conditional_rules")
+
+
 def main() -> int:
     with httpx.Client(timeout=60.0) as c:
         h = {
@@ -84,45 +93,56 @@ def main() -> int:
             "Prefer": "return=representation",
         }
 
-        print("A. early_payment_discount on create — accepted, then absent\n")
+        print("A. early_payment_discount on create — checked against a fresh GET after sending\n")
         cases = [
-            ("DUE_ON_RECEIPT, end date today", {"term_type": "DUE_ON_RECEIPT"}, TODAY),
-            ("NET_30, end date today", {"term_type": "NET_30"}, TODAY),
-            ("NET_30, end date +7d", {"term_type": "NET_30"}, SOON),
-            (
-                "DUE_ON_DATE_SPECIFIED, end date +7d",
-                {"term_type": "DUE_ON_DATE_SPECIFIED", "due_date": SOON},
-                SOON,
-            ),
+            ("DUE_ON_RECEIPT, end today", {"term_type": "DUE_ON_RECEIPT"}, TODAY),
+            ("NET_30, end today", {"term_type": "NET_30"}, TODAY),
+            ("NET_30, end +7d", {"term_type": "NET_30"}, SOON),
+            ("DUE_ON_DATE_SPECIFIED, +7d", {"term_type": "DUE_ON_DATE_SPECIFIED", "due_date": SOON}, SOON),
         ]
         first_id = None
         for label, term, end in cases:
-            r = c.post(f"{BASE}/v2/invoicing/invoices", headers=h, json=invoice(term, end))
+            r = c.post(f"{BASE}/v2/invoicing/invoices", headers=h, json=invoice_body(term, end))
             if r.status_code != 201:
-                print(f"   {label:38} HTTP {r.status_code} {r.text[:120]}")
+                print(f"   {label:28} create HTTP {r.status_code} {r.text[:90]}")
                 continue
-            body = r.json()
-            first_id = first_id or body["id"]
-            stored = body.get("detail", {}).get("payment_term", {})
-            survived = "conditional_rules" in stored
-            total = (body.get("amount") or {}).get("value")
-            eff = (body.get("effective_due_amount") or {}).get("value")
-            print(
-                f"   {label:38} HTTP 201  conditional_rules stored: {survived}  "
-                f"total={total}  effective_due_amount={eff}"
-            )
-            print(f"   {'':38} payment_term returned: {json.dumps(stored)}")
+            iid = r.json()["id"]
+            first_id = first_id or iid
+            on_create = stored_rules(r.json()) is not None
 
-        print("\nB. POST /conditional-rules\n")
-        r = c.post(
-            f"{BASE}/v2/invoicing/invoices/{first_id}/conditional-rules",
-            headers=h,
-            json={"early_payment_discount": {"percent": "10", "discount_end_date": TODAY}},
-        )
-        print(f"   POST /v2/invoicing/invoices/{{id}}/conditional-rules -> HTTP {r.status_code}")
-        print(f"   {r.text[:220]}")
+            # Send it, then read it back fresh. This is the step that makes the claim stand up.
+            sent = c.post(
+                f"{BASE}/v2/invoicing/invoices/{iid}/send",
+                headers=h,
+                json={"send_to_recipient": False, "send_to_invoicer": False},
+            )
+            fresh = c.get(f"{BASE}/v2/invoicing/invoices/{iid}", headers=h).json()
+            after = stored_rules(fresh)
+            print(
+                f"   {label:28} 201 | send {sent.status_code} | in create body: {on_create} "
+                f"| in fresh GET: {after is not None} | status {fresh.get('status')} "
+                f"| total {(fresh.get('amount') or {}).get('value')}"
+            )
+
+        print("\nB. POST /conditional-rules, asked rather than assumed\n")
+        attempts = [
+            ("rules array (the spec's own rule shape)", {"rules": [RULE]}),
+            ("bare rule object", RULE),
+            ("early_payment_discount shorthand", {"early_payment_discount": {"percent": "10", "discount_end_date": TODAY}}),
+        ]
+        for label, body in attempts:
+            r = c.post(
+                f"{BASE}/v2/invoicing/invoices/{first_id}/conditional-rules", headers=h, json=body
+            )
+            detail = ""
+            try:
+                detail = r.json().get("name", "") or r.text[:60]
+            except Exception:
+                detail = r.text[:60]
+            print(f"   {label:42} HTTP {r.status_code}  {detail[:46]}")
+
         r = c.get(f"{BASE}/v2/invoicing/invoices/{first_id}/conditional-rules", headers=h)
-        print(f"   GET  same path -> HTTP {r.status_code}  {r.text[:160]}")
+        print(f"   {'GET /conditional-rules':42} HTTP {r.status_code}  {r.text[:46]}")
 
         print("\nC. The field that does work\n")
         body = {
@@ -142,16 +162,22 @@ def main() -> int:
             },
         }
         r = c.post(f"{BASE}/v2/invoicing/invoices", headers=h, json=body)
-        got = r.json()
-        disc = (((got.get("amount") or {}).get("breakdown") or {}).get("discount") or {}).get(
-            "invoice_discount", {}
+        iid = r.json()["id"]
+        c.post(
+            f"{BASE}/v2/invoicing/invoices/{iid}/send",
+            headers=h,
+            json={"send_to_recipient": False, "send_to_invoicer": False},
         )
+        fresh = c.get(f"{BASE}/v2/invoicing/invoices/{iid}", headers=h).json()
+        disc = (
+            ((fresh.get("amount") or {}).get("breakdown") or {}).get("discount") or {}
+        ).get("invoice_discount", {})
         print(
-            f"   amount.breakdown.discount.invoice_discount -> HTTP {r.status_code}  "
-            f"total={(got.get('amount') or {}).get('value')}  "
-            f"stored={json.dumps(disc)}"
+            f"   amount.breakdown.discount.invoice_discount  create {r.status_code} | "
+            f"after a fresh GET: {json.dumps(disc)} | total "
+            f"{(fresh.get('amount') or {}).get('value')}"
         )
-        print("\n   $100.00 list, 20% off, PayPal computed the money itself.")
+        print("\n   $100.00 list, 20% off, still there after sending. PayPal did the arithmetic.")
     return 0
 
 
