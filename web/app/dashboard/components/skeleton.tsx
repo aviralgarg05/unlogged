@@ -23,10 +23,19 @@ export function SidebarSkeleton() {
 export function ContentSkeleton() {
   return (
     <>
+      {/* AG Studio is a 5.3 MB bundle and the first paint can take a while on a cold cache.
+          A wall of grey boxes for that long reads as broken, so the wait says what it is
+          waiting for and what the reader is about to see. */}
       <div className="border-b border-pp-border bg-white px-8 py-5">
-        <Skeleton className="h-4 w-32" />
-        <Skeleton className="mt-2 h-8 w-56" />
-        <Skeleton className="mt-3 h-4 w-48" />
+        <p className="text-sm font-semibold uppercase tracking-wider text-pp-muted">unlogged</p>
+        <h1 className="mt-1 text-[22px] font-semibold text-pp-navy">
+          Loading the engagement…
+        </h1>
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-pp-muted">
+          Three pages: everything that happened on the engagement, how each event was placed
+          against the agreed scope, and what reached the bill. First paint pulls the AG Studio
+          bundle, so give it a moment.
+        </p>
       </div>
       <div className="grid flex-1 grid-cols-4 grid-rows-[112px_1fr_1fr] gap-4 p-4" aria-hidden>
         {[0, 1, 2, 3].map((i) => (
