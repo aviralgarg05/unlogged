@@ -173,10 +173,11 @@ the file that implements it — so nothing has to be taken on trust.
 simulated, and what is not yet true — including that eight events is a smoke test rather than a
 benchmark, and that the fixture engagement was written for this repo.
 
-Three findings are filed upstream rather than kept as talking points, in
+Four findings are filed upstream rather than kept as talking points, in
 [`docs/UPSTREAM.md`](docs/UPSTREAM.md): PayPal's documented discount path is accepted and not
-stored, the generated Server SDK ships no Invoicing controller, and a public AG Studio custom
-widget cannot declare `formatShape` at all.
+stored, `generate-qr-code` returns a base64 multipart envelope rather than an image, the generated
+Server SDK ships no Invoicing controller, and a public AG Studio custom widget cannot declare
+`formatShape` at all. Each one is reproducible from this repo.
 
 ## Status
 

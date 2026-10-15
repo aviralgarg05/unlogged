@@ -143,3 +143,71 @@ Failing that, export a standalone builder, or say in the docs that `formatShape`
 
 Reproduced in `web/app/dashboard/studio/widgets/index.ts`, where the omission is commented rather
 than quietly worked around.
+
+---
+
+# Fourth report: `generate-qr-code` returns `multipart/form-data`, not an image
+
+For [PayPal Developer](https://developer.paypal.com/api/invoicing/v2/) and
+[paypal/agent-toolkit](https://github.com/paypal/agent-toolkit) (`generate_invoice_qr_code`).
+
+`POST /v2/invoicing/invoices/{invoice_id}/generate-qr-code` is documented as returning the QR
+code image. What it actually returns is a one-part multipart envelope whose single part is
+**base64 text**, declared as `text/plain`.
+
+## Reproduce, in one call
+
+```bash
+curl -sS -D - -o qr.out -X POST \
+  "https://api-m.sandbox.paypal.com/v2/invoicing/invoices/${INVOICE_ID}/generate-qr-code" \
+  -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json" \
+  -d '{"width":500,"height":500,"action":"pay"}'
+```
+
+Response, verbatim:
+
+```
+HTTP/2 200
+content-type: multipart/form-data; boundary=4f94561f-892c-472a-8277-94699429bd4b
+
+--4f94561f-892c-472a-8277-94699429bd4b
+Content-Disposition: form-data; name="image"
+Content-Type: text/plain
+
+iVBORw0KGgoAAAANSUhEUgAA…
+```
+
+```python
+d = open("qr.out", "rb").read()
+d[:4] == b"\x89PNG"      # False
+d.lstrip()[:2] == b"--"  # True
+```
+
+So the obvious handling — write the body to a file, or check for an image content type — produces
+a file that is not an image, silently. The working form is: split on the blank line after the part
+headers, strip the trailing boundary, and base64-decode.
+
+## Why it is worth fixing
+
+1. **It is undiscoverable from the docs.** Nothing in the endpoint's description or its
+   `qr_config` request schema indicates a multipart envelope or base64.
+2. **It fails quietly.** A naive integration gets HTTP 200 and a plausible-looking payload. The
+   failure surfaces later as a broken image, not as an error at the call site.
+3. **The agent toolkit exposes this as `generate_invoice_qr_code`**, so an agent asked for a QR
+   code gets the envelope with no indication that it needs decoding.
+
+## Suggested fix
+
+Either return `image/png` directly, or document the envelope on the endpoint and decode it inside
+`generate_invoice_qr_code` so the tool returns image bytes. Documenting it is the smaller change
+and would be enough.
+
+## Evidence in this repo
+
+[`src/unlogged/paypal/invoices.py`](../src/unlogged/paypal/invoices.py) `qr_png()` carries the
+working parse. Two recorded exchanges under `cassettes/` contain the raw envelope, so the
+behaviour is inspectable without credentials.
+
+## Not claimed
+
+Sandbox only, one merchant, `action: "pay"` at 500×500. Live mode untested.
