@@ -1,0 +1,114 @@
+{
+ "status": 200,
+ "body": {
+  "id": "INV2-Z947-CNF4-GGTW-QRHH",
+  "status": "MARKED_AS_PAID",
+  "detail": {
+   "reference": "probe-paidgrow",
+   "currency_code": "USD",
+   "note": "probe",
+   "category_code": "SHIPPABLE",
+   "invoice_number": "0027",
+   "invoice_date": "2026-10-15",
+   "payment_term": {
+    "term_type": "NET_15",
+    "due_date": "2026-10-30"
+   },
+   "viewed_by_recipient": false,
+   "group_draft": false,
+   "metadata": {
+    "create_time": "2026-10-15T15:52:18Z",
+    "last_update_time": "2026-10-15T15:52:20Z",
+    "created_by_flow": "REGULAR_SINGLE",
+    "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#Z947CNF4GGTWQRHH",
+    "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-Z947-CNF4-GGTW-QRHH",
+    "caller_type": "API_V2_INVOICE",
+    "spam_info": {}
+   },
+   "archived": false
+  },
+  "invoicer": {
+   "business_name": "unlogged probe"
+  },
+  "items": [
+   {
+    "id": "ITEM-32P003363U8888112",
+    "name": "Agreed scope",
+    "quantity": "1",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "100.00"
+    },
+    "unit_of_measure": "HOURS"
+   }
+  ],
+  "configuration": {
+   "tax_calculated_after_discount": false,
+   "tax_inclusive": false,
+   "allow_tip": false,
+   "allow_only_pay_by_bank": false,
+   "allow_vba_payments": false,
+   "save_item_for_future": true,
+   "template_id": "TEMP-7181852024373634C"
+  },
+  "amount": {
+   "breakdown": {
+    "item_total": {
+     "currency_code": "USD",
+     "value": "100.00"
+    },
+    "discount": {
+     "invoice_discount": {
+      "amount": {
+       "currency_code": "USD",
+       "value": "0.00"
+      }
+     },
+     "item_discount": {
+      "currency_code": "USD",
+      "value": "0.00"
+     }
+    },
+    "tax_total": {
+     "currency_code": "USD",
+     "value": "0.00"
+    }
+   },
+   "currency_code": "USD",
+   "value": "100.00"
+  },
+  "due_amount": {
+   "currency_code": "USD",
+   "value": "0.00"
+  },
+  "payments": {
+   "paid_amount": {
+    "currency_code": "USD",
+    "value": "100.00"
+   },
+   "transactions": [
+    {
+     "type": "EXTERNAL",
+     "payment_id": "EXTR-4XY40750Y3847243F",
+     "payment_date": "2026-10-15",
+     "payment_date_time": "2026-10-15T00:00:00Z",
+     "method": "BANK_TRANSFER",
+     "note": "paid in full",
+     "amount": {
+      "currency_code": "USD",
+      "value": "100.00"
+     }
+    }
+   ]
+  },
+  "links": [
+   {
+    "href": "https://api.sandbox.paypal.com/v2/invoicing/invoices/INV2-Z947-CNF4-GGTW-QRHH",
+    "rel": "self",
+    "method": "GET"
+   }
+  ],
+  "unilateral": false,
+  "settings": {}
+ }
+}

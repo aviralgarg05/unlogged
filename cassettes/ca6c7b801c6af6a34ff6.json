@@ -1,0 +1,8 @@
+{
+ "status": 200,
+ "body": {
+  "href": "https://www.sandbox.paypal.com/invoice/p/#INV2-SV6U-9B4S-JM3U-4ZKX",
+  "rel": "payer-view",
+  "method": "GET"
+ }
+}

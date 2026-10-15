@@ -41,6 +41,19 @@ def engagement() -> Engagement:
     return Engagement.model_validate_json((FIXTURES / "engagement.json").read_text())
 
 
+def adjudicator(eng: Engagement, s: Settings, evs: list[WorkEvent]):
+    """The arm that can actually answer: the model live with a key, or replayed without one.
+
+    Gating on the key alone meant a reader with no OpenAI account saw only the arm built to
+    lose — in the dashboard, in /api/verdicts, and in every screenshot taken of this product.
+    """
+    from unlogged.scope.adjudicate import Adjudicator
+
+    if s.model_ready or Adjudicator.recorded_for(eng, evs):
+        return Adjudicator(eng, s.openai_api_key)
+    return KeywordBaseline(eng)
+
+
 def events() -> list[WorkEvent]:
     return [
         WorkEvent.model_validate_json(line)
@@ -96,13 +109,9 @@ def read_events(page: int = 1, page_size: int = 50) -> dict[str, Any]:
 @app.get("/api/verdicts")
 def read_verdicts() -> dict[str, Any]:
     s, e = settings(), engagement()
-    if s.model_ready:
-        from unlogged.scope.adjudicate import Adjudicator
-
-        arm = Adjudicator(e, s.openai_api_key)
-    else:
-        arm = KeywordBaseline(e)
-    verdicts = arm.adjudicate(events())
+    evs = events()
+    arm = adjudicator(e, s, evs)
+    verdicts = arm.adjudicate(evs)
     return {"arm": arm.name, "rows": [v.model_dump(mode="json") for v in verdicts]}
 
 
@@ -188,11 +197,7 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
     """The single mutating call. Itemises the chosen extras onto a live invoice."""
     s, eng = settings(), engagement()
     by_id = {e.id: e for e in events()}
-    arm = KeywordBaseline(eng)
-    if s.model_ready:
-        from unlogged.scope.adjudicate import Adjudicator
-
-        arm = Adjudicator(eng, s.openai_api_key)
+    arm = adjudicator(eng, s, events())
     chosen = [
         v for v in arm.adjudicate(events()) if v.event_id in req.event_ids and v.is_billable()
     ]

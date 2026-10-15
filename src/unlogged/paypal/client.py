@@ -22,6 +22,13 @@ log = structlog.get_logger(__name__)
 CASSETTES = Path(__file__).resolve().parents[3] / "cassettes"
 
 
+def _takes(key: str) -> list[Path]:
+    """Every recorded response for a key, in the order it was recorded."""
+    first = CASSETTES / f"{key}.json"
+    rest = sorted(CASSETTES.glob(f"{key}.[0-9]*.json"), key=lambda q: int(q.suffixes[-2][1:]))
+    return ([first] if first.exists() else []) + rest
+
+
 class PayPalError(RuntimeError):
     def __init__(self, status: int, body: str, debug_id: str | None = None):
         self.status, self.body, self.debug_id = status, body, debug_id
@@ -42,6 +49,9 @@ class PayPalClient:
         self._token: str | None = None
         self._expires_at: float = 0.0
         self._http = httpx.Client(timeout=timeout)
+        # Per-key positions, so one client's run of requests lines up with one recorded run.
+        self._replays: dict[str, int] = {}
+        self._records: dict[str, int] = {}
 
     # -- auth ---------------------------------------------------------------
 
@@ -82,16 +92,23 @@ class PayPalClient:
         `idempotency` becomes PayPal-Request-Id; the official agent toolkit never sets it.
         """
         key = _cassette_key(method, path, json_body)
-        cassette = CASSETTES / f"{key}.json"
 
         if self.s.replay or not self.s.has_paypal:
-            if not cassette.exists():
+            takes = _takes(key)
+            if not takes:
                 raise PayPalError(
                     0,
                     f"No cassette for {method} {path} ({key}). Set UNLOGGED_REPLAY=0 with "
                     f"PayPal sandbox credentials to record one.",
                 )
-            rec = json.loads(cassette.read_text())
+            # The i-th request for a key replays the i-th recorded response, because a key is
+            # method+path+body and the invoice this project exists to grow is fetched before
+            # the write and again after it. Keyed only by name, the second GET overwrote the
+            # first and replay could not reproduce a change in state at all — the one thing
+            # the recordings are kept for. Reads past the end hold at the final state.
+            i = self._replays.get(key, 0)
+            self._replays[key] = i + 1
+            rec = json.loads(takes[min(i, len(takes) - 1)].read_text())
             if rec["status"] >= 400:
                 raise PayPalError(rec["status"], json.dumps(rec["body"]))
             return rec["body"]
@@ -124,7 +141,15 @@ class PayPalClient:
             payload = r.json() if r.content else {}
 
         CASSETTES.mkdir(parents=True, exist_ok=True)
-        cassette.write_text(json.dumps({"status": r.status_code, "body": payload}, indent=1))
+        n = self._records.get(key, 0)
+        if n == 0:
+            # Re-recording replaces a key's whole sequence rather than interleaving this run's
+            # responses with a previous run's.
+            for stale in _takes(key):
+                stale.unlink()
+        self._records[key] = n + 1
+        dest = CASSETTES / (f"{key}.json" if n == 0 else f"{key}.{n}.json")
+        dest.write_text(json.dumps({"status": r.status_code, "body": payload}, indent=1))
         return payload
 
     def close(self) -> None:

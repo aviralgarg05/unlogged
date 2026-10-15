@@ -54,8 +54,15 @@ class Result:
     # Right call, wrong class (e.g. called it included when it was noise). Harmless.
     misclassified: list[str] = field(default_factory=list)
     uncited: list[str] = field(default_factory=list)
+    # Right call, wrong quantity. Its own class because the call being right made this
+    # invisible: scoring returned as soon as the classes matched, so an arm could bill the
+    # correct work for the wrong number of hours and still print a clean sheet.
+    hours_wrong: list[str] = field(default_factory=list)
     money_overbilled: Decimal = Decimal(0)
     money_missed: Decimal = Decimal(0)
+    # Signed: negative is money the client was not charged, positive is money they were
+    # over-charged. Kept apart from the two columns above, which count misclassification.
+    money_hours: Decimal = Decimal(0)
 
     @property
     def accuracy(self) -> float:
@@ -79,8 +86,14 @@ class Result:
         return (
             f"| {self.arm} | {self.accuracy:.0%} | {self.precision:.0%} | {self.recall:.0%} "
             f"| {len(self.overbilled)} | {len(self.missed)} | {len(self.uncited)} "
-            f"| ${self.money_overbilled} | ${self.money_missed} |"
+            f"| ${self.money_overbilled} | ${self.money_missed} "
+            f"| {len(self.hours_wrong)} | {money(self.money_hours)} |"
         )
+
+
+def money(d: Decimal) -> str:
+    """`-$42.50`, not `$-42.50`. The sign belongs outside the currency symbol."""
+    return f"-${-d}" if d < 0 else f"${d}"
 
 
 def score(
@@ -104,6 +117,9 @@ def score(
                 # even when the call itself is right.
                 if not got.clause_id or not got.quoted_span:
                     r.uncited.append(ev.id)
+                if want.hours is not None and (got.hours or Decimal(0)) != want.hours:
+                    r.hours_wrong.append(ev.id)
+                    r.money_hours += ((got.hours or Decimal(0)) - want.hours) * rate
             continue
 
         if got.call is Call.BILLABLE_EXTRA:
@@ -117,6 +133,7 @@ def score(
 
     r.money_overbilled = r.money_overbilled.quantize(Decimal("0.01"))
     r.money_missed = r.money_missed.quantize(Decimal("0.01"))
+    r.money_hours = r.money_hours.quantize(Decimal("0.01"))
     return r
 
 
@@ -132,8 +149,8 @@ def report(results: list[Result], engagement: Engagement, gold: list[Gold]) -> s
         "for a message containing no work, and **missed** means real work never reached the bill.",
         "",
         "| arm | accuracy | precision | recall | overbilled | missed | uncited "
-        "| $ overbilled | $ missed |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "| $ overbilled | $ missed | hours wrong | $ hour error |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     lines += [r.table_row() for r in results]
     lines += ["", "## Where each arm went wrong", ""]
@@ -142,6 +159,10 @@ def report(results: list[Result], engagement: Engagement, gold: list[Gold]) -> s
         lines.append(f"- overbilled: {', '.join(r.overbilled) or 'none'}")
         lines.append(f"- missed: {', '.join(r.missed) or 'none'}")
         lines.append(f"- billed without citing a clause: {', '.join(r.uncited) or 'none'}")
+        lines.append(
+            f"- right call, wrong hours: {', '.join(r.hours_wrong) or 'none'}"
+            + (f" ({money(r.money_hours)} to the client)" if r.hours_wrong else "")
+        )
         lines.append("")
     return "\n".join(lines)
 

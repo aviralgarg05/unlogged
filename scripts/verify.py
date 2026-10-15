@@ -33,12 +33,26 @@ def check(name: str, status: str, detail: str) -> None:
     print(f"  {mark} {name:44} {detail}")
 
 
-def run(*cmd: str, cwd: Path = ROOT) -> tuple[int, str]:
+# Explicitly empty rather than deleted: the project fills absent variables from `.env`, so
+# unsetting these would hand the credentials straight back and the section below would quietly
+# stop testing the thing it is named after.
+# One place, because this drifted twice: a retired invoice id left this script passing a check
+# it was no longer making, and the dashboard kept quoting an invoice nobody could open.
+DEMO_INVOICE = (ROOT / "fixtures" / "demo-invoice-id").read_text().strip()
+EXPECTED_TOTAL = "902.50"
+
+BLANK = {"OPENAI_API_KEY": "", "PAYPAL_CLIENT_ID": "", "PAYPAL_CLIENT_SECRET": ""}
+
+
+def run(*cmd: str, cwd: Path = ROOT, keyless: bool = False) -> tuple[int, str]:
     # This file runs under `uv run --script` in its own isolated environment, so VIRTUAL_ENV
     # points somewhere the project is not installed. A nested `uv run` inherits it and resolves
     # against the wrong environment, which surfaces as a missing cassette rather than as an
     # environment error. Drop it and let uv resolve the project normally.
     env = {k: v for k, v in os.environ.items() if k != "VIRTUAL_ENV"}
+    if keyless:
+        # Whoever runs this most often is the one person whose machine has the credentials.
+        env |= BLANK
     p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, env=env)
     return p.returncode, (p.stdout + p.stderr).strip()
 
@@ -62,16 +76,16 @@ def section(title: str) -> None:
 def offline() -> None:
     section("Runs with no credentials — the Stage One requirement")
 
-    code, out = run("uv", "run", "pytest", "-q")
+    code, out = run("uv", "run", "pytest", "-q", keyless=True)
     summary = next(
         (line for line in reversed(out.splitlines()) if "passed" in line or "failed" in line), ""
     )
     check("test suite", PASS if code == 0 else FAIL, summary.strip()[:60])
 
-    code, _ = run("uv", "run", "ruff", "check", "src", "tests", "scripts")
+    code, _ = run("uv", "run", "ruff", "check", "src", "tests", "scripts", keyless=True)
     check("lint", PASS if code == 0 else FAIL, "ruff check")
 
-    code, _ = run("uv", "run", "ruff", "format", "--check", "src", "tests")
+    code, _ = run("uv", "run", "ruff", "format", "--check", "src", "tests", keyless=True)
     check("formatting", PASS if code == 0 else FAIL, "ruff format --check")
 
     # The evaluation is the project's central empirical claim; it must reproduce exactly.
@@ -86,6 +100,7 @@ def offline() -> None:
         "fixtures/events.jsonl",
         "--gold",
         "fixtures/gold.jsonl",
+        keyless=True,
     )
     rows = {
         line.split("|")[1].strip(): line.strip()
@@ -117,13 +132,14 @@ def offline() -> None:
         "--events",
         "fixtures/events.jsonl",
         "--invoice-id",
-        "INV2-AD9X-DDY8-AUNL-L9ZD",
+        DEMO_INVOICE,
         "--apply",
+        keyless=True,
     )
     total = next((line for line in out.splitlines() if "Total now" in line), "")
     check(
         "full apply flow replays from cassettes",
-        PASS if "690.00" in total else FAIL,
+        PASS if EXPECTED_TOTAL in total else FAIL,
         total.strip()[:60] or _why(code, out),
     )
 

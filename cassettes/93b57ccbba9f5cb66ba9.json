@@ -2,7 +2,7 @@
  "status": 200,
  "body": {
   "id": "INV2-AD9X-DDY8-AUNL-L9ZD",
-  "status": "UNPAID",
+  "status": "SENT",
   "detail": {
    "reference": "eng-checkout-001",
    "currency_code": "USD",
@@ -18,7 +18,9 @@
    "group_draft": false,
    "metadata": {
     "create_time": "2026-10-15T14:18:06Z",
-    "last_update_time": "2026-10-15T14:18:06Z",
+    "last_update_time": "2026-10-15T14:18:17Z",
+    "first_sent_time": "2026-10-15T14:18:17Z",
+    "last_sent_time": "2026-10-15T14:18:17Z",
     "created_by_flow": "REGULAR_SINGLE",
     "recipient_view_url": "https://www.sandbox.paypal.com/invoice/p/#AD9XDDY8AUNLL9ZD",
     "invoicer_view_url": "https://www.sandbox.paypal.com/invoice/details/INV2-AD9X-DDY8-AUNL-L9ZD",
@@ -47,6 +49,26 @@
      "value": "65.00"
     },
     "unit_of_measure": "HOURS"
+   },
+   {
+    "id": "ITEM-6H149561HK024201X",
+    "name": "Unspecified work (no description produced) (slack 02 Oct)",
+    "quantity": "1",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "85.00"
+    },
+    "unit_of_measure": "HOURS"
+   },
+   {
+    "id": "ITEM-0N930318FN9272131",
+    "name": "Unspecified work (no description produced) (slack 04 Oct)",
+    "quantity": "1",
+    "unit_amount": {
+     "currency_code": "USD",
+     "value": "85.00"
+    },
+    "unit_of_measure": "HOURS"
    }
   ],
   "configuration": {
@@ -62,7 +84,7 @@
    "breakdown": {
     "item_total": {
      "currency_code": "USD",
-     "value": "520.00"
+     "value": "690.00"
     },
     "discount": {
      "invoice_discount": {
@@ -82,11 +104,11 @@
     }
    },
    "currency_code": "USD",
-   "value": "520.00"
+   "value": "690.00"
   },
   "due_amount": {
    "currency_code": "USD",
-   "value": "520.00"
+   "value": "690.00"
   },
   "links": [
    {

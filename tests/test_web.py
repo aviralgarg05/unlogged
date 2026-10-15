@@ -34,10 +34,26 @@ def test_events_are_paged_server_side():
     assert {r["id"] for r in first["rows"]}.isdisjoint({r["id"] for r in second["rows"]})
 
 
-def test_verdicts_name_their_arm():
+def test_verdicts_serve_the_model_arm_from_cassettes_without_a_key():
+    """A reader with no OpenAI account must still see the arm that can answer.
+
+    This regressed once: the dashboard, /api/verdicts and every screenshot gated on the
+    API key alone, so all of them showed the ablation arm billing "Unspecified work"
+    against a "(Blanks)" clause. Recorded verdicts exist precisely so that cannot happen.
+    """
+    from unlogged.scope.adjudicate import Adjudicator
+    from unlogged.web import engagement, events
+
     body = client.get("/api/verdicts").json()
-    assert body["arm"] == "keyword-baseline"
     assert len(body["rows"]) == 8
+
+    if Adjudicator.recorded_for(engagement(), events()):
+        assert body["arm"] == "gpt-6.1-sol"
+        # The model arm's whole claim is that it cites the contract. Unanimously, or the
+        # screenshots are showing something weaker than what the README promises.
+        assert all(r["clause_id"] for r in body["rows"])
+    else:
+        assert body["arm"] == "keyword-baseline"
 
 
 def test_apply_refuses_when_nothing_selected_is_billable():

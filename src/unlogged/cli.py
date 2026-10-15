@@ -13,9 +13,20 @@ from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.invoices import total_of
 from unlogged.scope.baseline import KeywordBaseline
-from unlogged.scope.models import Engagement, WorkEvent, line_name
+from unlogged.scope.models import Call, Engagement, WorkEvent, line_name
 
 app = typer.Typer(add_completion=False, help=__doc__)
+
+# Exhaustive by construction: a new Call member fails at import rather than at the first event
+# that happens to use it. The previous dict was missing scope_request, and two of the eight
+# recorded verdicts are scope_request, so the documented command died with a KeyError.
+MARK: dict[Call, str] = {
+    Call.BILLABLE_EXTRA: "+",
+    Call.SCOPE_REQUEST: "?",
+    Call.INCLUDED: "=",
+    Call.NOISE: " ",
+}
+assert set(MARK) == set(Call), "every Call needs a mark"
 DATA = Path("data")
 
 
@@ -23,15 +34,18 @@ def _engagement(path: Path) -> Engagement:
     return Engagement.model_validate_json(path.read_text())
 
 
-def _adjudicator(eng: Engagement, settings: Settings):
+def _adjudicator(eng: Engagement, settings: Settings, events: list[WorkEvent]):
     """The model when a key exists, the keyword baseline when it does not.
 
     The baseline is not a placeholder — it is the evaluation's ablation arm, and the
     project is expected to run and be judged on both.
     """
-    if settings.model_ready:
-        from unlogged.scope.adjudicate import Adjudicator
+    from unlogged.scope.adjudicate import Adjudicator
 
+    # Live with a key, or replayed from recorded verdicts without one. Every call site uses this
+    # rule; gating on the key alone meant a reader with no account only ever saw the arm built
+    # to lose — including in every screenshot taken of this product.
+    if settings.model_ready or Adjudicator.recorded_for(eng, events):
         return Adjudicator(eng, settings.openai_api_key)
     typer.secho(f"Using the {settings.adjudicator_name()}.", fg=typer.colors.YELLOW)
     return KeywordBaseline(eng)
@@ -86,13 +100,13 @@ def discover(
         for line in events.read_text().splitlines()
         if line.strip()
     ]
-    judge = _adjudicator(eng, s)
+    judge = _adjudicator(eng, s, evs)
     verdicts = judge.adjudicate(evs)
     by_id = {e.id: e for e in evs}
 
     billable = [v for v in verdicts if v.is_billable()]
     for v in verdicts:
-        mark = {"billable_extra": "+", "included": "=", "noise": " "}[v.call.value]
+        mark = MARK[v.call]
         typer.echo(f" {mark} [{v.call.value:14}] {by_id[v.event_id].text[:70]}")
         if v.quoted_span:
             typer.echo(f'      cites {v.clause_id}: "{v.quoted_span[:60]}"')

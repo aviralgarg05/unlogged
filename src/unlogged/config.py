@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 
+from unlogged import dotenv
+
 SANDBOX = "https://api-m.sandbox.paypal.com"
 LIVE = "https://api-m.paypal.com"
 
@@ -19,6 +21,7 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> Settings:
+        dotenv.load()
         env = os.environ.get("PAYPAL_ENV", "sandbox").lower()
         if env not in ("sandbox", "live"):
             raise ValueError(f"PAYPAL_ENV must be sandbox or live, got {env!r}")
