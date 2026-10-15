@@ -77,10 +77,68 @@ Two more product defects came out of the same pass:
   silently replaced the first and the arm was measured against a label no reader of the file
   could identify. It now raises.
 
-## Why there is no corpus here
+## How much the two passes actually agreed
 
-After two rounds, not one of the fourteen engagements survived its critic. The remaining
-defects were not sloppiness. They were the same four judgements, over and over:
+"Fourteen attempts failed" is a story, not a measurement. It cannot tell a reader whether the
+task is hard, whether the labellers were careless, or whether the disagreements were one
+judgement repeating. So the two passes were scored against each other on the five threads both
+of them labelled:
+
+```bash
+uv run unlogged agreement
+```
+
+| measure | value |
+|---|---|
+| events labelled by both passes | 31 |
+| raw agreement | 80.6% |
+| Cohen's kappa | 0.719 |
+| Gwet's AC1 | 0.749 |
+
+Both statistics are given because kappa has a known failure — the *kappa paradox* — where a
+dominant category inflates the chance-correction term and collapses the score although the
+raters agree on nearly everything. These categories are skewed, about half of every thread
+being `noise`, so kappa alone would understate agreement in exactly the way that failure
+predicts. AC1 is the standard answer to it. The marginals are printed beside them so the skew
+is visible rather than asserted, and the implementation is checked against the textbook 2×2
+example in `tests/test_agreement.py` — a statistic a project computes about itself is worth
+nothing unless the arithmetic is right.
+
+**κ = 0.72 is substantial agreement by the usual convention.** That is the honest headline, and
+it is a different claim from "every engagement had a defect". Both are true: two readers agree
+on four events in five, and an error anywhere still invalidates an engagement's totals.
+
+One caveat that cuts the other way: the second pass was shown a critique of the first. That
+pushes in both directions — shared framing raises agreement, and targeted corrections lower it
+on exactly the events the critic named — so this figure is not clean inter-annotator agreement
+between independent readers. It is agreement between a pass and its own informed revision.
+
+### The disagreements are not scattered
+
+| thread | event | first pass | second pass |
+|---|---|---|---|
+| #11 | comment-3632851856 | noise | billable_extra |
+| #11 | comment-3635423731 | noise | billable_extra |
+| #11 | comment-3640234629 | noise | billable_extra |
+| #7 | pr-34 | included | billable_extra |
+| #10 | comment-3633596094 | included | noise |
+| #166 | comment-3956952147 | scope_request | noise |
+
+Three of the six are one judgement on one thread: whether a contributor's status comment
+reporting completed out-of-scope work is the work itself or merely talk about it. Two more are
+the same boundary seen from the other side. That is the request-versus-work distinction, which
+is the single thing this product is built around — `Call.SCOPE_REQUEST` exists precisely
+because billing the ask and the work double-charges the client.
+
+The disagreement is concentrated on the hardest and most expensive judgement in the domain.
+That is not a labelling accident.
+
+## Why there is still no corpus here
+
+Agreeing on 80% of events is not the same as producing a set worth scoring an arm against. An
+engagement's totals are wrong if *any* of its labels are, and after two rounds every
+engagement still contained at least one defect an independent reader could name. The defects
+were not sloppiness. They were the same four judgements, over and over:
 
 1. **Was it asked for, or was it done?** A request and the work answering it are two events,
    and the commit log is the only way to tell which you are looking at. Labellers got this
@@ -99,10 +157,11 @@ events, and says so in the table itself.
 ## What this is evidence of
 
 Every one of these threads was read twice: once by someone building the labels and once by
-someone whose only job was to break them. Both had the entire thread, the commit log, the
-diff and the brief in front of them, and no time pressure. Fourteen times out of fourteen,
-the second reader found something the first had got wrong about which side of a prose line a
-sentence fell on.
+someone whose only job was to break them. Both had the entire thread, the commit log, the diff
+and the brief in front of them, and no time pressure. They agreed on four events in five —
+and still, fourteen times out of fourteen, the second reader found something the first had got
+wrong, concentrated on whether a sentence described work that had been done or work that had
+merely been asked for.
 
 The freelancer this product is for does that reconstruction from memory, three weeks later,
 at midnight, against a client who remembers it differently. That is the problem. The

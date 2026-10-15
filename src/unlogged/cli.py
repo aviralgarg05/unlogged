@@ -254,6 +254,36 @@ def evaluate_corpus(
 
 
 @app.command()
+def agreement(
+    first: Path = typer.Option(Path("fixtures/agreement/round1.jsonl")),
+    second: Path = typer.Option(Path("fixtures/agreement/round2.jsonl")),
+) -> None:
+    """Score two independent label sets against each other.
+
+    This project's own attempt at a real ground-truth corpus is the input: two passes over
+    the same pull-request threads, the second written after an independent reader attacked
+    the first. Reporting that attempt as a failure said nothing about how hard the task is.
+    This says it in a number a reader can check.
+    """
+    from unlogged.eval.agreement import score as agreement_score
+
+    def load(path: Path) -> dict[str, str]:
+        out = {}
+        for line in path.read_text().splitlines():
+            if line.strip():
+                row = json.loads(line)
+                out[f"{row['issue']}:{row['event_id']}"] = row["call"]
+        return out
+
+    result = agreement_score(load(first), load(second))
+    typer.echo(result.table())
+    if result.disagreements:
+        typer.echo("\nWhere they differed:")
+        for event_id, a, b in result.disagreements:
+            typer.echo(f"  {event_id:<28} {a:<15} vs {b}")
+
+
+@app.command()
 def show(engagement: Path = typer.Option(...)) -> None:
     """Print the append-only change ledger for an engagement."""
     eng = _engagement(engagement)
