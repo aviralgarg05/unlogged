@@ -39,6 +39,33 @@ Run it and you will see the baseline get one decision right, bill a request for 
 last month's invoice*, and miss all three pieces of real out-of-scope engineering — including
 a PR whose own description says "not in the original scope". That gap is the product.
 
+### Running it with your own keys
+
+Nothing below is required to evaluate the project — the commands above work with none of it.
+Both files are gitignored; no key is ever committed, and none appears in the git history.
+
+**The Python service** reads `.env` (copy `.env.example`):
+
+| Variable | What it does |
+|---|---|
+| `OPENAI_API_KEY` | Switches the adjudicator from the keyword baseline to `gpt-6.1-sol`. The CLI, `/health` and the dashboard all follow automatically; there is no other change to make. |
+| `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET` | A sandbox REST app from developer.paypal.com. |
+| `UNLOGGED_REPLAY` | `1` replays recorded responses (default), `0` calls the live sandbox. |
+
+**The dashboard** reads `web/.env.local`:
+
+| Variable | What it does |
+|---|---|
+| `AG_STUDIO_OPENAI_API_KEY` | Enables the AG Studio assistant. Read server-side only — there is deliberately no `NEXT_PUBLIC_` variable for it, so it is never inlined into the browser bundle. Falls back to `OPENAI_API_KEY`. |
+| `OPENAI_MODELS` | Comma-separated. Two or more turns on the model picker in the chat panel. |
+| `UNLOGGED_API` | Where the Python service is listening. Defaults to `http://127.0.0.1:8000`. |
+
+With a key set, confirm it took effect:
+
+```bash
+curl -s localhost:8000/health    # "adjudicator" flips to gpt-6.1-sol
+```
+
 ### The dashboard
 
 One command, both halves, still no credentials:
