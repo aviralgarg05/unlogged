@@ -27,10 +27,12 @@ A label is only as good as where it came from, and these are not equal:
 - overbilled: e1, e4
 - missed: e3, e8
 - billed without citing a clause: none
+- cited a clause not yet in force: none
 - right call, wrong hours: none
 
 **gpt-6.1-sol**
 - overbilled: none
 - missed: none
 - billed without citing a clause: none
+- cited a clause not yet in force: none
 - right call, wrong hours: e8 (-$42.50 to the client)

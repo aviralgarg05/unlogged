@@ -79,6 +79,10 @@ class Result:
     # invisible: scoring returned as soon as the classes matched, so an arm could bill the
     # correct work for the wrong number of hours and still print a clean sheet.
     hours_wrong: list[str] = field(default_factory=list)
+    # Billed against a sentence that was not in the agreement yet. Tracked separately from
+    # overbilling because the call can be right and the authority still absent: the client
+    # is being charged under a term they had not agreed to when they asked for the work.
+    anachronistic: list[str] = field(default_factory=list)
     money_overbilled: Decimal = Decimal(0)
     money_missed: Decimal = Decimal(0)
     # Signed: negative is money the client was not charged, positive is money they were
@@ -135,6 +139,11 @@ def score(
         if want is None or got is None:
             continue
         rate = engagement.rate_card.rate_for(got.category)
+
+        if got.clause_id:
+            in_force = {c.id for c in engagement.clauses_at(ev.occurred_at)}
+            if got.clause_id not in in_force and engagement.clause(got.clause_id) is not None:
+                r.anachronistic.append(ev.id)
 
         if got.call is want.call:
             r.correct += 1
@@ -238,6 +247,7 @@ def report(results: list[Result], engagement: Engagement, gold: list[Gold]) -> s
         lines.append(f"- overbilled: {', '.join(r.overbilled) or 'none'}")
         lines.append(f"- missed: {', '.join(r.missed) or 'none'}")
         lines.append(f"- billed without citing a clause: {', '.join(r.uncited) or 'none'}")
+        lines.append("- cited a clause not yet in force: " + (", ".join(r.anachronistic) or "none"))
         lines.append(
             f"- right call, wrong hours: {', '.join(r.hours_wrong) or 'none'}"
             + (f" ({money(r.money_hours)} to the client)" if r.hours_wrong else "")

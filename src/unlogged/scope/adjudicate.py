@@ -100,8 +100,9 @@ class Adjudicator:
         self.cassettes = CASSETTES
         self.replay = os.environ.get("UNLOGGED_REPLAY", "1") not in ("0", "false", "False", "")
 
-    def _context(self) -> str:
-        clauses = "\n".join(f"[{c.id}] ({c.kind}) {c.text}" for c in self.e.clauses)
+    def _context(self, event: WorkEvent | None = None) -> str:
+        when = event.occurred_at if event else None
+        clauses = "\n".join(f"[{c.id}] ({c.kind}) {c.text}" for c in self.e.clauses_at(when))
         rates = ", ".join(
             f"{k} at {self.e.currency} {v}/h" for k, v in self.e.rate_card.by_category.items()
         )
@@ -131,7 +132,10 @@ class Adjudicator:
 
     def _key(self, event: WorkEvent) -> str:
         """Everything that changes the answer: the model, the agreement, and the event."""
-        clauses = "|".join(f"{c.id}:{c.text}" for c in self.e.clauses)
+        # The agreement AS IT STOOD when this event happened. For an engagement whose
+        # clauses carry no dates this is every clause, so recordings made before the
+        # amendment machinery existed still replay under the same key.
+        clauses = "|".join(f"{c.id}:{c.text}" for c in self.e.clauses_at(event.occurred_at))
         blob = f"{MODEL}\x00{clauses}\x00{event.id}\x00{event.text}"
         return hashlib.sha256(blob.encode()).hexdigest()[:20]
 
@@ -151,7 +155,7 @@ class Adjudicator:
                 {
                     "role": "user",
                     "content": (
-                        f"{self._context()}\n\n"
+                        f"{self._context(event)}\n\n"
                         f"WORK EVENT\nsource: {event.source.value}\n"
                         f"author: {event.author}\nat: {event.occurred_at.isoformat()}\n"
                         f"text: {event.text}"

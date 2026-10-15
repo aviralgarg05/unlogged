@@ -390,3 +390,114 @@ def test_a_corpus_is_unpriced_only_when_every_part_is():
     assert (
         combine("a", [Result(arm="a", priced=False), Result(arm="a", priced=True)]).priced is True
     )
+
+
+# -- 6. an agreement has versions, and the one in force is the one that governs -------------
+
+
+def _clause(cid, text, kind="scope", when=None):
+    from unlogged.scope.models import ScopeClause
+
+    return ScopeClause(id=cid, kind=kind, text=text, in_force_from=when)
+
+
+def test_a_clause_added_later_does_not_govern_earlier_work():
+    """The mistake this encodes was made while building this project's own corpus: two rules
+    were read from the current CONTRIBUTING.md and cited against pull requests from two
+    months before those rules were written. Not fabricated text — fabricated authority.
+    """
+    from datetime import UTC, datetime
+
+    eng = _engagement()
+    eng.clauses = [
+        _clause("S1", "Add a security audit step using cargo audit to CI"),
+        _clause(
+            "X9", "Avoid mixing unrelated fixes", "exclusion", datetime(2026, 2, 6, tzinfo=UTC)
+        ),
+    ]
+
+    december = datetime(2025, 12, 8, tzinfo=UTC)
+    assert [c.id for c in eng.clauses_at(december)] == ["S1"]
+
+    february = datetime(2026, 2, 20, tzinfo=UTC)
+    assert [c.id for c in eng.clauses_at(february)] == ["S1", "X9"]
+
+    # An engagement whose clauses carry no dates is unaffected, which is why every recording
+    # made before this existed still replays.
+    assert len(_engagement().clauses_at(december)) == 5
+
+
+def test_billing_against_a_clause_that_was_not_in_force_is_counted_separately():
+    """The call can be right and the authority still absent, so this is not overbilling. The
+    client is being charged under a term they had not agreed to when they asked for the work.
+    """
+    from datetime import UTC, datetime
+
+    eng = _engagement()
+    eng.clauses = [
+        _clause("S1", "Add a security audit step"),
+        _clause(
+            "X9", "Avoid mixing unrelated fixes", "exclusion", datetime(2026, 2, 6, tzinfo=UTC)
+        ),
+    ]
+    ev = WorkEvent(
+        id="x1",
+        source="github",
+        author="dev",
+        text="Also fixed the unrelated workflow",
+        occurred_at="2025-12-08T19:50:58Z",
+    )
+    got = Verdict(
+        event_id="x1",
+        call=Call.BILLABLE_EXTRA,
+        hours=Decimal("1"),
+        category="engineering",
+        clause_id="X9",
+        quoted_span="unrelated",
+        work_description="Workflow fix",
+        reason="outside scope",
+    )
+
+    r = score(
+        FixedArm([got]),
+        [ev],
+        [Gold(event_id="x1", call=Call.BILLABLE_EXTRA, hours=Decimal("1"))],
+        eng,
+    )
+
+    assert r.anachronistic == ["x1"]
+    # The classification was right, so it is not overbilling.
+    assert not r.overbilled and r.correct == 1
+
+
+def test_a_clause_in_force_is_not_flagged():
+    from datetime import UTC, datetime
+
+    eng = _engagement()
+    eng.clauses = [_clause("X9", "No payment work", "exclusion", datetime(2025, 1, 1, tzinfo=UTC))]
+    ev = WorkEvent(
+        id="x1",
+        source="github",
+        author="dev",
+        text="payment work",
+        occurred_at="2026-10-03T00:00:00Z",
+    )
+    got = Verdict(
+        event_id="x1",
+        call=Call.BILLABLE_EXTRA,
+        hours=Decimal("1"),
+        category="engineering",
+        clause_id="X9",
+        quoted_span="payment",
+        work_description="Payment work",
+        reason="outside scope",
+    )
+
+    r = score(
+        FixedArm([got]),
+        [ev],
+        [Gold(event_id="x1", call=Call.BILLABLE_EXTRA, hours=Decimal("1"))],
+        eng,
+    )
+
+    assert r.anachronistic == []

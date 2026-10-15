@@ -39,11 +39,24 @@ class Source(StrEnum):
 
 
 class ScopeClause(BaseModel):
-    """One sentence of the agreement. The id is quoted back in every verdict."""
+    """One sentence of the agreement. The id is quoted back in every verdict.
+
+    `in_force_from` is when this sentence became part of the agreement. Agreements get
+    amended, and a sentence added in February cannot govern work done in December — that is
+    true of a contract and it is true of a CONTRIBUTING.md. Leaving it unset means the clause
+    was in force from the beginning, which is the normal case.
+
+    This exists because of a real mistake made while building this project's own evaluation
+    corpus: two rules were read from the current file and cited against pull requests from two
+    months earlier. An adversarial reader caught it and named it exactly — not fabricated
+    text, but fabricated authority. The code now makes that error structurally impossible
+    rather than relying on whoever writes the engagement to remember.
+    """
 
     id: str
     text: str
     kind: str = Field(default="scope", description="scope | rate | exclusion | approval")
+    in_force_from: datetime | None = None
 
 
 class RateCard(BaseModel):
@@ -120,6 +133,12 @@ class Engagement(BaseModel):
 
     def clause(self, clause_id: str | None) -> ScopeClause | None:
         return next((c for c in self.clauses if c.id == clause_id), None)
+
+    def clauses_at(self, when: datetime | None = None) -> list[ScopeClause]:
+        """The agreement as it stood at `when`. All of it when nothing is dated."""
+        if when is None:
+            return list(self.clauses)
+        return [c for c in self.clauses if c.in_force_from is None or c.in_force_from <= when]
 
     def payer_note(self) -> str:
         """Rendered by PayPal as 'Note from seller' on the client's own page."""
