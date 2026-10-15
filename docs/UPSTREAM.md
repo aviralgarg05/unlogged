@@ -64,3 +64,45 @@ Happy to open the PR.
 Sandbox only. Live behaviour untested — this account cannot send live-mode payments. Whether the
 drop is a gateway-side validation gap or an intentional gate on the capability is unknown from
 outside.
+
+---
+
+# Second report: the Server SDK has no Invoicing controller
+
+For [APIMatic](https://www.apimatic.io/) and
+[paypaldev/server-sdk-context-plugin-preview](https://github.com/paypaldev/server-sdk-context-plugin-preview).
+
+The APIMatic-generated `paypal-server-sdk` (2.4.0, PyPI) ships six controllers:
+
+```
+o_auth_authorization, orders, payments, subscriptions, transaction_search, vault
+```
+
+There is no `invoicing` controller. Enumerated directly:
+
+```python
+import pkgutil, paypalserversdk.controllers as c
+[m.name for m in pkgutil.iter_modules(c.__path__)]
+```
+
+This matters more than a missing endpoint usually would, because the Context Plugin's whole
+premise is that an agent asking "how do I do X with the PayPal SDK" gets a grounded answer
+rather than a remembered one. For anything invoicing-shaped the grounded answer is *you cannot
+with this SDK* — and the plugin is right to say so, but an agent that does not ask will reach
+for a controller that is not there.
+
+Invoicing v2 is a large, self-serve, live surface: create, send, list, QR generation,
+conditional rules, recurring series, reminders, record-payment. It is also, going by the
+hackathon field, one of the most commonly reached-for parts of the platform.
+
+**Suggested:** generate the Invoicing v2 group into the SDK, or state the covered surface in the
+plugin's getting-started skill so an agent knows the boundary before it writes against it.
+
+## What this project did instead
+
+`src/unlogged/paypal/invoices.py` calls Invoicing v2 over `httpx`, because it has to.
+`src/unlogged/paypal/settlement.py` uses the SDK for the part the SDK does cover —
+`payments.get_captured_payment` and `seller_receivable_breakdown` — which answers the question
+a cross-border contractor actually ends on: not "did they pay" but "how much reached me".
+
+That division is the honest one, and it is stated in the README rather than blurred.
