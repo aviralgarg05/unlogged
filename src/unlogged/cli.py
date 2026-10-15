@@ -201,6 +201,59 @@ def evaluate(
 
 
 @app.command()
+def evaluate_corpus(
+    corpus: Path = typer.Option(..., help="A directory of engagement folders"),
+    out: Path = typer.Option(Path("evals/corpus"), help="Where to write the report"),
+) -> None:
+    """Score every arm across a corpus of separate engagements and write one report.
+
+    Each subdirectory holds `engagement.json`, `events.jsonl` and `gold.jsonl`. Real work
+    does not arrive as one agreement with one long thread; it arrives as a brief, a pull
+    request answering it, and a short argument about whether what landed was what was asked
+    for. Each of those is its own small engagement, and the corpus is the set of them.
+    """
+    from unlogged.eval.harness import Gold, combine, report, score, write_junit
+    from unlogged.scope.adjudicate import Adjudicator
+
+    s = Settings.from_env()
+    folders = sorted(d for d in corpus.iterdir() if (d / "engagement.json").exists())
+    if not folders:
+        typer.secho(f"No engagements under {corpus}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
+    per_arm: dict[str, list] = {}
+    all_labels: list[Gold] = []
+    for folder in folders:
+        eng = _engagement(folder / "engagement.json")
+        evs = [
+            WorkEvent.model_validate_json(line)
+            for line in (folder / "events.jsonl").read_text().splitlines()
+            if line.strip()
+        ]
+        labels = [
+            Gold.model_validate_json(line)
+            for line in (folder / "gold.jsonl").read_text().splitlines()
+            if line.strip()
+        ]
+        all_labels += labels
+
+        arms = [KeywordBaseline(eng)]
+        if s.model_ready or Adjudicator.recorded_for(eng, evs):
+            arms.append(Adjudicator(eng, s.openai_api_key))
+        for arm in arms:
+            per_arm.setdefault(arm.name, []).append(score(arm, evs, labels, eng))
+
+    results = [combine(name, parts) for name, parts in per_arm.items()]
+    first = _engagement(folders[0] / "engagement.json")
+    md = report(results, first, all_labels)
+    md = f"{md}\n\nScored across {len(folders)} engagements in `{corpus}`.\n"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "report.md").write_text(md)
+    write_junit(results, out / "junit.xml")
+    typer.echo(md)
+
+
+@app.command()
 def show(engagement: Path = typer.Option(...)) -> None:
     """Print the append-only change ledger for an engagement."""
     eng = _engagement(engagement)

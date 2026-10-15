@@ -360,3 +360,33 @@ def test_the_recorded_opening_state_is_the_one_the_before_image_shows():
 
     assert total_of(opening) == Decimal("520.00")
     assert len(opening["items"]) == 1
+
+
+def test_combining_engagements_recomputes_rates_from_totals_not_from_averages():
+    """A corpus is many small agreements, not one long one. Averaging their percentages
+    would weight a three-event thread the same as a thirty-event one."""
+    from unlogged.eval.harness import combine
+
+    small = Result(arm="a", n=3, correct=3, correct_billable=1)
+    large = Result(arm="a", n=30, correct=15, correct_billable=5)
+    large.overbilled = [f"e{i}" for i in range(5)]
+
+    whole = combine("a", [small, large])
+
+    assert whole.n == 33
+    assert whole.correct == 18
+    assert round(whole.accuracy, 4) == round(18 / 33, 4)
+    # Not (100% + 50%) / 2.
+    assert whole.accuracy != 0.75
+    assert whole.precision == 6 / 11
+
+
+def test_a_corpus_is_unpriced_only_when_every_part_is():
+    from unlogged.eval.harness import combine
+
+    assert (
+        combine("a", [Result(arm="a", priced=False), Result(arm="a", priced=False)]).priced is False
+    )
+    assert (
+        combine("a", [Result(arm="a", priced=False), Result(arm="a", priced=True)]).priced is True
+    )

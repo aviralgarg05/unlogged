@@ -164,6 +164,30 @@ def score(
     return r
 
 
+def combine(arm: str, parts: list[Result]) -> Result:
+    """One Result over several engagements.
+
+    A corpus of real work is not one agreement with one thread; it is many small ones, each
+    with its own brief and its own PR. Averaging their percentages would weight a three-event
+    thread the same as a thirty-event one, so the counts are summed and the rates recomputed
+    from the totals.
+    """
+    out = Result(arm=arm, priced=any(p.priced for p in parts))
+    for p in parts:
+        out.n += p.n
+        out.correct += p.correct
+        out.correct_billable += p.correct_billable
+        out.overbilled += p.overbilled
+        out.missed += p.missed
+        out.misclassified += p.misclassified
+        out.uncited += p.uncited
+        out.hours_wrong += p.hours_wrong
+        out.money_overbilled += p.money_overbilled
+        out.money_missed += p.money_missed
+        out.money_hours += p.money_hours
+    return out
+
+
 def report(results: list[Result], engagement: Engagement, gold: list[Gold]) -> str:
     billable = sum(1 for x in gold if x.call is Call.BILLABLE_EXTRA)
     lines = [
