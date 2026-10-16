@@ -122,8 +122,9 @@ class PayPalClient:
             if rec is None:
                 raise PayPalError(
                     0,
-                    f"No cassette for {method} {path} ({key}). Set UNLOGGED_REPLAY=0 with "
-                    f"PayPal sandbox credentials to record one.",
+                    f"No cassette for {method} {path} ({key}). To record one: "
+                    f"UNLOGGED_REPLAY=0 UNLOGGED_RECORD=1 with PayPal sandbox credentials. "
+                    f"Recording is opt-in, so credentials alone will not write it.",
                 )
             if rec["status"] >= 400:
                 raise PayPalError(rec["status"], json.dumps(rec["body"]))

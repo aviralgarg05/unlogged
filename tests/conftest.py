@@ -17,13 +17,22 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CASSETTES = ROOT / "cassettes"
+DATA = ROOT / "data"
 
 
 def _fingerprint() -> str:
+    """Everything a test run must leave exactly as it found it.
+
+    The recordings were watched and the shipped `data/` was not, while a test was appending
+    to data/webhooks.jsonl on every single run — the judge-visible ledger directory, growing
+    quietly, from the suite that exists to prove nothing moves.
+    """
     h = hashlib.sha256()
-    for path in sorted(CASSETTES.glob("*.json")):
-        h.update(path.name.encode())
-        h.update(path.read_bytes())
+    for root in (CASSETTES, DATA):
+        for path in sorted(root.rglob("*")):
+            if path.is_file() and not path.name.endswith(".lock"):
+                h.update(str(path.relative_to(ROOT)).encode())
+                h.update(path.read_bytes())
     return h.hexdigest()
 
 
@@ -34,7 +43,7 @@ def recordings_are_read_only():
     yield
     after = _fingerprint()
     assert before == after, (
-        "the test run modified cassettes/ — the committed recordings are the evidence every "
+        "the test run modified cassettes/ or data/ — the recordings are the evidence every "
         "money claim rests on, and a suite that rewrites them can make a broken demo pass. "
         "Run `git status cassettes/` and `git checkout -- cassettes/`."
     )
@@ -43,4 +52,8 @@ def recordings_are_read_only():
 @pytest.fixture(autouse=True)
 def never_record(monkeypatch):
     """No test may write a recording, whatever the developer has in their environment."""
-    monkeypatch.delenv("UNLOGGED_RECORD", raising=False)
+    # Set to empty rather than deleted. `Settings.from_env` loads `.env` first, and that
+    # loader fills variables that are ABSENT — so deleting the name handed it straight back
+    # from a developer's own file, and the fixture promising "no test may write a recording"
+    # was undone by the project's own configuration.
+    monkeypatch.setenv("UNLOGGED_RECORD", "")

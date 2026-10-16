@@ -7,6 +7,7 @@
 // through: a route that forwards everything is not a proxy, it is a hole with a fetch in it.
 
 import { BACKEND } from '@/lib/backend';
+import { sameOrigin, withinRate } from '@/lib/relay-guard';
 
 // Read paths the dashboard's data sources and tools use.
 const READABLE = new Set([
@@ -49,5 +50,14 @@ export async function GET(req: Request, ctx: { params: Promise<{ path: string[] 
 }
 
 export async function POST(req: Request, ctx: { params: Promise<{ path: string[] }> }) {
+  // The AI routes carry these and this one did not — and this is the route that moves money.
+  // The allowlist decides WHICH endpoint a caller reaches; it says nothing about who may
+  // reach it or how often, and `api/apply` adds a line to a real invoice.
+  if (!sameOrigin(req)) {
+    return Response.json({ error: 'Cross-origin requests are not accepted.' }, { status: 403 });
+  }
+  if (!withinRate(req)) {
+    return Response.json({ error: 'Too many requests. Wait a minute.' }, { status: 429 });
+  }
   return forward(req, (await ctx.params).path, WRITABLE);
 }

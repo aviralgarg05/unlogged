@@ -85,7 +85,12 @@ def _slim(item: dict[str, Any], fields: tuple[str, ...]) -> dict[str, Any]:
         # should not carry them.
         out["body"] = _clip(out["body"])
     if "user" in item and isinstance(item["user"], dict):
-        out["user"] = {"login": item["user"].get("login")}
+        # Only when there is one. Writing {"login": None} turned a payload the readers were
+        # built to tolerate — every one of them does `.get("login", "unknown")` — into a
+        # validation error on replay, because the key existed and the default could not fire.
+        login = item["user"].get("login")
+        if login:
+            out["user"] = {"login": login}
     if "pull_request" in item:
         # Only its presence matters: it marks an issue that is really a pull request.
         out["pull_request"] = {}
@@ -154,13 +159,22 @@ class GitHub:
     def _get(self, path: str, **params: Any) -> Any:
         key = cassette.key({"gh": path, "q": params})
 
-        if self.replay or not self.token:
+        if not self.replay and not self.token:
+            # Unauthenticated, which GitHub allows for a public repository at 60 requests an
+            # hour. The README, this class's docstring and config.py all promise exactly
+            # that, and the gate below read `or not self.token`, so a tokenless run could
+            # only ever replay — the promise was false in three places and the error told the
+            # reader to supply a token they had been told they did not need.
+            log.info("github_unauthenticated", repo=self.repo)
+
+        if self.replay:
             rec = self.tape.replay(key)
             if rec is None:
                 raise GitHubError(
                     0,
-                    f"No cassette for GET {path} ({key}). Run with UNLOGGED_REPLAY=0 and a "
-                    f"GITHUB_TOKEN, or pick a repository whose thread is already recorded.",
+                    f"No cassette for GET {path} ({key}). To read it live: UNLOGGED_REPLAY=0, "
+                    f"plus UNLOGGED_RECORD=1 if you want the exchange kept. A public "
+                    f"repository needs no token; a private one needs GITHUB_TOKEN.",
                 )
             if rec["status"] >= 400:
                 raise GitHubError(rec["status"], str(rec["body"]))
@@ -169,10 +183,19 @@ class GitHub:
         headers = {
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
-            "Authorization": f"Bearer {self.token}",
         }
+        if self.token:
+            headers["Authorization"] = f"Bearer {self.token}"
         r = self._http.get(f"{API}{path}", headers=headers, params=params)
         log.debug("github", path=path, status=r.status_code)
+        if r.status_code == 403 and "rate limit" in r.text.lower():
+            # 60 an hour without a token, 5,000 with one. A traceback here reads as a broken
+            # importer; it is the documented cost of the tokenless path this project promises.
+            raise GitHubError(
+                403,
+                "GitHub's rate limit. Unauthenticated callers get 60 requests an hour — set "
+                "GITHUB_TOKEN (`$(gh auth token)` works) for 5,000, or wait for the window.",
+            )
         if r.status_code >= 400:
             raise GitHubError(r.status_code, r.text)
         body = project(path, r.json())
@@ -191,7 +214,19 @@ class GitHub:
         """
         out: list[dict[str, Any]] = []
         for page in range(1, pages + 1):
-            batch = self._get(path, per_page=100, page=page, **params)
+            try:
+                batch = self._get(path, per_page=100, page=page, **params)
+            except GitHubError as exc:
+                # GitHub refuses `page` past a few thousand items on a large repository:
+                # "Pagination with the page parameter is not supported for large datasets".
+                # That is the end of what this endpoint will hand over, not a failed pull —
+                # aborting threw away every page already collected.
+                if exc.status == 422 and "agination" in exc.body:
+                    log.warning(
+                        "github_pagination_refused", path=path, pages=page - 1, collected=len(out)
+                    )
+                    return out
+                raise
             if not isinstance(batch, list) or not batch:
                 return out
             out.extend(batch)
@@ -202,7 +237,9 @@ class GitHub:
 
     # -- events -------------------------------------------------------------
 
-    def events(self, *, pr_detail: int = 40, include_bots: bool = False) -> list[WorkEvent]:
+    def events(
+        self, *, pr_detail: int = 40, review_detail: int = 200, include_bots: bool = False
+    ) -> list[WorkEvent]:
         """Every pull request, issue and comment on the repository, oldest first.
 
         `pr_detail` bounds how many pull requests get a second call for their diff stats.
@@ -221,14 +258,19 @@ class GitHub:
         stats: dict[int, dict[str, Any]] = {}
         reviews: list[dict[str, Any]] = []
         missed = 0
-        for pr in sorted(pulls, key=lambda p: p["number"], reverse=True)[:pr_detail]:
-            n = pr["number"]
+        newest = sorted(pulls, key=lambda p: p["number"], reverse=True)
+        for pr in newest[:pr_detail]:
             try:
-                stats[n] = self._get(f"/repos/{owner_repo}/pulls/{n}")
+                stats[pr["number"]] = self._get(f"/repos/{owner_repo}/pulls/{pr['number']}")
             except GitHubError:
                 missed += 1
+        # Reviews are events, not decoration, and `pr_detail` bounds diff stats. One loop
+        # capped both, so raising the limit to recover reviews also bought diff stats nobody
+        # asked for — and leaving it alone silently dropped the "CHANGES_REQUESTED" rulings
+        # the review fetch was added to recover.
+        for pr in newest[:review_detail]:
             try:
-                reviews += self._get(f"/repos/{owner_repo}/pulls/{n}/reviews")
+                reviews += self._get(f"/repos/{owner_repo}/pulls/{pr['number']}/reviews")
             except GitHubError:
                 missed += 1
         if missed:

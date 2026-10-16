@@ -51,11 +51,11 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 202 tests, no credentials needed
+uv run pytest -q                       # 205 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
-  --invoice-id INV2-DEMO
+  --invoice-id $(cat fixtures/demo-invoice-id)
 ```
 
 No PayPal account, no OpenAI key, no licence key. Recorded PayPal exchanges replay from
@@ -161,6 +161,8 @@ Both files are gitignored; no key is ever committed, and none appears in the git
 | `OPENAI_API_KEY` | Switches the adjudicator from the keyword baseline to `gpt-6.1-sol`. The CLI, `/health` and the dashboard all follow automatically; there is no other change to make. |
 | `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET` | A sandbox REST app from developer.paypal.com. |
 | `UNLOGGED_REPLAY` | `1` replays recorded responses (default), `0` calls the live sandbox. |
+| `UNLOGGED_RECORD` | `1` writes what a live call returns into `cassettes/`. Off by default, and deliberately: recording used to be a side effect of reaching the network, so any live run — a judge with credentials, a stray script — silently rewrote the recordings every money claim here rests on. One did, and the demo replayed `USD 1.00`. |
+| `UNLOGGED_DATA` | Where the ledger lives. Defaults to `data/`. |
 
 **The dashboard** reads `web/.env.local`:
 
@@ -206,7 +208,7 @@ filter tree and the sort order down to `getData`, trusts the returned window as-
 re-filters locally. **The rows stay in the Python service.**
 
 Four more things the surveyed entries leave untouched. A sixth agent owns the decision this
-product exists to make and hands layout work to AG's built-in five through `delegateTo`.
+product exists to make and hands layout work to four of AG's built-in agents through `delegateTo`.
 `defaultToolCalls` seeds it with the scope, the adjudications and the changes already made
 *before its first turn*, so its opening reply is a decision rather than a question. The one
 tool that moves money is `kind: 'server'` — Studio advertises the schema and never runs it, so
@@ -276,7 +278,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 202 Python (incl. a property test on the money path), 11 TypeScript |
+| Tests | ✅ 205 Python (incl. a property test on the money path), 11 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

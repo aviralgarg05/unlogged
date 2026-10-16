@@ -1332,3 +1332,64 @@ def test_a_thread_that_names_one_event_twice_is_refused():
 
     with pytest.raises(ValueError, match="names these twice: e3"):
         load_events([*lines, lines[2]])
+
+
+def test_bad_input_is_answered_as_bad_input_not_as_a_server_fault():
+    """The guards added today raise ValueError — a malformed invoice id, a currency that does
+    not match the invoice, a line count past PayPal's limit. Only PayPalError had a handler,
+    so each of them reached the caller as "500 Internal Server Error": the service reporting
+    its own correct refusal as a fault in itself, with no hint of what was wrong."""
+    from fastapi.testclient import TestClient
+
+    from unlogged.web import app
+
+    client = TestClient(app, raise_server_exceptions=False)
+
+    for bad in ("../../v1/payments", "INV2-BAD", ""):
+        r = client.post("/api/apply", json={"invoice_id": bad, "event_ids": ["e3", "e8"]})
+        assert r.status_code == 422, (bad, r.status_code)
+        assert "not a PayPal invoice id" in r.json()["error"]
+
+
+def test_the_cli_answers_a_bad_invoice_id_without_a_stack_trace(tmp_path, monkeypatch):
+    """The README's own example used a placeholder id and the CLI's own printed next step led
+    straight to it, so following the documentation exactly produced an unhandled ValueError
+    rendered as a traceback."""
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "discover",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
+            "--invoice-id",
+            "INV2-DEMO",
+            "--apply",
+        ],
+    )
+
+    assert result.exit_code == 2
+    assert "not a PayPal invoice id" in result.output
+    assert "Traceback" not in result.output
+
+
+def test_the_readme_only_shows_invoice_ids_that_are_real():
+    """It demonstrated INV2-DEMO, which the id check refuses."""
+    from pathlib import Path
+
+    from unlogged.paypal.invoices import INVOICE_ID
+
+    readme = (Path(__file__).resolve().parents[1] / "README.md").read_text()
+    for token in readme.split():
+        candidate = token.strip("`\"',.()")
+        if candidate.startswith("INV2-") and "XXXX" not in candidate:
+            assert INVOICE_ID.match(candidate), f"README shows {candidate!r}, which is refused"

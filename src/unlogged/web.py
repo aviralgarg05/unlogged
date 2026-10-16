@@ -233,6 +233,19 @@ def read_telemetry() -> dict[str, Any]:
 TERMINAL = {"PAID", "MARKED_AS_PAID", "CANCELLED", "REFUNDED"}
 
 
+@app.exception_handler(ValueError)
+def bad_request(request: Request, exc: ValueError) -> JSONResponse:
+    """A refusal this service made about its own input, answered as one.
+
+    The guards added today raise ValueError — a malformed invoice id, a currency that does
+    not match the invoice, a line count past PayPal's limit. Only PayPalError had a handler,
+    so every one of them reached the caller as "500 Internal Server Error": the service
+    reporting its own correct refusal as a fault in itself, with no hint of what was wrong.
+    """
+    log.info("rejected", reason=str(exc)[:200])
+    return JSONResponse(status_code=422, content={"error": str(exc)[:400]})
+
+
 @app.exception_handler(PayPalError)
 def paypal_error(request: Request, exc: PayPalError) -> JSONResponse:
     """PayPal's own status, not a 500.

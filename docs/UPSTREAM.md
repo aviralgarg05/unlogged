@@ -205,7 +205,7 @@ and would be enough.
 ## Evidence in this repo
 
 [`src/unlogged/paypal/invoices.py`](../src/unlogged/paypal/invoices.py) `qr_png()` carries the
-working parse. Two recorded exchanges under `cassettes/` contain the raw envelope, so the
+working parse. Six recorded exchanges under `cassettes/` contain the raw envelope, so the
 behaviour is inspectable without credentials.
 
 ## Not claimed

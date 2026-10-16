@@ -17,7 +17,10 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
+import structlog
 from pydantic import BaseModel, computed_field
+
+log = structlog.get_logger(__name__)
 
 
 class Entry(BaseModel):
@@ -154,9 +157,18 @@ class Ledger:
         source = self._source()
         if source is None:
             return
-        for raw in source.read_text(encoding="utf-8").splitlines():
-            if raw.strip():
+        for number, raw in enumerate(source.read_text(encoding="utf-8").splitlines(), 1):
+            if not raw.strip():
+                continue
+            try:
                 yield Entry.model_validate_json(raw)
+            except ValueError:
+                # A process killed mid-append leaves half a line. Raising on it made every
+                # later apply refuse and /api/ledger answer 500 — one torn line and the
+                # product stops billing and its summary page goes blank, for a row that was
+                # never completed. Skipped, and said out loud: silently dropping a money
+                # record is its own failure, so this is a warning rather than a shrug.
+                log.warning("ledger.unreadable_line", path=str(source), line=number)
 
     def settled_lines(self) -> list[Entry]:
         """One row per billed line: the latest for each event, with voided ones dropped.

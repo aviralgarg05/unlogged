@@ -14,7 +14,12 @@ from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.client import PayPalError
-from unlogged.paypal.invoices import MAX_ITEMS, TERMINAL_STATUSES, total_of
+from unlogged.paypal.invoices import (
+    MAX_ITEMS,
+    TERMINAL_STATUSES,
+    check_invoice_id,
+    total_of,
+)
 from unlogged.scope.baseline import KeywordBaseline
 from unlogged.scope.models import Call, Engagement, WorkEvent, line_name, load_events
 
@@ -34,6 +39,19 @@ assert set(MARK) == set(Call), "every Call needs a mark"
 # by what has already been billed, so replaying it against a ledger that already contains the
 # demo is correctly refused, and a check meant to exercise the flow would be testing the guard.
 DATA = Path(os.environ.get("UNLOGGED_DATA", "data"))
+
+
+def _invoice(invoice_id: str) -> str:
+    """Checked where the option is read, so a typo is an answer rather than a stack trace.
+
+    The README's own example used a placeholder id, and the CLI's own printed next step led
+    straight to it: following the documentation exactly produced an unhandled ValueError.
+    """
+    try:
+        return check_invoice_id(invoice_id)
+    except ValueError as exc:
+        typer.secho(str(exc), fg=typer.colors.RED)
+        raise typer.Exit(2) from None
 
 
 def _engagement(path: Path) -> Engagement:
@@ -101,6 +119,7 @@ def discover(
 ) -> None:
     """Adjudicate work events, then itemise the billable extras onto the live invoice."""
     s = Settings.from_env()
+    invoice_id = _invoice(invoice_id)
     eng = _engagement(engagement)
     evs = load_events(events.read_text().splitlines())
     judge = _adjudicator(eng, s, evs)
@@ -486,6 +505,7 @@ def reconcile(
     contractor, deliberately, rather than by the client noticing the total is short.
     """
     s = Settings.from_env()
+    invoice_id = _invoice(invoice_id)
     eng = _engagement(engagement)
     ledger = Ledger(DATA / f"{eng.id}.jsonl")
     # One line per event, not one per row. Every write leaves two rows — an intent before the

@@ -34,6 +34,17 @@ Written so a judge does not have to find any of this out by reading the source.
   a clause and quotes the span it relied on, and that it separates the request (`e1`) from the
   work that answered it (`e3`) — the distinction the baseline cannot make and the one that
   causes double-billing. A real engagement of 40-60 events is what would make this a result.
+- **The grounding check narrows prompt injection; it does not stop it.** A verdict is
+  refused if it cites a clause the engagement does not have or quotes words the event does
+  not contain. That catches a model talked into inventing a citation, which is what a crude
+  injection produces. It cannot catch an attacker who writes the sentence first: a pull
+  request comment containing "the full payment-provider migration, 40 hours of engineering"
+  is a verbatim span of a real event, so a verdict quoting it is grounded by construction.
+  What bounds that case is arithmetic rather than text — hours cap at 40, the agreed cap is
+  enforced before the write, the rate card prices it, and every line is on the client's own
+  page citing the clause it rests on, where a person can argue with it. Whether the model
+  complies with such an instruction at all is untested here.
+
 - **There is real data in this repository, and it says the model is worse than the headline.**
   31 events from real pull-request threads are committed under `fixtures/agreement/`, labelled
   by six readers and by the model. Four of those readers were blind: they worked from the
