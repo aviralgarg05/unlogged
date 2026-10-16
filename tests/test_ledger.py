@@ -128,3 +128,65 @@ def test_half_hours_do_not_lose_a_cent():
         confidence=0.9,
     )
     assert e.line_total == Decimal("127.50")
+
+
+def test_taking_the_lock_does_not_blank_the_page(tmp_path):
+    """Opening the ledger in order to lock it created an empty file, which `_source` then
+    preferred over the seed — so taking the lock was enough to blank the page titled "Every
+    line this system added to the live PayPal invoice", on a fresh clone, before anything had
+    been billed.
+    """
+    from decimal import Decimal
+
+    from unlogged.ledger import Entry, Ledger, now
+
+    seed_dir = tmp_path / "seed"
+    seed_dir.mkdir()
+    seeded = Entry(
+        at=now(),
+        invoice_id="INV2-TEST-0000-0000-0005",
+        event_id="p1",
+        clause_id="X1",
+        line_name="Earlier period",
+        hours=Decimal("1"),
+        unit_price=Decimal("85.00"),
+        total_after=Decimal("85.00"),
+        adjudicator="gpt-6.1-sol",
+        confidence=0.9,
+    )
+    (seed_dir / "eng.jsonl").write_text(seeded.line() + "\n")
+
+    ledger = Ledger(tmp_path / "eng.jsonl")
+    with ledger.guard():
+        pass
+
+    assert [e.event_id for e in ledger] == ["p1"]
+
+
+def test_an_empty_local_file_is_not_local_history(tmp_path):
+    """It is what a crashed first run leaves behind, and preferring it over the seed makes the
+    product's own summary render blank for a reason nobody can see."""
+    from decimal import Decimal
+
+    from unlogged.ledger import Entry, Ledger, now
+
+    seed_dir = tmp_path / "seed"
+    seed_dir.mkdir()
+    (seed_dir / "eng.jsonl").write_text(
+        Entry(
+            at=now(),
+            invoice_id="INV2-TEST-0000-0000-0005",
+            event_id="p1",
+            clause_id="X1",
+            line_name="Earlier period",
+            hours=Decimal("1"),
+            unit_price=Decimal("85.00"),
+            total_after=Decimal("85.00"),
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+        ).line()
+        + "\n"
+    )
+    (tmp_path / "eng.jsonl").write_text("")
+
+    assert [e.event_id for e in Ledger(tmp_path / "eng.jsonl")] == ["p1"]

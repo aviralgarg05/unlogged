@@ -68,7 +68,10 @@ class Ledger:
         self.path.parent.mkdir(parents=True, exist_ok=True)
 
     def _source(self) -> Path | None:
-        if self.path.exists():
+        # An empty local file is not local history. It is what a crashed first run, or any
+        # code that touched the path, leaves behind — and preferring it over the seed makes
+        # the product's own summary page render blank for a reason nobody can see.
+        if self.path.exists() and self.path.stat().st_size > 0:
             return self.path
         return self.seed if self.seed.exists() else None
 
@@ -84,8 +87,12 @@ class Ledger:
         A file lock rather than a thread lock, because the CLI and the web service are
         separate processes against one engagement.
         """
+        # A sibling, not the ledger itself. Opening the ledger to lock it created an empty
+        # file, which `_source` then preferred over the seed — so taking the lock was enough
+        # to blank the page titled "Every line this system added to the live PayPal invoice",
+        # on a fresh clone, before anything had been billed.
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        handle = self.path.open("a+", encoding="utf-8")
+        handle = self.path.with_suffix(".lock").open("a+", encoding="utf-8")
         try:
             fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
             yield
