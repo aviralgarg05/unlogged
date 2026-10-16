@@ -121,8 +121,11 @@ def test_health_never_claims_a_model_it_cannot_import(monkeypatch):
     assert body["openai_key_set"] is True
     assert body["openai_importable"] is False
     assert body["model_configured"] is False
-    assert body["adjudicator"].startswith("keyword-baseline")
-    assert "not installed" in body["adjudicator"]
+    # The name reports which arm would answer, and replaying recorded verdicts needs no SDK
+    # at all — so "gpt-6.1-sol" here is true rather than a boast: those verdicts came from
+    # that model. What must not happen is the capability flags claiming otherwise.
+    assert body["adjudicator"] == client.get("/api/verdicts").json()["arm"]
+    assert body["model_configured"] is False
 
 
 def test_apply_refuses_an_invoice_that_can_no_longer_take_items(monkeypatch):
@@ -215,3 +218,14 @@ def test_two_simultaneous_applies_bill_the_work_once(tmp_path, monkeypatch):
     assert sorted(codes) == [200, 409], codes
     billed = [i["name"] for i in state["items"] if i["name"] != "Agreed scope"]
     assert len(billed) == 1, billed
+
+
+def test_health_reports_the_arm_that_would_actually_answer():
+    """It reported the key-derived name, so /health said "keyword-baseline" while the very
+    same process served verdicts from gpt-6.1-sol — the exact failure this endpoint was built
+    to make impossible, reintroduced the moment arm selection stopped depending on a key.
+    """
+    health = client.get("/health").json()
+    verdicts = client.get("/api/verdicts").json()
+
+    assert health["adjudicator"] == verdicts["arm"]

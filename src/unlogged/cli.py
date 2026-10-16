@@ -294,10 +294,31 @@ def evaluate_corpus(
     from unlogged.scope.adjudicate import Adjudicator
 
     s = Settings.from_env()
-    folders = sorted(d for d in corpus.iterdir() if (d / "engagement.json").exists())
-    if not folders:
+    engagements = sorted(d for d in corpus.iterdir() if (d / "engagement.json").exists())
+    folders = [d for d in engagements if (d / "gold.jsonl").exists()]
+    if not engagements:
         typer.secho(f"No engagements under {corpus}", fg=typer.colors.RED)
         raise typer.Exit(1)
+    if not folders:
+        # The NexumDB corpus is exactly this case and it is not a defect: no labelling of it
+        # survived an independent reader, so there is no adjudicated gold to score against.
+        # Crashing with a FileNotFoundError said none of that.
+        typer.secho(
+            f"{len(engagements)} engagement(s) under {corpus}, none with a gold.jsonl.",
+            fg=typer.colors.YELLOW,
+        )
+        typer.echo(
+            "There is nothing to score an arm against. For the corpus in fixtures/nexumdb "
+            "that is deliberate — see docs/CORPUS.md — and `uv run unlogged agreement` is "
+            "the measurement that corpus supports."
+        )
+        raise typer.Exit(1)
+    skipped = [d.name for d in engagements if d not in folders]
+    if skipped:
+        typer.secho(
+            f"Skipping {len(skipped)} without gold.jsonl: {', '.join(skipped)}",
+            fg=typer.colors.YELLOW,
+        )
 
     per_arm: dict[str, list] = {}
     all_labels: list[Gold] = []

@@ -68,6 +68,15 @@ def events() -> list[WorkEvent]:
 def health() -> dict[str, Any]:
     """Proof the integration is live, which judging can check in December."""
     s = settings()
+    # Whichever arm would actually answer a request right now, asked the same way the
+    # endpoints ask. Reporting the key-derived name instead meant /health said
+    # "keyword-baseline" while the very same process served verdicts from gpt-6.1-sol: the
+    # exact failure this endpoint was built to make impossible, reintroduced the moment arm
+    # selection stopped depending on whether a key was set.
+    try:
+        serving = adjudicator(engagement(), s, events()).name
+    except Exception:  # a broken fixture must not take /health down with it
+        serving = s.adjudicator_name()
     return {
         "ok": True,
         "paypal_configured": s.has_paypal,
@@ -75,7 +84,7 @@ def health() -> dict[str, Any]:
         "openai_key_set": bool(s.openai_api_key),
         "openai_importable": s.openai_importable,
         "model_configured": s.model_ready,
-        "adjudicator": s.adjudicator_name(),
+        "adjudicator": serving,
     }
 
 

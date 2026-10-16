@@ -987,3 +987,19 @@ def test_every_committed_verdict_is_grounded_in_its_own_event():
             checked += 1
 
     assert checked >= 30, f"only {checked} recorded verdicts were reachable"
+
+
+def test_an_unlabelled_corpus_is_explained_rather_than_a_traceback():
+    """fixtures/nexumdb has no gold.jsonl and that is deliberate: no labelling of it survived
+    an independent reader, so there is nothing to score an arm against. A FileNotFoundError
+    said none of that."""
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+
+    result = CliRunner().invoke(cli.app, ["evaluate-corpus", "--corpus", "fixtures/nexumdb"])
+
+    assert result.exit_code == 1
+    assert "none with a gold.jsonl" in result.output
+    assert "unlogged agreement" in result.output
+    assert "Traceback" not in result.output
