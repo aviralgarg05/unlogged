@@ -132,7 +132,7 @@ class Panel:
             "| measure | value |",
             "|---|---|",
             f"| readers | {len(self.readers)} |",
-            f"| events every reader labelled | {self.n} |",
+            f"| events at least two readers labelled | {self.n} |",
             f"| Krippendorff's alpha across the panel | {self.alpha:.3f} |",
             f"| events all of them called the same way | {self.unanimous} of {self.n} |",
             f"| one reader against the rest (the ceiling) | {self.ceiling:.1%} |",
@@ -151,8 +151,15 @@ def panel(readings: dict[str, dict[str, str]], model: dict[str, str] | None = No
     agree with a panel as well as a member of that panel does".
     """
     names = sorted(readings)
-    shared = sorted(set.intersection(*(set(r) for r in readings.values()))) if readings else []
-    units = [[readings[n][e] for n in names] for e in shared]
+    # Every event any reader labelled, not only the ones all of them did. Intersecting down to
+    # the common subset is exactly what alpha exists to avoid — a panel where not everyone
+    # reads everything is the normal shape of an annotation effort, and discarding the ragged
+    # part silently reports a coefficient computed over data the reader was not told about.
+    # It happens to change nothing here, because all four readers labelled all 31 events.
+    covered = sorted({e for r in readings.values() for e in r})
+    units = [[r[e] for r in readings.values() if e in r] for e in covered]
+    shared = [e for e, u in zip(covered, units, strict=True) if len(u) >= 2]
+    units = [u for u in units if len(u) >= 2]
 
     def majority(calls: list[str]) -> str | None:
         counts = Counter(calls)
@@ -162,8 +169,10 @@ def panel(readings: dict[str, dict[str, str]], model: dict[str, str] | None = No
     hits = total = 0
     for e in shared:
         for held_out in names:
-            rest = [readings[n][e] for n in names if n != held_out]
-            winner = majority(rest)
+            if e not in readings[held_out]:
+                continue
+            rest = [readings[n][e] for n in names if n != held_out and e in readings[n]]
+            winner = majority(rest) if rest else None
             if winner is not None:
                 total += 1
                 hits += readings[held_out][e] == winner
@@ -173,7 +182,7 @@ def panel(readings: dict[str, dict[str, str]], model: dict[str, str] | None = No
         for e in shared:
             if e not in model:
                 continue
-            winner = majority([readings[n][e] for n in names])
+            winner = majority([readings[n][e] for n in names if e in readings[n]])
             if winner is not None:
                 model_total += 1
                 model_hits += model[e] == winner

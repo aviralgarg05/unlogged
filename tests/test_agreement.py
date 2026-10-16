@@ -376,3 +376,43 @@ def test_the_panel_disagreements_concentrate_on_one_reader_and_one_boundary():
 
     calls = collections.Counter(readers["a"].values())
     assert calls["scope_request"] == 0 and calls["billable_extra"] == 0
+
+
+def test_the_panel_uses_every_event_two_readers_saw_not_only_the_common_subset():
+    """Intersecting down to the events everyone labelled is exactly what alpha exists to
+    avoid: a panel where not everyone reads everything is the normal shape of an annotation
+    effort, and discarding the ragged part reports a coefficient over data the reader was
+    never told about. It changes nothing for the published figures, because all four readers
+    labelled all 31 events — which is why it needed a test of its own.
+    """
+    from unlogged.eval.agreement import panel
+
+    ragged = {
+        "a": {"e1": "X", "e2": "Y", "e3": "X"},
+        "b": {"e1": "X", "e2": "Y"},
+        "c": {"e1": "X", "e3": "X"},
+    }
+
+    result = panel(ragged)
+
+    assert result.n == 3, "the intersection is one event; the panel saw three"
+    assert result.alpha == 1.0
+    assert result.unanimous == 3
+
+
+def test_an_event_only_one_reader_saw_is_left_out_of_the_panel():
+    from unlogged.eval.agreement import panel
+
+    result = panel({"a": {"e1": "X", "lonely": "Y"}, "b": {"e1": "X"}})
+
+    assert result.n == 1
+
+
+def test_the_published_panel_figures_are_unchanged_by_the_ragged_rule():
+    """Pinned because the fix is invisible on this data and a later change to it would not be."""
+    result = _panel()
+
+    assert result.n == 31
+    assert round(result.alpha, 3) == 0.797
+    assert round(result.ceiling, 3) == 0.943
+    assert round(result.model, 3) == 0.613

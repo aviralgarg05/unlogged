@@ -104,7 +104,7 @@ uv run unlogged agreement
 | measure | value |
 |---|---|
 | readers | 4 |
-| events every reader labelled | 31 |
+| events at least two readers labelled | 31 |
 | **Krippendorff's alpha across the panel** | **0.797** |
 | events all four called the same way | 25 of 31 |
 | **one reader against the majority of the others** | **94.3%** |

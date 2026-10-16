@@ -26,11 +26,23 @@ export function sameOrigin(request: Request): boolean {
 
 const WINDOW_MS = 60_000;
 const MAX_PER_WINDOW = 30;
+const MAX_GLOBAL_PER_WINDOW = 120;
 const seen = new Map<string, number[]>();
+let global: number[] = [];
 
 /**
- * A coarse per-caller cap. In-process and therefore per-instance, which is honest about what
- * it is: a brake, not a quota. It bounds a single stranger, not a determined one.
+ * Two caps, because one is not enough and saying why matters more than the number.
+ *
+ * The per-caller key comes from `x-forwarded-for`, which the caller sends. Behind a proxy
+ * that overwrites it this identifies someone; without one it identifies nothing, and a
+ * stranger who varies the header walks past the per-caller cap entirely. So there is also a
+ * global cap, which nobody can vary their way around — it is blunt, it would inconvenience a
+ * real second user during an attack, and that is the correct trade for a route that spends
+ * somebody's money and has no session behind it.
+ *
+ * A refused request does NOT extend either window. Counting refusals meant a caller already
+ * over the limit kept the array growing and the filter re-scanning it, so the brake was its
+ * own CPU and memory sink: refusing got more expensive the harder it was pushed.
  */
 export function withinRate(request: Request): boolean {
   const who =
@@ -38,15 +50,29 @@ export function withinRate(request: Request): boolean {
     request.headers.get('x-real-ip') ||
     'unknown';
   const now = Date.now();
+
+  global = global.filter((t) => now - t < WINDOW_MS);
   const hits = (seen.get(who) ?? []).filter((t) => now - t < WINDOW_MS);
+
+  if (hits.length >= MAX_PER_WINDOW || global.length >= MAX_GLOBAL_PER_WINDOW) {
+    seen.set(who, hits);
+    return false;
+  }
+
   hits.push(now);
   seen.set(who, hits);
+  global.push(now);
 
   if (seen.size > 1_000) {
-    // Never let the brake itself become the leak.
     for (const [key, times] of seen) {
       if (times.every((t) => now - t >= WINDOW_MS)) seen.delete(key);
     }
   }
-  return hits.length <= MAX_PER_WINDOW;
+  return true;
+}
+
+/** Test seam: the caps are per-instance state and a suite needs to start from zero. */
+export function resetRate(): void {
+  seen.clear();
+  global = [];
 }
