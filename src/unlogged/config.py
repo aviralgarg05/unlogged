@@ -49,6 +49,10 @@ class Settings:
         )
 
     @property
+    def is_sandbox(self) -> bool:
+        return self.base_url == SANDBOX
+
+    @property
     def has_github(self) -> bool:
         return bool(self.github_token)
 

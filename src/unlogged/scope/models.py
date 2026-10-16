@@ -163,7 +163,13 @@ class Engagement(BaseModel):
         lines = [f"{kinds.get(c.kind, c.kind.title())} [{c.id}]: {c.text}" for c in self.clauses]
         if self.cap is not None:
             lines.append(f"Agreed cap: {self.currency} {self.cap:,.2f}.")
-        return "\n".join(lines)[:4000]
+        # Deliberately NOT clipped. PayPal caps this field at 4000 characters and the client
+        # cannot read what is past the cap, so an engagement with more scope than that has a
+        # problem the caller must decide about — not one this should hide by silently cutting
+        # the clause list at the point where the exclusions usually live. Clipping here also
+        # meant the refusal in Invoices.create could never fire, so the check added to stop
+        # exactly this was unreachable.
+        return "\n".join(lines)
 
 
 def line_name(verdict: Verdict) -> str:

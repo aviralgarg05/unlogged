@@ -90,6 +90,18 @@ class Webhooks:
         return ok
 
 
-def is_simulated(payload: dict[str, Any]) -> bool:
-    """Simulator events carry the literal id and cannot be postback-verified."""
-    return payload.get("id") == "WH-SIMULATED" or str(payload.get("id", "")).startswith("WH-TEST")
+def is_simulated(payload: dict[str, Any], *, sandbox: bool) -> bool:
+    """Whether to treat this as a sandbox simulator event rather than a forgery.
+
+    The simulator's events cannot be postback-verified, so a demo has to accept them on
+    their id alone. That is a hole with a label on it: anyone who knows the URL can post
+    `{"id": "WH-TEST-x", "event_type": "INVOICING.INVOICE.PAID"}` and be believed.
+
+    Which is tolerable in a sandbox and is not tolerable anywhere else, so `sandbox` is a
+    required keyword rather than a default. On a live account an event wearing a simulator's
+    id is not a simulator event; it is someone trying the obvious thing.
+    """
+    if not sandbox:
+        return False
+    event_id = str(payload.get("id", ""))
+    return event_id == "WH-SIMULATED" or event_id.startswith("WH-TEST")

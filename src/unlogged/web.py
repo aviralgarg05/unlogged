@@ -333,7 +333,7 @@ async def webhook(request: Request, paypal_transmission_id: str = Header(default
         with PayPalClient(s) as c:
             verified = Webhooks(c).verify(dict(request.headers), raw, webhook_id)
 
-    simulated = is_simulated(payload)
+    simulated = is_simulated(payload, sandbox=s.is_sandbox)
     if not verified and not simulated:
         log.warning("webhook.rejected", event_type=payload.get("event_type"))
         raise HTTPException(400, "signature verification failed")

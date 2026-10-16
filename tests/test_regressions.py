@@ -294,12 +294,33 @@ def test_payer_terms_carry_every_clause_with_the_ids_the_verdicts_cite():
     assert len(terms) <= 4000
 
 
-def test_payer_terms_stay_within_paypals_field_limit():
+def test_payer_terms_does_not_clip_so_the_refusal_can_fire():
+    """It used to cut the clause list at 4000 characters, which is where PayPal stops showing
+    it — and silently, at roughly the point exclusions live. It also made the refusal in
+    Invoices.create unreachable, so the check written to stop exactly this never ran."""
+    import pytest
+
+    from unlogged.config import Settings
+    from unlogged.paypal import Invoices, LineItem, PayPalClient
     from unlogged.scope.models import ScopeClause
 
     eng = _engagement()
     eng.clauses = [ScopeClause(id=f"S{i}", kind="scope", text="x" * 500) for i in range(20)]
-    assert len(eng.payer_terms()) == 4000
+    terms = eng.payer_terms()
+
+    assert len(terms) > 4000, "clipping here hides the problem instead of raising it"
+
+    s = Settings(client_id="", client_secret="", base_url="x", openai_api_key=None, replay=True)
+    with PayPalClient(s) as c, pytest.raises(ValueError, match="4000"):
+        Invoices(c).create(
+            items=[LineItem("Scope", Decimal("1"), Decimal("1.00"))],
+            invoicer_name="x",
+            recipient_email=None,
+            reference="r",
+            note="n",
+            terms=terms,
+            invoice_date="2026-10-16",
+        )
 
 
 # -- 5. the committed recordings have to stay reachable ------------------------------------
