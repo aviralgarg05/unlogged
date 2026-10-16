@@ -55,7 +55,7 @@ Three undocumented behaviours cost a day each and are written up in `docs/VERIFI
 `amount.value` you just read; `generate-qr-code` returns `multipart/form-data`, not `image/png`;
 and exactly three top-level invoice properties are readOnly, not the six commonly assumed.
 
-## Four things filed upstream
+## Five things filed upstream
 
 Each one was found by building on the platform, each is reproducible from the repo, and each is
 written up in `docs/UPSTREAM.md` rather than kept as a talking point:

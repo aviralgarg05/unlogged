@@ -9,8 +9,10 @@ because the reason turns out to be the argument for the product.
 ## What was attempted
 
 [`aviralgarg05/NexumDB`](https://github.com/aviralgarg05/NexumDB) is an open-source project
-with 124 pull requests, and 319 events from 25 people once the review bots are
-dropped. It has the one property that matters here: the
+with 124 pull requests, and 359 events from 29 people once the review bots are dropped —
+the figure the committed recording reproduces, which is 40 higher than the first count here
+because the importer stopped after three pages and said nothing. It has the one property
+that matters here: the
 work was **briefed before it was done**. Each issue carries a task list and a YAML block;
 `CONTRIBUTING.md` was committed on 2025-12-05T17:23:28Z and the first external pull request
 arrived fifteen hours later, on 2025-12-06T08:37:34Z. The agreement predates the work, which
@@ -305,7 +307,7 @@ difficulty found here is not an obstacle to the argument; it *is* the argument.
 ## Reproducing any of it
 
 ```bash
-uv run unlogged pull-github --repo aviralgarg05/NexumDB --out /tmp/events.jsonl
+uv run unlogged pull-github --repo aviralgarg05/NexumDB --out /tmp/events.jsonl --pr-detail 60
 ```
 
 Read-only, no token needed for a public repository, and the recorded thread replays from

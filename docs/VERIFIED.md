@@ -28,7 +28,7 @@ Source: `developer.paypal.com/api/invoicing/v2/schema.json`, HTTP 200, **557,403
 | `effective_due_amount` and `effective_invoice_total` exist on the `invoice` object | **CONFIRMED** |
 | Link rel for the hosted payer page is `payer-view` | **CONFIRMED** |
 
-**Three corrections to the research**, all now applied to `day1_probe.py`:
+**Three corrections to the research**, all now applied to `scripts/day1_probe.py`:
 
 1. **Only three** top-level invoice properties are readOnly — `id`, `parent_id`, `links`. The claim of
    six was wrong: `status`, `due_amount` and `gratuity` are **not** readOnly. The full-document PUT
@@ -108,7 +108,7 @@ None is a competitor, but it is bad for discoverability and reads as convergence
 
 # Day-1 gate: **GREEN** — run live against sandbox, 2026-10-15
 
-5/5 automated checks plus the manual payer-page check. `uv run day1_probe.py` reproduces it.
+5/5 automated checks plus the manual payer-page check. `uv run scripts/day1_probe.py` reproduces it.
 Raw request and response bodies in `DAY1.md`.
 
 **The concept is alive.** A PayPal invoice's charged amount really does move while its printed QR
