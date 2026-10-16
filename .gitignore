@@ -8,6 +8,10 @@ dist/
 build/
 .DS_Store
 
+# Not part of this project. It was sitting in the directory and a `git add -A` swept it into
+# a commit; nothing here reads it. Untracked rather than deleted, because it is not mine.
+oc_software.json
+
 # Credentials. Never committed; verified by scripts/verify.py on every run and in CI.
 .env
 .env.local

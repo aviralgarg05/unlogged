@@ -170,7 +170,8 @@ Both files are gitignored; no key is ever committed, and none appears in the git
 |---|---|
 | `AG_STUDIO_OPENAI_API_KEY` | Enables the AG Studio assistant. Read server-side only — there is deliberately no `NEXT_PUBLIC_` variable for it, so it is never inlined into the browser bundle. Falls back to `OPENAI_API_KEY`. |
 | `OPENAI_MODELS` | Comma-separated. Two or more turns on the model picker in the chat panel. |
-| `UNLOGGED_API` | Where the Python service is listening. Defaults to `http://127.0.0.1:8000`. |
+| `UNLOGGED_API` | Where the Python service is listening. Defaults to `http://127.0.0.1:8000`. A value with no scheme is read as a host and given `https://`, because a Render blueprint cannot interpolate one. |
+| `AG_STUDIO` | An AG Studio Pro licence key, if you have one. None is needed: `validateLicense()` only ever sets a watermark message, and `isDisplayWatermark()` returns false on localhost. |
 
 With a key set, confirm it took effect:
 
