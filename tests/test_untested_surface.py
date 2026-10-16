@@ -205,3 +205,187 @@ def test_the_importer_reads_past_the_first_page(tmp_path):
 
     assert len(events) == 307, "a page cap would make this 300 or fewer, silently"
     assert any(e.text.endswith("comment 4-6") for e in events), "the last page was dropped"
+
+
+# -- the QR the client files on day one ---------------------------------------------------
+
+
+def _multipart(png: bytes) -> bytes:
+    import base64 as b64
+
+    body = b64.b64encode(png)
+    return (
+        b"--boundary\r\n"
+        b'Content-Disposition: form-data; name="image"\r\n'
+        b"Content-Type: text/plain\r\n\r\n" + body + b"\r\n--boundary--\r\n"
+    )
+
+
+def test_the_qr_is_decoded_out_of_paypals_multipart_envelope(tmp_path):
+    """`generate-qr-code` answers multipart/form-data, not image/png: the PNG arrives as
+    base64 text in a part whose own Content-Type is text/plain. That is upstream report four,
+    and the decoding of it had no test — so a change that returned the envelope itself would
+    have shipped a broken QR on the one artifact the client keeps."""
+    png = b"\x89PNG\r\n\x1a\n" + b"pretend pixels"
+
+    class Fake:
+        def request(self, _m, _p, **_kw):
+            return {
+                "_raw_b64": _multipart(png).hex(),
+                "_ct": "multipart/form-data; boundary=boundary",
+            }
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.c = Fake()
+
+    out = inv.qr_png("INV2-TEST-0000-0000-0008")
+
+    assert out == png
+    assert out[:4] == b"\x89PNG", "whatever else changes, it has to be a PNG"
+
+
+def test_a_plain_png_response_is_passed_through_unharmed():
+    """If PayPal ever fixes the envelope, the decoder must not corrupt the fixed response."""
+    png = b"\x89PNG\r\n\x1a\nstraight through"
+
+    class Fake:
+        def request(self, _m, _p, **_kw):
+            return {"_raw_b64": png.hex(), "_ct": "image/png"}
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.c = Fake()
+
+    assert inv.qr_png("INV2-TEST-0000-0000-0008") == png
+
+
+# -- what the seller actually receives ------------------------------------------------------
+
+
+class _Money:
+    def __init__(self, value, currency_code="USD"):
+        self.value, self.currency_code = value, currency_code
+
+
+class _Breakdown:
+    def __init__(self, **kw):
+        self.gross_amount = kw.get("gross")
+        self.paypal_fee = kw.get("fee")
+        self.net_amount = kw.get("net")
+        self.receivable_amount = kw.get("received")
+        self.exchange_rate = kw.get("rate")
+
+
+def _capture(breakdown):
+    envelope = type("Response", (), {})()
+    envelope.body = type("Capture", (), {"seller_receivable_breakdown": breakdown})()
+    return envelope
+
+
+def _read(monkeypatch, breakdown):
+    from unlogged.paypal import settlement as mod
+
+    class FakeSdk:
+        def __init__(self, **_kw):
+            self.payments = type(
+                "Payments", (), {"get_captured_payment": lambda _s, _a: _capture(breakdown)}
+            )()
+
+    monkeypatch.setitem(
+        __import__("sys").modules,
+        "paypalserversdk.paypal_serversdk_client",
+        type("M", (), {"PaypalServersdkClient": FakeSdk}),
+    )
+    monkeypatch.setitem(
+        __import__("sys").modules,
+        "paypalserversdk.configuration",
+        type("M", (), {"Environment": type("E", (), {"SANDBOX": 1, "PRODUCTION": 2})}),
+    )
+    monkeypatch.setitem(
+        __import__("sys").modules,
+        "paypalserversdk.http.auth.o_auth_2",
+        type("M", (), {"ClientCredentialsAuthCredentials": lambda **_kw: None}),
+    )
+    return mod.read_settlement(
+        Settings(
+            client_id="i", client_secret="s", base_url=SANDBOX, openai_api_key=None, replay=False
+        ),
+        "CAP-1",
+    )
+
+
+def test_gross_fee_and_net_are_not_swapped(monkeypatch):
+    """Swapping gross and net survived the whole suite. These are the three numbers a
+    contractor checks against their bank, and PayPal supplies all of them."""
+    result = _read(
+        monkeypatch,
+        _Breakdown(
+            gross=_Money("902.50"),
+            fee=_Money("26.47"),
+            net=_Money("876.03"),
+            received=_Money("876.03", "USD"),
+        ),
+    )
+
+    assert result is not None
+    assert result.gross == Decimal("902.50")
+    assert result.fee == Decimal("26.47")
+    assert result.net == Decimal("876.03")
+    assert result.gross - result.fee == result.net, "PayPal's own arithmetic has to hold"
+    assert result.currency == "USD"
+
+
+def test_a_capture_with_no_breakdown_says_so_rather_than_inventing_zeroes(monkeypatch):
+    """Not every capture carries one — a same-currency capture may report only the net — and
+    zeroes would read as a free transaction."""
+    assert _read(monkeypatch, None) is None
+
+
+# -- money that arrived outside PayPal ------------------------------------------------------
+
+
+def test_an_out_of_band_payment_is_posted_in_paypals_own_shape():
+    """Verified live — a $100 bank transfer moved a $690 invoice to PARTIALLY_PAID with
+    $590 due, and a later line left the payment intact — and then never tested. Contractors
+    are paid by bank transfer constantly; without this the client pays and the invoice goes
+    on asking."""
+    sent: dict = {}
+
+    class Fake:
+        def request(self, method, path, *, json_body=None, **_kw):
+            sent.update({"method": method, "path": path, "body": json_body})
+            return {"payment_id": "PAY-1"}
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.c = Fake()
+
+    inv.record_payment(
+        "INV2-TEST-0000-0000-0008",
+        amount=Decimal("100.00"),
+        when="2026-10-16",
+        note="Bank transfer, reference NW-0042",
+    )
+
+    assert sent["method"] == "POST"
+    assert sent["path"].endswith("/INV2-TEST-0000-0000-0008/payments")
+    assert sent["body"]["method"] == "BANK_TRANSFER"
+    assert sent["body"]["payment_date"] == "2026-10-16"
+    # Two decimals, as a string: PayPal rejects a float and silently loses a third decimal.
+    assert sent["body"]["amount"] == {"currency_code": "USD", "value": "100.00"}
+    assert sent["body"]["note"] == "Bank transfer, reference NW-0042"
+
+
+def test_a_payment_without_a_note_does_not_send_an_empty_one():
+    sent: dict = {}
+
+    class Fake:
+        def request(self, _m, _p, *, json_body=None, **_kw):
+            sent.update(json_body)
+            return {}
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.c = Fake()
+
+    inv.record_payment("INV2-TEST-0000-0000-0008", amount=Decimal("40"), when="2026-10-16")
+
+    assert "note" not in sent
+    assert sent["amount"]["value"] == "40.00"
