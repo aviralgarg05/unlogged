@@ -288,15 +288,15 @@ def main() -> int:
     if "--live" in sys.argv:
         before = len(results)
         live()
-        if any(r[1] == SKIP for r in results[before:]):
+        skipped = any(r[1] == SKIP for r in results[before:])
+        if skipped:
             # No credentials, so the live section skipped itself. Counting the checks it did
             # not run and comparing that to the README produced a FAIL that said the README
             # was wrong when the truth was that nothing had been verified.
             print("\n  (live section skipped — the count below is not checked)")
-        else:
-            live_total()
-        # The live section writes to PayPal and may write recordings. Re-check that it has not
-        # changed the tree it just certified, or --live reports PASS on a repository it broke.
+        # The live section writes to PayPal and may write recordings. Re-check that it has
+        # not changed the tree it just certified, or --live reports PASS on a repository it
+        # broke.
         section("After the live run")
         _, out = run("git", "status", "--porcelain", "cassettes/", keyless=True)
         dirty = [line for line in out.splitlines() if line.strip()]
@@ -305,6 +305,10 @@ def main() -> int:
             PASS if not dirty else FAIL,
             "clean" if not dirty else f"{len(dirty)} changed",
         )
+        if not skipped:
+            # Last, so it counts every check this run performed. Running it before the
+            # section above undercounted by one and reported the README as wrong.
+            live_total()
 
     failed = [r for r in results if r[1] == FAIL]
     skipped = [r for r in results if r[1] == SKIP]

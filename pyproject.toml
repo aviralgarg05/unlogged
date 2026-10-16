@@ -14,6 +14,14 @@ dependencies = [
     "uvicorn>=0.54.0",
 ]
 
+# A dependency group rather than an optional extra, because `uv run` installs groups and
+# does not install extras. As an extra, the first command in the README — `uv run pytest -q`
+# — failed on a fresh clone with "Failed to spawn: pytest", while working on the machine of
+# the one person whose environment already had it. The extra is kept as an alias so anyone
+# who learned `--extra dev` is not broken by the move.
+[dependency-groups]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "hypothesis>=6.112", "ruff>=0.7"]
+
 [project.optional-dependencies]
 dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "hypothesis>=6.112", "ruff>=0.7"]
 

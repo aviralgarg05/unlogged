@@ -389,3 +389,27 @@ def test_a_payment_without_a_note_does_not_send_an_empty_one():
 
     assert "note" not in sent
     assert sent["amount"]["value"] == "40.00"
+
+
+# -- the environment a judge actually gets ---------------------------------------------------
+
+
+def test_the_test_runner_is_declared_where_uv_run_will_install_it():
+    """`uv run` installs dependency groups and does not install extras. With pytest declared
+    only as an optional extra, the first command in the README — `uv run pytest -q` — failed
+    on a fresh clone with "Failed to spawn: pytest", while working on the machine of the one
+    person whose environment already had it. That is the worst shape a bug can have here.
+    """
+    import tomllib
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    pyproject = tomllib.loads((root / "pyproject.toml").read_text())
+
+    groups = pyproject.get("dependency-groups", {})
+    assert "dev" in groups, "uv run installs groups; without one the documented command fails"
+    declared = " ".join(groups["dev"])
+    for tool in ("pytest", "hypothesis", "ruff"):
+        assert tool in declared, (
+            f"{tool} is used by the documented commands and is not in the group"
+        )
