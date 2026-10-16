@@ -7,12 +7,11 @@ be run directly, though it works if you do.
 from __future__ import annotations
 
 import os
-from datetime import date
 from decimal import Decimal
 
 from unlogged.config import Settings
 from unlogged.paypal import Invoices, LineItem, PayPalClient
-from unlogged.paypal.invoices import total_of
+from unlogged.paypal.invoices import today, total_of
 
 
 def emit(name: str, status: str, detail: str) -> None:
@@ -28,9 +27,9 @@ def main() -> int:
                 items=[LineItem("Agreed scope", Decimal("8"), Decimal("65.00"))],
                 invoicer_name="Aviral Garg",
                 recipient_email=None,
-                reference=f"verify-{date.today().isoformat()}",
+                reference=f"verify-{today().isoformat()}",
                 note="Agreed scope: checkout page. Cap USD 1,200.00.",
-                invoice_date=date.today().isoformat(),
+                invoice_date=today().isoformat(),
             )
             iid = created["id"]
             inv.send(iid, notify=False)
@@ -78,7 +77,7 @@ def main() -> int:
             paid = inv.record_payment(
                 iid,
                 amount=Decimal("100.00"),
-                when=date.today().isoformat(),
+                when=today().isoformat(),
                 note="Bank transfer, reference NW-0042",
             )
             after_pay = inv.get(iid)

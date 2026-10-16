@@ -22,13 +22,15 @@ from __future__ import annotations
 import json
 import os
 import sys
-from datetime import date, timedelta
+from datetime import timedelta
 
 import httpx
 
+from unlogged.paypal.invoices import today
+
 BASE = "https://api-m.sandbox.paypal.com"
-TODAY = date.today().isoformat()
-SOON = (date.today() + timedelta(days=7)).isoformat()
+TODAY = today().isoformat()
+SOON = (today() + timedelta(days=7)).isoformat()
 
 # Exactly the shape the published spec gives as its own worked example for
 # PUT /v2/invoicing/invoices/{id}/conditional-rules/{conditional_rule_id}.

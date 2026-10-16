@@ -41,7 +41,7 @@ uv run scripts/verify.py               # checks every claim in this README
 That script is the short version of everything below: it runs the tests, reproduces the
 evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
 the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
-14 checks keyless, 22 with sandbox credentials, about twenty seconds.
+15 checks keyless, 23 with sandbox credentials, about twenty seconds.
 
 With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
 against PayPal on the day you run it — it creates a real invoice, grows it, records a bank
@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 209 tests, no credentials needed
+uv run pytest -q                       # 212 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -245,7 +245,7 @@ the file that implements it — so nothing has to be taken on trust.
 
 | Criterion | Run this | Implemented in |
 |---|---|---|
-| **Technological Implementation** | `uv run scripts/verify.py` — 14 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
+| **Technological Implementation** | `uv run scripts/verify.py` — 15 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
 | **Design** | `docker compose up` → `/dashboard` — rows fetched a page at a time and never materialised in the browser, a custom widget, and the one button that moves money | [`studio/data.ts`](web/app/dashboard/studio/data.ts), [`evidence-card.tsx`](web/app/dashboard/studio/widgets/evidence-card.tsx) |
 | **Potential Impact** | `uv run unlogged evaluate …` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
 | **Innovation** | The same invoice id and QR at $520.00 and at $902.50, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
@@ -255,13 +255,14 @@ the file that implements it — so nothing has to be taken on trust.
 simulated, and what is not yet true — including that eight events is a smoke test rather than a
 benchmark, and that the fixture engagement was written for this repo.
 
-Five findings are filed upstream rather than kept as talking points, in
+Six findings are filed upstream rather than kept as talking points, in
 [`docs/UPSTREAM.md`](docs/UPSTREAM.md): PayPal's documented discount path is accepted and not
-stored, `generate-qr-code` returns a base64 multipart envelope rather than an image, the generated
-Server SDK ships no Invoicing controller, and a public AG Studio custom widget cannot declare
-`formatShape` at all, and `PayPal-Request-Id` is accepted on an invoice PUT and ignored, so a
-retried write bills the client twice — which is why the guard here is an append-only ledger and
-not that header. The same report shows a billed line vanishing when two writers read the same
+stored; `generate-qr-code` returns a base64 multipart envelope rather than an image; the
+generated Server SDK ships no Invoicing controller; a public AG Studio custom widget cannot
+declare `formatShape` at all; `PayPal-Request-Id` is accepted on an invoice PUT and ignored, so
+a retried write bills the client twice — which is why the guard here is an append-only ledger
+and not that header; and `send` refuses a future-dated invoice with `MISSING_RECIPIENT_EMAIL`,
+naming the one field that is not the cause. The same report shows a billed line vanishing when two writers read the same
 invoice before either wrote: there is no ETag and no `If-Match`, so `unlogged reconcile` exists
 to find the divergence the API cannot prevent. Each one is reproducible from this repo.
 
@@ -269,7 +270,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 
 | | |
 |---|---|
-| Mechanism verified live | ✅ 2026-10-15, `$520 → $902.50`, reproducible from `cassettes/` |
+| Mechanism verified live | ✅ 2026-10-15, `$520 → $902.50`; re-proved end to end 2026-10-16 UTC, reproducible from `cassettes/` |
 | Invoice engine | ✅ live sandbox, end to end |
 | Webhooks + signature verification | ✅ |
 | HTTP API + `/health` | ✅ |
@@ -280,7 +281,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 209 Python (incl. a property test on the money path), 22 TypeScript |
+| Tests | ✅ 212 Python (incl. a property test on the money path), 22 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

@@ -5,8 +5,8 @@
 The repository is **private** and stays private until the last of these. Devpost needs a
 public link; a private one is a mechanical fail regardless of what is in it.
 
-- [ ] `uv run scripts/verify.py` — 14 checks, all green, no credentials
-- [ ] `uv run scripts/verify.py --live` — 22 checks, re-proves the mechanism against PayPal on
+- [ ] `uv run scripts/verify.py` — 15 checks, all green, no credentials
+- [ ] `uv run scripts/verify.py --live` — 23 checks, re-proves the mechanism against PayPal on
       the day of submission, and prints a payer URL that can go straight in the write-up
 - [ ] Record the video. `docs/VIDEO.md` has the shot list. Presentation is one of five equally
       weighted criteria and is worth nothing unfilmed
@@ -55,7 +55,7 @@ Three undocumented behaviours cost a day each and are written up in `docs/VERIFI
 `amount.value` you just read; `generate-qr-code` returns `multipart/form-data`, not `image/png`;
 and exactly three top-level invoice properties are readOnly, not the six commonly assumed.
 
-## Five things filed upstream
+## Six things filed upstream
 
 Each one was found by building on the platform, each is reproducible from the repo, and each is
 written up in `docs/UPSTREAM.md` rather than kept as a talking point:
@@ -76,6 +76,12 @@ written up in `docs/UPSTREAM.md` rather than kept as a talking point:
    nothing. The resource carries no ETag and the update accepts no `If-Match` either, so two
    writers that read before either wrote lose one of the two lines with no error: $270.00 where
    $300.00 was billed. Both reproduced live and written up in `docs/UPSTREAM.md`.
+6. **`send` blames a missing recipient when the invoice date is the problem.** A future
+   `invoice_date` silently turns an immediate send into a scheduled one; without a recipient to
+   schedule the email to, it is refused with `MISSING_RECIPIENT_EMAIL` on `field: invoiceId`.
+   Add the recipient the error asks for and the 422 becomes a 202 and an invoice stuck in
+   `SCHEDULED` that the client cannot pay. The variable is the date, and `date.today()` is wrong
+   for a quarter of the day east of UTC.
 
 ## Challenges
 

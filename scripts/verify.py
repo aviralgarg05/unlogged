@@ -170,11 +170,35 @@ def offline() -> None:
     code, tout = run("uv", "run", "pytest", "-q", keyless=True)
     m = re.search(r"(\d+) passed", tout)
     ran = m.group(1) if m else "?"
+    # Both places the README writes it: the command block a judge copies, and the status
+    # table. The table went unchecked and sat one release behind more than once.
+    table = re.search(r"(\d+) Python[^|]*?(\d+) TypeScript", readme)
+    in_table = table.group(1) if table else "?"
     check(
         "README quotes the test count it has",
-        PASS if f"# {ran} tests" in readme else FAIL,
-        f"{ran} passing",
+        PASS if f"# {ran} tests" in readme and in_table == ran else FAIL,
+        f"{ran} passing" + ("" if in_table == ran else f", table says {in_table}"),
     )
+
+    # The TypeScript suite is as much a claim as the Python one, and the only check on its
+    # number was me remembering. Needs an installed web/, so it reports SKIP rather than
+    # failing on a clone that has not run npm install.
+    if (ROOT / "web" / "node_modules").is_dir():
+        code, wout = run("npm", "test", "--silent", cwd=ROOT / "web")
+        w = re.search(r"^# pass (\d+)$", wout, re.M)
+        passed = w.group(1) if w else "?"
+        quoted = table.group(2) if table else None
+        check(
+            "README quotes the TypeScript test count it has",
+            PASS if code == 0 and quoted == passed else FAIL,
+            f"{passed} passing" + ("" if quoted == passed else f", README says {quoted}"),
+        )
+    else:
+        check(
+            "README quotes the TypeScript test count it has",
+            SKIP,
+            "web/node_modules absent — run npm install in web/",
+        )
 
     section("Submission requirements")
 

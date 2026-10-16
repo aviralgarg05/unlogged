@@ -156,3 +156,38 @@ it, so the markdown ladder is just a sequence of percentages and the whole awkwa
 - **PayPal's own payer page renders the markdown**, which the brief listed as an open question
   hoping for a second proof shot. It shows `Subtotal £4.00` / `Discount (75% off) -£3.00` /
   `Total £1.00`. The strike-through is free, on PayPal's own hosted page, in the video.
+
+---
+
+# A fourth trap, found two days later — 2026-10-16
+
+The live verification had passed twenty-two checks on 2026-10-15 and started failing on
+2026-10-17 local time, with nothing in between touching the PayPal path. It looked exactly like
+a platform change. It was a clock.
+
+`date.today()` is local. In IST it runs a day ahead of UTC from midnight until 05:30, so an
+invoice created at 01:52 IST carries tomorrow's `invoice_date` as far as PayPal is concerned —
+and **PayPal treats a future `invoice_date` as a scheduled invoice**, which is not documented on
+the send endpoint and is never reported as an error.
+
+Three states, all reproduced against sandbox on 2026-10-16 UTC:
+
+| `invoice_date` | recipient | `POST /{id}/send` | status after |
+|---|---|---|---|
+| UTC today | none | **200** | `UNPAID` |
+| UTC tomorrow | `sb-client@…` | **202** | **`SCHEDULED`** |
+| UTC tomorrow | none | **422 `MISSING_RECIPIENT_EMAIL`** | stays `DRAFT` |
+
+Row two is the quiet one: 202 looks like success, and the invoice is simply not payable. Row
+three is the misleading one — the error names `field: invoiceId`, `issue:
+MISSING_RECIPIENT_EMAIL`, "Recipient email address is required to send invoice via PayPal",
+which is true only as a consequence. A scheduled send has to be delivered by email, so it
+demands an address; the thing that is actually wrong is the date. A developer who believes the
+error adds a recipient, gets a 202, and ships an invoice nobody can pay.
+
+What the product does about it: `unlogged.paypal.invoices.today()` is UTC, `check_invoice_date`
+refuses a date PayPal would read as future and says what it would have done instead, and a test
+parses every script that sends a date to PayPal and fails if any of them asks the local clock.
+Filed upstream as the sixth report in [`UPSTREAM.md`](UPSTREAM.md).
+
+A product for contractors billing across borders is a poor place to get a timezone wrong.

@@ -284,3 +284,62 @@ An append-only ledger of what has already been billed to each invoice, consulted
 write, in both `src/unlogged/cli.py` and `src/unlogged/web.py`. The header is still sent — it
 costs nothing and may one day work — but nothing depends on it. The test that proves the second
 apply is refused is `test_the_documented_apply_command_refuses_to_bill_the_same_work_twice`.
+
+---
+
+# Sixth report: `send` blames a missing recipient when the invoice date is the problem
+
+For [paypal/PayPal-REST-API-issues](https://github.com/paypal/PayPal-REST-API-issues) /
+Invoicing v2. Reproduced against sandbox on 2026-10-16 UTC; full table in
+[`VERIFIED.md`](VERIFIED.md).
+
+## Summary
+
+`POST /v2/invoicing/invoices/{id}/send` on an invoice whose `detail.invoice_date` is in the
+future returns:
+
+```json
+{"name":"UNPROCESSABLE_ENTITY","details":[{"field":"invoiceId",
+ "issue":"MISSING_RECIPIENT_EMAIL",
+ "description":"Missing recipient email address. Recipient email address is required to send invoice via PayPal."}]}
+```
+
+The recipient is not the problem. The same call, on the same account, with the same empty
+`primary_recipients` and an `invoice_date` of **today in UTC**, returns **200** and the invoice
+lands on `UNPAID`. Three cases, one variable:
+
+| `invoice_date` | recipient | send | status after |
+|---|---|---|---|
+| UTC today | none | 200 | `UNPAID` |
+| UTC tomorrow | present | 202 | `SCHEDULED` |
+| UTC tomorrow | none | 422 `MISSING_RECIPIENT_EMAIL` | stays `DRAFT` |
+
+A future `invoice_date` silently turns an immediate send into a scheduled one. A scheduled send
+has to be delivered by email, so it requires an address — the error is a true statement about a
+consequence, and it names `field: invoiceId` rather than the field that decided it.
+
+## Why it costs more than a confusing message
+
+Developers do not pass a future date on purpose; they pass `date.today()` from a machine east
+of UTC. In IST that is wrong from 00:00 to 05:30 every day — about 23% of the clock — and
+nothing in the request looks unusual. The reading the error invites is "add a recipient", which
+turns the 422 into a **202** and an invoice sitting in `SCHEDULED` that the client cannot pay.
+The failure gets quieter, not louder.
+
+This cost a working integration here a day of looking for a platform change.
+
+## Suggested fix
+
+Either of these would have been enough:
+
+1. Report the field that decided it — `field: detail.invoice_date`, with an issue naming the
+   scheduled-send path — so the message points at the thing to change.
+2. Document on the send endpoint that a future `invoice_date` schedules the send and therefore
+   requires a recipient. The schema reference for `invoice_date` does not mention `send` at all.
+
+## Not claimed
+
+Sandbox only, one merchant. Whether the live endpoint behaves identically is untested, for the
+reason given in [`HONESTY.md`](HONESTY.md): this account cannot send in live mode. No claim
+about the intent of the scheduling behaviour itself, which is reasonable — only about the error
+that reports it.

@@ -22,11 +22,53 @@ import re
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
+from datetime import UTC, date, datetime
 from decimal import Decimal
 from threading import Lock
 from typing import Any
 
 from unlogged.paypal.client import PayPalClient
+
+
+def today() -> date:
+    """Today as PayPal reads it, which is UTC and not where you are sitting.
+
+    `date.today()` is local. East of UTC it runs ahead for the first hours of the local day —
+    in IST, every invoice created between 00:00 and 05:30 carries tomorrow's date as far as
+    PayPal is concerned. What PayPal does with a future invoice_date is not an error: it
+    silently turns `send` into a SCHEDULED send, which it will deliver by email later. So the
+    invoice never reaches UNPAID, is not payable, and if no recipient was given the send is
+    refused with `MISSING_RECIPIENT_EMAIL` — an error that names the one field that is not the
+    problem. Verified live on 2026-10-16 UTC; see `check_invoice_date`.
+
+    A product for contractors billing across borders should not be the thing that gets this
+    wrong.
+    """
+    return datetime.now(UTC).date()
+
+
+def check_invoice_date(invoice_date: str) -> None:
+    """Refuse a date PayPal will read as the future.
+
+    Not a style rule. A future invoice_date changes what `send` means — scheduled rather than
+    immediate — and the way that surfaces is either a status of SCHEDULED where the caller
+    expected UNPAID, or a 422 blaming a missing recipient. Both took a working live
+    verification and made it look like PayPal had changed under us.
+    """
+    try:
+        asked = date.fromisoformat(invoice_date)
+    except ValueError as exc:
+        raise ValueError(f"invoice_date {invoice_date!r} is not YYYY-MM-DD") from exc
+    utc = today()
+    if asked > utc:
+        raise ValueError(
+            f"invoice_date {invoice_date} is in the future for PayPal, which reads dates in "
+            f"UTC where today is {utc}. PayPal would accept it and turn the send into a "
+            f"SCHEDULED one — never UNPAID, not payable, and refused outright with "
+            f"MISSING_RECIPIENT_EMAIL if there is no recipient. Pass "
+            f"unlogged.paypal.invoices.today() rather than date.today()."
+        )
+
 
 # Verified against the published 557,403-byte schema: exactly three top-level invoice
 # properties carry readOnly. `status`, `due_amount` and `gratuity` do NOT,
@@ -156,8 +198,10 @@ class Invoices:
         scope and cap live there, where the client can read them. `terms` is the full clause
         list, carried in `detail.terms_and_conditions`, so the exclusion a billed line cites is
         on the same page as the line.
-        A recipient is optional: `invoice.required` is `["detail"]` only.
+        A recipient is optional: `invoice.required` is `["detail"]` only — but only for an
+        invoice sent today. See `check_invoice_date`.
         """
+        check_invoice_date(invoice_date)
         body: dict[str, Any] = {
             "detail": {
                 "currency_code": currency,

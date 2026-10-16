@@ -1492,3 +1492,64 @@ def test_the_readme_only_shows_invoice_ids_that_are_real():
         candidate = token.strip("`\"',.()")
         if candidate.startswith("INV2-") and "XXXX" not in candidate:
             assert INVOICE_ID.match(candidate), f"README shows {candidate!r}, which is refused"
+
+
+# -- 12. the date PayPal reads is UTC, not the one on your wall ------------------------------
+
+
+def test_today_is_utc_not_local():
+    """`date.today()` is local. In IST it runs a day ahead from midnight to 05:30."""
+    from datetime import UTC, datetime
+
+    from unlogged.paypal.invoices import today
+
+    assert today() == datetime.now(UTC).date()
+
+
+def test_an_invoice_dated_in_paypals_future_is_refused():
+    """What PayPal does with a future invoice_date is not an error, which is the problem.
+
+    It accepts the create, then silently turns `send` into a SCHEDULED send: the invoice never
+    reaches UNPAID, is not payable, and — because a scheduled send has to be delivered by
+    email — is refused outright with MISSING_RECIPIENT_EMAIL when there is no recipient. That
+    error names the one field that is not the cause, so a live verification that had passed
+    for two days looked exactly like PayPal having changed under us. All three states were
+    reproduced against the sandbox on 2026-10-16 UTC.
+    """
+    from datetime import timedelta
+
+    from unlogged.paypal.invoices import check_invoice_date, today
+
+    check_invoice_date(today().isoformat())
+    check_invoice_date((today() - timedelta(days=1)).isoformat())
+
+    with pytest.raises(ValueError, match="future for PayPal"):
+        check_invoice_date((today() + timedelta(days=1)).isoformat())
+
+    with pytest.raises(ValueError, match="not YYYY-MM-DD"):
+        check_invoice_date("17-10-2026")
+
+
+def test_nothing_that_talks_to_paypal_asks_the_local_clock_what_day_it_is():
+    """The guard above only helps if the callers stop reaching for the wrong clock.
+
+    This is the test that would have caught it. Every script here sends a date to PayPal, and
+    each one used `date.today()` — correct for about eighteen and a half hours a day, in a
+    product written for people billing across borders.
+    """
+    import ast
+
+    for name in ("_live_check.py", "repro_discount_defect.py", "day1_probe.py"):
+        path = Path(__file__).resolve().parents[1] / "scripts" / name
+        # Parsed rather than grepped: these files explain the bug in their own docstrings, and
+        # a test that cannot tell an explanation from a call is a test nobody keeps.
+        calls = [
+            node
+            for node in ast.walk(ast.parse(path.read_text()))
+            if isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and node.func.attr == "today"
+            and isinstance(node.func.value, ast.Name)
+            and node.func.value.id == "date"
+        ]
+        assert not calls, f"{name}:{calls[0].lineno} asks the local clock what day it is"

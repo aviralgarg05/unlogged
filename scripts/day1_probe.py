@@ -35,10 +35,23 @@ import base64
 import json
 import os
 import sys
-from datetime import date
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
+
+
+def utc_today():
+    """PayPal reads invoice dates in UTC, not where you are sitting.
+
+    This script is standalone — `uv run --script`, httpx only — so it carries its own copy of
+    what `unlogged.paypal.invoices.today` does. `date.today()` is local, and east of UTC it
+    runs a day ahead for the first hours of the morning; PayPal then treats the invoice as
+    future-dated, turns `send` into a SCHEDULED send, and refuses it outright with
+    MISSING_RECIPIENT_EMAIL when there is no recipient to schedule the email to.
+    """
+    return datetime.now(UTC).date()
+
 
 BASE = "https://api-m.sandbox.paypal.com"
 DOCS = Path(__file__).parent / "docs"
@@ -96,7 +109,7 @@ def main() -> int:
     if not cid or not sec:
         sys.exit("Set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET (sandbox REST app credentials).")
 
-    today = date.today().isoformat()
+    today = utc_today().isoformat()
     with httpx.Client(timeout=60.0) as c:
         tk = c.post(
             f"{BASE}/v1/oauth2/token", auth=(cid, sec), data={"grant_type": "client_credentials"}
@@ -219,7 +232,7 @@ def main() -> int:
 
     DOCS.mkdir(parents=True, exist_ok=True)
     head = [
-        f"# Day-1 gate — {date.today().isoformat()}\n",
+        f"# Day-1 gate — {utc_today().isoformat()}\n",
         "Can a PayPal invoice's charged amount really move while its printed QR stays valid?\n",
         "\n| Check | Result |\n|---|---|",
     ]
