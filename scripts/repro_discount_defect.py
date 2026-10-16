@@ -22,11 +22,20 @@ from __future__ import annotations
 import json
 import os
 import sys
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 
 import httpx
 
-from unlogged.paypal.invoices import today
+
+def today():
+    """PayPal reads invoice dates in UTC, not where you are sitting.
+
+    Its own copy rather than `unlogged.paypal.invoices.today`, because this file is a
+    standalone `uv run --script` with httpx as its only dependency — that is the point of it.
+    A reproduction PayPal is asked to run has to run on a machine that has only this file.
+    """
+    return datetime.now(UTC).date()
+
 
 BASE = "https://api-m.sandbox.paypal.com"
 TODAY = today().isoformat()

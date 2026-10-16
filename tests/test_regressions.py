@@ -1553,3 +1553,34 @@ def test_nothing_that_talks_to_paypal_asks_the_local_clock_what_day_it_is():
             and node.func.value.id == "date"
         ]
         assert not calls, f"{name}:{calls[0].lineno} asks the local clock what day it is"
+
+
+def test_a_standalone_script_imports_nothing_from_this_project():
+    """A `# /// script` file runs in an environment holding only its own dependencies.
+
+    That is the whole point of the two reproductions: PayPal and AG Grid are asked to run a
+    single file on a machine that has never seen this project. Fixing the clock, I reached for
+    the shared `today()` in one of them — and `uv run scripts/repro_discount_defect.py`, the
+    exact command the upstream report prints, died on `No module named 'unlogged'` before it
+    made a single call. The duplication in those files is the cost of being runnable.
+    """
+    import ast
+
+    scripts = Path(__file__).resolve().parents[1] / "scripts"
+    standalone = [
+        p for p in sorted(scripts.glob("*.py")) if p.read_text().startswith("# /// script")
+    ]
+    assert standalone, "no standalone scripts found — has the marker changed?"
+
+    for path in standalone:
+        for node in ast.walk(ast.parse(path.read_text())):
+            module = (
+                node.module
+                if isinstance(node, ast.ImportFrom)
+                else next((a.name for a in node.names), None)
+                if isinstance(node, ast.Import)
+                else None
+            )
+            assert not (module or "").startswith("unlogged"), (
+                f"{path.name}:{node.lineno} imports {module} — it cannot, it runs alone"
+            )

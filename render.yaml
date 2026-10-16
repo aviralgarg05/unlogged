@@ -23,11 +23,17 @@ services:
     buildCommand: npm ci && npm run build
     startCommand: npx next start --port $PORT --hostname 0.0.0.0
     envVars:
+      # `host`, not `hostport`: these are two public web services, so the web half reaches the
+      # API over https on 443, and a `host:10000` would point at a port that is not open.
+      # Neither form carries a scheme and a blueprint cannot add one, so `lib/backend-origin`
+      # puts https in front of a bare host. Without that the web half cannot reach its own API
+      # — and `host:port` fails as a network error rather than a bad address, so it reads as
+      # the API being down.
       - key: UNLOGGED_API
         fromService:
           name: unlogged-api
           type: web
-          property: hostport
+          property: host
       - key: OPENAI_MODELS
         value: gpt-6.1-sol,gpt-5.4-mini
       # AG_STUDIO_OPENAI_API_KEY is set in the Render dashboard, never committed.

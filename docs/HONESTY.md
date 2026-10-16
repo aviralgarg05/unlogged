@@ -102,6 +102,14 @@ Written so a judge does not have to find any of this out by reading the source.
   What has *not* happened is a real model emitting that call and the result flowing back into a
   conversation, which has not been run. The declaration and the handler are both real; the
   join between them is untested.
+- **The Render blueprint has never been deployed.** `render.yaml` is written and its two
+  services are the ones this repo runs locally, but no deploy has been made from it, so what
+  it claims is a configuration rather than a result. It did carry a real defect until it was
+  read properly: a blueprint cannot put a scheme in front of a `fromService` value, so the web
+  half was handed a bare `host:port` and could not reach its own API — and that failure reads
+  as the API being down rather than as a bad address. `lib/backend-origin` fixes it and is
+  tested against the exact strings Render produces, which is as far as testing can go without
+  deploying.
 - **Telemetry has been round-tripped but not scored.** `/api/telemetry` accepts and summarises
   batches, and the observer is registered on the harness. No AgentUnit evaluation consumes it
   yet, because there are no runs to consume.

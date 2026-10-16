@@ -2,7 +2,9 @@
 // PayPal credential, and every mutation is executed server-side — which is also why the
 // one mutating AI tool is declared client-side but runs through this proxy.
 
-export const BACKEND = process.env.UNLOGGED_API ?? 'http://127.0.0.1:8000';
+import { backendOrigin } from './backend-origin.ts';
+
+export const BACKEND = backendOrigin(process.env.UNLOGGED_API);
 
 export type EventRow = {
   id: string;

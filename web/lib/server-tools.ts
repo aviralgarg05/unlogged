@@ -4,9 +4,12 @@
 // execution lives here, on the server, next to the only process that holds a PayPal credential.
 // Written as a pure function over a fetch so it can be tested without a network or a model.
 
-// Read directly rather than importing the shared constant, so this module can be unit-tested
-// under plain node with no bundler and no path aliases.
-const BACKEND = process.env.UNLOGGED_API ?? 'http://127.0.0.1:8000';
+// Imported relatively, not through the `@/lib` alias, so this module stays unit-testable under
+// plain node with no bundler. It used to carry its own copy of the default, which is two
+// places for one fact.
+import { backendOrigin } from './backend-origin.ts';
+
+const BACKEND = backendOrigin(process.env.UNLOGGED_API);
 
 export type ServerToolCall = { name: string; arguments: Record<string, unknown> };
 
