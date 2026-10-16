@@ -59,6 +59,11 @@ type DashboardProps = {
   licenseKey?: string;
   /** OpenAI models the assistant may use; omitted when no key is configured, which hides the assistant. */
   aiModels?: string[];
+  /**
+   * The engagement's currency, used to format every money column. Omitted when the service
+   * could not be reached, which leaves the figures unsymbolled rather than guessing a symbol.
+   */
+  currency?: string;
 };
 
 type StudioHistory = { canUndo: boolean; canRedo: boolean };
@@ -77,7 +82,7 @@ export function Dashboard(props: DashboardProps) {
   return inBrowser ? <ReportsDashboard {...props} /> : <DashboardSkeleton />;
 }
 
-function ReportsDashboard({ licenseKey, aiModels }: DashboardProps) {
+function ReportsDashboard({ licenseKey, aiModels, currency }: DashboardProps) {
   const { store, latest, update, editReport } = useReports();
   const apiRef = useRef<AgStudioApi | null>(null);
 
@@ -101,14 +106,14 @@ function ReportsDashboard({ licenseKey, aiModels }: DashboardProps) {
   const widgets = useMemo(() => unloggedWidgets(), []);
   const studioData = useMemo(
     () => ({
-      sources: [unloggedDataSource()],
+      sources: [unloggedDataSource(currency)],
       description:
         'One contracting engagement. `events` is the raw work surface, `verdicts` places each ' +
         'event against the agreed scope and cites the clause it relied on, and `ledger` records ' +
         'every line that was actually added to the live PayPal invoice. A verdict with no ' +
         'clause_id was not auditable and should be treated as suspect.',
     }),
-    [],
+    [currency],
   );
   // `ai` is read once, when Studio is created.
   const ai = useMemo(() => (aiModels?.length ? buildAi(aiModels) : undefined), [aiModels]);

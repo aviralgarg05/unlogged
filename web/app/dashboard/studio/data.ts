@@ -39,21 +39,69 @@ const VERDICT_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'confidence', name: 'Confidence', format: 'decimalFormat' },
 ];
 
-const LEDGER_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
-  { id: 'at', name: 'Written at', format: 'dateTimeFormat' },
-  // Present because the ledger spans billing periods: the seeded rows belong to an earlier
-  // invoice. Without this column the money tiles above read as one invoice's figures when
-  // they are the engagement's, and nothing on the page says which.
-  { id: 'invoice_id', name: 'Invoice', format: 'textFormat' },
-  { id: 'event_id', name: 'From event', format: 'textFormat' },
-  { id: 'line_name', name: 'Line added to the invoice', format: 'textFormat' },
-  { id: 'clause_id', name: 'Clause', format: 'textFormat' },
-  { id: 'hours', name: 'Hours', format: 'decimalFormat' },
-  { id: 'unit_price', name: 'Rate', format: 'currencyFormat' },
-  { id: 'line_total', name: 'Added by this line', format: 'currencyFormat' },
-  { id: 'total_after', name: 'Invoice total after', format: 'currencyFormat' },
-  { id: 'adjudicator', name: 'Decided by', format: 'textFormat' },
-];
+/**
+ * What a money column should be formatted with, for the engagement's own currency.
+ *
+ * `currencyFormat` sounds like it carries a currency and does not: AG's default pattern for
+ * it is `#,##0.00`, byte for byte the decimal one. So every figure on the page a contractor
+ * opens to see what a client owes read `860.00` — on a product whose entire subject is money,
+ * next to a README that writes the same number as $902.50.
+ *
+ * The symbol is the engagement's, not a hardcoded dollar: the whole cross-border case rests on
+ * the currency being whatever was agreed. `symbol` rather than `narrowSymbol` because narrow
+ * renders AUD, CAD and SGD all as a bare `$`, which on an invoice is not a cosmetic difference.
+ * An unknown code formats as itself. The symbol is quoted so a multi-character one (`CHF`,
+ * `CA$`) is not read as format codes — unquoted, `USD #,##0.00` renders as `U 1,234.50`,
+ * because `D` is one.
+ *
+ * Returns undefined when the currency is not known, which leaves the figures exactly as they
+ * are today: a symbol nobody can check is worse than none.
+ */
+export function moneyFormat(currency?: string): { format: string } | undefined {
+  if (!currency) return undefined;
+  let symbol = currency;
+  try {
+    const parts = new Intl.NumberFormat('en', {
+      style: 'currency',
+      currency,
+      currencyDisplay: 'symbol',
+    }).formatToParts(0);
+    symbol = parts.find((part) => part.type === 'currency')?.value ?? currency;
+  } catch {
+    // Intl throws on anything that is not a well-formed currency code. The code itself is
+    // then the honest symbol.
+  }
+  return { format: `"${symbol}"#,##0.00` };
+}
+
+const ledgerFields = (currency?: string): AgFieldDefinition<UnloggedRegistry>[] => {
+  const money = moneyFormat(currency);
+  return [
+    { id: 'at', name: 'Written at', format: 'dateTimeFormat' },
+    // Present because the ledger spans billing periods: the seeded rows belong to an earlier
+    // invoice. Without this column the money tiles above read as one invoice's figures when
+    // they are the engagement's, and nothing on the page says which.
+    { id: 'invoice_id', name: 'Invoice', format: 'textFormat' },
+    { id: 'event_id', name: 'From event', format: 'textFormat' },
+    { id: 'line_name', name: 'Line added to the invoice', format: 'textFormat' },
+    { id: 'clause_id', name: 'Clause', format: 'textFormat' },
+    { id: 'hours', name: 'Hours', format: 'decimalFormat' },
+    { id: 'unit_price', name: 'Rate', format: 'currencyFormat', formatOptions: money },
+    {
+      id: 'line_total',
+      name: 'Added by this line',
+      format: 'currencyFormat',
+      formatOptions: money,
+    },
+    {
+      id: 'total_after',
+      name: 'Invoice total after',
+      format: 'currencyFormat',
+      formatOptions: money,
+    },
+    { id: 'adjudicator', name: 'Decided by', format: 'textFormat' },
+  ];
+};
 
 /** Same-origin proxy, so the browser never needs the backend's address or its credentials. */
 async function api<T>(path: string): Promise<T> {
@@ -81,7 +129,9 @@ function filterToQuery(filter: AgDataSourceGetOptions['filter']): string {
   return parts.length ? `&${parts.join('&')}` : '';
 }
 
-export function unloggedDataSource(): AgDataSourceDefinition<'row', UnloggedRegistry> {
+export function unloggedDataSource(
+  currency?: string,
+): AgDataSourceDefinition<'row', UnloggedRegistry> {
   return {
     id: 'unlogged',
     name: 'Engagement',
@@ -112,7 +162,7 @@ export function unloggedDataSource(): AgDataSourceDefinition<'row', UnloggedRegi
         description:
           'The append-only record of every line this system added to a live PayPal invoice, ' +
           'with the running total after each one.',
-        fields: LEDGER_FIELDS,
+        fields: ledgerFields(currency),
       },
     ],
     dataShape: 'row',

@@ -230,9 +230,11 @@ strictly worse than none, because a trial can expire and nothing here can.
 </tr>
 <tr>
 <td><em>The thread, paged from the server.</em></td>
-<td><em>Each event against the agreed scope. The baseline's two billings are
-drawn as defects because neither cites a clause.</em></td>
-<td><em>What reached the bill, and the one button that puts it there.</em></td>
+<td><em>Each event against the agreed scope, beside the sentence that decided
+it — and the one button that moves money. A verdict that would bill without
+citing a clause is drawn as a defect; this arm produces none.</em></td>
+<td><em>What reached the bill. Four discovered lines, an invoice at $902.50,
+and the append-only ledger that is the only record of how it got there.</em></td>
 </tr>
 </table>
 
@@ -278,7 +280,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 209 Python (incl. a property test on the money path), 11 TypeScript |
+| Tests | ✅ 209 Python (incl. a property test on the money path), 18 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

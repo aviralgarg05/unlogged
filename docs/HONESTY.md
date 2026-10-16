@@ -113,8 +113,13 @@ Written so a judge does not have to find any of this out by reading the source.
 - **The widget declares no `formatShape`,** so the assistant can place and data-map it but not
   configure its format. That is not a choice — the public API makes a shape impossible to
   construct. Evidence and a suggested fix are in `docs/UPSTREAM.md`.
-- **Accuracy of hour estimates is unmeasured.** The adjudicator estimates hours for billable
-  extras. Nothing yet checks those estimates against anything.
+- **Hours are scored, and the model is worse at them than at the call.** This bullet said they
+  were unmeasured, and that was true until `score()` learned to compare them: a run that got
+  every call right could still bill the wrong amount, and the harness called it 100%. It now
+  reports hours wrong and prices the gap at the rate card — `gpt-6.1-sol` estimates `e8` at 1.5
+  hours against a label of 2.0, which is **$42.50 the client is not charged**, visible in the
+  README's own table. What is still unmeasured is hour accuracy against anything but authored
+  labels, for the same reason the call accuracy is: there is no adjudicated real gold set yet.
 
 ## Deliberately not built
 
