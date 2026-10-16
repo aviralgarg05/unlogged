@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 200 tests, no credentials needed
+uv run pytest -q                       # 202 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -86,9 +86,8 @@ Both arms are scored, and both run with no key:
 >
 > The ceiling is measured, not assumed: hold one reader out, take the majority of the rest, ask
 > whether the held-out reader matches. The model gets the same question and lands **33 points
-> below** a bar four readers clear. It calls 18 of 31 events `included` where the readers call
-> 7. It calls 18 of 31 events
-> `included` where the humans call 5 and 7 — it is not finding out-of-scope work at all.
+> below** a bar four readers clear. It calls 18 of 31 events `included` where three of the four
+> readers call 7 — it is not finding out-of-scope work at all.
 > Sharper still: across the 21 events whose agreements list no exclusion, **the model never
 > once returns `scope_request`**, while the readers do. That is
 > the distinction between a client *asking* for out-of-scope work and the work being *done* —
@@ -174,8 +173,15 @@ Both files are gitignored; no key is ever committed, and none appears in the git
 With a key set, confirm it took effect:
 
 ```bash
-curl -s localhost:8000/health    # "adjudicator" flips to gpt-6.1-sol
+curl -s localhost:8000/health    # "model_configured" turns true; see the note below
 ```
+
+`adjudicator` does **not** change, and that is correct rather than a bug: it names the arm that
+would answer, and the model's verdicts replay from the recordings with no key at all. So it
+reads `gpt-6.1-sol` before you set anything. What a key changes is whether an event with no
+recorded verdict can be adjudicated live — which `model_configured` reports, and which is the
+flag to look at. An earlier version of this README told you to watch `adjudicator` flip; it
+never did.
 
 ### The dashboard
 
@@ -270,7 +276,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 200 Python (incl. a property test on the money path), 11 TypeScript |
+| Tests | ✅ 202 Python (incl. a property test on the money path), 11 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

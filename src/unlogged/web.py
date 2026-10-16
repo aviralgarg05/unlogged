@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -30,7 +31,10 @@ from unlogged.scope.models import Engagement, WorkEvent, line_name, load_events
 log = structlog.get_logger(__name__)
 
 FIXTURES = Path("fixtures")
-DATA = Path("data")
+# The same variable the CLI honours. Hardcoding it meant the cross-process lock the two are
+# supposed to share resolved to two different files whenever UNLOGGED_DATA was set — which is
+# every test run and every scripted demo — so the lock guarded nothing across them.
+DATA = Path(os.environ.get("UNLOGGED_DATA", "data"))
 
 app = FastAPI(title="unlogged", version="0.1.0")
 
@@ -128,10 +132,13 @@ def read_ledger() -> dict[str, Any]:
     # One row per billed line. The raw file holds the intent row written before the money
     # moves, the settled row after it, and a void where a write never left — bookkeeping that
     # makes the write safe and has no business being summed as money or drawn as a bar.
-    return {
-        "summary": led.summary(),
-        "rows": [e.model_dump(mode="json") for e in led.settled_lines()],
-    }
+    # Under the lock: a reader that catches an apply between its intent rows and its settled
+    # ones sees a half-written truth and draws it.
+    with led.guard():
+        return {
+            "summary": led.summary(),
+            "rows": [e.model_dump(mode="json") for e in led.settled_lines()],
+        }
 
 
 @app.get("/api/settlement/{capture_id}")

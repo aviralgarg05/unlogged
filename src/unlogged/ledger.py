@@ -140,7 +140,12 @@ class Ledger:
         # Carry the seed forward on the first local write. Reading it only as a fallback meant
         # the earlier periods vanished the moment anyone used the product — an append-only
         # record that silently drops its history the first time it is appended to.
-        if not self.path.exists() and self.seed.exists():
+        # The same test `_source` applies. They disagreed: `_source` treated a zero-byte file
+        # as absent and read the seed, while `append` treated it as present and did not carry
+        # the seed forward — so one append to an empty file erased the engagement's history
+        # from an append-only record.
+        empty = not self.path.exists() or self.path.stat().st_size == 0
+        if empty and self.seed.exists():
             self.path.write_text(self.seed.read_text(), encoding="utf-8")
         with self.path.open("a", encoding="utf-8") as fh:
             fh.write(entry.line() + "\n")

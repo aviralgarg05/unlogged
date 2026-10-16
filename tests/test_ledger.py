@@ -276,3 +276,69 @@ def test_the_api_returns_one_row_per_line_so_the_chart_cannot_draw_bookkeeping(
 
     assert len(body["rows"]) == 1, "the chart would otherwise draw the intent row as a bar"
     assert body["summary"]["added"] == "170.00"
+
+
+def test_a_zero_byte_ledger_does_not_erase_the_seeded_history(tmp_path):
+    """`_source` treated an empty file as absent and read the seed; `append` treated it as
+    present and did not carry the seed forward. So one append to an empty file erased the
+    engagement's history — from an append-only record.
+    """
+    from decimal import Decimal
+
+    from unlogged.ledger import Entry, Ledger, now
+
+    seed_dir = tmp_path / "seed"
+    seed_dir.mkdir()
+    (seed_dir / "eng.jsonl").write_text(
+        Entry(
+            at=now(),
+            invoice_id="INV2-TEST-0000-0000-0010",
+            event_id="p1",
+            clause_id="X1",
+            line_name="Earlier period",
+            hours=Decimal("1"),
+            unit_price=Decimal("85.00"),
+            total_after=Decimal("85.00"),
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+        ).line()
+        + "\n"
+    )
+    (tmp_path / "eng.jsonl").write_text("")
+
+    ledger = Ledger(tmp_path / "eng.jsonl")
+    ledger.append(
+        Entry(
+            at=now(),
+            invoice_id="INV2-TEST-0000-0000-0011",
+            event_id="e3",
+            clause_id="X1",
+            line_name="New work",
+            hours=Decimal("1"),
+            unit_price=Decimal("85.00"),
+            total_after=Decimal("85.00"),
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+        )
+    )
+
+    assert [e.event_id for e in ledger] == ["p1", "e3"]
+
+
+def test_the_service_and_the_cli_lock_the_same_file(monkeypatch, tmp_path):
+    """The cross-process lock is the whole point, and the service hardcoded `data` while the
+    CLI honoured UNLOGGED_DATA — so whenever it was set, which is every test run and every
+    scripted demo, the two locked different files and guarded nothing across each other."""
+    import importlib
+
+    monkeypatch.setenv("UNLOGGED_DATA", str(tmp_path))
+    from unlogged import cli, web
+
+    importlib.reload(cli)
+    importlib.reload(web)
+    try:
+        assert cli.DATA.resolve() == web.DATA.resolve() == tmp_path.resolve()
+    finally:
+        monkeypatch.delenv("UNLOGGED_DATA", raising=False)
+        importlib.reload(cli)
+        importlib.reload(web)

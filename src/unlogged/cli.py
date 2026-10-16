@@ -491,12 +491,17 @@ def reconcile(
     # One line per event, not one per row. Every write leaves two rows — an intent before the
     # money moves and a settled one after — so counting rows expected each line twice and
     # reported a correct invoice as half missing.
-    latest: dict[str, Entry] = {}
-    for e in ledger:
-        if e.invoice_id == invoice_id:
-            latest[e.event_id] = e
-    discovered = [e.line_name for e in latest.values()]
-    unsettled = [e.line_name for e in latest.values() if not e.settled]
+    # Under the lock, and by the same rule billed_to uses. Reading an in-flight apply from
+    # outside the lock showed the intent rows without the settled ones and called a healthy
+    # write a divergence; ignoring `voided` counted a released write twice over.
+    with ledger.guard():
+        latest: dict[str, Entry] = {}
+        for e in ledger:
+            if e.invoice_id == invoice_id:
+                latest[e.event_id] = e
+    live_rows = [e for e in latest.values() if not e.voided]
+    discovered = [e.line_name for e in live_rows]
+    unsettled = [e.line_name for e in live_rows if not e.settled]
     # The opening lines were put on the invoice when it was created and never passed through
     # the ledger, which records discovered work. Leaving them out made every clean invoice
     # report its own agreed scope as a line nobody could account for — the loudest possible
@@ -570,7 +575,10 @@ def reconcile(
 def show(engagement: Path = typer.Option(...)) -> None:
     """Print the append-only change ledger for an engagement."""
     eng = _engagement(engagement)
-    typer.echo(json.dumps(Ledger(DATA / f"{eng.id}.jsonl").summary(), indent=2))
+    ledger = Ledger(DATA / f"{eng.id}.jsonl")
+    with ledger.guard():
+        summary = ledger.summary()
+    typer.echo(json.dumps(summary, indent=2))
 
 
 @app.command()

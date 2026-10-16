@@ -67,6 +67,13 @@ written up in `docs/UPSTREAM.md` rather than kept as a talking point:
    plausible payload that is not a PNG. Reproducible in one curl.
 3. **The APIMatic-generated Server SDK ships no Invoicing controller** — six controllers, none
    of them invoicing — which is why every invoice call here goes through httpx.
+5. **`PayPal-Request-Id` is accepted on an invoice PUT and ignored.** The identical write sent
+   twice under one key took a sandbox invoice from $225.00 to $250.00 — so a retry after a lost
+   response bills the client again, and the header an integration trusts to prevent that does
+   nothing. The resource carries no ETag and the update accepts no `If-Match` either, so two
+   writers that read before either wrote lose one of the two lines with no error: $270.00 where
+   $300.00 was billed. Both reproduced live and written up in `docs/UPSTREAM.md`.
+
 4. **A public AG Studio custom widget cannot declare `formatShape`.** The callback is handed
    `{ api, context }`, `ag-studio` exports no shape builder, and returning a plain object throws
    inside `hydrateWidget` and takes the dashboard down.

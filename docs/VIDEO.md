@@ -33,7 +33,8 @@ span that decided it. Linger on three rows and say only what is on screen:
 - `could you also send me last month's invoice` → `noise` — *"that one is phrasing, not work."*
 
 **1:10–1:35 — the ablation, on screen, not in the README.**
-Run `uv run unlogged evaluate`. Two rows appear: keyword triage at 0% precision and 0% recall,
+Run `uv run unlogged evaluate --engagement fixtures/engagement.json --events
+fixtures/events.jsonl --gold fixtures/gold.jsonl`. Two rows appear: keyword triage at 0% precision and 0% recall,
 $170 billed that should not have been and $425 of real work missed; then `gpt-6.1-sol` at 100%
 on all three. Read the two columns that matter out loud and say nothing else — the table is the
 argument. Add one sentence of honesty, because a judge will think it: *"Eight events is a smoke

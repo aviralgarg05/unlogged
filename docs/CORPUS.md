@@ -250,7 +250,7 @@ this document opened with. So it is written down as a known failure with its mec
 identified, and the README says beside its own headline that the 100% is a fact about a
 fixture.
 
-### The disagreements are not scattered### The disagreements are not scattered
+### The disagreements are not scattered
 
 | thread | event | first pass | second pass |
 |---|---|---|---|
