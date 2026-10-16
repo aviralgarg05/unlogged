@@ -8,6 +8,7 @@ line a sentence falls on, so the Verdict must carry the clause it relied on.
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
 from enum import StrEnum
@@ -129,6 +130,26 @@ class OpeningItem(BaseModel):
     quantity: Decimal
     unit_price: Decimal
     unit_of_measure: str = "HOURS"
+
+
+def load_events(lines: Iterable[str]) -> list[WorkEvent]:
+    """Parse a thread, and refuse one that names the same event twice.
+
+    Event ids are how everything downstream identifies a piece of work: the ledger's guard
+    against double-billing, the verdict cassettes, the agreement sets. Nothing checked them,
+    so a file listing one event twice — a bad merge, an importer run twice into the same
+    output — billed the client twice for it inside a single apply, with the ledger recording
+    one row and agreeing.
+    """
+    events = [WorkEvent.model_validate_json(line) for line in lines if line.strip()]
+    seen: set[str] = set()
+    repeated = sorted({e.id for e in events if e.id in seen or seen.add(e.id)})
+    if repeated:
+        raise ValueError(
+            f"the event thread names these twice: {', '.join(repeated)}. "
+            f"An id identifies one piece of work, and two of them bill it twice."
+        )
+    return events
 
 
 class Engagement(BaseModel):

@@ -112,10 +112,29 @@ class Ledger:
         it again. Attempted-but-unresolved still counts — the money may have moved.
         """
         latest: dict[str, Entry] = {}
-        for e in self:
-            if e.invoice_id == invoice_id:
-                latest[e.event_id] = e
+        for e in self._everything_for(invoice_id):
+            latest[e.event_id] = e
         return {eid for eid, e in latest.items() if not e.voided}
+
+    def _everything_for(self, invoice_id: str) -> Iterator[Entry]:
+        """Every row written against this invoice, from any ledger in the directory.
+
+        The file is named after the engagement, and the guard is about an invoice. Rename the
+        engagement — a typo corrected, a client renamed — and the next run reads an empty
+        ledger and bills the same work onto the same invoice a second time. The invoice does
+        not know what the engagement is called, and neither should the question "has this
+        already been billed to it".
+        """
+        for path in sorted(self.path.parent.glob("*.jsonl")):
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                try:
+                    entry = Entry.model_validate_json(line)
+                except ValueError:
+                    continue
+                if entry.invoice_id == invoice_id:
+                    yield entry
 
     def append(self, entry: Entry) -> None:
         # Carry the seed forward on the first local write. Reading it only as a fallback meant

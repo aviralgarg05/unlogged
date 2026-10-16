@@ -1271,3 +1271,64 @@ def test_a_line_priced_in_another_currency_never_reaches_the_invoice():
             "INV2-TEST-0000-0000-0007",
             [LineItem("Work", Decimal("1"), Decimal("85.00"), currency="GBP")],
         )
+
+
+def test_renaming_the_engagement_does_not_re_bill_the_same_invoice(tmp_path, monkeypatch):
+    """The ledger file is named after the engagement and the guard is about an invoice. Fix a
+    typo in the engagement's id and the next run read an empty ledger and billed the same work
+    onto the same invoice again. The invoice does not know what the engagement is called.
+    """
+    import json
+
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+    original = json.loads((HERE / "fixtures" / "engagement.json").read_text())
+
+    def argv(path):
+        return [
+            "discover",
+            "--engagement",
+            str(path),
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
+            "--invoice-id",
+            invoice_id,
+            "--apply",
+        ]
+
+    first = tmp_path / "eng.json"
+    first.write_text(json.dumps(original))
+    assert CliRunner().invoke(cli.app, argv(first)).exit_code == 0
+
+    renamed = tmp_path / "eng-renamed.json"
+    renamed.write_text(json.dumps({**original, "id": "eng-checkout-001-corrected"}))
+    second = CliRunner().invoke(cli.app, argv(renamed))
+
+    assert second.exit_code == 1, second.output
+    assert "Already billed" in second.output
+
+
+def test_a_thread_that_names_one_event_twice_is_refused():
+    """Event ids identify the work everywhere downstream — the double-billing guard, the
+    verdict cassettes, the agreement sets — and nothing checked them. A file listing one event
+    twice billed the client twice for it inside a single apply, with the ledger recording one
+    row and agreeing.
+    """
+    import pytest
+
+    from unlogged.scope.models import load_events
+
+    lines = (HERE / "fixtures" / "events.jsonl").read_text().splitlines()
+
+    assert len(load_events(lines)) == 8
+
+    with pytest.raises(ValueError, match="names these twice: e3"):
+        load_events([*lines, lines[2]])

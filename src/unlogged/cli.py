@@ -16,7 +16,7 @@ from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.client import PayPalError
 from unlogged.paypal.invoices import MAX_ITEMS, TERMINAL_STATUSES, total_of
 from unlogged.scope.baseline import KeywordBaseline
-from unlogged.scope.models import Call, Engagement, WorkEvent, line_name
+from unlogged.scope.models import Call, Engagement, WorkEvent, line_name, load_events
 
 app = typer.Typer(add_completion=False, help=__doc__)
 
@@ -102,11 +102,7 @@ def discover(
     """Adjudicate work events, then itemise the billable extras onto the live invoice."""
     s = Settings.from_env()
     eng = _engagement(engagement)
-    evs = [
-        WorkEvent.model_validate_json(line)
-        for line in events.read_text().splitlines()
-        if line.strip()
-    ]
+    evs = load_events(events.read_text().splitlines())
     judge = _adjudicator(eng, s, evs)
     verdicts = judge.adjudicate(evs)
     by_id = {e.id: e for e in evs}
@@ -302,11 +298,7 @@ def evaluate(
 
     s = Settings.from_env()
     eng = _engagement(engagement)
-    evs = [
-        WorkEvent.model_validate_json(line)
-        for line in events.read_text().splitlines()
-        if line.strip()
-    ]
+    evs = load_events(events.read_text().splitlines())
     labels = [
         Gold.model_validate_json(line) for line in gold.read_text().splitlines() if line.strip()
     ]

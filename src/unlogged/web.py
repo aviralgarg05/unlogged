@@ -25,7 +25,7 @@ from unlogged.paypal.client import PayPalError
 from unlogged.paypal.invoices import MAX_ITEMS, total_of
 from unlogged.paypal.webhooks import Webhooks, is_simulated
 from unlogged.scope.baseline import KeywordBaseline
-from unlogged.scope.models import Engagement, WorkEvent, line_name
+from unlogged.scope.models import Engagement, WorkEvent, line_name, load_events
 
 log = structlog.get_logger(__name__)
 
@@ -57,11 +57,7 @@ def adjudicator(eng: Engagement, s: Settings, evs: list[WorkEvent]):
 
 
 def events() -> list[WorkEvent]:
-    return [
-        WorkEvent.model_validate_json(line)
-        for line in (FIXTURES / "events.jsonl").read_text().splitlines()
-        if line.strip()
-    ]
+    return load_events((FIXTURES / "events.jsonl").read_text().splitlines())
 
 
 @app.get("/health")

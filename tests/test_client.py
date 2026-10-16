@@ -69,11 +69,32 @@ def test_a_missing_cassette_says_how_to_record_one(cassettes: Path):
     assert "UNLOGGED_REPLAY=0" in str(exc.value)
 
 
-def test_replay_is_forced_when_there_are_no_credentials(cassettes: Path):
-    """Even with replay off, no credentials means no live call — not a crash mid-request."""
+def test_replay_is_the_default_and_needs_nothing(cassettes: Path):
+    """The judge path: no credentials, no flags, and the recordings answer."""
     record(cassettes, "GET", "/x", None, 200, {"ok": True})
-    with PayPalClient(settings(replay=False)) as c:
+    with PayPalClient(settings()) as c:
         assert c.request("GET", "/x") == {"ok": True}
+
+
+def test_asking_for_live_without_credentials_is_refused_rather_than_quietly_replayed(
+    cassettes: Path,
+):
+    """It used to fall through to the recording, so a run the operator believed was live
+    returned a recorded success and the ledger recorded a settled write that never happened —
+    the worst possible disagreement between a seller's record and PayPal, arrived at in
+    silence. A configuration error is a configuration error.
+    """
+    import pytest
+
+    from unlogged.paypal.client import PayPalError
+
+    record(cassettes, "GET", "/x", None, 200, {"ok": True})
+
+    with PayPalClient(settings(replay=False)) as c, pytest.raises(PayPalError) as err:
+        c.request("GET", "/x")
+
+    assert "UNLOGGED_REPLAY=0" in str(err.value)
+    assert "PAYPAL_CLIENT_ID" in str(err.value)
 
 
 def test_the_cassette_key_distinguishes_different_requests():

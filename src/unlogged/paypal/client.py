@@ -104,7 +104,20 @@ class PayPalClient:
         """
         key = _cassette_key(method, path, json_body)
 
-        if self.s.replay or not self.s.has_paypal:
+        if not self.s.replay and not self.s.has_paypal:
+            # Asking for live and having no credentials is a configuration error, not a cue
+            # to replay. Falling through to the recording meant a run the operator believed
+            # was live returned a recorded success and the ledger recorded a settled write
+            # that never happened — the worst possible disagreement between a seller's record
+            # and PayPal, arrived at silently.
+            raise PayPalError(
+                0,
+                "UNLOGGED_REPLAY=0 asks for the live API and PAYPAL_CLIENT_ID / "
+                "PAYPAL_CLIENT_SECRET are not set. Set them, or leave UNLOGGED_REPLAY unset "
+                "to replay the recordings.",
+            )
+
+        if self.s.replay:
             rec = self.tape.final(key) if final else self.tape.replay(key)
             if rec is None:
                 raise PayPalError(
