@@ -16,7 +16,7 @@ from typing import Any
 import structlog
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
@@ -161,8 +161,14 @@ def settlement(capture_id: str) -> dict[str, Any]:
     return {"available": True, **found.to_dict()}
 
 
+# This endpoint takes no credential, because the observer that posts to it runs in a browser.
+# Unbounded, that is an invitation: 20,000 events in one request wrote 2MB, and nothing stopped
+# the next one. Bounded, the worst a stranger can do is fill a page of a log nobody bills from.
+MAX_TELEMETRY_EVENTS = 500
+
+
 class TelemetryBatch(BaseModel):
-    events: list[dict[str, Any]]
+    events: list[dict[str, Any]] = Field(max_length=MAX_TELEMETRY_EVENTS)
 
 
 @app.post("/api/telemetry")
@@ -185,14 +191,28 @@ def read_telemetry() -> dict[str, Any]:
     path = DATA / "telemetry.jsonl"
     if not path.exists():
         return {"rows": []}
-    rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
-    tools = [r for r in rows if r.get("tool")]
+    rows = []
+    for line in path.read_text().splitlines():
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(row, dict):
+            rows.append(row)
+
+    # `tool` is read as a name, and one POST of {"tool": {"a": 1}} used to make this raise
+    # "unhashable type: dict" on every subsequent read — a permanent denial of service on an
+    # unauthenticated endpoint, from a single request, with the poison already on disk. What
+    # has been written cannot be unwritten, so reading has to survive it.
+    tools = [r["tool"] for r in rows if isinstance(r.get("tool"), str) and r["tool"]]
     return {
         "rows": rows,
         "summary": {
             "events": len(rows),
             "tool_calls": len(tools),
-            "tools_used": sorted({r["tool"] for r in tools}),
+            "tools_used": sorted(set(tools)),
         },
     }
 

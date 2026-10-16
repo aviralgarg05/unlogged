@@ -229,3 +229,42 @@ def test_health_reports_the_arm_that_would_actually_answer():
     verdicts = client.get("/api/verdicts").json()
 
     assert health["adjudicator"] == verdicts["arm"]
+
+
+def test_one_telemetry_post_cannot_permanently_break_reading(tmp_path, monkeypatch):
+    """`{"tool": {"a": 1}}` made every subsequent GET raise "unhashable type: dict" — a
+    permanent denial of service on an unauthenticated endpoint, from a single request, with
+    the poison already on disk. What has been written cannot be unwritten, so reading has to
+    survive it."""
+    from unlogged import web as web_mod
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+
+    assert client.post("/api/telemetry", json={"events": [{"tool": {"a": 1}}]}).status_code == 200
+
+    body = client.get("/api/telemetry").json()
+    assert body["summary"]["events"] == 1
+    assert body["summary"]["tools_used"] == []
+
+
+def test_a_torn_line_on_disk_does_not_stop_the_rest_being_read(tmp_path, monkeypatch):
+    from unlogged import web as web_mod
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+    (tmp_path / "telemetry.jsonl").write_text('{"tool": "apply"}\n{"tool": "trunc\n')
+
+    body = client.get("/api/telemetry").json()
+
+    assert body["summary"]["tools_used"] == ["apply"]
+
+
+def test_a_telemetry_batch_is_bounded(tmp_path, monkeypatch):
+    """Unbounded, 20,000 events in one request wrote 2MB and nothing stopped the next one."""
+    from unlogged import web as web_mod
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+
+    too_many = client.post("/api/telemetry", json={"events": [{"x": 1}] * 20_000})
+
+    assert too_many.status_code == 422
+    assert client.post("/api/telemetry", json={"events": [{"x": 1}] * 10}).status_code == 200

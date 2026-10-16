@@ -1,3 +1,4 @@
+import { sameOrigin, withinRate } from '@/lib/relay-guard';
 import { aiModels, openAiKey } from '@/lib/ai';
 
 // Proxy for AG Studio's OpenAI adapter (app/dashboard/studio/openai-adapter.ts). The adapter
@@ -14,6 +15,11 @@ const MAX_OUTPUT_TOKENS = 32_000;
 const error = (status: number, message: string) => Response.json({ error: { message } }, { status });
 
 export async function POST(request: Request) {
+  // This route spends the owner's OpenAI credit and takes no credential, because the caller is
+  // a browser. Two bounds rather than none: see lib/relay-guard.ts for why that is the trade.
+  if (!sameOrigin(request)) return Response.json({ error: { message: 'Cross-origin requests are not accepted.' } }, { status: 403 });
+  if (!withinRate(request)) return Response.json({ error: { message: 'Too many requests. Wait a minute.' } }, { status: 429 });
+
   const apiKey = openAiKey();
   if (!apiKey) return error(503, 'The AI assistant is not configured: set AG_STUDIO_OPENAI_API_KEY in .env.local.');
 
