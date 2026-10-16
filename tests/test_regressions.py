@@ -1584,3 +1584,38 @@ def test_a_standalone_script_imports_nothing_from_this_project():
             assert not (module or "").startswith("unlogged"), (
                 f"{path.name}:{node.lineno} imports {module} — it cannot, it runs alone"
             )
+
+
+# -- 13. two copies of one fact, and a document that outlived what it described --------------
+
+
+def test_the_dev_dependencies_are_declared_once_in_two_places_that_agree():
+    """Both declarations are deliberate — `uv run` installs groups, `--extra dev` is the alias
+    anyone who learned it still types — but four package pins written twice drift the first
+    time one of them is bumped."""
+    import tomllib
+
+    pyproject = Path(__file__).resolve().parents[1] / "pyproject.toml"
+    data = tomllib.loads(pyproject.read_text())
+    group = data["dependency-groups"]["dev"]
+    extra = data["project"]["optional-dependencies"]["dev"]
+    assert group == extra, (
+        f"the dev dependency group and the dev extra have drifted; group={group!r} extra={extra!r}"
+    )
+
+
+def test_nothing_in_the_product_deletes_a_line_or_cancels_an_invoice():
+    """SECURITY.md states this about the code, so the code is what should answer for it.
+
+    The whole premise is an invoice that only ever grows, on a link the client already has.
+    A delete or a cancel would not be a bug to fix later; it would make the claim false.
+    """
+    import ast
+
+    src = Path(__file__).resolve().parents[1] / "src"
+    for path in sorted(src.rglob("*.py")):
+        for node in ast.walk(ast.parse(path.read_text())):
+            if not isinstance(node, ast.Constant) or not isinstance(node.value, str):
+                continue
+            assert node.value != "DELETE", f"{path.name}:{node.lineno} issues a DELETE"
+            assert "/cancel" not in node.value, f"{path.name}:{node.lineno} calls cancel"
