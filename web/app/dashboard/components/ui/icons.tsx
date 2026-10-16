@@ -75,9 +75,3 @@ export const AlertIcon = icon(
     <path d="M12 9v4M12 17h.01" />
   </>,
 );
-export const InboxIcon = icon(
-  <>
-    <path d="M3 13h5l1.5 3h5L16 13h5" />
-    <path d="M5.5 5h13L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5z" />
-  </>,
-);

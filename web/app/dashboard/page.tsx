@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { connection } from "next/server";
 import { aiEnabled, aiModels } from "@/lib/ai";
 import { fetchEngagement } from "@/lib/backend";
+import type { ServiceStatus } from "@/lib/service-status";
 import { Dashboard } from "./dashboard";
 
 export const metadata: Metadata = {
@@ -9,21 +10,22 @@ export const metadata: Metadata = {
 };
 
 /**
- * The currency every money column on the page is formatted in.
+ * One call to the Python service: whether it answered, and the currency to format money in.
  *
  * Read here rather than in the browser because the fields are declared when Studio is built,
- * and a second render to add a currency symbol would reset the open report. One cheap call;
- * the rows themselves are still fetched a page at a time by the data source.
+ * and a second render to add a currency symbol would reset the open report. The rows
+ * themselves are still fetched a page at a time by the data source.
  *
- * If the service is unreachable the page still renders — the data source reports that per
- * widget, which is where a reader can act on it — and the figures keep today's unsymbolled
- * form rather than being labelled with a currency nobody confirmed.
+ * If the service is unreachable the page still renders, because it recovers on its own as
+ * soon as the service is up and the header carries a refresh. What it does not do is draw a
+ * green light over three empty grids: the figures stay unsymbolled rather than carrying a
+ * currency nobody confirmed, and the header says what is wrong and how to fix it.
  */
-async function engagementCurrency(): Promise<string | undefined> {
+async function serviceStatus(): Promise<ServiceStatus> {
   try {
-    return (await fetchEngagement()).currency;
+    return { reachable: true, currency: (await fetchEngagement()).currency };
   } catch {
-    return undefined;
+    return { reachable: false };
   }
 }
 
@@ -36,7 +38,7 @@ export default async function DashboardPage() {
     <Dashboard
       licenseKey={process.env.AG_STUDIO}
       aiModels={aiEnabled() ? aiModels() : undefined}
-      currency={await engagementCurrency()}
+      service={await serviceStatus()}
     />
   );
 }

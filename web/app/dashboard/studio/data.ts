@@ -191,5 +191,3 @@ export function unloggedDataSource(
     },
   };
 }
-
-export const hasData = (_data?: unknown) => true;
