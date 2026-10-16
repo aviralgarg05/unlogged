@@ -41,7 +41,7 @@ uv run scripts/verify.py               # checks every claim in this README
 That script is the short version of everything below: it runs the tests, reproduces the
 evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
 the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
-13 checks keyless, 20 with sandbox credentials, about twenty seconds.
+14 checks keyless, 22 with sandbox credentials, about twenty seconds.
 
 With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
 against PayPal on the day you run it — it creates a real invoice, grows it, records a bank
@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 140 tests, no credentials needed
+uv run pytest -q                       # 144 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -229,7 +229,7 @@ the file that implements it — so nothing has to be taken on trust.
 
 | Criterion | Run this | Implemented in |
 |---|---|---|
-| **Technological Implementation** | `uv run scripts/verify.py` — 13 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
+| **Technological Implementation** | `uv run scripts/verify.py` — 14 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
 | **Design** | `docker compose up` → `/dashboard` — rows fetched a page at a time and never materialised in the browser, a custom widget, and the one button that moves money | [`studio/data.ts`](web/app/dashboard/studio/data.ts), [`evidence-card.tsx`](web/app/dashboard/studio/widgets/evidence-card.tsx) |
 | **Potential Impact** | `uv run unlogged evaluate …` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
 | **Innovation** | The same invoice id and QR at $520.00 and at $902.50, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
@@ -264,7 +264,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 140 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 144 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

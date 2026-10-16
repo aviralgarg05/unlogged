@@ -1,0 +1,798 @@
+{
+ "neg": [
+  {
+   "id": 343260,
+   "slug": "jekyll",
+   "desc": "Safety and sanity",
+   "amount": 2500.0,
+   "items": [
+    "Safety and sanity "
+   ]
+  },
+  {
+   "id": 340290,
+   "slug": "webpack",
+   "desc": "Ppm",
+   "amount": 500.0,
+   "items": [
+    "Ppm"
+   ]
+  },
+  {
+   "id": 299552,
+   "slug": "openaddresses",
+   "desc": "Gadget repair",
+   "amount": 30000.0,
+   "items": [
+    "Gadget repair"
+   ]
+  },
+  {
+   "id": 295762,
+   "slug": "eslint",
+   "desc": "Legal work/businesses preperation",
+   "amount": 9200.0,
+   "items": [
+    "legal/attorney fee",
+    "admin.cost/accounting fee",
+    "postage/printing of documents/phone costs"
+   ]
+  },
+  {
+   "id": 285903,
+   "slug": "webpack",
+   "desc": "Governance, Administrative, Communication & Development Work",
+   "amount": 6000.0,
+   "items": [
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work",
+    "Governance, Administrative, Communication &amp; Development Work"
+   ]
+  },
+  {
+   "id": 284147,
+   "slug": "webpack",
+   "desc": "communication, admin - July 2025 - January 2026",
+   "amount": 6000.0,
+   "items": [
+    "communication, admin - July - August 2025 ",
+    "communication, admin - August - September 2025",
+    "communication, admin - September - October 2025",
+    "communication, admin - October - November 2025 ",
+    "communication, admin - November - December 2025 ",
+    "communication, admin - December - January 2026 "
+   ]
+  },
+  {
+   "id": 283154,
+   "slug": "yiisoft",
+   "desc": "For December 2025",
+   "amount": 2000.0,
+   "items": [
+    "Working on Yii3 development in December 2025"
+   ]
+  },
+  {
+   "id": 280887,
+   "slug": "opensourcedesign",
+   "desc": "Lodging",
+   "amount": 351.98,
+   "items": [
+    "Lodging"
+   ]
+  },
+  {
+   "id": 277236,
+   "slug": "urllib3",
+   "desc": "Maintenance (April\u2014November 2025)",
+   "amount": 5993.0,
+   "items": [
+    "April 2025: 1) research and initial remediation development for vulnerability https://github.com/urllib3/urllib3/security/advisories/GHSA-pq67-6m6q-mj2v; 2) finding another vulnerability and initial work on it https://github.com/urllib3/urllib3/security/advisories/GHSA-48p4-8xcf-vxj5; 3) reviewing pull requests https://github.com/urllib3/urllib3/pull/3577, https://github.com/urllib3/urllib3/pull/3592, https://github.com/urllib3/urllib3/pull/3591, https://github.com/urllib3/urllib3/pull/3599, Dependabot updates; 4) authoring pull requests https://github.com/urllib3/urllib3/pull/3586, https://github.com/urllib3/urllib3/pull/3585, https://github.com/urllib3/urllib3/pull/3589, https://github.com/urllib3/urllib3/pull/3596, https://github.com/urllib3/urllib3/pull/3597, https://github.com/urllib3/urllib3/pull/3600; 5) issues https://github.com/psf/requests/issues/6934, https://github.com/urllib3/urllib3/issues/3598; 6) releasing version 2.4.0 https://github.com/urllib3/urllib3/pull/3587, https://github.com/conda-forge/urllib3-feedstock/pull/89",
+    "May 2025: private communication related to https://github.com/urllib3/urllib3/security/advisories/GHSA-48p4-8xcf-vxj5",
+    "June 2025: 1) further and final work on security advisories and remediations for https://github.com/urllib3/urllib3/security/advisories/GHSA-pq67-6m6q-mj2v and https://github.com/urllib3/urllib3/security/advisories/GHSA-48p4-8xcf-vxj5; 2) research and initial remediation PoC development for a new vulnerability report https://huntr.com/bounties/89cbe781-5fa2-41e4-9f65-66d7cc2959fe; 2) 2) reviewing pull requests https://github.com/urllib3/urllib3/pull/3620, https://github.com/urllib3/urllib3/pull/3602, https://github.com/urllib3/urllib3/pull/3633; 3) issues https://github.com/wntrblm/nox/issues/986; 4) releasing version 2.5.0 https://github.com/urllib3/urllib3/pull/3625, discussions on ceasing support for the 1.x branch",
+    "July 2025: 1) investigating errors related to Emscripten, fixing them by extensive changes to tests structure https://github.com/urllib3/urllib3/pull/3637, https://github.com/pyodide/pytest-pyodide/issues/163, https://github.com/urllib3/urllib3/pull/3644; 2) further work on remediation for https://huntr.com/bounties/89cbe781-5fa2-41e4-9f65-66d7cc2959fe, private communication with Brotli's maintainer; 3) reviewing and closing new private report https://github.com/urllib3/urllib3/security/advisories/GHSA-4654-qj59-cpc7; 4) reviewing https://github.com/urllib3/urllib3/pull/3639, https://github.com/urllib3/urllib3/issues/3636, https://github.com/urllib3/urllib3/pull/3647; 5) authoring https://github.com/urllib3/urllib3/pull/3645",
+    "August 2025: 1) checking issues https://github.com/urllib3/urllib3/issues/3649, https://github.com/urllib3/urllib3/issues/3652; 2) authoring pull requests https://github.com/urllib3/urllib3/pull/3655; 3) reviewing pull requests https://github.com/urllib3/urllib3/pull/3648, https://github.com/urllib3/urllib3/pull/3650, https://github.com/urllib3/urllib3/pull/3653, https://github.com/urllib3/urllib3/pull/3664; 4) updating https://github.com/urllib3/urllib3/pull/3644",
+    "September 2025: 1) further work on remediation for https://huntr.com/bounties/89cbe781-5fa2-41e4-9f65-66d7cc2959fe, communication with Google regarding new Brotli release via Google Bug Hunters, communication with Huntr to extend the disclosure deadline; 2) reviewing https://github.com/urllib3/urllib3/pull/3667, https://github.com/urllib3/urllib3/pull/3666, https://github.com/urllib3/urllib3/pull/3654, https://github.com/urllib3/urllib3/issues/3675, https://github.com/urllib3/urllib3/issues/3676, https://github.com/urllib3/urllib3/issues/3677, https://github.com/github/advisory-database/pull/6149, https://github.com/urllib3/urllib3/pull/3682, Dependabot updates",
+    "October 2025: 1) private communication with 7ASecurity related to a security audit, filling in questionnaire on urllib3's supply chain, describing known issues and useful links for auditors, reading provided documents, checking reported issues and providing my feedback; 2) further work on remediation for https://huntr.com/bounties/89cbe781-5fa2-41e4-9f65-66d7cc2959fe, initial coding for needed updates to dependency brotlicffi; 3) reviewing https://github.com/urllib3/urllib3/pull/3691, https://github.com/urllib3/urllib3/pull/3696, https://github.com/urllib3/urllib3/pull/3697, https://github.com/urllib3/urllib3/pull/3690, https://github.com/urllib3/urllib3/pull/3687, Dependabot updates; 4) check new vulnerability report https://huntr.com/bounties/9b6981e3-a3b9-4389-81f4-430ffa930559; 5) authoring https://github.com/urllib3/urllib3/pull/3692, https://github.com/urllib3/urllib3/issues/3693; 6) private communication regarding a fraudulent domain report",
+    "November 2025: 1) review https://github.com/urllib3/urllib3/issues/3588#issuecomment-3487497719, https://github.com/urllib3/urllib3/issues/3567#issuecomment-3487579383, https://github.com/urllib3/urllib3/pull/3711, https://github.com/urllib3/urllib3/pull/3705, https://github.com/urllib3/urllib3/pull/3720, https://github.com/urllib3/urllib3/pull/3721, https://github.com/conda-forge/urllib3-feedstock/pull/93, Dependabot updates; 2) further and final work on https://github.com/python-hyper/brotlicffi/pull/207; 3) researching new details on https://huntr.com/bounties/9b6981e3-a3b9-4389-81f4-430ffa930559, coding reproducers, communication with co-maintainers, transferring the report to CPython, reviewing a related fix and adding a suggestion https://github.com/python/cpython/pull/119454; 4) focusing on the security audit report, potential fixes, communication with 7ASecurity; 5) authoring https://github.com/urllib3/urllib3/pull/3715, https://github.com/urllib3/urllib3/pull/3716, https://github.com/urllib3/urllib3/pull/3717, https://github.com/python-hyper/brotlicffi/issues/215; 6) further work on remediation for https://huntr.com/bounties/89cbe781-5fa2-41e4-9f65-66d7cc2959fe, preparing a private pull request to review, coordination around the issue, writing an advisory draft https://github.com/urllib3/urllib3/security/advisories/GHSA-2xpw-w6gg-jr37; 7) writing an advisory draft and a first version of the fix for https://github.com/urllib3/urllib3/security/advisories/GHSA-gm62-xv2j-4w53; 8) checking a new vulnerability report https://huntr.com/bounties/3998374b-9726-447d-9102-5d19f34d6d50"
+   ]
+  },
+  {
+   "id": 271576,
+   "slug": "srs-server",
+   "desc": "Developer fee for haibo and junqin.",
+   "amount": 2800.0,
+   "items": [
+    "Developer fee for haibo and junqin."
+   ]
+  },
+  {
+   "id": 270953,
+   "slug": "webdriverio",
+   "desc": "Project Contribution PR webdriverio-community/wdio-teamcity-reporter#66",
+   "amount": 15.0,
+   "items": [
+    " Update link to WebdriverIO configuration file in README.md"
+   ]
+  },
+  {
+   "id": 266599,
+   "slug": "webpack",
+   "desc": "Founder Siaze of Assets until call from shareholders .",
+   "amount": 5000.0,
+   "items": [
+    "Do not payout any payment unless you get in contact with warith Akbar. "
+   ]
+  },
+  {
+   "id": 265604,
+   "slug": "kivymd",
+   "desc": "Payment for completed work",
+   "amount": 4565.0,
+   "items": [
+    "Work completion dates (from April 2025 to September 2025"
+   ]
+  },
+  {
+   "id": 264718,
+   "slug": "webdriverio",
+   "desc": "Project Contribution PR webdriverio/webdriverio#14736",
+   "amount": 15.0,
+   "items": [
+    "Add \"appium:webviewAtomWaitTimeout\" to AppiumXCUITestCapabilities"
+   ]
+  },
+  {
+   "id": 256020,
+   "slug": "webdriverio",
+   "desc": "Project Contribution PR webdriverio/expect-webdriverio#1867",
+   "amount": 48.18,
+   "items": [
+    "chore(tsc+lint): Enhancing project tsc and linting, July 2025"
+   ]
+  },
+  {
+   "id": 250148,
+   "slug": "webdriverio",
+   "desc": "Project Contribution PR webdriverio/webdriverio#14488",
+   "amount": 85.23,
+   "items": [
+    "docs: improve browser.keys documentation, May 2025"
+   ]
+  },
+  {
+   "id": 238328,
+   "slug": "generator-jhipster",
+   "desc": "Sponsorship for the JHipster Developers Association",
+   "amount": 10000.0,
+   "items": [
+    "As described in our statuses at https://www.jhipster.tech/association/ the association manages activities to promote JHipster. A major part of the costs this year is the hosting fees."
+   ]
+  },
+  {
+   "id": 236243,
+   "slug": "bazel-rules-authors-sig",
+   "desc": "Dinner",
+   "amount": 5000.0,
+   "items": [
+    "Asa ko "
+   ]
+  },
+  {
+   "id": 223455,
+   "slug": "babel",
+   "desc": "Babel engineering support",
+   "amount": 5400.0,
+   "items": [
+    "Babel engineering support (September 2024)"
+   ]
+  },
+  {
+   "id": 221381,
+   "slug": "webdriverio",
+   "desc": "Project Contribution PR webdriverio/webdriverio#13520 And PR webdriverio/expect-webdriverio#1631",
+   "amount": 30.0,
+   "items": [
+    "fix expect import and fix the second deepselector call , sept 2024"
+   ]
+  },
+  {
+   "id": 220406,
+   "slug": "eslint",
+   "desc": "Community org management - July + August 2024",
+   "amount": 1050.0,
+   "items": [
+    "Discussing governance + possible new packages",
+    "Maintaining @eslint-community/eslint-plugin-mysticatea: triaging issues/PRs &amp; writing code",
+    "Maintaining @eslint-community/eslint-utils: triaging issues/PRs &amp; reviewing PRs",
+    "Maintaining @eslint-community/regexpp: triaging issues/PRs &amp; reviewing PRs",
+    "Maintaining eslint-plugin-promise: triaging issues/PRs &amp; reviewing PRs",
+    "Maintaining eslint-plugin-security: triaging issues/PRs",
+    "Maintaining eslint-plugin-n: triaging issues/PRs &amp; reviewing PRs"
+   ]
+  },
+  {
+   "id": 217239,
+   "slug": "urllib3",
+   "desc": "Bounty For [FIX #1338 ] Respects Timeout on Retry After",
+   "amount": 100.0,
+   "items": [
+    "[FIX #1338 ] Respects Timeout on Retry After"
+   ]
+  },
+  {
+   "id": 213676,
+   "slug": "eslint",
+   "desc": "eslint-plugin-promise contributions",
+   "amount": 700.0,
+   "items": [
+    "Review PRs and tag issues",
+    "Prepare PRs",
+    "Prepare PR",
+    "Prepare PRs",
+    "Prepare PR",
+    "Prepare PR",
+    "Prepare PR",
+    "Prepare PR"
+   ]
+  },
+  {
+   "id": 209049,
+   "slug": "webpack",
+   "desc": "research and development",
+   "amount": 2000.0,
+   "items": [
+    "research activity"
+   ]
+  },
+  {
+   "id": 205243,
+   "slug": "fast-xml-parser",
+   "desc": "development cost",
+   "amount": 239.0,
+   "items": [
+    "development and maintenance, April 2024"
+   ]
+  },
+  {
+   "id": 202784,
+   "slug": "octobox",
+   "desc": "Test Expense AAA",
+   "amount": 192.0,
+   "items": [
+    "I did this",
+    "I did that"
+   ]
+  },
+  {
+   "id": 201460,
+   "slug": "curl",
+   "desc": "curl up 2024",
+   "amount": 3277.0,
+   "items": [
+    "curl up 2024, venue, food, coffee and tshirts"
+   ]
+  },
+  {
+   "id": 196775,
+   "slug": "bazel-rules-authors-sig",
+   "desc": "BazelCon Venue Deposit",
+   "amount": 17301.0,
+   "items": [
+    "BazelCon Deposit"
+   ]
+  },
+  {
+   "id": 192843,
+   "slug": "cloudflarecollective",
+   "desc": "Campinas HashiCorp User Group",
+   "amount": 300.0,
+   "items": [
+    "IaC no dia a dia e casos de uso do Terraform, April HashiCorp meetup"
+   ]
+  },
+  {
+   "id": 191742,
+   "slug": "srs-server",
+   "desc": "Spoken English training",
+   "amount": 353.0,
+   "items": [
+    "Spoken English training to attend a technical meeting in England"
+   ]
+  },
+  {
+   "id": 190716,
+   "slug": "webpack",
+   "desc": "Factura",
+   "amount": 500.0,
+   "items": [
+    "Pago"
+   ]
+  },
+  {
+   "id": 190577,
+   "slug": "mautic",
+   "desc": "Legal services",
+   "amount": 984.5,
+   "items": [
+    "Legal services"
+   ]
+  },
+  {
+   "id": 190035,
+   "slug": "webdriverio",
+   "desc": "Add feature to specify os version for the emulated device",
+   "amount": 25.0,
+   "items": [
+    "02/2024  #12344"
+   ]
+  },
+  {
+   "id": 189425,
+   "slug": "webdriverio",
+   "desc": "[V8] Updated props to optional for getText and getLocation commands",
+   "amount": 25.0,
+   "items": [
+    "02/2024  #12307"
+   ]
+  },
+  {
+   "id": 184063,
+   "slug": "urllib3",
+   "desc": "Research/Answer Issue 2798",
+   "amount": 300.0,
+   "items": [
+    "Summary: https://github.com/urllib3/urllib3/issues/2799#issuecomment-1872448595"
+   ]
+  },
+  {
+   "id": 183897,
+   "slug": "yiisoft",
+   "desc": "Yii 3 development",
+   "amount": 1500.0,
+   "items": [
+    "Yii 3 development"
+   ]
+  },
+  {
+   "id": 183839,
+   "slug": "webdriverio",
+   "desc": "PR #1234",
+   "amount": 1.23,
+   "items": [
+    "PR #1234"
+   ]
+  },
+  {
+   "id": 179581,
+   "slug": "jsprimer",
+   "desc": "Test 2",
+   "amount": 10.0,
+   "items": [
+    "Test 2"
+   ]
+  },
+  {
+   "id": 178768,
+   "slug": "eslint",
+   "desc": "Contributor Pool - June 2023",
+   "amount": 100.0,
+   "items": [
+    "https://opencollective.com/eslint/expenses/147116#comment-1703179881991"
+   ]
+  }
+ ],
+ "pos": [
+  {
+   "id": 350685,
+   "slug": "yiisoft",
+   "desc": "Yii development",
+   "amount": 600.0,
+   "items": [
+    "Contributions between 2026-08-01 and 2026-08-15"
+   ]
+  },
+  {
+   "id": 350128,
+   "slug": "instancio",
+   "desc": "Release 6.1.0",
+   "amount": 15.0,
+   "items": [
+    "Instancio 6.1.0 \u2013 development and release, Sep 19\u201326, 2026"
+   ]
+  },
+  {
+   "id": 349588,
+   "slug": "mochajs",
+   "desc": "2026-08 and 2026-09 maintenance and development",
+   "amount": 1275.0,
+   "items": [
+    "2026-08 and 2026-09 maintenance and development"
+   ]
+  },
+  {
+   "id": 349498,
+   "slug": "webdriverio",
+   "desc": "WebdriverIO Contribution for September 2026",
+   "amount": 334.29,
+   "items": [
+    "@wdio/mcp and devtools' feature development &amp; fixes"
+   ]
+  },
+  {
+   "id": 349425,
+   "slug": "webdriverio",
+   "desc": "September Maintenance and v10",
+   "amount": 742.86,
+   "items": [
+    "September Maintenance and v10"
+   ]
+  },
+  {
+   "id": 349327,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 544.2,
+   "items": [
+    "Maintenance and Development - September 2026"
+   ]
+  },
+  {
+   "id": 349313,
+   "slug": "testcontainers",
+   "desc": "Maintenance of Testcontainers for NodeJS for September 2026",
+   "amount": 1506.5,
+   "items": [
+    "Maintenance of Testcontainers for NodeJS for September 2026"
+   ]
+  },
+  {
+   "id": 349258,
+   "slug": "testcontainers",
+   "desc": "Maintenance of Testcontainers for .NET",
+   "amount": 2000.0,
+   "items": [
+    "Maintenance of Testcontainers for .NET for September 2026, including the release of version 4.16.0"
+   ]
+  },
+  {
+   "id": 349113,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 1600.0,
+   "items": [
+    "Maintenance and Development - September 2026"
+   ]
+  },
+  {
+   "id": 349059,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 1800.0,
+   "items": [
+    "Maintenance and Development - September 2026"
+   ]
+  },
+  {
+   "id": 349054,
+   "slug": "actual",
+   "desc": "September 2026 Maintainer Distribution - youngcw",
+   "amount": 850.25,
+   "items": [
+    "September Maintainer Distribution - youngcw"
+   ]
+  },
+  {
+   "id": 349051,
+   "slug": "webdriverio",
+   "desc": "webdriverio sept 2026 support",
+   "amount": 241.23,
+   "items": [
+    "webdriverio sept 2026 support "
+   ]
+  },
+  {
+   "id": 349034,
+   "slug": "generator-jhipster",
+   "desc": "Bug bounty claim for #34641, #21466 and #35153",
+   "amount": 500.0,
+   "items": [
+    "Bug bounty claim for https://github.com/jhipster/generator-jhipster/pull/34641",
+    "Bug bounty claim for https://github.com/jhipster/generator-jhipster/issues/21466",
+    "Bug bounty claim for https://github.com/jhipster/generator-jhipster/issues/35153"
+   ]
+  },
+  {
+   "id": 349030,
+   "slug": "generator-jhipster",
+   "desc": "Bug bounty claim for https://github.com/jhipster/generator-jhipster/pull/34793",
+   "amount": 500.0,
+   "items": [
+    "Bug bounty claim for https://github.com/jhipster/generator-jhipster/pull/34793"
+   ]
+  },
+  {
+   "id": 349015,
+   "slug": "eslint",
+   "desc": "Maintenance and Development, September 2026",
+   "amount": 2800.4,
+   "items": [
+    "Maintenance and Development, September 2026"
+   ]
+  },
+  {
+   "id": 348987,
+   "slug": "actual",
+   "desc": "August - September 2026 Maintainer Distribution - MikesGlitch",
+   "amount": 498.77,
+   "items": [
+    "August - September 2026 Maintainer Distribution - MikesGlitch"
+   ]
+  },
+  {
+   "id": 348974,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 1935.4,
+   "items": [
+    "Contributions"
+   ]
+  },
+  {
+   "id": 348956,
+   "slug": "babel",
+   "desc": "Babel Engineering Support (September 2026)",
+   "amount": 2350.0,
+   "items": [
+    "Babel Engineering Support"
+   ]
+  },
+  {
+   "id": 348937,
+   "slug": "actual",
+   "desc": "September 2026 Maintainer Distribution - matt-fidd",
+   "amount": 361.45,
+   "items": [
+    "September 2026 Maintainer Distribution - matt-fidd"
+   ]
+  },
+  {
+   "id": 348794,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 360.0,
+   "items": [
+    "Programming Support",
+    "Issue Triage &amp; PR Reviews"
+   ]
+  },
+  {
+   "id": 348770,
+   "slug": "mochajs",
+   "desc": "Maintenance and development, Sep. 2026",
+   "amount": 331.33,
+   "items": [
+    "Maintenance and development of Mocha"
+   ]
+  },
+  {
+   "id": 348604,
+   "slug": "eslint",
+   "desc": "Contributor Pool - September 2026",
+   "amount": 250.0,
+   "items": [
+    "Contributor Pool - September 2026"
+   ]
+  },
+  {
+   "id": 348590,
+   "slug": "mochajs",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 375.0,
+   "items": [
+    "Maintenance and Development - September 2026"
+   ]
+  },
+  {
+   "id": 348519,
+   "slug": "leanbitlab-org",
+   "desc": "Open-source software maintenance, bug fixes, and dependency updates for LeanType (September 2026)",
+   "amount": 115.0,
+   "items": [
+    "Open-source software maintenance, release preparation, bug fixes, and dependency updates for LeanType (September 2026)"
+   ]
+  },
+  {
+   "id": 348427,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 275.0,
+   "items": [
+    "Issue triage and programming - September 2026"
+   ]
+  },
+  {
+   "id": 348424,
+   "slug": "eslint",
+   "desc": "Maintenance and Development - September 2026",
+   "amount": 2000.0,
+   "items": [
+    "Maintenance and Development - September 2026 (ESLint)",
+    "Maintenance and Development - September 2026 (ESLint Community)"
+   ]
+  },
+  {
+   "id": 348403,
+   "slug": "webdriverio",
+   "desc": "Maintenance work for September / v10 dev work",
+   "amount": 1437.02,
+   "items": [
+    "Maintenance work for September / v10 dev work"
+   ]
+  },
+  {
+   "id": 348245,
+   "slug": "yiisoft",
+   "desc": "Yii development",
+   "amount": 600.0,
+   "items": [
+    "Contributions between 2026-07-16 and 2026-07-31"
+   ]
+  },
+  {
+   "id": 348190,
+   "slug": "generator-jhipster",
+   "desc": "KHipster Release v2.0.0",
+   "amount": 750.0,
+   "items": [
+    "KHipster Release v2.0.0"
+   ]
+  },
+  {
+   "id": 348115,
+   "slug": "babel",
+   "desc": "Babel development and support (August 2026)",
+   "amount": 6600.0,
+   "items": [
+    "Babel development and support (August 2026)"
+   ]
+  },
+  {
+   "id": 347955,
+   "slug": "webpack",
+   "desc": "Development and communication (08/2026)",
+   "amount": 400.0,
+   "items": [
+    "Development and communication (08/2026)"
+   ]
+  },
+  {
+   "id": 347942,
+   "slug": "webpack",
+   "desc": "Development and communication (08/2026)",
+   "amount": 7000.0,
+   "items": [
+    "Development and communication (08/2026)"
+   ]
+  },
+  {
+   "id": 347886,
+   "slug": "webpack",
+   "desc": "Development and communication (2025-2026) Payment 2/2",
+   "amount": 2700.0,
+   "items": [
+    "Development and communication (2025-2026) Payment 2/2"
+   ]
+  },
+  {
+   "id": 347714,
+   "slug": "yiisoft",
+   "desc": "Yii 3 Development",
+   "amount": 2500.0,
+   "items": [
+    "Contributions in April - July (2026)"
+   ]
+  },
+  {
+   "id": 347461,
+   "slug": "webdriverio",
+   "desc": "Project Contribution PR webdriverio/webdriverio#15609",
+   "amount": 15.0,
+   "items": [
+    "fix(utils): include execution context in timeout errors, September 2026"
+   ]
+  },
+  {
+   "id": 347000,
+   "slug": "neoforged",
+   "desc": "Creation of changes primer for MC 26.3",
+   "amount": 400.0,
+   "items": [
+    "Creation of changes primer for MC 26.3, Sep. 2026"
+   ]
+  },
+  {
+   "id": 346764,
+   "slug": "generator-jhipster",
+   "desc": "JHipster 9.4.0 release",
+   "amount": 500.0,
+   "items": [
+    "JHipster 9.4.0 release"
+   ]
+  },
+  {
+   "id": 346424,
+   "slug": "monitorcontrol",
+   "desc": "Support & Maintenance Jun 2024 - Aug 2026",
+   "amount": 1650.0,
+   "items": [
+    "Support &amp; Maintenance - Jun 2024 - Aug 2026"
+   ]
+  },
+  {
+   "id": 346366,
+   "slug": "yiisoft",
+   "desc": "Yii development",
+   "amount": 600.0,
+   "items": [
+    "Contributions between 2026-07-01 and 2026-07-15"
+   ]
+  },
+  {
+   "id": 346286,
+   "slug": "nanoframework",
+   "desc": "Development work",
+   "amount": 8000.0,
+   "items": [
+    "Development work "
+   ]
+  },
+  {
+   "id": 346205,
+   "slug": "generator-jhipster",
+   "desc": "$100 bug bounty claim for https://github.com/jhipster/generator-jhipster/pull/34939",
+   "amount": 100.0,
+   "items": [
+    "$100 bug bounty claim for https://github.com/jhipster/generator-jhipster/pull/34939"
+   ]
+  }
+ ],
+ "policies": {
+  "jekyll": "OpenCollective funds are awarded based on the needs of the projects as prioritized by the Core team. These needs are loosely correlated with the priority labels on the GitHub issue tracker. If you believe that you've contributed something that fulfills those needs, please contact the core team or directly file an expense.",
+  "webpack": "We distribute the money according to the contributions on github. There is a minimum threshold. You'll receive a mail when you made enough contributions last month. It may take a bit longer for new contributions. All expenses needs to include a github handle for administrators to better verify.",
+  "openaddresses": "The OpenAddresses project has very limited expenses: we use Amazon Web Services for data processing (EC2) and hosting (S3). We also use BunnyCDN to defray some of the costs of repeated, large downloads. For now, this OpenCollective will be used to fund these activities on AWS and BunnyCDN to keep sharing open address data with the world.",
+  "eslint": "All expenses need to be approved by ESLint financial committee. For more information about the process, please visit https://github.com/eslint/finances",
+  "yiisoft": "Feel free to expense time you've spent according to Yii Software goal i.e. support, promote and develop Yii and other OpenSource software with a focus on Yii framework. Anyone contributing to Yii can use it. Priority is given to people who are contributing a lot and with a clear plan instead of doing commercial job i.e. hurting regular income. Sum can't exceed what's in the current foundation considering others. The core team should be told about it in advance. Hours should be logged. No person may be favored by expenses alien to the goals of the Yii Software or disproportionately high.",
+  "opensourcedesign": "Feel free to expense things which benefit the community at large. For example: Printing stickers (if they don\u2019t get sponsored, for example by Stickermule) Organizing a meetup (if you can\u2019t get the venue for free, like we do in Berlin from Wikimedia) Domain or service costs (so far we only have the yearly domain cost, as our Discourse is sponsored) Because of the limited resources, we don\u2019t do reimbursement of personal expenses like travel or accommodation to any meetup.",
+  "urllib3": "Contributions that can be added as expenses include 'Adding Features', 'Fixing Bugs', and 'Reviewing Pull Requests'. The contribution should be non-trivial (fixing whitespace, etc). You don't need to be a core contributor to submit an expense. The amount billed is up to you depending on the amount of time spent and complexity of the contribution.",
+  "srs-server": "In SRS, our main expenses are related to community development, which can be divided into the following categories: 1. Infrastructure, such as the community's official website domain and VPS running on DigitalOcean, as well as blog hosting on Medium. 2. Tools, mainly AI tools, such as the cost of OpenAI's API and AI tools for generating documents and videos. 3. Basic project support, where we will allocate half of the expenses to open-source projects we use, such as FFmpeg, at the end of the year. 4. Equipment, primarily audio and video-related devices, including various embedded devices, different platform devices, cameras, and XR equipment. 5. Consultation fees, supporting senior developers in the community to participate in industry conferences and share travel expenses.",
+  "webdriverio": "The goal with this collective is to sponsor development of the project as well community events. The following expense types may be eligible for reimbursement from this collective:: Event Expenses: If you host an event that has a speaker talking about using WebdriverIO and its features you can expense up to $100. Reimbursement requirements for event expenses include : You or the event account must share the project on social media (Twitter, Facebook or LinkedIn) at least 3x The event page must have the WebdriverIO logo and a link to the project page in your meetup description You must use the funds for qualified event expenses such as food, beverage, room or equipment rental. You must submit receipts with your reimbursement request. Development Expenses If you have done development work on any of the repositories within the GitHub WebdriverIO organisation you may reimburse up to $1000 if the following requirements are met: You must have submitted qualifying pull requests that have closed at least 10 issues that were labeled with \u201c Expensable \ud83d\udcb8 \u201d Every additional issue closed with that label can be expensed with $100 You must submit links to all issues you\u2019ve closed due to your pull requests In order to close the ticket automatically, you must have one commit message with the Fix keyword. For example, Fix #1234 to close ticket #1234. Pull Requests must be merged by someone from the core team . If there are several Pull Requests, the core team member either selects the most recent one or the best one - that\u2019s up to them to decide what is best for the project. You must claim an \u201c Expensable \ud83d\udcb8 \u201d issue by commenting to the issue thread to ensure that no one else is working on the same issue. Anyone contributing to WebdriverIO is eligible to expense their work if the implemented features or bug fixes are not objectives of a commercial job. Travel Expenses If you are a member of the Technical Steering Committee team you are eligible to expense flights and hotel accommodations for travel to conferences or meetups as part of a speaking engagement on WebdriverIO. You may expense up to $500. Reimbursement requirements for travel expenses include: You must send out a post from your main social media account (e.g. Twitter, LinkedIn or personal blog) thanking all contributors of the collective after the event took place. You must use the funds for qualified travel expenses such as ground or air transportation to the event and hotel accomodations. You must submit receipts with your reimbursement request. All expenses that meet the above requirements will be reviewed and processed by the collective administrators within 7 days of receiving the request.",
+  "kivymd": "Contribution type - a link to a pull request, or a pull, in which the contributor made useful changes for the KivyMD library , KivyMD organization projects or KivyMD Extensions . The maximum amount is $5000. For other questions, please contact https://opencollective.com/juri-ivanov",
+  "generator-jhipster": "Create a Pull Request that fixes a ticket with the \u201c$$ bug-bounty $$\u201d label. In order to close the ticket automatically, you must have one commit message with the Fix keyword. For example, Fix #1234 to close ticket #1234. That Pull Request must be merged by someone from the core team. If there are several Pull Requests, the core team member either selects the most recent one or the best one - that\u2019s up to them to decide what is best for the project. You can then add an expense for the bounty amount on the JHipster OpenCollective. You must add a link to your Pull Request in the description (for example, a $100 bug bounty claim for https://github.com/jhipster/generator-jhipster/pull/1234 ). You will also need to provide an invoice, see the Open Collective FAQ for expenses for more details, and to get a Google Docs template that you can use. Then, you must add a comment on your Pull Request, telling that you claimed the money, with a link to your OpenCollective expense. This is to be sure it is the same person who fixed the issue and claimed the money. That expense will then be validated by @jdubois, @deepu105, or @pascalgrimaud and you will receive your money on your Paypal/bank account.",
+  "bazel-rules-authors-sig": "Typical rate for documentation work is $130USD/hr. Engineering work can be billed at up to $220/hr, which is the same rate Chrome is paying. https://opencollective.com/chrome For example, https://opencollective.com/ui-fund/expenses/84879 for $33k in June (assuming 150hr/mo) works out to $220/hr.",
+  "babel": "As a community member, feel free to expense a public transport for a conference/meetup. For core members, transport/stay for things like TC39 meetings or conferences. For other expenses you can ask and we'll need to think about it as a group. Otherwise, we plan on spending the funding trying to pay our maintainers full time.",
+  "fast-xml-parser": "Fast XML Parser is an opensource application. And we welcome contributors. However, all the contributors can't submit an expense for each of their work. Please note that Your contribution to the application was raised as a requirement in advance by the collaborators or maintainers. An expense can't be raised against an issue created for first timers, or to motivate new contributors. Very small changes, spelling corrections, issue creation are out of the scope. Only the collaborators or major contributors can file expense. Collaborators or Maintainers of the project are not responsible for final payment. They're limited only till accepting or rejecting a payment. Please discuss in advance before filing expense to avoid rejection. Because rejection may hurt.",
+  "octobox": "Please provide electronic copies of all receipts, invoices and other official documentation supporting an expense claim. Thanks!",
+  "curl": "If you're doing good things for the curl project that ends up costing you real money, feel free to reach out and we can discuss covering all or some of those expenses! Actual expenses that we might use sponsor money for: server, backup and bandwidth costs curl up (the annual curl developers meeting) costs and expenses sticker production and distribution travel expenses to get attendees to attend curl up",
+  "cloudflarecollective": "Requirements: Picture of itemized pizza receipt from vendor Link to social media post with picture of organizer presenting Cloudflare slides to the meetup group Fill out this form: https://docs.google.com/forms/d/e/1FAIpQLSfoMpIOfWofyGstDmHg3PfuK5nGLAQeYMd5nKecX66zEvN1Ng/viewform",
+  "mautic": "Mautic Community Financial Policy: https://contribute.mautic.org/policies/financial-policy",
+  "jsprimer": "Contributor\u306e\u7d4c\u8cbb\u7533\u8acb\u306e\u30dd\u30ea\u30b7\u30fc\u306f\u6b21\u306e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u53c2\u7167\u3057\u3066\u304f\u3060\u3055\u3044 https://github.com/asciidwango/js-primer/blob/master/CONTRIBUTING_EXPENSE.md",
+  "instancio": "Invoice expenses are accepted only for work or services that have been approved in advance by the Instancio maintainers. Unsolicited invoices or invoices for work performed without prior agreement will not be accepted.",
+  "mochajs": "Mocha follows the Collective Funds Guidelines 0.1 as specified in its FUNDING.md and with any customisation specified in that FUNDING.md.",
+  "testcontainers": "Anyone can file an expense, but should agree this with the Testcontainers core team before incurring any costs. If the expense makes sense for the development of the community, it will be \u201cmerged\u201d in the ledger of our open collective by the Testcontainers core team and the person who filed the expense will be reimbursed. Money will first be used to cover direct project costs: Bug bounties Website hosting Tooling, such as CI infrastructure Legal protection Then, money will be used to: Pay for project expenses (e.g. \u2018swag\u2019, stickers, T-shirts, etc). Pay expenses for core maintainers\u2019 travel to present at conferences and meetups, if not reimbursable by the conference/meetup or employers. Pay expenses for developer gatherings: travel expenses for core maintainer meetings Pay core maintainers for time expended on key project engineering activities, e.g. release engineering, project housekeeping, expedited PR review for bug-bountied tickets. Who can approve expenses (the \u2018Testcontainers core team\u2019)? This list is likely to change over time, but is currently Richard North, Sergei Egorov and Kevin Wittek.",
+  "actual": "See our expense policy at https://actualbudget.org/docs/contributing/leadership/funding",
+  "leanbitlab-org": "Invoices are accepted for development, design, translation, or documentation work that directly benefits one of our open-source apps. Requirements: - State the work performed, time spent, and the agreed rate. - Link the invoice to the relevant project (e.g., LeanType, LTvLauncher). - The work must be merged or shipped (PR merged, release published) before invoicing. - All invoices are published on our Budget page for public audit.",
+  "neoforged": "Regular contributors can submit requests based on their recent contributions to the project. We will also pay out those who have given us assets and other useful content such as artwork.",
+  "monitorcontrol": "\u2022 Yearly Apple Developer Subscription \u2022 Testing Hardware (Cables, Monitors, Devices).",
+  "nanoframework": "&nbsp;Use Invoice for services/time-based work (development, maintenance, documentation, design, project management, support).&nbsp; Pre-approval + completed work Invoice expenses must be approved by a project admin and must be for work already completed (no advance payments).&nbsp; What to include &nbsp; Clear description of work delivered, dates/period covered, and links to relevant issues/PRs/releases when possible. Rate and quantity (hours/days) or fixed fee with deliverables. Payee details and invoice details required by OSC/compliance. What will be rejected &nbsp; Vague invoices (\u201cwork\u201d, \u201cservices\u201d, \u201cpayment\u201d) without scope/evidence. Requests that should be reimbursements (purchases with receipts). Using \u201cgrant/donation/reward\u201d wording for paid work.&nbsp; Tax/compliance &nbsp; OSC may require tax documentation depending on payouts (e.g., 1099 reporting thresholds). &nbsp;"
+ }
+}

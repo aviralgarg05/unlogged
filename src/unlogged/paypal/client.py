@@ -124,7 +124,8 @@ class PayPalClient:
         else:
             payload = r.json() if r.content else {}
 
-        self.tape.record(key, {"status": r.status_code, "body": payload})
+        if self.s.record:
+            self.tape.record(key, {"status": r.status_code, "body": payload})
         return payload
 
     def close(self) -> None:

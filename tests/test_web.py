@@ -159,3 +159,51 @@ def test_a_paypal_refusal_keeps_paypals_status_and_debug_id(monkeypatch):
     assert body["paypal_status"] == 422
     # The one field PayPal support asks for survives the round trip.
     assert body["debug_id"] == "abc123"
+
+
+def test_two_simultaneous_applies_bill_the_work_once(tmp_path, monkeypatch):
+    """Reading the ledger and then writing is check-then-act. Two requests arriving together
+    both saw an empty ledger, both passed the repeat check, and the client was charged twice
+    for one piece of work. FastAPI runs a sync endpoint in a threadpool, so that is the
+    ordinary shape of a double-click or an agent retrying its one mutating tool.
+    """
+    import threading
+    import time
+
+    from unlogged import web as web_mod
+    from unlogged.paypal import Invoices
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+
+    state = {"items": [{"name": "Agreed scope"}], "detail": {"currency_code": "USD"}}
+    monkeypatch.setattr(
+        Invoices,
+        "get",
+        lambda self, _id: {"status": "SENT", **state, "amount": {"value": "520.00"}},
+    )
+
+    def slow_add(self, invoice_id, items, *, notify=True, idempotency_key=None):
+        time.sleep(0.05)
+        state["items"] = state["items"] + [i.to_paypal() for i in items]
+        return {"items": state["items"], "amount": {"value": "775.00"}}
+
+    monkeypatch.setattr(Invoices, "add_items", slow_add)
+
+    ready = threading.Barrier(2)
+    codes = []
+
+    def fire():
+        ready.wait()
+        r = client.post("/api/apply", json={"invoice_id": "INV2-RACE", "event_ids": ["e3"]})
+        codes.append(r.status_code)
+
+    threads = [threading.Thread(target=fire) for _ in range(2)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    # One wins, one is refused as already billed.
+    assert sorted(codes) == [200, 409], codes
+    billed = [i["name"] for i in state["items"] if i["name"] != "Agreed scope"]
+    assert len(billed) == 1, billed

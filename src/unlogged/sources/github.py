@@ -130,6 +130,7 @@ class GitHub:
         *,
         token: str | None = None,
         replay: bool = True,
+        record: bool = False,
         timeout: float = 30.0,
     ):
         if "/" not in repo:
@@ -137,6 +138,8 @@ class GitHub:
         self.repo = repo
         self.token = token
         self.replay = replay
+        # Same rule as the PayPal client: a recording is written only when asked for.
+        self.record = record
         self.tape = cassette.Tape()
         self._http = httpx.Client(timeout=timeout)
 
@@ -173,7 +176,8 @@ class GitHub:
         if r.status_code >= 400:
             raise GitHubError(r.status_code, r.text)
         body = project(path, r.json())
-        self.tape.record(key, {"status": r.status_code, "body": body})
+        if self.record:
+            self.tape.record(key, {"status": r.status_code, "body": body})
         return body
 
     def _paged(self, path: str, *, pages: int = 20, **params: Any) -> list[dict[str, Any]]:

@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from decimal import Decimal
 from pathlib import Path
 
 import typer
@@ -121,7 +122,18 @@ def discover(
         raise typer.Exit()
 
     ledger = Ledger(DATA / f"{eng.id}.jsonl")
-    already = {e.event_id for e in ledger if e.invoice_id == invoice_id}
+    with ledger.guard():
+        _apply(s, eng, ledger, invoice_id, billable, by_id, judge)
+
+
+def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
+    """Everything from reading the ledger to recording the write, under one lock.
+
+    Checking and then writing is check-then-act: two callers that read before either wrote
+    both see nothing billed and the client is charged twice. The lock has to span the
+    decision, not just the HTTP call.
+    """
+    already = ledger.billed_to(invoice_id)
     repeats = sorted({v.event_id for v in billable} & already)
     if repeats:
         # The only guard that works. PayPal accepts PayPal-Request-Id on an invoice PUT and
@@ -155,6 +167,27 @@ def discover(
         key = hashlib.sha256(",".join(sorted(v.event_id for v in billable)).encode()).hexdigest()[
             :16
         ]
+        # Written before the money moves. The ledger is the only guard, and a guard recorded
+        # after the write does not exist during the window it has to cover: a crash or a read
+        # timeout between the PUT and the record leaves nothing behind, and the next run
+        # bills the client again.
+        for v, item in zip(billable, items, strict=True):
+            ledger.append(
+                Entry(
+                    at=now(),
+                    invoice_id=invoice_id,
+                    event_id=v.event_id,
+                    clause_id=v.clause_id,
+                    line_name=item.display_name,
+                    hours=v.hours,
+                    unit_price=item.unit_price,
+                    total_after=Decimal("0"),
+                    adjudicator=judge.name,
+                    confidence=v.confidence,
+                    settled=False,
+                )
+            )
+
         updated = inv.add_items(invoice_id, items, notify=True, idempotency_key=key)
         total = total_of(updated)
         for v, item in zip(billable, items, strict=True):
@@ -367,22 +400,32 @@ def reconcile(
         raise typer.Exit()
 
     with PayPalClient(s) as c:
-        missing = Invoices(c).reconcile(invoice_id, expected)
+        missing, unexplained = Invoices(c).reconcile(invoice_id, expected)
 
-    if not missing:
+    if not missing and not unexplained:
         typer.secho(
-            f"{len(expected)} billed line(s), all present on {invoice_id}.",
+            f"{len(expected)} billed line(s), and the invoice carries exactly those.",
             fg=typer.colors.GREEN,
         )
         raise typer.Exit()
 
-    typer.secho(
-        f"{len(missing)} of {len(expected)} billed line(s) are NOT on {invoice_id}:",
-        fg=typer.colors.RED,
-    )
-    for name in missing:
-        typer.echo(f"  {name}")
-    typer.echo("\nThe ledger and the invoice disagree. Re-apply these, or correct the ledger.")
+    if missing:
+        typer.secho(
+            f"{len(missing)} billed line(s) are NOT on {invoice_id} — work the client has "
+            f"not been charged for:",
+            fg=typer.colors.YELLOW,
+        )
+        for name in missing:
+            typer.echo(f"  {name}")
+    if unexplained:
+        typer.secho(
+            f"\n{len(unexplained)} line(s) on {invoice_id} the ledger does not justify — the "
+            f"client may be charged twice:",
+            fg=typer.colors.RED,
+        )
+        for name in unexplained:
+            typer.echo(f"  {name}")
+    typer.echo("\nThe ledger and the invoice disagree.")
     raise typer.Exit(1)
 
 

@@ -8,8 +8,10 @@ one thing a bill that grows must never do is quietly forget a step.
 
 from __future__ import annotations
 
+import fcntl
 import json
 from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from decimal import Decimal
 from pathlib import Path
@@ -29,6 +31,13 @@ class Entry(BaseModel):
     total_after: Decimal
     adjudicator: str
     confidence: float
+    # False means "the write was attempted and we do not know whether it landed". The row is
+    # appended BEFORE the money moves, because the ledger is the only guard against
+    # double-billing — PayPal ignores the idempotency header on an invoice PUT — and a guard
+    # that is written after the write does not exist during the window it has to cover. A
+    # crash, a killed process or a read timeout between the two leaves this row behind, and
+    # the next run refuses rather than billing again. `unlogged reconcile` says which it was.
+    settled: bool = True
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -62,6 +71,31 @@ class Ledger:
         if self.path.exists():
             return self.path
         return self.seed if self.seed.exists() else None
+
+    @contextmanager
+    def guard(self) -> Iterator[None]:
+        """Hold an exclusive lock on this ledger for the whole read-decide-write-record cycle.
+
+        Checking the ledger and then writing to PayPal is check-then-act: two callers that
+        read before either wrote both see nothing billed, both proceed, and the client is
+        charged twice for one piece of work. A lock inside the HTTP call does not help, it
+        only makes the two identical writes tidy.
+
+        A file lock rather than a thread lock, because the CLI and the web service are
+        separate processes against one engagement.
+        """
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        handle = self.path.open("a+", encoding="utf-8")
+        try:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+            yield
+        finally:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+            handle.close()
+
+    def billed_to(self, invoice_id: str) -> set[str]:
+        """Event ids already written against this invoice, settled or merely attempted."""
+        return {e.event_id for e in self if e.invoice_id == invoice_id}
 
     def append(self, entry: Entry) -> None:
         # Carry the seed forward on the first local write. Reading it only as a fallback meant

@@ -671,16 +671,50 @@ def test_two_threads_growing_one_invoice_do_not_lose_a_line():
     assert "Work from B" in names, "B's billed work was dropped"
 
 
-def test_reconcile_names_the_lines_the_invoice_is_missing():
-    """Locks cannot reach a writer in another process, so divergence between the ledger and
-    the invoice is detected afterwards and named — rather than found by a client reading a
-    total that is short."""
+def _fake_invoice(names):
     from unlogged.paypal import invoices as inv_mod
 
     inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
-    inv.get = lambda _id: {"items": [{"name": "Agreed scope"}, {"name": "Work from B"}]}
+    inv.get = lambda _id: {"items": [{"name": n} for n in names]}
+    return inv
 
-    missing = inv.reconcile("INV2-X", ["Agreed scope", "Work from A", "Work from B"])
+
+def test_reconcile_names_the_lines_the_invoice_is_missing():
+    """A lost write: the ledger says it was billed and the invoice does not carry it. The
+    client is undercharged and neither writer was told."""
+    inv = _fake_invoice(["Agreed scope", "Work from B"])
+
+    missing, unexplained = inv.reconcile("INV2-X", ["Agreed scope", "Work from A", "Work from B"])
 
     assert missing == ["Work from A"]
-    assert inv.reconcile("INV2-X", ["Agreed scope"]) == []
+    assert unexplained == []
+
+
+def test_reconcile_catches_the_double_charge_not_only_the_lost_one():
+    """The first version looked only for missing lines, so an invoice billing the same work
+    twice was reported green — the worse of the two failures, reported as correct."""
+    inv = _fake_invoice(["Agreed scope", "Work from A", "Work from A"])
+
+    missing, unexplained = inv.reconcile("INV2-X", ["Agreed scope", "Work from A"])
+
+    assert missing == []
+    assert unexplained == ["Work from A"]
+
+
+def test_reconcile_counts_rather_than_comparing_sets():
+    """The opening line and any two same-day events with no description share a display name.
+    Against a set, one of two identical lines vanishing is invisible — which is exactly the
+    failure this exists to find."""
+    twice = "Unspecified work (no description produced) (slack 02 Oct)"
+    inv = _fake_invoice(["Agreed scope", twice])
+
+    missing, unexplained = inv.reconcile("INV2-X", ["Agreed scope", twice, twice])
+
+    assert missing == [twice]
+    assert unexplained == []
+
+
+def test_reconcile_is_quiet_when_the_two_records_agree():
+    inv = _fake_invoice(["Agreed scope", "Work from A"])
+
+    assert inv.reconcile("INV2-X", ["Agreed scope", "Work from A"]) == ([], [])

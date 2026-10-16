@@ -20,6 +20,13 @@ class Settings:
     replay: bool
     github_token: str | None = None
     github_repo: str | None = None
+    # Writing a cassette must be something someone asked for. It used to be a side effect of
+    # any call that reached the network, so a --live verification run, or a judge who set
+    # credentials, or a stray script with a stubbed transport would overwrite the committed
+    # recordings the money claims rest on — and the next keyless run would report the wrong
+    # number with no error, because a matching recording existed. It happened during an audit
+    # of this repository: the demo replayed USD 1.00 instead of USD 902.50.
+    record: bool = False
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -38,6 +45,7 @@ class Settings:
             # recorded thread replays with nothing set at all.
             github_token=os.environ.get("GITHUB_TOKEN") or None,
             github_repo=os.environ.get("GITHUB_REPO") or None,
+            record=os.environ.get("UNLOGGED_RECORD", "") not in ("", "0", "false", "False"),
         )
 
     @property

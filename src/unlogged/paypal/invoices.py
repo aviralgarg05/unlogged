@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
 from decimal import Decimal
@@ -232,21 +233,30 @@ class Invoices:
             idempotency=f"items-{invoice_id}-{idempotency_key}",
         )
 
-    def reconcile(self, invoice_id: str, billed: Iterable[str]) -> list[str]:
-        """Which lines the ledger says were billed and the live invoice does not carry.
+    def reconcile(self, invoice_id: str, billed: Iterable[str]) -> tuple[list[str], list[str]]:
+        """Compare the ledger against the live invoice, in both directions and by count.
 
         The detection half of the concurrency problem. Locks serialise writers inside one
         process; two processes growing one invoice cannot be serialised from here, because
-        PayPal offers nothing to do it with — the loser's items vanish from the document and
-        nothing in the response says so. So the ledger is compared against the invoice
-        afterwards, and a divergence is named rather than discovered by a client reading a
-        total that is lower than the work done.
+        PayPal offers nothing to do it with. So the two records are compared afterwards.
 
-        Returns the display names the ledger expects and the invoice is missing, in order.
-        An empty list means the two agree.
+        Returns (missing, unexplained):
+
+        * **missing** — the ledger says it was billed and the invoice does not carry it. This
+          is the lost write: the client is undercharged and nobody was told.
+        * **unexplained** — the invoice carries a line the ledger does not justify. This is the
+          double charge, and it is the worse of the two. A first version of this looked only
+          for missing lines, so an invoice billing the same work twice was reported green.
+
+        Counted rather than set-compared, because the opening line and any two same-day events
+        with no description share a display name. Against a set, one of two identical lines
+        vanishing is invisible — which is exactly the failure this is for.
         """
-        live = {i.get("name", "") for i in self.get(invoice_id).get("items", [])}
-        return [name for name in billed if name not in live]
+        live = Counter(i.get("name", "") for i in self.get(invoice_id).get("items", []))
+        expected = Counter(billed)
+        missing = sorted((expected - live).elements())
+        unexplained = sorted((live - expected).elements())
+        return missing, unexplained
 
     # -- payer surface ------------------------------------------------------
 

@@ -229,11 +229,19 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
     if not chosen:
         raise HTTPException(400, "none of the selected events are billable extras")
 
-    # The ledger is the record of what has already been billed. Re-applying an event already on
-    # this invoice is the expensive mistake, and it is refused here rather than left to the
-    # idempotency header, which only covers an immediate retry of the same call.
+    # The ledger is the record of what has already been billed, and it is the ONLY guard:
+    # PayPal ignores the idempotency header on an invoice PUT. Reading it and then writing is
+    # check-then-act, so the whole sequence — decide, write, record — happens under one
+    # exclusive lock on the ledger file. Two requests arriving together used to both see an
+    # empty ledger, both pass this check, and both bill the client for the same work. FastAPI
+    # runs a sync endpoint in a threadpool, so that is the ordinary shape of a double-click.
     ledger = Ledger(DATA / f"{eng.id}.jsonl")
-    already = {e.event_id for e in ledger if e.invoice_id == req.invoice_id}
+    with ledger.guard():
+        return _apply_locked(s, eng, ledger, req, chosen, by_id, arm)
+
+
+def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
+    already = ledger.billed_to(req.invoice_id)
     repeats = sorted({v.event_id for v in chosen} & already)
     if repeats:
         raise HTTPException(409, f"already billed to {req.invoice_id}: {', '.join(repeats)}")
@@ -254,6 +262,27 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
             for v in chosen
         ]
         key = hashlib.sha256(",".join(sorted(v.event_id for v in chosen)).encode()).hexdigest()[:16]
+
+        # Recorded before the money moves: a guard written afterwards does not exist during
+        # the window it has to cover, and a crash between the two would let the next request
+        # bill the same work again.
+        for v, item in zip(chosen, items, strict=True):
+            ledger.append(
+                Entry(
+                    at=now(),
+                    invoice_id=req.invoice_id,
+                    event_id=v.event_id,
+                    clause_id=v.clause_id,
+                    line_name=item.display_name,
+                    hours=v.hours,
+                    unit_price=item.unit_price,
+                    total_after=Decimal("0"),
+                    adjudicator=arm.name,
+                    confidence=v.confidence,
+                    settled=False,
+                )
+            )
+
         updated = inv.add_items(req.invoice_id, items, notify=req.notify, idempotency_key=key)
         total = total_of(updated)
         for v, item in zip(chosen, items, strict=True):

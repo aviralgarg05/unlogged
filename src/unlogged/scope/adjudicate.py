@@ -99,6 +99,7 @@ class Adjudicator:
         # eight calls twice. Same contract as the PayPal cassettes in paypal/client.py.
         self.cassettes = CASSETTES
         self.replay = os.environ.get("UNLOGGED_REPLAY", "1") not in ("0", "false", "False", "")
+        self.record = os.environ.get("UNLOGGED_RECORD", "") not in ("", "0", "false", "False")
 
     def _context(self, event: WorkEvent | None = None) -> str:
         when = event.occurred_at if event else None
@@ -184,7 +185,10 @@ class Adjudicator:
             confidence=float(data["confidence"]),
         )
         self.cassettes.mkdir(parents=True, exist_ok=True)
-        cassette.write_text(verdict.model_dump_json(indent=1))
+        if self.record:
+            # Opt-in, like the HTTP recordings: a live call must not silently rewrite the
+            # verdicts the evaluation table is computed from.
+            cassette.write_text(verdict.model_dump_json(indent=1))
         return verdict
 
     def adjudicate(self, events: list[WorkEvent]) -> list[Verdict]:

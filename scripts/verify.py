@@ -200,6 +200,18 @@ def offline() -> None:
         f"{len(cassettes)} recorded exchanges",
     )
 
+    # The committed recordings ARE the evidence. Any run that writes one has changed the thing
+    # every other check reads, and it used to happen as a side effect of reaching the network:
+    # an audit of this repository left the demo replaying USD 1.00 instead of USD 902.50, with
+    # no error anywhere, because a matching recording existed for the corrupted state.
+    code, out = run("git", "status", "--porcelain", "cassettes/")
+    dirty = [line for line in out.splitlines() if line.strip()]
+    check(
+        "the committed recordings are untouched",
+        PASS if not dirty else FAIL,
+        "clean" if not dirty else f"{len(dirty)} changed: {dirty[0][:40]}",
+    )
+
     # Counted rather than written down, because this sentence has been wrong twice and a
     # README that miscounts its own checks is the first thing a careful reader stops trusting.
     keyless = len(results) + 1
@@ -262,6 +274,16 @@ def main() -> int:
     if "--live" in sys.argv:
         live()
         live_total()
+        # The live section writes to PayPal and may write recordings. Re-check that it has not
+        # changed the tree it just certified, or --live reports PASS on a repository it broke.
+        section("After the live run")
+        _, out = run("git", "status", "--porcelain", "cassettes/", keyless=True)
+        dirty = [line for line in out.splitlines() if line.strip()]
+        check(
+            "the live run left the recordings alone",
+            PASS if not dirty else FAIL,
+            "clean" if not dirty else f"{len(dirty)} changed",
+        )
 
     failed = [r for r in results if r[1] == FAIL]
     skipped = [r for r in results if r[1] == SKIP]
