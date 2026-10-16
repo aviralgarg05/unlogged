@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 138 tests, no credentials needed
+uv run pytest -q                       # 140 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -243,9 +243,11 @@ Five findings are filed upstream rather than kept as talking points, in
 [`docs/UPSTREAM.md`](docs/UPSTREAM.md): PayPal's documented discount path is accepted and not
 stored, `generate-qr-code` returns a base64 multipart envelope rather than an image, the generated
 Server SDK ships no Invoicing controller, and a public AG Studio custom widget cannot declare
-`formatShape` at all, and `PayPal-Request-Id` is accepted on an invoice PUT and ignored — the
-retry bills the client a second time, which is why the guard here is an append-only ledger and
-not that header. Each one is reproducible from this repo.
+`formatShape` at all, and `PayPal-Request-Id` is accepted on an invoice PUT and ignored, so a
+retried write bills the client twice — which is why the guard here is an append-only ledger and
+not that header. The same report shows a billed line vanishing when two writers read the same
+invoice before either wrote: there is no ETag and no `If-Match`, so `unlogged reconcile` exists
+to find the divergence the API cannot prevent. Each one is reproducible from this repo.
 
 ## Status
 
@@ -262,7 +264,7 @@ not that header. Each one is reproducible from this repo.
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 138 Python (incl. a property test on the money path), 4 TypeScript |
+| Tests | ✅ 140 Python (incl. a property test on the money path), 4 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

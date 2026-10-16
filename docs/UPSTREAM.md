@@ -242,9 +242,36 @@ documentation does not say so, and the failure mode is silent. An integration th
 after a lost response, which is the exact case idempotency exists for, bills the work twice, and
 nothing in the second response distinguishes it from the first.
 
+## The same gap, demonstrated: a billed line disappears
+
 There is no concurrency primitive either. The invoice resource carries no ETag and the update
-operation accepts no `If-Match`, so read-modify-write on an invoice is last-writer-wins with no
-way to detect that a write was lost.
+operation accepts no `If-Match`, so read-modify-write on an invoice is last-writer-wins — and
+the loser is not told.
+
+Two readers, then two writers, on the sandbox, 2026-10-16:
+
+```
+start       : 200.00
+after A     : 230.00      A reads, adds a $30.00 line, writes
+after B     : 270.00      B had read BEFORE A wrote, adds a $70.00 line, writes
+
+   line: Agreed scope
+   line: Work from adjudication B
+```
+
+A's line is gone. The total is $270.00 rather than the $300.00 the two adjudications between
+them billed, no error was returned to either writer, and nothing in the document records that a
+write was lost. For an integration that keeps its own record of what has been billed — which
+any invoicing integration must — the record and the invoice now disagree, silently, in the
+client's favour.
+
+**What would fix it:** an ETag on the invoice and `If-Match` on the update, so a stale write is
+rejected with 412 instead of applied.
+
+**What this project does instead:** writers in one process are serialised by a per-invoice lock,
+and because a lock cannot reach a writer in another process, `unlogged reconcile` compares the
+ledger against the live invoice and names any line the invoice is missing. Detection, not
+prevention — prevention is not available.
 
 ## Suggested fix
 

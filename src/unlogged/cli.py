@@ -347,6 +347,46 @@ def agreement(
 
 
 @app.command()
+def reconcile(
+    engagement: Path = typer.Option(...),
+    invoice_id: str = typer.Option(..., help="The invoice to check the ledger against"),
+) -> None:
+    """Check that every line the ledger says was billed is on the live invoice.
+
+    Growing an invoice is read-modify-write and PayPal offers no way to make that safe: no
+    ETag, no If-Match, and the idempotency header is ignored. Two processes writing to one
+    invoice means one of them loses its items silently. This is how that gets found — by the
+    contractor, deliberately, rather than by the client noticing the total is short.
+    """
+    s = Settings.from_env()
+    eng = _engagement(engagement)
+    ledger = Ledger(DATA / f"{eng.id}.jsonl")
+    expected = [e.line_name for e in ledger if e.invoice_id == invoice_id]
+    if not expected:
+        typer.echo(f"The ledger records nothing billed to {invoice_id}.")
+        raise typer.Exit()
+
+    with PayPalClient(s) as c:
+        missing = Invoices(c).reconcile(invoice_id, expected)
+
+    if not missing:
+        typer.secho(
+            f"{len(expected)} billed line(s), all present on {invoice_id}.",
+            fg=typer.colors.GREEN,
+        )
+        raise typer.Exit()
+
+    typer.secho(
+        f"{len(missing)} of {len(expected)} billed line(s) are NOT on {invoice_id}:",
+        fg=typer.colors.RED,
+    )
+    for name in missing:
+        typer.echo(f"  {name}")
+    typer.echo("\nThe ledger and the invoice disagree. Re-apply these, or correct the ledger.")
+    raise typer.Exit(1)
+
+
+@app.command()
 def show(engagement: Path = typer.Option(...)) -> None:
     """Print the append-only change ledger for an engagement."""
     eng = _engagement(engagement)

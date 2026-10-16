@@ -610,3 +610,77 @@ def test_the_hundred_and_first_line_is_refused_before_the_write():
         inv.get = lambda _id: {"items": monkey, "detail": {"currency_code": "USD"}}
         with pytest.raises(ValueError, match="101 line items"):
             inv.add_items("INV2-X", [LineItem("one more", Decimal("1"), Decimal("1.00"))])
+
+
+# -- 8. two writers, one invoice ------------------------------------------------------------
+
+
+def test_two_threads_growing_one_invoice_do_not_lose_a_line():
+    """Read-modify-write on a shared document, with nothing from the server to make it safe.
+
+    Verified live on 2026-10-16: two adjudications that read the same invoice and then wrote
+    produced a total of $270.00 with one of the two billed lines gone. The loser is not told,
+    so the ledger records work the invoice does not carry.
+
+    The write is given a deliberate delay, because without one the race is too narrow to lose
+    reliably and the test passes whether the lock is there or not — which is how the first
+    version of this test was written, and it proved nothing.
+    """
+    import threading
+    import time
+    from decimal import Decimal
+
+    from unlogged.paypal import LineItem
+    from unlogged.paypal import invoices as inv_mod
+
+    state = {"items": [], "detail": {"currency_code": "USD"}}
+    ready = threading.Barrier(2)
+
+    class Fake:
+        @staticmethod
+        def get(_id):
+            return {"items": list(state["items"]), "detail": state["detail"]}
+
+        def request(self, _method, _path, *, json_body, **_kw):
+            # Wide enough that the other thread certainly reads before this write lands.
+            # Last write wins, exactly as PayPal behaves: there is no ETag, no If-Match, and
+            # the idempotency header is ignored.
+            time.sleep(0.05)
+            state["items"] = json_body["items"]
+            return {"items": state["items"]}
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.c = Fake()
+    inv.get = Fake.get
+
+    def add(name, price):
+        ready.wait()
+        inv.add_items("INV2-RACE", [LineItem(name, Decimal("1"), Decimal(price))], notify=False)
+
+    threads = [
+        threading.Thread(target=add, args=("Work from A", "30.00")),
+        threading.Thread(target=add, args=("Work from B", "70.00")),
+    ]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    names = [i["name"] for i in state["items"]]
+    assert "Work from A" in names, "A's billed work was dropped"
+    assert "Work from B" in names, "B's billed work was dropped"
+
+
+def test_reconcile_names_the_lines_the_invoice_is_missing():
+    """Locks cannot reach a writer in another process, so divergence between the ledger and
+    the invoice is detected afterwards and named — rather than found by a client reading a
+    total that is short."""
+    from unlogged.paypal import invoices as inv_mod
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.get = lambda _id: {"items": [{"name": "Agreed scope"}, {"name": "Work from B"}]}
+
+    missing = inv.reconcile("INV2-X", ["Agreed scope", "Work from A", "Work from B"])
+
+    assert missing == ["Work from A"]
+    assert inv.reconcile("INV2-X", ["Agreed scope"]) == []

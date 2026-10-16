@@ -21,6 +21,7 @@ import hashlib
 from collections.abc import Iterable
 from dataclasses import dataclass
 from decimal import Decimal
+from threading import Lock
 from typing import Any
 
 from unlogged.paypal.client import PayPalClient
@@ -35,6 +36,26 @@ READONLY = ("id", "parent_id", "links")
 # line is rejected after the work is already done.
 TERMS_LIMIT = 4000
 MAX_ITEMS = 100
+
+# Growing an invoice is read-modify-write on a shared mutable document, and PayPal offers no
+# primitive to make that safe: no ETag on the resource, no If-Match on the update, and the
+# idempotency header is ignored. Verified live on 2026-10-16 — two adjudications that read the
+# same invoice and then wrote produced a total of $270.00 with one of the two billed lines
+# missing entirely. The loser is not told; the ledger says the work was billed and the invoice
+# does not carry it.
+#
+# These locks close the window for writers in one process, which is the case this product
+# actually creates: a web request and a CLI run, or two events adjudicated together. Writers in
+# separate processes cannot be serialised from here at all, which is what `reconcile` is for.
+_LOCKS: dict[str, Lock] = {}
+_LOCKS_GUARD = Lock()
+
+
+def _lock_for(invoice_id: str) -> Lock:
+    with _LOCKS_GUARD:
+        return _LOCKS.setdefault(invoice_id, Lock())
+
+
 # Writable per the schema, but server-computed; echoing them back on a PUT invites a 422.
 COMPUTED = (
     "status",
@@ -165,6 +186,16 @@ class Invoices:
         notify=True asks PayPal to email the client that the invoice changed. That is the
         consent step, and it is PayPal's own machinery rather than something we invented.
         """
+        with _lock_for(invoice_id):
+            return self._add_items_locked(invoice_id, new_items, notify, idempotency_key)
+
+    def _add_items_locked(
+        self,
+        invoice_id: str,
+        new_items: Iterable[LineItem],
+        notify: bool,
+        idempotency_key: str | None,
+    ) -> dict[str, Any]:
         new = list(new_items)
         current = self.get(invoice_id)
         items = list(current.get("items", [])) + [i.to_paypal() for i in new]
@@ -200,6 +231,22 @@ class Invoices:
             params={"send_to_recipient": str(notify).lower(), "send_to_invoicer": "false"},
             idempotency=f"items-{invoice_id}-{idempotency_key}",
         )
+
+    def reconcile(self, invoice_id: str, billed: Iterable[str]) -> list[str]:
+        """Which lines the ledger says were billed and the live invoice does not carry.
+
+        The detection half of the concurrency problem. Locks serialise writers inside one
+        process; two processes growing one invoice cannot be serialised from here, because
+        PayPal offers nothing to do it with — the loser's items vanish from the document and
+        nothing in the response says so. So the ledger is compared against the invoice
+        afterwards, and a divergence is named rather than discovered by a client reading a
+        total that is lower than the work done.
+
+        Returns the display names the ledger expects and the invoice is missing, in order.
+        An empty list means the two agree.
+        """
+        live = {i.get("name", "") for i in self.get(invoice_id).get("items", [])}
+        return [name for name in billed if name not in live]
 
     # -- payer surface ------------------------------------------------------
 
