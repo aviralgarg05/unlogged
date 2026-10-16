@@ -183,6 +183,11 @@ def offline() -> None:
     check("LICENSE present and detectable", PASS if "MIT" in first else FAIL, first[:40])
 
     code, out = run("git", "ls-files")
+    if code != 0:
+        # An empty answer from a failed git is indistinguishable from an empty answer from a
+        # clean repository, and the second is what this check was reporting either way.
+        check("no key file is tracked", FAIL, f"git ls-files failed: {out[:40]}")
+        return
     tracked = set(out.split())
     leaked = [f for f in tracked if f == ".env" or f.endswith("/.env.local")]
     check("no key file is tracked", PASS if not leaked else FAIL, ", ".join(leaked) or "clean")
@@ -190,8 +195,17 @@ def offline() -> None:
     # Assembled rather than written out, so this file does not match its own pattern.
     key_pattern = "sk" + "-proj|" + "sk" + "-[A-Za-z0-9]{32}"
     code, out = run("git", "grep", "-lE", key_pattern, "--", ".")
-    # git grep exits 1 when it finds nothing, which is the outcome we want.
-    check("no API key in any tracked file", PASS if code != 0 else FAIL, out[:40] or "clean")
+    # git grep exits 0 on a match, 1 on no match, and ANYTHING ELSE on an error. Treating
+    # "not zero" as success meant a broken invocation — wrong directory, bad pattern, no git —
+    # reported the repository as clean. On the one check that stands between this project and
+    # publishing a credential.
+    if code == 0:
+        verdict, detail = FAIL, out[:40]
+    elif code == 1:
+        verdict, detail = PASS, "clean"
+    else:
+        verdict, detail = FAIL, f"git grep failed with {code}: {out[:30]}"
+    check("no API key in any tracked file", verdict, detail)
 
     cassettes = list((ROOT / "cassettes").glob("*.json"))
     check(
