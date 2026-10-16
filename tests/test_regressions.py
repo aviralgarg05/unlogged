@@ -636,7 +636,7 @@ def test_the_hundred_and_first_line_is_refused_before_the_write():
     with PayPalClient(s) as c:
         inv = Invoices(c)
         monkey = [{"name": f"line {i}"} for i in range(inv_mod.MAX_ITEMS)]
-        inv.get = lambda _id: {"items": monkey, "detail": {"currency_code": "USD"}}
+        inv.get = lambda _id, **_kw: {"items": monkey, "detail": {"currency_code": "USD"}}
         with pytest.raises(ValueError, match="101 line items"):
             inv.add_items(
                 "INV2-TEST-0000-0000-0001", [LineItem("one more", Decimal("1"), Decimal("1.00"))]
@@ -669,7 +669,7 @@ def test_two_threads_growing_one_invoice_do_not_lose_a_line():
 
     class Fake:
         @staticmethod
-        def get(_id):
+        def get(_id, **_kw):
             return {"items": list(state["items"]), "detail": state["detail"]}
 
         def request(self, _method, _path, *, json_body, **_kw):
@@ -708,7 +708,7 @@ def _fake_invoice(names):
     from unlogged.paypal import invoices as inv_mod
 
     inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
-    inv.get = lambda _id: {"items": [{"name": n} for n in names]}
+    inv.get = lambda _id, **_kw: {"items": [{"name": n} for n in names]}
     return inv
 
 
@@ -812,7 +812,7 @@ def test_the_agreed_cap_printed_on_the_invoice_is_actually_enforced(tmp_path, mo
     monkeypatch.setattr(
         Invoices,
         "get",
-        lambda self, _id: {"status": "SENT", "amount": {"value": "1190.00"}, "items": []},
+        lambda self, _id, **_kw: {"status": "SENT", "amount": {"value": "1190.00"}, "items": []},
     )
 
     result = CliRunner().invoke(
@@ -846,7 +846,7 @@ def test_the_cli_refuses_an_invoice_that_can_no_longer_take_items(tmp_path, monk
     for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
         monkeypatch.setenv(var, "")
     monkeypatch.setenv("UNLOGGED_REPLAY", "1")
-    monkeypatch.setattr(Invoices, "get", lambda self, _id: {"status": "MARKED_AS_PAID"})
+    monkeypatch.setattr(Invoices, "get", lambda self, _id, **_kw: {"status": "MARKED_AS_PAID"})
 
     result = CliRunner().invoke(
         cli.app,
@@ -1003,3 +1003,106 @@ def test_an_unlabelled_corpus_is_explained_rather_than_a_traceback():
     assert "none with a gold.jsonl" in result.output
     assert "unlogged agreement" in result.output
     assert "Traceback" not in result.output
+
+
+def test_reconcile_expects_one_line_per_event_not_one_per_ledger_row(tmp_path, monkeypatch):
+    """Every write leaves two rows — an intent before the money moves and a settled one after
+    — so counting rows expected each line twice and reported a correct invoice as half
+    missing. The guard against double-billing must not make the detector cry wolf.
+    """
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+    from unlogged.paypal import Invoices
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+
+    argv = [
+        "discover",
+        "--engagement",
+        str(HERE / "fixtures" / "engagement.json"),
+        "--events",
+        str(HERE / "fixtures" / "events.jsonl"),
+        "--invoice-id",
+        invoice_id,
+        "--apply",
+    ]
+    assert CliRunner().invoke(cli.app, argv).exit_code == 0
+
+    # The invoice, as the recording left it, carries both discovered lines plus the opening.
+    monkeypatch.setattr(
+        Invoices,
+        "get",
+        lambda self, _id, **_kw: {
+            "items": [
+                {"name": "Checkout page — agreed scope"},
+                {"name": "PSP timeout handling and 3DS re-challenge (github 03 Oct)"},
+                {"name": "Prevent double-charges on checkout double-click (github 09 Oct)"},
+            ]
+        },
+    )
+
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "reconcile",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--invoice-id",
+            invoice_id,
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "exactly those" in result.output
+
+
+def test_reconcile_names_lines_that_were_attempted_and_never_confirmed(tmp_path, monkeypatch):
+    """An intent row with no settled row means the write went out and nothing came back. That
+    is precisely the case this command exists for."""
+    from decimal import Decimal
+
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+    from unlogged.ledger import Entry, Ledger, now
+    from unlogged.paypal import Invoices
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+
+    Ledger(tmp_path / "eng-checkout-001.jsonl").append(
+        Entry(
+            at=now(),
+            invoice_id=invoice_id,
+            event_id="e3",
+            clause_id="X1",
+            line_name="Work nobody confirmed",
+            hours=Decimal("1"),
+            unit_price=Decimal("85.00"),
+            total_after=Decimal("0"),
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+            settled=False,
+        )
+    )
+    monkeypatch.setattr(Invoices, "get", lambda self, _id, **_kw: {"items": []})
+
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "reconcile",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--invoice-id",
+            invoice_id,
+        ],
+    )
+
+    assert "attempted and never confirmed" in result.output
+    assert "Work nobody confirmed" in result.output

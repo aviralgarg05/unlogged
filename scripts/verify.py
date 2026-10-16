@@ -272,8 +272,15 @@ def main() -> int:
     print(f"unlogged — verification run, {date.today().isoformat()}")
     offline()
     if "--live" in sys.argv:
+        before = len(results)
         live()
-        live_total()
+        if any(r[1] == SKIP for r in results[before:]):
+            # No credentials, so the live section skipped itself. Counting the checks it did
+            # not run and comparing that to the README produced a FAIL that said the README
+            # was wrong when the truth was that nothing had been verified.
+            print("\n  (live section skipped — the count below is not checked)")
+        else:
+            live_total()
         # The live section writes to PayPal and may write recordings. Re-check that it has not
         # changed the tree it just certified, or --live reports PASS on a repository it broke.
         section("After the live run")

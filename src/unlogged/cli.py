@@ -441,17 +441,56 @@ def reconcile(
     s = Settings.from_env()
     eng = _engagement(engagement)
     ledger = Ledger(DATA / f"{eng.id}.jsonl")
-    expected = [e.line_name for e in ledger if e.invoice_id == invoice_id]
-    if not expected:
-        typer.echo(f"The ledger records nothing billed to {invoice_id}.")
+    # One line per event, not one per row. Every write leaves two rows — an intent before the
+    # money moves and a settled one after — so counting rows expected each line twice and
+    # reported a correct invoice as half missing.
+    latest: dict[str, Entry] = {}
+    for e in ledger:
+        if e.invoice_id == invoice_id:
+            latest[e.event_id] = e
+    discovered = [e.line_name for e in latest.values()]
+    unsettled = [e.line_name for e in latest.values() if not e.settled]
+    # The opening lines were put on the invoice when it was created and never passed through
+    # the ledger, which records discovered work. Leaving them out made every clean invoice
+    # report its own agreed scope as a line nobody could account for — the loudest possible
+    # false alarm, on the one tool whose job is to be believed when it cries divergence.
+    expected = [i.name for i in eng.opening] + discovered
+    if not discovered:
+        typer.echo(f"The ledger records nothing discovered against {invoice_id}.")
         raise typer.Exit()
+
+    if unsettled:
+        # The write was attempted and we never learned whether it landed. That is precisely
+        # the case this command exists for, so it is said first rather than folded into the
+        # comparison below.
+        typer.secho(
+            f"{len(unsettled)} line(s) were attempted and never confirmed:", fg=typer.colors.YELLOW
+        )
+        for name in unsettled:
+            typer.echo(f"  {name}")
+        typer.echo("")
+
+    if s.replay:
+        # Said plainly rather than discovered. A recording is a snapshot of the invoice as it
+        # stood when it was made; a ledger written by a later run describes writes that
+        # snapshot never saw. Comparing the two is not a reconciliation, and silently
+        # reporting the difference as divergence would teach a reader to ignore this command
+        # — on the one tool whose only value is being believed when it says something is
+        # wrong.
+        typer.secho(
+            "Replaying: this compares the ledger against a RECORDED snapshot of the invoice, "
+            "not the live one. Set UNLOGGED_REPLAY=0 with sandbox credentials to reconcile "
+            "against PayPal.",
+            fg=typer.colors.YELLOW,
+        )
 
     with PayPalClient(s) as c:
         missing, unexplained = Invoices(c).reconcile(invoice_id, expected)
 
     if not missing and not unexplained:
         typer.secho(
-            f"{len(expected)} billed line(s), and the invoice carries exactly those.",
+            f"{len(discovered)} discovered line(s) plus {len(eng.opening)} opening line(s), "
+            f"and the invoice carries exactly those.",
             fg=typer.colors.GREEN,
         )
         raise typer.Exit()

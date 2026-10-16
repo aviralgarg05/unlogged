@@ -188,7 +188,7 @@ def test_two_simultaneous_applies_bill_the_work_once(tmp_path, monkeypatch):
     monkeypatch.setattr(
         Invoices,
         "get",
-        lambda self, _id: {"status": "SENT", **state, "amount": {"value": "520.00"}},
+        lambda self, _id, **_kw: {"status": "SENT", **state, "amount": {"value": "520.00"}},
     )
 
     def slow_add(self, invoice_id, items, *, notify=True, idempotency_key=None):

@@ -65,6 +65,19 @@ class Tape:
         self._replays[k] = i + 1
         return json.loads(available[min(i, len(available) - 1)].read_text())
 
+    def final(self, k: str) -> dict[str, Any] | None:
+        """The LAST recorded response for a key, ignoring this run's position.
+
+        A recording is a tape of a past session, and for a caller asking "what does this
+        resource look like now" the answer the tape can give is where it ended. Reconciling a
+        ledger against the first take compares a record of what was written against a snapshot
+        taken before any of it was — which reports every correct invoice as diverged.
+        """
+        available = takes(k, self.root)
+        if not available:
+            return None
+        return json.loads(available[-1].read_text())
+
     def record(self, k: str, payload: dict[str, Any]) -> Path:
         self.root.mkdir(parents=True, exist_ok=True)
         n = self._records.get(k, 0)

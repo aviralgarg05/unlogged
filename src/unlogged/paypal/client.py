@@ -76,6 +76,7 @@ class PayPalClient:
         representation: bool = True,
         idempotency: str | None = None,
         raw: bool = False,
+        final: bool = False,
     ) -> Any:
         """Call PayPal, or replay a recorded exchange when running keyless.
 
@@ -86,7 +87,7 @@ class PayPalClient:
         key = _cassette_key(method, path, json_body)
 
         if self.s.replay or not self.s.has_paypal:
-            rec = self.tape.replay(key)
+            rec = self.tape.final(key) if final else self.tape.replay(key)
             if rec is None:
                 raise PayPalError(
                     0,

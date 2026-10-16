@@ -184,9 +184,15 @@ class Invoices:
             json_body={"send_to_recipient": notify, "send_to_invoicer": False},
         )
 
-    def get(self, invoice_id: str) -> dict[str, Any]:
+    def get(self, invoice_id: str, *, final: bool = False) -> dict[str, Any]:
+        """`final` asks a recording for its last take rather than the next one in sequence.
+
+        Live it changes nothing — there is one invoice and it has one state. On the replay
+        path it is the difference between "the invoice as the tape found it" and "the invoice
+        as the tape left it", and a reconciliation wants the second.
+        """
         check_invoice_id(invoice_id)
-        return self.c.request("GET", f"/v2/invoicing/invoices/{invoice_id}")
+        return self.c.request("GET", f"/v2/invoicing/invoices/{invoice_id}", final=final)
 
     # -- the mechanism ------------------------------------------------------
 
@@ -274,7 +280,7 @@ class Invoices:
         with no description share a display name. Against a set, one of two identical lines
         vanishing is invisible — which is exactly the failure this is for.
         """
-        live = Counter(i.get("name", "") for i in self.get(invoice_id).get("items", []))
+        live = Counter(i.get("name", "") for i in self.get(invoice_id, final=True).get("items", []))
         expected = Counter(billed)
         missing = sorted((expected - live).elements())
         unexplained = sorted((live - expected).elements())
