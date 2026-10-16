@@ -14,7 +14,7 @@ from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.client import PayPalError
-from unlogged.paypal.invoices import TERMINAL_STATUSES, total_of
+from unlogged.paypal.invoices import MAX_ITEMS, TERMINAL_STATUSES, total_of
 from unlogged.scope.baseline import KeywordBaseline
 from unlogged.scope.models import Call, Engagement, WorkEvent, line_name
 
@@ -192,6 +192,27 @@ def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
         key = hashlib.sha256(",".join(sorted(v.event_id for v in billable)).encode()).hexdigest()[
             :16
         ]
+        # Checked HERE, before the intent rows, and not only inside add_items. Both of these
+        # fire before a socket is opened, and raising after the intent rows left the work
+        # blocked for good: the ledger is append-only and a ValueError is not a PayPalError,
+        # so no void was written and no retry was ever allowed.
+        on_invoice = current.get("detail", {}).get("currency_code")
+        mismatched = sorted({i.currency for i in items if on_invoice and i.currency != on_invoice})
+        if mismatched:
+            typer.secho(
+                f"{invoice_id} is in {on_invoice} and these lines are priced in "
+                f"{', '.join(mismatched)}. Nothing written.",
+                fg=typer.colors.RED,
+            )
+            raise typer.Exit(1)
+        if len(current.get("items", [])) + len(items) > MAX_ITEMS:
+            typer.secho(
+                f"{invoice_id} already carries {len(current.get('items', []))} lines; "
+                f"PayPal accepts {MAX_ITEMS}. Nothing written.",
+                fg=typer.colors.RED,
+            )
+            raise typer.Exit(1)
+
         # The cap is printed on the client's own invoice, under "Agreed cap". Until now it
         # was decoration: nothing compared a total against it, so the one number the client
         # was asked to rely on was the one number never checked.
@@ -505,18 +526,22 @@ def reconcile(
         typer.echo("")
 
     if s.replay:
-        # Said plainly rather than discovered. A recording is a snapshot of the invoice as it
-        # stood when it was made; a ledger written by a later run describes writes that
-        # snapshot never saw. Comparing the two is not a reconciliation, and silently
-        # reporting the difference as divergence would teach a reader to ignore this command
-        # — on the one tool whose only value is being believed when it says something is
-        # wrong.
+        # A recording is a snapshot of the invoice as it stood when it was made, and the
+        # ledger describes writes that snapshot never saw. Comparing them is not a
+        # reconciliation — it reported the demo's own just-billed lines as missing, every
+        # time, on the documented path. Saying so and stopping is the honest answer; printing
+        # an alarm it cannot justify teaches a reader to ignore the one tool whose only value
+        # is being believed.
         typer.secho(
-            "Replaying: this compares the ledger against a RECORDED snapshot of the invoice, "
-            "not the live one. Set UNLOGGED_REPLAY=0 with sandbox credentials to reconcile "
-            "against PayPal.",
+            "Replaying, so there is nothing to reconcile against: the recorded invoice is a "
+            "snapshot from when it was taped, not the invoice as it stands.",
             fg=typer.colors.YELLOW,
         )
+        typer.echo(
+            f"The ledger records {len(discovered)} discovered line(s) against {invoice_id}. "
+            "Set UNLOGGED_REPLAY=0 with sandbox credentials to compare them against PayPal."
+        )
+        raise typer.Exit()
 
     with PayPalClient(s) as c:
         missing, unexplained = Invoices(c).reconcile(invoice_id, expected)

@@ -36,7 +36,14 @@ class PayPalError(RuntimeError):
         — may have applied at PayPal's end, and treating those as "never happened" is how an
         integration bills a client twice.
         """
-        return self.status == 0 and "No cassette" in self.body
+        if self.status == 0 and "No cassette" in self.body:
+            return True
+        # PayPal answering 4xx means it read the request and refused it: the invoice is
+        # unchanged and the work is still unbilled. Leaving the intent rows in place after a
+        # refusal blocks that work for good on an append-only record. 5xx and transport
+        # failures stay ambiguous — those may have applied, and calling them "never happened"
+        # is how an integration bills a client twice.
+        return 400 <= self.status < 500
 
 
 def _cassette_key(method: str, path: str, body: Any) -> str:

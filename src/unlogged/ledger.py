@@ -134,16 +134,37 @@ class Ledger:
             if raw.strip():
                 yield Entry.model_validate_json(raw)
 
+    def settled_lines(self) -> list[Entry]:
+        """One row per billed line: the latest for each event, with voided ones dropped.
+
+        The file holds up to three rows per line — the intent written before the money moves,
+        the settled row after, and a void if the write never left. Those exist so a write
+        cannot be lost or repeated, and `billed_to` has always read them that way. Everything
+        that reports MONEY read the raw rows instead, so the two guards that make a write safe
+        were the two that corrupted the figure: $382.50 of real work was reported as
+        $1,105.00, and an apply that billed nothing at all still moved the total.
+
+        Everything that answers "what was billed" goes through here.
+        """
+        latest: dict[tuple[str, str], Entry] = {}
+        for e in self:
+            latest[(e.invoice_id, e.event_id)] = e
+        return [e for e in latest.values() if not e.voided]
+
     def total_added(self) -> Decimal:
-        return sum((e.hours * e.unit_price for e in self), Decimal(0)).quantize(Decimal("0.01"))
+        return sum((e.hours * e.unit_price for e in self.settled_lines()), Decimal(0)).quantize(
+            Decimal("0.01")
+        )
 
     def summary(self) -> dict[str, Any]:
-        entries = list(self)
+        lines = self.settled_lines()
         return {
-            "changes": len(entries),
+            "changes": len(lines),
             "added": str(self.total_added()),
-            "first": entries[0].at.isoformat() if entries else None,
-            "last": entries[-1].at.isoformat() if entries else None,
+            "first": min((e.at for e in lines), default=None)
+            and min(e.at for e in lines).isoformat(),
+            "last": max((e.at for e in lines), default=None)
+            and max(e.at for e in lines).isoformat(),
         }
 
 

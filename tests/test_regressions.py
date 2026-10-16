@@ -1005,60 +1005,47 @@ def test_an_unlabelled_corpus_is_explained_rather_than_a_traceback():
     assert "Traceback" not in result.output
 
 
-def test_reconcile_expects_one_line_per_event_not_one_per_ledger_row(tmp_path, monkeypatch):
-    """Every write leaves two rows — an intent before the money moves and a settled one after
-    — so counting rows expected each line twice and reported a correct invoice as half
-    missing. The guard against double-billing must not make the detector cry wolf.
+def test_reconcile_on_the_replay_path_judges_nothing(tmp_path, monkeypatch):
+    """It compared the ledger against a recorded snapshot the writes never touched, and so
+    reported the demo's own just-billed lines as missing — every time, on the documented
+    sequence a judge runs. The test that was meant to cover this stubbed Invoices.get, so it
+    never touched a cassette and could not have caught it.
     """
     from typer.testing import CliRunner
 
     from unlogged import cli
-    from unlogged.paypal import Invoices
 
     monkeypatch.setattr(cli, "DATA", tmp_path)
     for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
         monkeypatch.setenv(var, "")
     monkeypatch.setenv("UNLOGGED_REPLAY", "1")
     invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+    engagement = str(HERE / "fixtures" / "engagement.json")
 
-    argv = [
-        "discover",
-        "--engagement",
-        str(HERE / "fixtures" / "engagement.json"),
-        "--events",
-        str(HERE / "fixtures" / "events.jsonl"),
-        "--invoice-id",
-        invoice_id,
-        "--apply",
-    ]
-    assert CliRunner().invoke(cli.app, argv).exit_code == 0
-
-    # The invoice, as the recording left it, carries both discovered lines plus the opening.
-    monkeypatch.setattr(
-        Invoices,
-        "get",
-        lambda self, _id, **_kw: {
-            "items": [
-                {"name": "Checkout page — agreed scope"},
-                {"name": "PSP timeout handling and 3DS re-challenge (github 03 Oct)"},
-                {"name": "Prevent double-charges on checkout double-click (github 09 Oct)"},
-            ]
-        },
-    )
-
-    result = CliRunner().invoke(
+    applied = CliRunner().invoke(
         cli.app,
         [
-            "reconcile",
+            "discover",
             "--engagement",
-            str(HERE / "fixtures" / "engagement.json"),
+            engagement,
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
             "--invoice-id",
             invoice_id,
+            "--apply",
         ],
+    )
+    assert applied.exit_code == 0, applied.output
+
+    # No stubbing: this reads the committed recording, which is the whole point.
+    result = CliRunner().invoke(
+        cli.app, ["reconcile", "--engagement", engagement, "--invoice-id", invoice_id]
     )
 
     assert result.exit_code == 0, result.output
-    assert "exactly those" in result.output
+    assert "nothing to reconcile against" in result.output
+    assert "2 discovered line(s)" in result.output
+    assert "are NOT on" not in result.output, "it must not accuse the demo it just ran"
 
 
 def test_reconcile_names_lines_that_were_attempted_and_never_confirmed(tmp_path, monkeypatch):
@@ -1111,15 +1098,26 @@ def test_reconcile_names_lines_that_were_attempted_and_never_confirmed(tmp_path,
 # -- 10. a write that never left ------------------------------------------------------------
 
 
-def test_only_a_request_that_never_left_counts_as_never_happened():
-    """A timeout or a 5xx may have applied at PayPal's end. Treating those as "never
-    happened" is how an integration bills a client twice."""
+def test_a_refusal_releases_the_work_and_an_unknown_outcome_does_not():
+    """The line is drawn at whether the invoice can have changed.
+
+    PayPal answering 4xx means it read the request and refused it: the invoice is unchanged
+    and the work is still unbilled, so leaving the intent rows would block that work for good
+    on an append-only record. A 5xx or a dropped connection may have applied, and calling
+    those "never happened" is how an integration bills a client twice.
+    """
     from unlogged.paypal.client import PayPalError
 
+    # Never left this process at all.
     assert PayPalError(0, "No cassette for PUT /v2/invoicing/...").never_dispatched is True
-    assert PayPalError(0, "Connection reset").never_dispatched is False
+    # Read and refused: nothing was billed.
+    assert PayPalError(422, "UNPROCESSABLE_ENTITY").never_dispatched is True
+    assert PayPalError(400, "INVALID_REQUEST").never_dispatched is True
+    assert PayPalError(409, "RESOURCE_CONFLICT").never_dispatched is True
+    # Unknown: the write may have applied.
     assert PayPalError(500, "INTERNAL_SERVICE_ERROR").never_dispatched is False
-    assert PayPalError(422, "UNPROCESSABLE_ENTITY").never_dispatched is False
+    assert PayPalError(503, "SERVICE_UNAVAILABLE").never_dispatched is False
+    assert PayPalError(0, "Connection reset").never_dispatched is False
 
 
 def test_a_failed_apply_does_not_block_the_next_one_for_good(tmp_path, monkeypatch):

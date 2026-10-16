@@ -190,3 +190,89 @@ def test_an_empty_local_file_is_not_local_history(tmp_path):
     (tmp_path / "eng.jsonl").write_text("")
 
     assert [e.event_id for e in Ledger(tmp_path / "eng.jsonl")] == ["p1"]
+
+
+def test_the_money_total_counts_one_row_per_billed_line(tmp_path):
+    """The file holds up to three rows per line — the intent before the money moves, the
+    settled row after, and a void where the write never left. Those exist so a write cannot
+    be lost or repeated, and summing them as money made $382.50 of real work report as
+    $1,105.00, while an apply that billed nothing still moved the total.
+    """
+    import json
+    from decimal import Decimal
+
+    from unlogged.ledger import Entry, Ledger, now
+
+    ledger = Ledger(tmp_path / "eng.jsonl")
+
+    def row(event_id, **kw):
+        return Entry(
+            at=now(),
+            invoice_id="INV2-TEST-0000-0000-0009",
+            event_id=event_id,
+            clause_id="X1",
+            line_name=f"Work for {event_id}",
+            hours=Decimal("2"),
+            unit_price=Decimal("85.00"),
+            total_after=Decimal("0"),
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+            **kw,
+        )
+
+    # One line, billed properly: intent then settled.
+    ledger.append(row("e3", settled=False))
+    ledger.append(row("e3"))
+    assert ledger.total_added() == Decimal("170.00")
+    assert ledger.summary()["changes"] == 1
+
+    # A second line attempted and voided bills nothing and counts as nothing.
+    ledger.append(row("e8", settled=False))
+    ledger.append(row("e8", settled=False, voided=True))
+    assert ledger.total_added() == Decimal("170.00")
+    assert ledger.summary()["changes"] == 1
+
+    # And when it is billed for real afterwards, it counts once.
+    ledger.append(row("e8", settled=False))
+    ledger.append(row("e8"))
+    assert ledger.total_added() == Decimal("340.00")
+    assert ledger.summary()["changes"] == 2
+
+    # The raw file still holds every row: the bookkeeping is kept, it is just not money.
+    assert len((tmp_path / "eng.jsonl").read_text().strip().splitlines()) == 6
+    assert all(json.loads(line) for line in (tmp_path / "eng.jsonl").read_text().splitlines())
+
+
+def test_the_api_returns_one_row_per_line_so_the_chart_cannot_draw_bookkeeping(
+    tmp_path, monkeypatch
+):
+    from decimal import Decimal
+
+    from fastapi.testclient import TestClient
+
+    from unlogged import web as web_mod
+    from unlogged.ledger import Entry, Ledger, now
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+    ledger = Ledger(tmp_path / "eng-checkout-001.jsonl")
+    for settled in (False, True):
+        ledger.append(
+            Entry(
+                at=now(),
+                invoice_id="INV2-TEST-0000-0000-0009",
+                event_id="e3",
+                clause_id="X1",
+                line_name="One line",
+                hours=Decimal("2"),
+                unit_price=Decimal("85.00"),
+                total_after=Decimal("170.00"),
+                adjudicator="gpt-6.1-sol",
+                confidence=0.9,
+                settled=settled,
+            )
+        )
+
+    body = TestClient(web_mod.app).get("/api/ledger").json()
+
+    assert len(body["rows"]) == 1, "the chart would otherwise draw the intent row as a bar"
+    assert body["summary"]["added"] == "170.00"

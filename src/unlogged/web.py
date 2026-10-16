@@ -22,7 +22,7 @@ from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.client import PayPalError
-from unlogged.paypal.invoices import total_of
+from unlogged.paypal.invoices import MAX_ITEMS, total_of
 from unlogged.paypal.webhooks import Webhooks, is_simulated
 from unlogged.scope.baseline import KeywordBaseline
 from unlogged.scope.models import Engagement, WorkEvent, line_name
@@ -129,7 +129,13 @@ def read_verdicts() -> dict[str, Any]:
 @app.get("/api/ledger")
 def read_ledger() -> dict[str, Any]:
     led = Ledger(DATA / f"{engagement().id}.jsonl")
-    return {"summary": led.summary(), "rows": [e.model_dump(mode="json") for e in led]}
+    # One row per billed line. The raw file holds the intent row written before the money
+    # moves, the settled row after it, and a void where a write never left — bookkeeping that
+    # makes the write safe and has no business being summed as money or drawn as a bar.
+    return {
+        "summary": led.summary(),
+        "rows": [e.model_dump(mode="json") for e in led.settled_lines()],
+    }
 
 
 @app.get("/api/settlement/{capture_id}")
@@ -322,6 +328,25 @@ def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
             )
             for v in chosen
         ]
+        # Checked HERE, before the intent rows, and not only inside add_items. Both of these
+        # fire before a socket is opened, and raising after the intent rows left the work
+        # blocked for good: the ledger is append-only and a ValueError is not a PayPalError,
+        # so no void was written and no retry was ever allowed.
+        on_invoice = current.get("detail", {}).get("currency_code")
+        mismatched = sorted({i.currency for i in items if on_invoice and i.currency != on_invoice})
+        if mismatched:
+            raise HTTPException(
+                409,
+                f"invoice {req.invoice_id} is in {on_invoice} and these lines are priced in "
+                f"{', '.join(mismatched)}",
+            )
+        if len(current.get("items", [])) + len(items) > MAX_ITEMS:
+            raise HTTPException(
+                409,
+                f"invoice {req.invoice_id} already carries "
+                f"{len(current.get('items', []))} lines; PayPal accepts {MAX_ITEMS}",
+            )
+
         # The cap is printed on the client's own invoice. Until now nothing compared a total
         # against it, so the one number the client was asked to rely on was never checked.
         if eng.cap is not None:
