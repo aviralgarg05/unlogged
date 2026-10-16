@@ -13,6 +13,7 @@ import typer
 from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
+from unlogged.paypal.client import PayPalError
 from unlogged.paypal.invoices import TERMINAL_STATUSES, total_of
 from unlogged.scope.baseline import KeywordBaseline
 from unlogged.scope.models import Call, Engagement, WorkEvent, line_name
@@ -214,7 +215,28 @@ def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
                 )
             )
 
-        updated = inv.add_items(invoice_id, items, notify=True, idempotency_key=key)
+        try:
+            updated = inv.add_items(invoice_id, items, notify=True, idempotency_key=key)
+        except PayPalError as exc:
+            if exc.never_dispatched:
+                for v, item in zip(billable, items, strict=True):
+                    ledger.append(
+                        Entry(
+                            at=now(),
+                            invoice_id=invoice_id,
+                            event_id=v.event_id,
+                            clause_id=v.clause_id,
+                            line_name=item.display_name,
+                            hours=v.hours,
+                            unit_price=item.unit_price,
+                            total_after=Decimal("0"),
+                            adjudicator=judge.name,
+                            confidence=v.confidence,
+                            settled=False,
+                            voided=True,
+                        )
+                    )
+            raise
         total = total_of(updated)
         for v, item in zip(billable, items, strict=True):
             ledger.append(

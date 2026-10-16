@@ -41,6 +41,10 @@ const VERDICT_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
 
 const LEDGER_FIELDS: AgFieldDefinition<UnloggedRegistry>[] = [
   { id: 'at', name: 'Written at', format: 'dateTimeFormat' },
+  // Present because the ledger spans billing periods: the seeded rows belong to an earlier
+  // invoice. Without this column the money tiles above read as one invoice's figures when
+  // they are the engagement's, and nothing on the page says which.
+  { id: 'invoice_id', name: 'Invoice', format: 'textFormat' },
   { id: 'event_id', name: 'From event', format: 'textFormat' },
   { id: 'line_name', name: 'Line added to the invoice', format: 'textFormat' },
   { id: 'clause_id', name: 'Clause', format: 'textFormat' },

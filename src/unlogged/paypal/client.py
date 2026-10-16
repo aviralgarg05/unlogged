@@ -27,6 +27,17 @@ class PayPalError(RuntimeError):
         self.status, self.body, self.debug_id = status, body, debug_id
         super().__init__(f"PayPal {status}: {body[:400]}")
 
+    @property
+    def never_dispatched(self) -> bool:
+        """True when the request did not leave this process.
+
+        Only the missing-cassette case qualifies: it is raised before any socket is opened, so
+        nothing can have been billed. Everything else — a timeout, a 5xx, a dropped connection
+        — may have applied at PayPal's end, and treating those as "never happened" is how an
+        integration bills a client twice.
+        """
+        return self.status == 0 and "No cassette" in self.body
+
 
 def _cassette_key(method: str, path: str, body: Any) -> str:
     """Stable id for a recorded exchange. Volatile fields are excluded by the caller."""

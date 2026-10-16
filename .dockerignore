@@ -9,7 +9,11 @@
 .venv
 __pycache__
 *.pyc
-data
+# The live ledger and the webhook log stay out; the seed does not. Excluding the whole
+# directory kept data/seed/ out of the image too, and that file is the only thing standing
+# between a `docker compose up` demo and a blank page where the billed lines should be.
+data/*.jsonl
+data/*.lock
 evals
 web/node_modules
 web/.next

@@ -96,8 +96,13 @@ const bill: AgPageState<UnloggedRegistry> = {
   widgets: {
     // total_after is a RUNNING total, so the latest row is the answer and summing it
     // double-counts every earlier write.
-    'kpi-total': kpi('Invoice total now', { id: 'ledger.total_after', aggregation: 'max' }),
-    'kpi-added': kpi('Added after sending', sum('ledger.line_total')),
+    //
+    // These three read across the whole ledger, which spans more than one invoice: the seeded
+    // rows are an earlier billing period. Labelled "Invoice total now" and "Added after
+    // sending", they claimed to describe one invoice while summing two — so they say what
+    // they measure, and the Invoice column below shows the reader which is which.
+    'kpi-total': kpi('Highest invoice total', { id: 'ledger.total_after', aggregation: 'max' }),
+    'kpi-added': kpi('Billed across the engagement', sum('ledger.line_total')),
     'kpi-lines': kpi('Lines discovered', countd('ledger.event_id')),
     growth: {
       type: 'column-chart-grouped',
@@ -106,7 +111,7 @@ const bill: AgPageState<UnloggedRegistry> = {
         valueKey: [sum('ledger.line_total')],
       },
       format: {
-        ...title('What each discovered line added to the bill'),
+        ...title('What each discovered line added, across both billing periods'),
         style: { theme: { common: { legend: { enabled: false } } } },
       },
     },

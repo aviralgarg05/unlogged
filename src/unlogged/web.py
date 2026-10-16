@@ -232,6 +232,26 @@ def paypal_error(request: Request, exc: PayPalError) -> JSONResponse:
     id — reached the caller as an internal server error, which says the fault is here and
     throws away the one field PayPal's support will ask for.
     """
+    if exc.status == 0 and "No cassette" in exc.body:
+        # Not a PayPal failure: a selection nobody recorded. The keyless path can only replay
+        # the exchange that was taped, and the body of a PUT depends on which lines are being
+        # added — so ticking a different subset asks for an exchange that does not exist. It
+        # used to surface as "apply failed", which reads as the product being broken on the
+        # one screen where it moves money.
+        log.info("paypal_no_cassette")
+        return JSONResponse(
+            status_code=409,
+            content={
+                "error": (
+                    "No recorded PayPal exchange for this selection. Replaying only covers "
+                    "the demo as it was recorded: select every billable line, or set "
+                    "UNLOGGED_REPLAY=0 with sandbox credentials to call PayPal for real."
+                ),
+                "paypal_status": 0,
+                "replay_only": True,
+            },
+        )
+
     status = exc.status if 400 <= exc.status < 600 else 502
     log.warning("paypal_error", status=exc.status, debug_id=exc.debug_id)
     return JSONResponse(
@@ -324,7 +344,30 @@ def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
                 )
             )
 
-        updated = inv.add_items(req.invoice_id, items, notify=req.notify, idempotency_key=key)
+        try:
+            updated = inv.add_items(req.invoice_id, items, notify=req.notify, idempotency_key=key)
+        except PayPalError as exc:
+            if exc.never_dispatched:
+                # Nothing was sent, so the intent rows above would block a legitimate retry
+                # for good. Released, on an append-only record, by saying so in a row.
+                for v, item in zip(chosen, items, strict=True):
+                    ledger.append(
+                        Entry(
+                            at=now(),
+                            invoice_id=req.invoice_id,
+                            event_id=v.event_id,
+                            clause_id=v.clause_id,
+                            line_name=item.display_name,
+                            hours=v.hours,
+                            unit_price=item.unit_price,
+                            total_after=Decimal("0"),
+                            adjudicator=arm.name,
+                            confidence=v.confidence,
+                            settled=False,
+                            voided=True,
+                        )
+                    )
+            raise
         total = total_of(updated)
         for v, item in zip(chosen, items, strict=True):
             ledger.append(

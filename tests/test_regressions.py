@@ -1106,3 +1106,78 @@ def test_reconcile_names_lines_that_were_attempted_and_never_confirmed(tmp_path,
 
     assert "attempted and never confirmed" in result.output
     assert "Work nobody confirmed" in result.output
+
+
+# -- 10. a write that never left ------------------------------------------------------------
+
+
+def test_only_a_request_that_never_left_counts_as_never_happened():
+    """A timeout or a 5xx may have applied at PayPal's end. Treating those as "never
+    happened" is how an integration bills a client twice."""
+    from unlogged.paypal.client import PayPalError
+
+    assert PayPalError(0, "No cassette for PUT /v2/invoicing/...").never_dispatched is True
+    assert PayPalError(0, "Connection reset").never_dispatched is False
+    assert PayPalError(500, "INTERNAL_SERVICE_ERROR").never_dispatched is False
+    assert PayPalError(422, "UNPROCESSABLE_ENTITY").never_dispatched is False
+
+
+def test_a_failed_apply_does_not_block_the_next_one_for_good(tmp_path, monkeypatch):
+    """The intent rows written before the money moves are what stop a double charge. When the
+    request never left, they would instead block the legitimate apply for good — on an
+    append-only record with no way back.
+    """
+    from fastapi.testclient import TestClient
+
+    from unlogged import web as web_mod
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+    client = TestClient(web_mod.app)
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+
+    # One row: no recorded exchange covers that selection, so nothing is sent.
+    first = client.post("/api/apply", json={"invoice_id": invoice_id, "event_ids": ["e3"]})
+    assert first.status_code == 409
+    assert first.json()["replay_only"] is True
+
+    # The selection that IS recorded must still work.
+    second = client.post("/api/apply", json={"invoice_id": invoice_id, "event_ids": ["e3", "e8"]})
+    assert second.status_code == 200, second.json()
+    assert second.json()["total"] == "902.50"
+
+    # And having succeeded, it is now blocked — which is the guard doing its job.
+    third = client.post("/api/apply", json={"invoice_id": invoice_id, "event_ids": ["e3", "e8"]})
+    assert third.status_code == 409
+    assert "already billed" in third.json()["detail"]
+
+
+def test_a_voided_row_releases_the_event_and_a_later_write_claims_it_again(tmp_path):
+    from decimal import Decimal
+
+    from unlogged.ledger import Entry, Ledger, now
+
+    ledger = Ledger(tmp_path / "eng.jsonl")
+
+    def row(**kw):
+        return Entry(
+            at=now(),
+            invoice_id="INV2-TEST-0000-0000-0006",
+            event_id="e3",
+            clause_id="X1",
+            line_name="Work",
+            hours=Decimal("1"),
+            unit_price=Decimal("85.00"),
+            total_after=Decimal("0"),
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+            **kw,
+        )
+
+    ledger.append(row(settled=False))
+    assert ledger.billed_to("INV2-TEST-0000-0000-0006") == {"e3"}
+
+    ledger.append(row(settled=False, voided=True))
+    assert ledger.billed_to("INV2-TEST-0000-0000-0006") == set()
+
+    ledger.append(row())
+    assert ledger.billed_to("INV2-TEST-0000-0000-0006") == {"e3"}

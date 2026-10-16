@@ -38,6 +38,11 @@ class Entry(BaseModel):
     # crash, a killed process or a read timeout between the two leaves this row behind, and
     # the next run refuses rather than billing again. `unlogged reconcile` says which it was.
     settled: bool = True
+    # Appended when a write is known never to have reached PayPal, which frees the events to
+    # be billed properly. The distinction matters: an intent row means "sent, outcome unknown"
+    # and must block a retry, while a request that never left must not — otherwise one failed
+    # click blocks the legitimate apply for good, on an append-only record with no way back.
+    voided: bool = False
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -101,8 +106,16 @@ class Ledger:
             handle.close()
 
     def billed_to(self, invoice_id: str) -> set[str]:
-        """Event ids already written against this invoice, settled or merely attempted."""
-        return {e.event_id for e in self if e.invoice_id == invoice_id}
+        """Event ids written against this invoice: settled, or attempted and unresolved.
+
+        The latest row for an event wins, so a void releases it and a later real write claims
+        it again. Attempted-but-unresolved still counts — the money may have moved.
+        """
+        latest: dict[str, Entry] = {}
+        for e in self:
+            if e.invoice_id == invoice_id:
+                latest[e.event_id] = e
+        return {eid for eid, e in latest.items() if not e.voided}
 
     def append(self, entry: Entry) -> None:
         # Carry the seed forward on the first local write. Reading it only as a fallback meant
