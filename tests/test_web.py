@@ -57,7 +57,9 @@ def test_verdicts_serve_the_model_arm_from_cassettes_without_a_key():
 
 
 def test_apply_refuses_when_nothing_selected_is_billable():
-    r = client.post("/api/apply", json={"invoice_id": "INV2-X", "event_ids": ["e2"]})
+    r = client.post(
+        "/api/apply", json={"invoice_id": "INV2-TEST-0000-0000-0001", "event_ids": ["e2"]}
+    )
     assert r.status_code == 400
 
 
@@ -131,7 +133,9 @@ def test_apply_refuses_an_invoice_that_can_no_longer_take_items(monkeypatch):
     from unlogged.paypal import Invoices
 
     monkeypatch.setattr(Invoices, "get", lambda self, iid: {"status": "MARKED_AS_PAID"})
-    r = client.post("/api/apply", json={"invoice_id": "INV2-X", "event_ids": ["e3"]})
+    r = client.post(
+        "/api/apply", json={"invoice_id": "INV2-TEST-0000-0000-0001", "event_ids": ["e3"]}
+    )
     assert r.status_code == 409
     assert "MARKED_AS_PAID" in r.json()["detail"]
 
@@ -153,7 +157,9 @@ def test_a_paypal_refusal_keeps_paypals_status_and_debug_id(monkeypatch):
         raise PayPalError(422, '{"name":"UNPROCESSABLE_ENTITY"}', debug_id="abc123")
 
     monkeypatch.setattr(Invoices, "get", boom)
-    r = client.post("/api/apply", json={"invoice_id": "INV2-X", "event_ids": ["e3"]})
+    r = client.post(
+        "/api/apply", json={"invoice_id": "INV2-TEST-0000-0000-0001", "event_ids": ["e3"]}
+    )
     assert r.status_code == 422
     body = r.json()
     assert body["paypal_status"] == 422
@@ -194,7 +200,9 @@ def test_two_simultaneous_applies_bill_the_work_once(tmp_path, monkeypatch):
 
     def fire():
         ready.wait()
-        r = client.post("/api/apply", json={"invoice_id": "INV2-RACE", "event_ids": ["e3"]})
+        r = client.post(
+            "/api/apply", json={"invoice_id": "INV2-TEST-0000-0000-0002", "event_ids": ["e3"]}
+        )
         codes.append(r.status_code)
 
     threads = [threading.Thread(target=fire) for _ in range(2)]

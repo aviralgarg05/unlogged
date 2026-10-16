@@ -13,7 +13,7 @@ import typer
 from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
-from unlogged.paypal.invoices import total_of
+from unlogged.paypal.invoices import TERMINAL_STATUSES, total_of
 from unlogged.scope.baseline import KeywordBaseline
 from unlogged.scope.models import Call, Engagement, WorkEvent, line_name
 
@@ -148,6 +148,18 @@ def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
 
     with PayPalClient(s) as c:
         inv = Invoices(c)
+
+        current = inv.get(invoice_id)
+        status = current.get("status", "")
+        if status in TERMINAL_STATUSES:
+            # The web path refused this and the CLI did not, so the documented command would
+            # ask PayPal to grow a paid invoice and surface the refusal as a stack trace.
+            typer.secho(
+                f"{invoice_id} is {status} and cannot take items. Nothing written.",
+                fg=typer.colors.RED,
+            )
+            raise typer.Exit(1)
+
         items = []
         for v in billable:
             ev = by_id[v.event_id]
@@ -167,6 +179,20 @@ def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
         key = hashlib.sha256(",".join(sorted(v.event_id for v in billable)).encode()).hexdigest()[
             :16
         ]
+        # The cap is printed on the client's own invoice, under "Agreed cap". Until now it
+        # was decoration: nothing compared a total against it, so the one number the client
+        # was asked to rely on was the one number never checked.
+        if eng.cap is not None:
+            projected = total_of(current) + sum((i.total for i in items), Decimal("0"))
+            if projected > eng.cap:
+                typer.secho(
+                    f"{eng.currency} {projected:,.2f} would exceed the agreed cap of "
+                    f"{eng.currency} {eng.cap:,.2f}. Nothing written.",
+                    fg=typer.colors.RED,
+                )
+                typer.echo("Raise the cap with the client, or bill fewer of these.")
+                raise typer.Exit(1)
+
         # Written before the money moves. The ledger is the only guard, and a guard recorded
         # after the write does not exist during the window it has to cover: a crash or a read
         # timeout between the PUT and the record leaves nothing behind, and the next run

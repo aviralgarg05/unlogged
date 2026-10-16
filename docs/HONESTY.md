@@ -35,21 +35,32 @@ Written so a judge does not have to find any of this out by reading the source.
   work that answered it (`e3`) — the distinction the baseline cannot make and the one that
   causes double-billing. A real engagement of 40-60 events is what would make this a result.
 - **There is real data in this repository, and it says the model is worse than the headline.**
-  31 events from real pull-request threads, each labelled by two readers, are committed under
-  `fixtures/agreement/`, with the model's own calls beside them. The two readers agree 80.6% of
-  the time (Krippendorff's alpha 0.72, 95% CI 0.50 to 0.91). The model agrees with them 61.3%
-  and 48.4%, and across the 21 events whose agreements carry no written exclusion it never once
-  returns `scope_request` while both readers use it five times each. Run `uv run unlogged
-  agreement`. [`CORPUS.md`](CORPUS.md) is the full account, including the error that was mine.
+  31 events from real pull-request threads are committed under `fixtures/agreement/`, labelled
+  by six readers and by the model. Four of those readers were blind: they worked from the
+  frozen instruction in [`LABELLING.md`](LABELLING.md) and had seen neither each other, nor the
+  earlier passes, nor any critique, nor this repository. They agree at Krippendorff's alpha
+  **0.797**, call 25 of 31 events identically, and one of them matches the majority of the
+  others **94.3%** of the time. The model, asked the same question, manages **61.3%**. Run `uv
+  run unlogged agreement`. [`CORPUS.md`](CORPUS.md) is the full account, including the error
+  that was mine.
 
 - **What is still missing is a usable gold set, not data.** None of the fourteen engagements
-  survived the independent reader whose job was to break it, so there is no labelled set to
-  score an arm against — which is why the accuracy table in the README is still eight authored
-  events, and why it now carries the real-data result beside it rather than below it.
+  built in the first two rounds survived the independent reader whose job was to break it, so
+  there is no adjudicated set to score an arm against — which is why the accuracy table in the
+  README is still eight authored events, and why it now carries the real-data result beside it
+  rather than below it.
 
-- **The agreement figure is not clean inter-annotator agreement.** The second reader was shown a
-  critique of the first, so it is a pass and its own informed revision. A reproducibility
-  statistic needs a reader who has seen neither, and there has not been one.
+- **Two of the six readers are not independent.** `round1` and `round2` are a pass and its own
+  informed revision: the second was shown a critique of the first. Their 0.72 is reported for
+  completeness and is not the headline. The 0.797 comes from the four who saw nothing, and the
+  blindness is checkable rather than asserted — every tool call those four made is `gh api`
+  against the source repository from a scratch directory.
+
+- **All six readers are language models, not people.** The figure measures how reproducible the
+  written instruction is under careful independent reading, which is the question that matters
+  for whether the labels mean anything. It is not a claim about human annotators, and two model
+  families were used rather than one so it is not a claim about a single model's habits
+  either.
 
 - **The events can be real; the agreement still is not.** `unlogged pull-github` pulls a
   genuine thread out of a repository, which removes the worst circularity — that one person

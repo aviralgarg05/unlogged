@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import re
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -35,6 +36,25 @@ READONLY = ("id", "parent_id", "links")
 # life of an engagement, and both fail in ways the caller would otherwise discover late: the
 # clause list disappears off the end of the payer's page, or the hundred-and-first discovered
 # line is rejected after the work is already done.
+# An invoice id is interpolated straight into the request path, so anything accepted here
+# becomes a path this client will call with the merchant's OAuth token. `../../v1/payments`
+# is a valid Python string and was a valid argument. PayPal's own format is INV2 and four
+# groups of four, and nothing else should ever reach the wire.
+INVOICE_ID = re.compile(r"^INV2(-[A-Z0-9]{4}){4}$")
+
+
+# An invoice in one of these cannot take another line and PayPal rejects the write.
+TERMINAL_STATUSES = frozenset({"PAID", "MARKED_AS_PAID", "CANCELLED", "REFUNDED"})
+
+
+def check_invoice_id(invoice_id: str) -> str:
+    if not INVOICE_ID.match(invoice_id):
+        raise ValueError(
+            f"{invoice_id!r} is not a PayPal invoice id. Expected INV2-XXXX-XXXX-XXXX-XXXX."
+        )
+    return invoice_id
+
+
 TERMS_LIMIT = 4000
 MAX_ITEMS = 100
 
@@ -165,6 +185,7 @@ class Invoices:
         )
 
     def get(self, invoice_id: str) -> dict[str, Any]:
+        check_invoice_id(invoice_id)
         return self.c.request("GET", f"/v2/invoicing/invoices/{invoice_id}")
 
     # -- the mechanism ------------------------------------------------------
@@ -187,6 +208,7 @@ class Invoices:
         notify=True asks PayPal to email the client that the invoice changed. That is the
         consent step, and it is PayPal's own machinery rather than something we invented.
         """
+        check_invoice_id(invoice_id)
         with _lock_for(invoice_id):
             return self._add_items_locked(invoice_id, new_items, notify, idempotency_key)
 

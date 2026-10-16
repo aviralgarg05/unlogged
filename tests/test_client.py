@@ -39,9 +39,18 @@ def record(dir_: Path, method: str, path: str, body, status: int, payload) -> st
 
 
 def test_a_recorded_exchange_replays_without_credentials(cassettes: Path):
-    record(cassettes, "GET", "/v2/invoicing/invoices/INV2-X", None, 200, {"id": "INV2-X"})
+    record(
+        cassettes,
+        "GET",
+        "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009",
+        None,
+        200,
+        {"id": "INV2-TEST-0000-0000-0001"},
+    )
     with PayPalClient(settings()) as c:
-        assert c.request("GET", "/v2/invoicing/invoices/INV2-X") == {"id": "INV2-X"}
+        assert c.request("GET", "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009") == {
+            "id": "INV2-TEST-0000-0000-0001"
+        }
 
 
 def test_a_recorded_failure_replays_as_a_failure(cassettes: Path):

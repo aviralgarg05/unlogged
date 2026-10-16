@@ -1,0 +1,17 @@
+# Same rule as web/.dockerignore: the build context must not carry credentials, recorded
+# evidence, or a ledger. .env holds live PayPal and OpenAI keys; data/ holds what has been
+# billed to a real invoice.
+.env
+.env.*
+!.env.example
+
+.git
+.venv
+__pycache__
+*.pyc
+data
+evals
+web/node_modules
+web/.next
+docs/img
+.DS_Store

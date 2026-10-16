@@ -248,7 +248,8 @@ def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
 
     with PayPalClient(s) as c:
         inv = Invoices(c)
-        status = inv.get(req.invoice_id).get("status", "")
+        current = inv.get(req.invoice_id)
+        status = current.get("status", "")
         if status in TERMINAL:
             raise HTTPException(409, f"invoice {req.invoice_id} is {status} and cannot take items")
         items = [
@@ -261,6 +262,17 @@ def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
             )
             for v in chosen
         ]
+        # The cap is printed on the client's own invoice. Until now nothing compared a total
+        # against it, so the one number the client was asked to rely on was never checked.
+        if eng.cap is not None:
+            projected = total_of(current) + sum((i.total for i in items), Decimal("0"))
+            if projected > eng.cap:
+                raise HTTPException(
+                    409,
+                    f"{eng.currency} {projected:.2f} would exceed the agreed cap of "
+                    f"{eng.currency} {eng.cap:.2f}",
+                )
+
         key = hashlib.sha256(",".join(sorted(v.event_id for v in chosen)).encode()).hexdigest()[:16]
 
         # Recorded before the money moves: a guard written afterwards does not exist during

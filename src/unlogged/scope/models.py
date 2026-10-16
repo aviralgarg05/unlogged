@@ -100,7 +100,11 @@ class Verdict(BaseModel):
     # being shown our internal justification instead of their own work.
     work_description: str | None = None
     category: str | None = None
-    hours: Decimal | None = None
+    # Bounded, because this number is multiplied by a rate and written onto a real invoice on
+    # the strength of text a client wrote. Negative hours issue a credit; four hundred issue a
+    # bill nobody agreed to. A single work event that genuinely took more than a working week
+    # is not one event, and a model that says otherwise has been talked into it.
+    hours: Decimal | None = Field(default=None, ge=0, le=40)
     confidence: float = Field(ge=0.0, le=1.0, default=1.0)
 
     def is_billable(self) -> bool:

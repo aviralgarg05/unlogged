@@ -1,0 +1,16 @@
+# A build context is not a deployment boundary. `COPY . .` in the build stage put
+# web/.env.local — which holds a live OpenAI key — into an image layer, where it survives in
+# the layer history even though the final stage copies only the build output. Gitignored is
+# not dockerignored, and nothing warns you.
+.env
+.env.*
+!.env.example
+
+node_modules
+.next
+out
+.git
+.gitignore
+*.log
+coverage
+.DS_Store

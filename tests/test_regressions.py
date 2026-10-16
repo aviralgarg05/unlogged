@@ -216,7 +216,7 @@ def test_repeated_reads_of_one_key_replay_in_recorded_order(tmp_path, monkeypatc
     reproduce the one thing the recordings exist to show: the total going up.
     """
     monkeypatch.setattr(ppclient, "CASSETTES", tmp_path)
-    key = ppclient._cassette_key("GET", "/v2/invoicing/invoices/INV2-X", None)
+    key = ppclient._cassette_key("GET", "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009", None)
     (tmp_path / f"{key}.json").write_text(json.dumps({"status": 200, "body": {"total": "520.00"}}))
     (tmp_path / f"{key}.1.json").write_text(
         json.dumps({"status": 200, "body": {"total": "902.50"}})
@@ -226,10 +226,16 @@ def test_repeated_reads_of_one_key_replay_in_recorded_order(tmp_path, monkeypatc
 
     s = Settings(client_id="", client_secret="", base_url="x", openai_api_key=None, replay=True)
     with ppclient.PayPalClient(s) as c:
-        assert c.request("GET", "/v2/invoicing/invoices/INV2-X")["total"] == "520.00"
-        assert c.request("GET", "/v2/invoicing/invoices/INV2-X")["total"] == "902.50"
+        assert (
+            c.request("GET", "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009")["total"] == "520.00"
+        )
+        assert (
+            c.request("GET", "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009")["total"] == "902.50"
+        )
         # Reads past the end hold at the final state rather than failing.
-        assert c.request("GET", "/v2/invoicing/invoices/INV2-X")["total"] == "902.50"
+        assert (
+            c.request("GET", "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009")["total"] == "902.50"
+        )
 
 
 def test_takes_are_ordered_numerically_not_lexically(tmp_path):
@@ -308,8 +314,10 @@ def test_the_paypal_cassette_key_is_the_one_the_committed_recordings_were_writte
 
     # Pinned to the digest the recordings in cassettes/ were written under. If this changes,
     # the recordings are unreachable and the keyless path is gone, whatever the tests say.
-    assert _cassette_key("GET", "/v2/invoicing/invoices/INV2-X", None) == (
-        cassette.key({"m": "GET", "p": "/v2/invoicing/invoices/INV2-X", "b": None})
+    assert _cassette_key("GET", "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009", None) == (
+        cassette.key(
+            {"m": "GET", "p": "/v2/invoicing/invoices/INV2-TEST-0000-0000-0009", "b": None}
+        )
     )
     assert len(_cassette_key("GET", "/x", None)) == 20
 
@@ -609,7 +617,9 @@ def test_the_hundred_and_first_line_is_refused_before_the_write():
         monkey = [{"name": f"line {i}"} for i in range(inv_mod.MAX_ITEMS)]
         inv.get = lambda _id: {"items": monkey, "detail": {"currency_code": "USD"}}
         with pytest.raises(ValueError, match="101 line items"):
-            inv.add_items("INV2-X", [LineItem("one more", Decimal("1"), Decimal("1.00"))])
+            inv.add_items(
+                "INV2-TEST-0000-0000-0001", [LineItem("one more", Decimal("1"), Decimal("1.00"))]
+            )
 
 
 # -- 8. two writers, one invoice ------------------------------------------------------------
@@ -655,7 +665,9 @@ def test_two_threads_growing_one_invoice_do_not_lose_a_line():
 
     def add(name, price):
         ready.wait()
-        inv.add_items("INV2-RACE", [LineItem(name, Decimal("1"), Decimal(price))], notify=False)
+        inv.add_items(
+            "INV2-TEST-0000-0000-0002", [LineItem(name, Decimal("1"), Decimal(price))], notify=False
+        )
 
     threads = [
         threading.Thread(target=add, args=("Work from A", "30.00")),
@@ -684,7 +696,9 @@ def test_reconcile_names_the_lines_the_invoice_is_missing():
     client is undercharged and neither writer was told."""
     inv = _fake_invoice(["Agreed scope", "Work from B"])
 
-    missing, unexplained = inv.reconcile("INV2-X", ["Agreed scope", "Work from A", "Work from B"])
+    missing, unexplained = inv.reconcile(
+        "INV2-TEST-0000-0000-0001", ["Agreed scope", "Work from A", "Work from B"]
+    )
 
     assert missing == ["Work from A"]
     assert unexplained == []
@@ -695,7 +709,9 @@ def test_reconcile_catches_the_double_charge_not_only_the_lost_one():
     twice was reported green — the worse of the two failures, reported as correct."""
     inv = _fake_invoice(["Agreed scope", "Work from A", "Work from A"])
 
-    missing, unexplained = inv.reconcile("INV2-X", ["Agreed scope", "Work from A"])
+    missing, unexplained = inv.reconcile(
+        "INV2-TEST-0000-0000-0001", ["Agreed scope", "Work from A"]
+    )
 
     assert missing == []
     assert unexplained == ["Work from A"]
@@ -708,7 +724,7 @@ def test_reconcile_counts_rather_than_comparing_sets():
     twice = "Unspecified work (no description produced) (slack 02 Oct)"
     inv = _fake_invoice(["Agreed scope", twice])
 
-    missing, unexplained = inv.reconcile("INV2-X", ["Agreed scope", twice, twice])
+    missing, unexplained = inv.reconcile("INV2-TEST-0000-0000-0001", ["Agreed scope", twice, twice])
 
     assert missing == [twice]
     assert unexplained == []
@@ -717,4 +733,128 @@ def test_reconcile_counts_rather_than_comparing_sets():
 def test_reconcile_is_quiet_when_the_two_records_agree():
     inv = _fake_invoice(["Agreed scope", "Work from A"])
 
-    assert inv.reconcile("INV2-X", ["Agreed scope", "Work from A"]) == ([], [])
+    assert inv.reconcile("INV2-TEST-0000-0000-0001", ["Agreed scope", "Work from A"]) == ([], [])
+
+
+# -- 9. what the audit found -----------------------------------------------------------------
+
+
+def test_an_invoice_id_is_a_shape_not_an_arbitrary_path_segment():
+    """It is interpolated straight into the request path, so anything accepted here becomes a
+    path this client calls with the merchant's OAuth token."""
+    import pytest
+
+    from unlogged.paypal.invoices import check_invoice_id
+
+    assert check_invoice_id("INV2-DB9K-DK3X-WK8F-3E4N") == "INV2-DB9K-DK3X-WK8F-3E4N"
+    for bad in (
+        "../../v1/payments",
+        "INV2-X",
+        "",
+        "INV2-DB9K-DK3X-WK8F",
+        "inv2-db9k-dk3x-wk8f-3e4n",
+    ):
+        with pytest.raises(ValueError, match="not a PayPal invoice id"):
+            check_invoice_id(bad)
+
+
+def test_hours_cannot_be_negative_or_absurd():
+    """This number is multiplied by a rate and written onto a real invoice on the strength of
+    text a client wrote. Negative hours issue a credit; four hundred issue a bill nobody
+    agreed to."""
+    import pytest
+    from pydantic import ValidationError
+
+    for bad in (Decimal("-4"), Decimal("400")):
+        with pytest.raises(ValidationError):
+            Verdict(event_id="x", call=Call.BILLABLE_EXTRA, hours=bad, reason="r")
+
+    assert Verdict(event_id="x", call=Call.BILLABLE_EXTRA, hours=Decimal("3"), reason="r").hours
+
+
+def test_the_agreed_cap_printed_on_the_invoice_is_actually_enforced(tmp_path, monkeypatch):
+    """ "Agreed cap USD 1,200.00" is on the client's own page, under Note from seller. Until
+    this, nothing ever compared a total against it: the one number the client was asked to
+    rely on was the one number never checked.
+    """
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+    from unlogged.paypal import Invoices
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+
+    # An invoice already just under the engagement's USD 1,200.00 cap.
+    monkeypatch.setattr(
+        Invoices,
+        "get",
+        lambda self, _id: {"status": "SENT", "amount": {"value": "1190.00"}, "items": []},
+    )
+
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "discover",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
+            "--invoice-id",
+            (HERE / "fixtures" / "demo-invoice-id").read_text().strip(),
+            "--apply",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "exceed the agreed cap" in result.output
+    assert "Nothing written" in result.output
+
+
+def test_the_cli_refuses_an_invoice_that_can_no_longer_take_items(tmp_path, monkeypatch):
+    """The web path refused this and the CLI did not, so the documented command asked PayPal
+    to grow a paid invoice and surfaced the refusal as a stack trace."""
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+    from unlogged.paypal import Invoices
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+    monkeypatch.setattr(Invoices, "get", lambda self, _id: {"status": "MARKED_AS_PAID"})
+
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "discover",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
+            "--invoice-id",
+            (HERE / "fixtures" / "demo-invoice-id").read_text().strip(),
+            "--apply",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "MARKED_AS_PAID" in result.output
+
+
+def test_the_build_context_cannot_carry_a_credential():
+    """`COPY . .` in web/Dockerfile put web/.env.local — a live OpenAI key — into an image
+    layer, where it survives in the layer history even though the final stage copies only the
+    build output. Gitignored is not dockerignored, and nothing warns you."""
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    for name in (".dockerignore", "web/.dockerignore"):
+        text = (root / name).read_text()
+        assert ".env" in text.splitlines(), f"{name} does not exclude .env"
+        assert ".env.*" in text.splitlines(), f"{name} does not exclude .env.local"
+    # And the recordings must survive, because they are the keyless path.
+    assert "cassettes" not in (root / ".dockerignore").read_text()
