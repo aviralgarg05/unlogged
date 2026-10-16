@@ -1181,3 +1181,95 @@ def test_a_voided_row_releases_the_event_and_a_later_write_claims_it_again(tmp_p
 
     ledger.append(row())
     assert ledger.billed_to("INV2-TEST-0000-0000-0006") == {"e3"}
+
+
+# -- 11. a line the client can argue with, in the currency they agreed to --------------------
+
+
+def test_a_line_the_client_cannot_trace_is_refused_whichever_arm_produced_it(tmp_path, monkeypatch):
+    """The keyword baseline produces "Unspecified work (no description produced)", citing no
+    clause and quoting nothing, and it was allowed to write that onto a real invoice. That is
+    not a weaker version of this product's claim; it is the thing the product exists instead
+    of. The refusal is at the write, so it holds for any arm.
+    """
+    from typer.testing import CliRunner
+
+    from unlogged import cli
+    from unlogged.scope import adjudicate as adj
+
+    monkeypatch.setattr(cli, "DATA", tmp_path)
+    for var in ("OPENAI_API_KEY", "PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET"):
+        monkeypatch.setenv(var, "")
+    monkeypatch.setenv("UNLOGGED_REPLAY", "1")
+    # Hide the recorded verdicts so the ablation arm is the one that answers.
+    monkeypatch.setattr(adj.Adjudicator, "recorded_for", classmethod(lambda cls, e, ev: False))
+
+    result = CliRunner().invoke(
+        cli.app,
+        [
+            "discover",
+            "--engagement",
+            str(HERE / "fixtures" / "engagement.json"),
+            "--events",
+            str(HERE / "fixtures" / "events.jsonl"),
+            "--invoice-id",
+            (HERE / "fixtures" / "demo-invoice-id").read_text().strip(),
+            "--apply",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "Refusing to bill" in result.output
+    # By name: e1 and e4 are exactly the two the baseline overbills.
+    assert "e1" in result.output and "e4" in result.output
+    assert "Nothing written" in result.output
+
+
+def test_a_citable_verdict_is_the_one_with_all_three_parts():
+    verdict = Verdict(
+        event_id="x1",
+        call=Call.BILLABLE_EXTRA,
+        hours=Decimal("2"),
+        clause_id="X1",
+        quoted_span="retry logic",
+        work_description="Retry handling on card decline",
+        reason="r",
+    )
+    assert verdict.is_citable() is True
+
+    for missing in ("clause_id", "quoted_span", "work_description"):
+        assert verdict.model_copy(update={missing: None}).is_citable() is False
+    assert verdict.model_copy(update={"work_description": "   "}).is_citable() is False
+
+
+def test_an_engagement_and_its_rate_card_must_agree_on_currency():
+    """A GBP engagement with a USD rate card produced GBP-labelled lines priced from a dollar
+    card, and the client was billed the difference without a word about it anywhere."""
+    import json
+
+    import pytest
+    from pydantic import ValidationError
+
+    raw = json.loads((HERE / "fixtures" / "engagement.json").read_text())
+    raw["currency"] = "GBP"
+
+    with pytest.raises(ValidationError, match="rate card"):
+        Engagement.model_validate(raw)
+
+
+def test_a_line_priced_in_another_currency_never_reaches_the_invoice():
+    """PayPal does not convert. A line in the wrong currency is a wrong number wearing the
+    right symbol, and nothing downstream looks at it again."""
+    import pytest
+
+    from unlogged.paypal import LineItem
+    from unlogged.paypal import invoices as inv_mod
+
+    inv = inv_mod.Invoices.__new__(inv_mod.Invoices)
+    inv.get = lambda _id, **_kw: {"items": [], "detail": {"currency_code": "USD"}}
+
+    with pytest.raises(ValueError, match="priced in GBP"):
+        inv.add_items(
+            "INV2-TEST-0000-0000-0007",
+            [LineItem("Work", Decimal("1"), Decimal("85.00"), currency="GBP")],
+        )

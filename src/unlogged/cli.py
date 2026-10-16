@@ -134,6 +134,18 @@ def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
     both see nothing billed and the client is charged twice. The lock has to span the
     decision, not just the HTTP call.
     """
+    uncitable = [v.event_id for v in billable if not v.is_citable()]
+    if uncitable:
+        # Not a judgement about which arm is better. A line the client cannot trace to a
+        # sentence in their own agreement is the thing this product exists instead of, and it
+        # must not reach their invoice whichever arm produced it.
+        typer.secho(
+            f"Refusing to bill {', '.join(uncitable)}: the verdict cites no clause, quotes "
+            f"nothing, or describes no work. Nothing written.",
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(1)
+
     already = ledger.billed_to(invoice_id)
     repeats = sorted({v.event_id for v in billable} & already)
     if repeats:

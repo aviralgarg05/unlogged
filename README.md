@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 174 tests, no credentials needed
+uv run pytest -q                       # 178 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -103,6 +103,12 @@ says 2.0 — $42.50 of real work the client is never asked to pay for. Scoring u
 soon as the predicted class matched the label, so that error was invisible and this table read
 as perfect. It is reported in the client's favour, which is the safer direction to be wrong in,
 and it is still wrong.
+
+Neither of those two lines could reach a client, because the money path refuses a verdict
+that cites no clause, quotes nothing, or describes no work — whichever arm produced it. Run
+the apply with the ablation arm and it stops by name: *"Refusing to bill e1, e4 … Nothing
+written."* That is not a judgement about which arm is better. A line the client cannot trace
+to a sentence in their own agreement is the thing this product exists instead of.
 
 The baseline bills a request for *a copy of last month's invoice*, bills the ask rather than
 the work that answered it, and misses both pieces of real out-of-scope engineering — including
@@ -264,7 +270,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose, Render blueprint | ✅ API image built and verified |
-| Tests | ✅ 174 Python (incl. a property test on the money path), 9 TypeScript |
+| Tests | ✅ 178 Python (incl. a property test on the money path), 9 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

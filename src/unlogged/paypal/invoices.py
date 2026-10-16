@@ -227,6 +227,17 @@ class Invoices:
     ) -> dict[str, Any]:
         new = list(new_items)
         current = self.get(invoice_id)
+        # The invoice has one currency and PayPal will not convert. A line priced in another
+        # one is not a smaller mistake than a wrong number — it is a wrong number wearing the
+        # right symbol, and nothing downstream looks at it again.
+        on_invoice = current.get("detail", {}).get("currency_code")
+        wrong = sorted({i.currency for i in new if on_invoice and i.currency != on_invoice})
+        if wrong:
+            raise ValueError(
+                f"invoice {invoice_id} is in {on_invoice} and these lines are priced in "
+                f"{', '.join(wrong)}. PayPal does not convert and the client pays the number."
+            )
+
         items = list(current.get("items", [])) + [i.to_paypal() for i in new]
         if len(items) > MAX_ITEMS:
             raise ValueError(

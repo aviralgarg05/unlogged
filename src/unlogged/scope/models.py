@@ -12,7 +12,7 @@ from datetime import datetime
 from decimal import Decimal
 from enum import StrEnum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class Call(StrEnum):
@@ -110,6 +110,17 @@ class Verdict(BaseModel):
     def is_billable(self) -> bool:
         return self.call is Call.BILLABLE_EXTRA and self.hours is not None
 
+    def is_citable(self) -> bool:
+        """Whether this verdict can be defended to the person being charged for it.
+
+        The claim this product makes is that every billed line names the clause it rests on
+        and quotes the words that decided it. A verdict with neither is not a weaker version
+        of that; it is the thing the product exists instead of. The keyword baseline produces
+        exactly this — "Unspecified work (no description produced)", citing nothing — and it
+        was allowed to write it onto a real invoice.
+        """
+        return bool(self.clause_id and self.quoted_span and (self.work_description or "").strip())
+
 
 class OpeningItem(BaseModel):
     """The agreed work, as it appears on the invoice from day one."""
@@ -130,6 +141,22 @@ class Engagement(BaseModel):
     clauses: list[ScopeClause] = Field(default_factory=list)
     opening: list[OpeningItem] = Field(default_factory=list)
     rate_card: RateCard
+
+    @model_validator(mode="after")
+    def _one_currency(self) -> Engagement:
+        """The engagement and its rate card have to agree.
+
+        Currency is declared in four places — here, on the rate card, on every line item, and
+        on the invoice itself — and nothing compared them. A GBP engagement with a USD rate
+        card produced GBP-labelled lines priced from a dollar card, and the client was billed
+        the difference without a word appearing anywhere about it.
+        """
+        if self.rate_card.currency != self.currency:
+            raise ValueError(
+                f"engagement is in {self.currency} and its rate card is in "
+                f"{self.rate_card.currency}. One of them is wrong, and the client pays either way."
+            )
+        return self
 
     @property
     def opening_total(self) -> Decimal:

@@ -290,6 +290,17 @@ def apply(req: ApplyRequest) -> dict[str, Any]:
 
 
 def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
+    uncitable = [v.event_id for v in chosen if not v.is_citable()]
+    if uncitable:
+        # Not a judgement about which arm is better. A line the client cannot trace to a
+        # sentence in their own agreement is the thing this product exists instead of, and it
+        # must not reach their invoice whichever arm produced it.
+        raise HTTPException(
+            422,
+            f"refusing to bill {', '.join(uncitable)}: the verdict cites no clause, quotes "
+            f"nothing, or describes no work",
+        )
+
     already = ledger.billed_to(req.invoice_id)
     repeats = sorted({v.event_id for v in chosen} & already)
     if repeats:
