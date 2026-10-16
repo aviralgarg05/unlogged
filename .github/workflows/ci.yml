@@ -55,7 +55,7 @@ jobs:
           uv run unlogged discover \
             --engagement fixtures/engagement.json \
             --events fixtures/events.jsonl \
-            --invoice-id INV2-DEMO
+            --invoice-id $(cat fixtures/demo-invoice-id)
           uv run unlogged evaluate \
             --engagement fixtures/engagement.json \
             --events fixtures/events.jsonl \
