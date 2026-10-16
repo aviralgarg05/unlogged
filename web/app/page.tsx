@@ -5,6 +5,19 @@ import Link from 'next/link';
 // page has one job: say what the product does and show it working, above the fold, before any
 // explanation of how.
 
+// The before and after of one live invoice. Opened full size, because at column width the
+// line items that carry the claim are unreadable.
+const SHOTS = [
+  {
+    src: '/payer-before.jpg',
+    alt: "The client's PayPal invoice at $520.00, showing one line: the agreed scope",
+  },
+  {
+    src: '/payer-after.jpg',
+    alt: 'The same invoice at $902.50, with two discovered lines added, each naming its source',
+  },
+];
+
 const EVIDENCE = [
   { n: '100%', label: 'precision and recall', sub: 'gpt-6.1-sol on the fixture engagement' },
   { n: '0%', label: 'for keyword triage', sub: 'the same events, the alternative people use' },
@@ -40,24 +53,32 @@ export default function Home() {
         </a>
       </div>
 
+      {/*
+        Side by side in a 4xl column, each of these is about 430px wide and the line items are
+        too small to read — which is the whole point of the pair. They open full size, because
+        a judge being asked to believe a number should be able to read it.
+      */}
       <figure className="mt-12">
         <div className="grid gap-4 sm:grid-cols-2">
-          <Image
-            src="/payer-before.jpg"
-            alt="The client's PayPal invoice at $520.00, showing one line: the agreed scope"
-            width={800}
-            height={563}
-            className="rounded-lg border border-pp-border"
-            priority
-          />
-          <Image
-            src="/payer-after.jpg"
-            alt="The same invoice at $902.50, with two discovered lines added, each naming its source"
-            width={800}
-            height={563}
-            className="rounded-lg border border-pp-border"
-            priority
-          />
+          {SHOTS.map((shot) => (
+            <a
+              key={shot.src}
+              href={shot.src}
+              target="_blank"
+              rel="noreferrer"
+              className="block rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-pp-blue"
+              title="Open full size"
+            >
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                width={800}
+                height={563}
+                className="rounded-lg border border-pp-border"
+                priority
+              />
+            </a>
+          ))}
         </div>
         <figcaption className="mt-3 text-sm leading-relaxed text-pp-muted">
           The same live PayPal invoice, before and after. <strong>$520.00 → $902.50.</strong> Same
