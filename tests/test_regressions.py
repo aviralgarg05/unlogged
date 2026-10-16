@@ -11,6 +11,8 @@ import os
 from decimal import Decimal
 from pathlib import Path
 
+import pytest
+
 from unlogged import cassette, dotenv
 from unlogged.eval.harness import Gold, Result, money, score
 from unlogged.paypal import client as ppclient
@@ -253,7 +255,11 @@ def test_takes_are_ordered_numerically_not_lexically(tmp_path):
 
 def test_re_recording_replaces_a_keys_whole_sequence(tmp_path):
     """Otherwise a shorter second run leaves a longer first run's tail behind it, and replay
-    walks off the end of this run into the last one."""
+    walks off the end of this run into the last one.
+
+    A run is a process, so the second one has to be declared: `forget_run` is what a new
+    process gets for free. Simulating it with a second `Tape` is what the test below forbids.
+    """
     from unlogged import cassette
 
     tape = cassette.Tape(tmp_path)
@@ -261,10 +267,103 @@ def test_re_recording_replaces_a_keys_whole_sequence(tmp_path):
         tape.record("k", {"n": i})
     assert len(cassette.takes("k", tmp_path)) == 3
 
-    again = cassette.Tape(tmp_path)
-    again.record("k", {"n": 99})
+    cassette.forget_run(tmp_path)
+    cassette.Tape(tmp_path).record("k", {"n": 99})
     assert len(cassette.takes("k", tmp_path)) == 1
     assert cassette.Tape(tmp_path).replay("k") == {"n": 99}
+    cassette.forget_run(tmp_path)
+
+
+def test_two_tapes_in_one_run_extend_one_sequence_instead_of_splicing_it(tmp_path):
+    """The take number belongs to the directory, not to the tape writing into it.
+
+    With a counter per tape, both of these started at 0: the second unlinked the first's
+    `k.json` and wrote its own, then the first wrote `k.1.json`. Replay then walked a tape
+    whose take 0 came from one writer and take 1 from the other, reported no problem, and
+    reproduced a total that never existed.
+    """
+    from unlogged import cassette
+
+    first, second = cassette.Tape(tmp_path), cassette.Tape(tmp_path)
+    first.record("k", {"writer": "first"})
+    second.record("k", {"writer": "second"})
+    first.record("k", {"writer": "first again"})
+
+    assert [p.name for p in cassette.takes("k", tmp_path)] == ["k.json", "k.1.json", "k.2.json"]
+    walk = cassette.Tape(tmp_path)
+    assert [walk.replay("k")["writer"] for _ in range(3)] == [
+        "first",
+        "second",
+        "first again",
+    ]
+    cassette.forget_run(tmp_path)
+
+
+def test_a_second_process_recording_the_same_directory_is_refused(tmp_path):
+    """Not slowed down, not queued — refused, while this process holds the directory.
+
+    Two processes cannot see each other's take numbers, so the splice above is the best case;
+    the worst is both unlinking and both writing `k.json`. `fcntl.flock` is what makes the
+    refusal real, so the test spends a real process to prove it rather than stubbing one.
+    """
+    import subprocess
+    import sys
+
+    from unlogged import cassette
+
+    cassette.Tape(tmp_path).record("k", {"held": True})
+    try:
+        other = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                "import sys; from unlogged import cassette; "
+                "cassette.Tape(__import__('pathlib').Path(sys.argv[1])).record('k', {})",
+                str(tmp_path),
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    finally:
+        cassette.forget_run(tmp_path)
+
+    assert other.returncode != 0, "a second recorder was allowed to write the same tape"
+    assert "already recording" in other.stderr
+    # And it changed nothing on the way out.
+    assert json.loads((tmp_path / "k.json").read_text()) == {"held": True}
+
+
+def test_a_filename_that_is_not_a_take_is_ignored_rather_than_fatal(tmp_path):
+    """A hand-copied `k.2x.json` used to raise `ValueError: invalid literal for int()`.
+
+    That is the only error anyone got — no filename, no reason — and it came out of every
+    replay of that key, which in this project means the demo a judge runs with no credentials
+    dies on a file nobody meant to keep. Skipped and named, like a torn ledger line.
+    """
+    from unlogged import cassette
+
+    (tmp_path / "k.json").write_text('{"take": 0}')
+    (tmp_path / "k.1.json").write_text('{"take": 1}')
+    (tmp_path / "k.2x.json").write_text("not a take")
+
+    with pytest.warns(UserWarning, match="k.2x.json"):
+        assert [p.name for p in cassette.takes("k", tmp_path)] == ["k.json", "k.1.json"]
+
+
+def test_two_files_claiming_one_take_number_are_refused_not_ranked(tmp_path):
+    """`k.1.json` and `k.01.json` are both take 1. Preferring one decides a total in silence.
+
+    Sorting them is what the old glob did, by whichever `int()` came first off the filesystem
+    — so the same directory could replay a different invoice on a different machine.
+    """
+    from unlogged import cassette
+
+    (tmp_path / "k.1.json").write_text('{"value": "225.00"}')
+    (tmp_path / "k.01.json").write_text('{"value": "250.00"}')
+
+    with pytest.raises(ValueError, match="both take 1"):
+        cassette.takes("k", tmp_path)
 
 
 def test_replaying_a_key_that_was_never_recorded_returns_nothing(tmp_path):

@@ -57,3 +57,18 @@ def never_record(monkeypatch):
     # from a developer's own file, and the fixture promising "no test may write a recording"
     # was undone by the project's own configuration.
     monkeypatch.setenv("UNLOGGED_RECORD", "")
+
+
+@pytest.fixture(autouse=True)
+def each_test_is_its_own_recording_run():
+    """End the recording run after every test.
+
+    A recording run holds an exclusive lock on its directory for the life of the process, and
+    the suite is one process that records into a fresh `tmp_path` per test. Without this the
+    descriptors pile up until the run exits, which is how the two tests that prove take
+    numbering came with a column of ResourceWarnings attached.
+    """
+    from unlogged import cassette
+
+    yield
+    cassette.forget_run()
