@@ -102,6 +102,18 @@ class LineItem:
     unit_of_measure: str = "HOURS"
     provenance: str | None = None
 
+    def __post_init__(self) -> None:
+        # A rate PayPal cannot express is a rate that cannot be billed. `unit_amount` goes out
+        # at two decimals, so 85.333 is sent as 85.33 while this object's own `total` keeps the
+        # third: the ledger recorded 256.00 against three hours and the client paid 255.99.
+        # A cent, each time, between the seller's record and the client's invoice — and
+        # `reconcile` comparing two records that genuinely differ.
+        if self.unit_price != self.unit_price.quantize(Decimal("0.01")):
+            raise ValueError(
+                f"{self.unit_price} is not a billable rate in {self.currency}: PayPal takes "
+                f"two decimals and the rest is lost silently. Round it before billing it."
+            )
+
     @property
     def display_name(self) -> str:
         return f"{self.name} ({self.provenance})" if self.provenance else self.name
