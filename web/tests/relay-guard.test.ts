@@ -67,3 +67,58 @@ test('varying the caller-supplied header does not buy unlimited requests', () =>
 
   assert.equal(allowed, 120, 'the global cap is the one that actually holds');
 });
+
+
+// --- the container case -----------------------------------------------------------------
+//
+// Every test above builds a Request whose URL host and Host header agree, which is why none of
+// them caught this: inside a container they do not. Next listens on 0.0.0.0 and reconstructs
+// request.url from the listen address, so the browser's `Origin: http://localhost:3000` was
+// compared against the container's own id. Under the README's own `docker compose up`, every
+// same-origin POST — the button that moves money included — was refused with 403 and a message
+// that named the wrong cause.
+
+/** A request as it arrives inside a container: the browser's host, the server's URL. */
+const inContainer = (headers: Record<string, string>) =>
+  new Request('http://382b629e4d40:3000/api/backend/api/apply', {
+    method: 'POST',
+    headers: { host: 'localhost:3000', ...headers },
+  });
+
+test('a same-origin POST inside a container is accepted', () => {
+  assert.equal(
+    sameOrigin(inContainer({ origin: 'http://localhost:3000', 'sec-fetch-site': 'same-origin' })),
+    true,
+  );
+});
+
+test('and a genuinely foreign origin is still refused there', () => {
+  assert.equal(sameOrigin(inContainer({ origin: 'https://evil.example' })), false);
+});
+
+test('behind a proxy the forwarded host is what the browser addressed', () => {
+  const req = new Request('http://10.0.1.7:3000/api/backend/api/apply', {
+    method: 'POST',
+    headers: {
+      host: '10.0.1.7:3000',
+      'x-forwarded-host': 'unlogged.onrender.com',
+      origin: 'https://unlogged.onrender.com',
+    },
+  });
+  assert.equal(sameOrigin(req), true);
+});
+
+test('a host header that is a list is read as its first entry', () => {
+  const req = new Request('http://0.0.0.0:3000/x', {
+    method: 'POST',
+    headers: { 'x-forwarded-host': 'unlogged.example, inner:3000', origin: 'https://unlogged.example' },
+  });
+  assert.equal(sameOrigin(req), true);
+});
+
+test('case in a host does not decide whether money moves', () => {
+  assert.equal(
+    sameOrigin(inContainer({ host: 'LocalHost:3000', origin: 'http://localhost:3000' })),
+    true,
+  );
+});

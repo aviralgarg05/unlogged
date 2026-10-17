@@ -8,6 +8,31 @@
 // turn "unlimited by anyone" into "a nuisance at worst", which is the right trade for a demo
 // whose whole value is being runnable. Real deployment wants a session behind it.
 
+/**
+ * The host the browser addressed — which is not the one the server answers on.
+ *
+ * This compared `Origin` against `new URL(request.url).host`, and inside a container that host
+ * is the server's own: Next listens on 0.0.0.0 and reconstructs the URL from the listen
+ * address, so a browser at localhost:3000 sent `Origin: http://localhost:3000` and was
+ * compared against `382b629e4d40:3000`. Every same-origin POST under the README's own
+ * `docker compose up` was refused 403 — including the one button that moves money, and both
+ * AI routes. The request's own `Host` header is what the browser addressed, so that is what
+ * the origin has to match.
+ *
+ * `x-forwarded-host` first, for a deploy behind a proxy. A caller outside a browser can set
+ * either header, but one outside a browser can also simply omit `Origin` and pass the check
+ * below — this was never authentication and the file says so at the top.
+ */
+function addressedHost(request: Request): string | null {
+  const stated = request.headers.get('x-forwarded-host') ?? request.headers.get('host');
+  if (stated) return stated.split(',')[0].trim().toLowerCase() || null;
+  try {
+    return new URL(request.url).host.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
 /** Requests a browser makes from another site, or with a forged-looking origin, are refused. */
 export function sameOrigin(request: Request): boolean {
   // Set by browsers on every cross-origin fetch and absent on same-origin navigations in some
@@ -17,8 +42,10 @@ export function sameOrigin(request: Request): boolean {
 
   const origin = request.headers.get('origin');
   if (!origin) return true;
+  const addressed = addressedHost(request);
+  if (!addressed) return false;
   try {
-    return new URL(origin).host === new URL(request.url).host;
+    return new URL(origin).host.toLowerCase() === addressed;
   } catch {
     return false;
   }

@@ -172,8 +172,31 @@ def settlement(capture_id: str) -> dict[str, Any]:
 
 # This endpoint takes no credential, because the observer that posts to it runs in a browser.
 # Unbounded, that is an invitation: 20,000 events in one request wrote 2MB, and nothing stopped
-# the next one. Bounded, the worst a stranger can do is fill a page of a log nobody bills from.
+# the next one.
+#
+# The sentence that used to end this comment — "the worst a stranger can do is fill a page of a
+# log nobody bills from" — was false, and expensively so. This wrote caller-supplied JSON into
+# DATA, which is the ledger directory, under the .jsonl extension the ledger globbed. So the
+# log WAS billed from: `Ledger.billed_to`, the only guard against charging a client twice,
+# parsed every line of it. Posting two rows shaped like ledger entries and marked voided
+# released the guard and the next apply re-billed work already on the invoice; posting them
+# unvoided jammed it, so real work could never be billed again on an append-only record.
+#
+# Two things now stand between a stranger and that. Telemetry is written outside the ledger
+# directory, where `Ledger._ledgers` does not look; and each line is wrapped, so even a file
+# that did get read cannot produce a row — the caller's object is nested under "event" and a
+# ledger entry needs its fields at the top level.
 MAX_TELEMETRY_EVENTS = 500
+
+
+def telemetry_path() -> Path:
+    """Where telemetry goes: a sibling of the ledger directory, never inside it.
+
+    Derived at call time rather than bound at import, so it follows `DATA` — both when the
+    environment sets it and when a test redirects it. A second constant frozen at import is
+    how one of these two paths ends up somewhere the other does not expect.
+    """
+    return DATA.parent / f"{DATA.name}-telemetry" / "events.jsonl"
 
 
 class TelemetryBatch(BaseModel):
@@ -188,16 +211,19 @@ def telemetry(batch: TelemetryBatch) -> dict[str, Any]:
     and posts here rather than awaiting anything. Nothing downstream of this is on a critical
     path: a failure here must never affect a run.
     """
-    DATA.mkdir(parents=True, exist_ok=True)
-    with (DATA / "telemetry.jsonl").open("a") as fh:
+    path = telemetry_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a") as fh:
         for e in batch.events:
-            fh.write(json.dumps(e) + "\n")
+            # Nested under "event", never spread at the top level: a ledger row needs its
+            # fields there, so a line written here cannot become one.
+            fh.write(json.dumps({"received_at": now().isoformat(), "event": e}) + "\n")
     return {"ok": True, "recorded": len(batch.events)}
 
 
 @app.get("/api/telemetry")
 def read_telemetry() -> dict[str, Any]:
-    path = DATA / "telemetry.jsonl"
+    path = telemetry_path()
     if not path.exists():
         return {"rows": []}
     rows = []
@@ -205,9 +231,15 @@ def read_telemetry() -> dict[str, Any]:
         if not line.strip():
             continue
         try:
-            row = json.loads(line)
+            stored = json.loads(line)
         except json.JSONDecodeError:
             continue
+        # Each line is {"received_at": …, "event": <what the caller posted>}; the wrapper is
+        # what keeps a posted object from ever being read as a ledger row. Readers want the
+        # event, so unwrap here rather than making every one of them know the shape.
+        if not isinstance(stored, dict):
+            continue
+        row = stored.get("event", stored)
         if isinstance(row, dict):
             rows.append(row)
 

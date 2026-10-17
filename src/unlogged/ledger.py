@@ -119,6 +119,27 @@ class Ledger:
             latest[e.event_id] = e
         return {eid for eid, e in latest.items() if not e.voided}
 
+    def _ledgers(self) -> list[Path]:
+        """Every file that is a ledger of this engagement's directory — and nothing else.
+
+        This was `parent.glob("*.jsonl")`, which is not "every ledger", it is "every file
+        anyone put here ending in .jsonl". `/api/telemetry` takes no credential and wrote
+        caller-supplied JSON straight into this directory under exactly that extension, and
+        `billed_to` — the only guard against billing a client twice — parsed every line of it
+        as a ledger row. A stranger could post rows marked `voided` and release the guard, so
+        the next apply re-billed work already on the invoice; or post unvoided rows and jam
+        it, so real work could never be billed, permanently, on an append-only record. Both
+        were reproduced. Telemetry now lives in its own directory and its lines cannot parse
+        as rows, and this looks only where ledgers actually are.
+
+        `seed/` is included deliberately. It is read as history by every reporting path, and
+        it was invisible to the guard until the first local write carried it forward — two
+        readers of one append-only record disagreeing about what had been billed, with the
+        guard on the wrong side of the disagreement.
+        """
+        root = self.path.parent
+        return sorted([*root.glob("*.jsonl"), *(root / "seed").glob("*.jsonl")])
+
     def _everything_for(self, invoice_id: str) -> Iterator[Entry]:
         """Every row written against this invoice, from any ledger in the directory.
 
@@ -128,7 +149,7 @@ class Ledger:
         not know what the engagement is called, and neither should the question "has this
         already been billed to it".
         """
-        for path in sorted(self.path.parent.glob("*.jsonl")):
+        for path in self._ledgers():
             for line in path.read_text(encoding="utf-8").splitlines():
                 if not line.strip():
                     continue

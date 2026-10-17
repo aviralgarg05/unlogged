@@ -39,6 +39,15 @@ The resource carries no ETag and the update accepts no `If-Match`, so two writer
 read before either wrote lose one of the two lines with no error anywhere. Nothing can prevent
 that from outside, which is why `unlogged reconcile` exists to find it after the fact.
 
+Because that ledger is the only guard, what can reach it matters as much as what it does.
+`/api/telemetry` takes no credential — the observer posting to it runs in a browser — and it
+used to append caller-supplied JSON into the ledger's own directory, which the guard read as
+rows. An unauthenticated POST could release the guard, so the next apply re-billed work already
+on the invoice, or jam it, so real work could never be billed again. Telemetry now writes
+outside that directory and each line is nested under `event`, so it cannot parse as a row; the
+ledger reads only files that are ledgers. Both directions are reproduced in
+`tests/test_web.py`, and both fail against the old code.
+
 Line items are only ever appended. Nothing in this project deletes a line, lowers a total, or
 cancels an invoice — there is no `DELETE` and no call to the `cancel` link in the codebase.
 

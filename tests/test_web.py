@@ -263,7 +263,13 @@ def test_a_torn_line_on_disk_does_not_stop_the_rest_being_read(tmp_path, monkeyp
     from unlogged import web as web_mod
 
     monkeypatch.setattr(web_mod, "DATA", tmp_path)
-    (tmp_path / "telemetry.jsonl").write_text('{"tool": "apply"}\n{"tool": "trunc\n')
+    poisoned = web_mod.telemetry_path()
+    poisoned.parent.mkdir(parents=True, exist_ok=True)
+    # Written in the stored shape, because that is what is on disk to survive.
+    poisoned.write_text(
+        '{"received_at": "x", "event": {"tool": "apply"}}\n'
+        '{"received_at": "x", "event": {"tool": "trunc\n'
+    )
 
     body = client.get("/api/telemetry").json()
 
@@ -280,3 +286,61 @@ def test_a_telemetry_batch_is_bounded(tmp_path, monkeypatch):
 
     assert too_many.status_code == 422
     assert client.post("/api/telemetry", json={"events": [{"x": 1}] * 10}).status_code == 200
+
+
+def test_a_stranger_cannot_reach_the_double_bill_guard_through_telemetry(tmp_path):
+    """`/api/telemetry` takes no credential. It used to write into the ledger directory.
+
+    `Ledger.billed_to` is the only thing standing between a client and being charged twice,
+    and it read every `*.jsonl` in that directory, parsing each line as a row. So an
+    unauthenticated POST of two ledger-shaped objects decided what the guard believed:
+
+      * marked `voided`, they released it — the next apply re-billed work already on the
+        invoice, which live is a second PUT appending the same lines to the client's bill;
+      * marked settled, they jammed it — real work could never be billed to that invoice
+        again, permanently, on a record that is append-only by design.
+
+    Both were reproduced end to end before this test existed. The comment above the endpoint
+    claimed "the worst a stranger can do is fill a page of a log nobody bills from"; the log
+    was read by the billing guard.
+    """
+    from unlogged.ledger import Entry, Ledger, now
+    from unlogged.web import telemetry_path
+
+    invoice = "INV2-AAAA-BBBB-CCCC-DDDD"
+    ledger = Ledger(tmp_path / "eng.jsonl")
+    ledger.append(
+        Entry(
+            at=now(),
+            invoice_id=invoice,
+            event_id="e1",
+            clause_id="X1",
+            line_name="Discovered work",
+            hours="2.0",
+            unit_price="85.00",
+            total_after="690.00",
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+            settled=True,
+        )
+    )
+    assert ledger.billed_to(invoice) == {"e1"}
+
+    poison = {
+        "at": now().isoformat(),
+        "invoice_id": invoice,
+        "event_id": "e1",
+        "clause_id": "X1",
+        "line_name": "Discovered work",
+        "hours": "2.0",
+        "unit_price": "85.00",
+        "total_after": "690.00",
+        "adjudicator": "gpt-6.1-sol",
+        "confidence": 0.9,
+        "voided": True,
+    }
+    assert client.post("/api/telemetry", json={"events": [poison]}).status_code == 200
+
+    assert ledger.billed_to(invoice) == {"e1"}, "telemetry released the double-bill guard"
+    assert telemetry_path().parent != tmp_path, "telemetry is writing into the ledger directory"
+    assert not list(tmp_path.glob("telemetry*")), "telemetry left a file among the ledgers"

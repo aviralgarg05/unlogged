@@ -342,3 +342,39 @@ def test_the_service_and_the_cli_lock_the_same_file(monkeypatch, tmp_path):
         monkeypatch.delenv("UNLOGGED_DATA", raising=False)
         importlib.reload(cli)
         importlib.reload(web)
+
+
+def test_the_seeded_history_is_visible_to_the_guard_not_only_to_the_reports(tmp_path):
+    """Two readers of one append-only record used to disagree, and the guard was the wrong one.
+
+    `seed/` is read as history by every reporting path — it is what keeps the page titled
+    "Every line this system added to the live PayPal invoice" from being blank on a fresh
+    clone. `billed_to`, the only guard against billing a client twice, globbed the ledger
+    directory and never looked inside `seed/`, so until the first local write carried the seed
+    forward, the dashboard showed a line as billed while the guard believed it was not.
+    """
+    from unlogged.ledger import Entry, Ledger, now
+
+    invoice = "INV2-SEED-SEED-SEED-SEED"
+    seeded = Entry(
+        at=now(),
+        invoice_id=invoice,
+        event_id="p1",
+        clause_id="X1",
+        line_name="Billed in an earlier period",
+        hours="2.5",
+        unit_price="85.00",
+        total_after="732.50",
+        adjudicator="gpt-6.1-sol",
+        confidence=0.91,
+        settled=True,
+    )
+    seed_dir = tmp_path / "seed"
+    seed_dir.mkdir()
+    (seed_dir / "eng.jsonl").write_text(seeded.model_dump_json() + "\n")
+
+    ledger = Ledger(tmp_path / "eng.jsonl")
+
+    # Nothing written locally yet: the reports can see it, so the guard has to as well.
+    assert [e.event_id for e in ledger] == ["p1"]
+    assert ledger.billed_to(invoice) == {"p1"}
