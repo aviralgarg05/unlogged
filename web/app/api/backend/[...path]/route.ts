@@ -7,7 +7,7 @@
 // through: a route that forwards everything is not a proxy, it is a hole with a fetch in it.
 
 import { BACKEND } from '@/lib/backend';
-import { sameOrigin, withinRate } from '@/lib/relay-guard';
+import { sameOrigin, withinRate, type RateChannel } from '@/lib/relay-guard';
 
 // Read paths the dashboard's data sources and tools use.
 const READABLE = new Set([
@@ -56,7 +56,11 @@ export async function POST(req: Request, ctx: { params: Promise<{ path: string[]
   if (!sameOrigin(req)) {
     return Response.json({ error: 'Cross-origin requests are not accepted.' }, { status: 403 });
   }
-  if (!withinRate(req)) {
+  // The money path gets its own budget. Sharing one with telemetry meant a minute of using
+  // the assistant could make the button that bills a client answer 429.
+  const joined = (await ctx.params).path.join('/');
+  const channel: RateChannel = joined === 'api/telemetry' ? 'telemetry' : 'money';
+  if (!withinRate(req, channel)) {
     return Response.json({ error: 'Too many requests. Wait a minute.' }, { status: 429 });
   }
   return forward(req, (await ctx.params).path, WRITABLE);

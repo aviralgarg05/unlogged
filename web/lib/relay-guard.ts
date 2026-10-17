@@ -52,10 +52,32 @@ export function sameOrigin(request: Request): boolean {
 }
 
 const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 30;
-const MAX_GLOBAL_PER_WINDOW = 120;
+
+/**
+ * Separate budgets, because these three things are not competing for the same scarce resource.
+ *
+ * All three callers shared one 30-a-minute per-caller allowance. The telemetry observer posts
+ * fire-and-forget batches throughout a conversation and the AI routes spend a turn each, so a
+ * minute of using the assistant could spend the whole budget — and then "Add to the live
+ * invoice", the one button this product exists for, answered "Too many requests. Wait a
+ * minute." A brake written to stop a stranger spending the owner's OpenAI credit was
+ * throttling the owner's own demo, on the money path, with a message about a limit the reader
+ * had no way to connect to what they had been doing.
+ *
+ * `money` is deliberately the smallest and is spent by nothing else: a human adding lines to
+ * an invoice does it a handful of times a minute, and an automated caller doing it more than
+ * ten is not something to be accommodated.
+ */
+const CHANNELS = {
+  money: { perCaller: 10, global: 40 },
+  ai: { perCaller: 30, global: 120 },
+  telemetry: { perCaller: 60, global: 240 },
+} as const;
+
+export type RateChannel = keyof typeof CHANNELS;
+
 const seen = new Map<string, number[]>();
-let global: number[] = [];
+const global = new Map<RateChannel, number[]>();
 
 /**
  * Two caps, because one is not enough and saying why matters more than the number.
@@ -71,28 +93,32 @@ let global: number[] = [];
  * over the limit kept the array growing and the filter re-scanning it, so the brake was its
  * own CPU and memory sink: refusing got more expensive the harder it was pushed.
  */
-export function withinRate(request: Request): boolean {
+export function withinRate(request: Request, channel: RateChannel = 'ai'): boolean {
   const who =
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     request.headers.get('x-real-ip') ||
     'unknown';
   const now = Date.now();
+  const caps = CHANNELS[channel];
+  const key = `${channel}:${who}`;
 
-  global = global.filter((t) => now - t < WINDOW_MS);
-  const hits = (seen.get(who) ?? []).filter((t) => now - t < WINDOW_MS);
+  const globalHits = (global.get(channel) ?? []).filter((t) => now - t < WINDOW_MS);
+  const hits = (seen.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
 
-  if (hits.length >= MAX_PER_WINDOW || global.length >= MAX_GLOBAL_PER_WINDOW) {
-    seen.set(who, hits);
+  if (hits.length >= caps.perCaller || globalHits.length >= caps.global) {
+    seen.set(key, hits);
+    global.set(channel, globalHits);
     return false;
   }
 
   hits.push(now);
-  seen.set(who, hits);
-  global.push(now);
+  seen.set(key, hits);
+  globalHits.push(now);
+  global.set(channel, globalHits);
 
   if (seen.size > 1_000) {
-    for (const [key, times] of seen) {
-      if (times.every((t) => now - t >= WINDOW_MS)) seen.delete(key);
+    for (const [k, times] of seen) {
+      if (times.every((t) => now - t >= WINDOW_MS)) seen.delete(k);
     }
   }
   return true;
@@ -101,5 +127,5 @@ export function withinRate(request: Request): boolean {
 /** Test seam: the caps are per-instance state and a suite needs to start from zero. */
 export function resetRate(): void {
   seen.clear();
-  global = [];
+  global.clear();
 }

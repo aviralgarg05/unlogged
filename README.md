@@ -41,7 +41,7 @@ uv run scripts/verify.py               # checks every claim in this README
 That script is the short version of everything below: it runs the tests, reproduces the
 evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
 the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
-15 checks keyless, 23 with sandbox credentials, about twenty seconds.
+16 checks keyless, 24 with sandbox credentials, about twenty seconds.
 
 With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
 against PayPal on the day you run it — it creates a real invoice, grows it, records a bank
@@ -163,6 +163,7 @@ Both files are gitignored; no key is ever committed, and none appears in the git
 | `UNLOGGED_REPLAY` | `1` replays recorded responses (default), `0` calls the live sandbox. |
 | `UNLOGGED_RECORD` | `1` writes what a live call returns into `cassettes/`. Off by default, and deliberately: recording used to be a side effect of reaching the network, so any live run — a judge with credentials, a stray script — silently rewrote the recordings every money claim here rests on. One did, and the demo replayed `USD 1.00`. |
 | `UNLOGGED_DATA` | Where the ledger lives. Defaults to `data/`. |
+| `PAYPAL_WEBHOOK_ID` | The id of the webhook subscription PayPal signs with. Required to verify a genuine delivery — without it `/webhook` rejects every non-simulated payload with 400, which is the right answer and an opaque one if you did not know the variable existed. Find it under your sandbox app's webhooks in developer.paypal.com. |
 
 **The dashboard** reads `web/.env.local`:
 
@@ -264,9 +265,9 @@ the file that implements it — so nothing has to be taken on trust.
 
 | Criterion | Run this | Implemented in |
 |---|---|---|
-| **Technological Implementation** | `uv run scripts/verify.py` — 15 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
+| **Technological Implementation** | `uv run scripts/verify.py` — 16 checks including the full PayPal apply flow, replayed from recorded exchanges | [`paypal/invoices.py`](src/unlogged/paypal/invoices.py), [`docs/UPSTREAM.md`](docs/UPSTREAM.md) |
 | **Design** | `docker compose up` → `/dashboard` — rows fetched a page at a time and never materialised in the browser, a custom widget, and the one button that moves money | [`studio/data.ts`](web/app/dashboard/studio/data.ts), [`evidence-card.tsx`](web/app/dashboard/studio/widgets/evidence-card.tsx) |
-| **Potential Impact** | `uv run unlogged evaluate …` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
+| **Potential Impact** | `uv run unlogged evaluate --engagement fixtures/engagement.json --events fixtures/events.jsonl --gold fixtures/gold.jsonl` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
 | **Innovation** | The same invoice id and QR at $520.00 and at $902.50, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
 | **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page | — |
 
@@ -301,7 +302,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose | ✅ `docker compose up` run end to end with no `.env` at all — both images built, the web half reaches the API over the compose network, and the full apply flow replays *inside* the image to `USD 902.50` |
 | Render blueprint | ⏳ written, never deployed — see [HONESTY.md](docs/HONESTY.md) |
-| Tests | ✅ 245 Python (incl. a property test on the money path), 43 TypeScript |
+| Tests | ✅ 245 Python (incl. a property test on the money path), 47 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

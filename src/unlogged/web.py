@@ -523,6 +523,11 @@ def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
         return {
             "invoice_id": req.invoice_id,
             "total": str(total),
+            # The currency goes with the number. Without it the card that reports a write
+            # printed a hardcoded "$", on the one code path that just moved money, for an
+            # engagement whose currency is whatever was agreed — the same defect the rest of
+            # the dashboard was corrected for, in the widget that performs the write.
+            "currency": eng.currency,
             "added": [i.display_name for i in items],
             "payer_url": inv.payer_url(req.invoice_id),
         }

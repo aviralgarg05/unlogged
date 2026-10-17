@@ -32,10 +32,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-# The example carries variable names and comments, never a value. Without this the web half
-# was the only one with no example to copy, while the README told readers to make a
-# .env.local and left them to guess what goes in it. verify.py checks separately that no key
-# file is tracked and that no tracked file holds a key.
+# The example carries variable names and comments, never a value. It needs the negation
+# because `.env*` above would otherwise hide it — which is how this repository ended up with
+# the same file twice, once as `env.example` with the dot dropped to get past that line and
+# once properly named. One file now, this one. verify.py checks separately that no key file
+# is tracked and that no tracked file holds a key.
 !.env.example
 
 # vercel

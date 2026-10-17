@@ -5,8 +5,8 @@
 The repository is **private** and stays private until the last of these. Devpost needs a
 public link; a private one is a mechanical fail regardless of what is in it.
 
-- [ ] `uv run scripts/verify.py` — 15 checks, all green, no credentials
-- [ ] `uv run scripts/verify.py --live` — 23 checks, re-proves the mechanism against PayPal on
+- [ ] `uv run scripts/verify.py` — 16 checks, all green, no credentials
+- [ ] `uv run scripts/verify.py --live` — 24 checks, re-proves the mechanism against PayPal on
       the day of submission, and prints a payer URL that can go straight in the write-up
 - [ ] Record the video. `docs/VIDEO.md` has the shot list. Presentation is one of five equally
       weighted criteria and is worth nothing unfilmed

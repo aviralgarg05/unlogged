@@ -106,13 +106,22 @@ def test_notify_true_asks_paypal_to_tell_the_client_it_changed():
     assert params == {"send_to_recipient": "true", "send_to_invoicer": "false"}
 
 
-def test_a_retry_after_a_lost_response_does_not_bill_the_work_twice():
-    """The failure this product cannot have.
+def test_a_retry_reuses_the_key_even_though_paypal_ignores_it():
+    """The key is stable across a retry. It does not stop anything, and this test used to say
+    it did.
 
-    PayPal applied the write; the response never arrived; the caller retries. Because the
-    client re-reads the invoice first, a key derived from the RESULTING document would differ
-    on the second attempt and the duplicate would be accepted. Keyed on what is being added,
-    it does not.
+    PayPal applied the write; the response never arrived; the caller retries. A key derived
+    from the RESULTING document would differ on the second attempt, because the client re-reads
+    the invoice first. Keyed on what is being added, it does not — which is the property pinned
+    here, and all of it.
+
+    What this is NOT is protection. Verified live on 2026-10-15: the identical PUT sent twice
+    under one `PayPal-Request-Id` took a sandbox invoice from $225.00 to $250.00. The header is
+    ignored on an invoice PUT and is filed upstream as such. This test's name and failure
+    message used to tell a reader checking the double-billing claim that a stable key was what
+    prevented the second charge — the opposite of what this repository proved. The guard that
+    works is the append-only ledger under a file lock, and it is tested in test_web.py and
+    test_ledger.py.
     """
     c = FakeClient(invoice())
     inv = Invoices(c)
@@ -123,7 +132,10 @@ def test_a_retry_after_a_lost_response_does_not_bill_the_work_twice():
     inv.add_items("INV2-TEST-0000-0000-0009", [item()])
     retry_key = [x for x in c.calls if x["method"] == "PUT"][-1]["idempotency"]
 
-    assert retry_key == first_key, "a retry must reuse the key, or PayPal accepts a duplicate"
+    assert retry_key == first_key, (
+        "the key must be stable across a retry — not because PayPal honours it, but because a "
+        "key that changes with the document would be wrong in both worlds"
+    )
 
 
 def test_a_different_addition_gets_a_different_key():

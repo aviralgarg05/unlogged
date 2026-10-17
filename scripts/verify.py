@@ -213,11 +213,23 @@ def offline() -> None:
         check("no key file is tracked", FAIL, f"git ls-files failed: {out[:40]}")
         return
     tracked = set(out.split())
-    leaked = [f for f in tracked if f == ".env" or f.endswith("/.env.local")]
+    # Any dotenv at any depth, not two spellings. This matched exactly `.env` and anything
+    # ending `/.env.local`, so `web/.env.development`, `api/.env.production` or a plain
+    # `.env.local` at the root would all have been reported clean.
+    leaked = [
+        f
+        for f in tracked
+        if (name := f.rsplit("/", 1)[-1]).startswith(".env") and name != ".env.example"
+    ]
     check("no key file is tracked", PASS if not leaked else FAIL, ", ".join(leaked) or "clean")
 
     # Assembled rather than written out, so this file does not match its own pattern.
-    key_pattern = "sk" + "-proj|" + "sk" + "-[A-Za-z0-9]{32}"
+    key_pattern = (
+        "sk" + "-proj|" + "sk" + "-[A-Za-z0-9]{32}"
+        # The scan said "no key anywhere in the repo" while knowing only OpenAI's shape.
+        # GitHub's and Slack's are the other two this project could plausibly hold.
+        "|gh[pousr]_[A-Za-z0-9]{36}|github" + "_pat_[A-Za-z0-9_]{22,}|xox[baprs]-[A-Za-z0-9-]{10,}"
+    )
     code, out = run("git", "grep", "-lE", key_pattern, "--", ".")
     # git grep exits 0 on a match, 1 on no match, and ANYTHING ELSE on an error. Treating
     # "not zero" as success meant a broken invocation — wrong directory, bad pattern, no git —
@@ -230,6 +242,53 @@ def offline() -> None:
     else:
         verdict, detail = FAIL, f"git grep failed with {code}: {out[:30]}"
     check("no API key in any tracked file", verdict, detail)
+
+    # The exact check, when there is something exact to check: every value this machine's own
+    # env files hold, looked for in tracked files AND in every commit. A pattern can only
+    # catch a shape somebody thought of — PayPal's client secret has no distinctive one, and
+    # a pattern loose enough to catch it matches a cassette's base64 QR and a lockfile. This
+    # catches the thing that actually matters: did MY key reach the repository. The README
+    # says none appears in the git history, and until now nothing looked there at all.
+    # Judged by the variable's NAME, plus a length backstop. Taking every value of 20
+    # characters or more flagged OPENAI_MODELS and UNLOGGED_API, which are configuration and
+    # are supposed to appear in docker-compose.yml and the README — a check that cries wolf
+    # on its first run is a check someone turns off.
+    SECRET_NAMES = ("KEY", "SECRET", "TOKEN", "PASSWORD", "CLIENT_ID", "WEBHOOK_ID")
+    secrets: set[str] = set()
+    for env_file in (ROOT / ".env", ROOT / "web" / ".env.local"):
+        if not env_file.exists():
+            continue
+        for line in env_file.read_text().splitlines():
+            if line.startswith("#"):
+                continue
+            name, _, value = line.partition("=")
+            name, value = name.strip().upper(), value.strip().strip("\"'")
+            looks_secret = any(word in name for word in SECRET_NAMES)
+            # Or long and opaque whatever it is called: 40+ characters of credential does not
+            # become safe by being named something reassuring.
+            if value and (len(value) >= 40 or (looks_secret and len(value) >= 20)):
+                secrets.add(value)
+    if not secrets:
+        check(
+            "no credential of this machine's is in the repo or its history",
+            SKIP,
+            "no local .env to check against",
+        )
+    else:
+        found: list[str] = []
+        history = run("git", "rev-list", "--all")[1].split()
+        for value in secrets:
+            if run("git", "grep", "-lF", value, "--", ".")[0] == 0:
+                found.append("a tracked file")
+            elif history and run("git", "grep", "-lF", value, *history, "--", ".")[0] == 0:
+                found.append("the history")
+        check(
+            "no credential of this machine's is in the repo or its history",
+            PASS if not found else FAIL,
+            f"{len(secrets)} checked, {len(history)} commits"
+            if not found
+            else f"FOUND IN {', '.join(sorted(set(found)))}",
+        )
 
     cassettes = list((ROOT / "cassettes").glob("*.json"))
     check(

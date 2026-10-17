@@ -52,7 +52,11 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
   const [filtered, setFiltered] = useState(false);
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [applying, setApplying] = useState(false);
-  const [applied, setApplied] = useState<{ total: string; added: string[] } | null>(null);
+  const [applied, setApplied] = useState<{
+    total: string;
+    currency?: string;
+    added: string[];
+  } | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
 
   const mapped = params.dataMapping?.rows;
@@ -134,7 +138,7 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
       // A refusal is information, not an error to swallow: the backend rejects anything that
       // is not a billable extra, and anything already billed to this invoice.
       if (!res.ok) throw new Error(body?.detail ?? `apply failed (${res.status})`);
-      setApplied({ total: body.total, added: body.added ?? [] });
+      setApplied({ total: body.total, currency: body.currency, added: body.added ?? [] });
       setPicked(new Set());
     } catch (e: unknown) {
       setFailure(e instanceof Error ? e.message : 'apply failed');
@@ -162,7 +166,12 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
           </button>
           {applied ? (
             <p className="ic-apply__ok">
-              Invoice now <strong>${applied.total}</strong>. PayPal emailed the client.
+              Invoice now{' '}
+              <strong>
+                {applied.currency ? `${applied.currency} ` : ''}
+                {applied.total}
+              </strong>
+              . PayPal emailed the client.
               {applied.added.length ? ` Added: ${applied.added.join('; ')}` : ''}
             </p>
           ) : null}

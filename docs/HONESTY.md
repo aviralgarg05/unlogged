@@ -113,8 +113,10 @@ Written so a judge does not have to find any of this out by reading the source.
   and reporting `paypal_configured: false`, the web half reaching it over the compose network,
   the dashboard rendering the seeded ledger, and the documented apply flow replaying *inside*
   the API image to `USD 902.50`. Both images were opened afterwards: no `.env` anywhere in
-  either, `data/seed/` present and nothing else under `data/`, and the only key-shaped string
-  in the web image is `sk-typefilterUnits` — SVG attribute names inside a `sharp` wasm binary.
+  either, `data/seed/` present and nothing else under `data/`. Exactly one file in the web image
+  matches `sk-[A-Za-z0-9]{20,}` — `@img/sharp-wasm32`'s wasm binary, whose matches are SVG
+  attribute names with the leading `ma` eaten by the pattern: `sk-typefilterUnits`,
+  `sk-modeyChannelSelector`, `sk-borderspecularExponent`. One file, several strings, no key.
 
 - **The Render blueprint has never been deployed.** `render.yaml` is written and its two
   services are the ones this repo runs locally, but no deploy has been made from it, so what

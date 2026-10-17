@@ -122,3 +122,43 @@ test('case in a host does not decide whether money moves', () => {
     true,
   );
 });
+
+// --- separate budgets --------------------------------------------------------------------
+//
+// All three callers shared one 30-a-minute allowance. The telemetry observer posts
+// fire-and-forget batches throughout a conversation, so a minute of using the assistant spent
+// the budget and then "Add to the live invoice" — the one button this product exists for —
+// answered "Too many requests. Wait a minute." A brake meant to stop a stranger spending the
+// owner's OpenAI credit was throttling the owner's own demo, on the money path.
+
+const from = (ip: string) =>
+  new Request('https://unlogged.example/api/backend/api/apply', {
+    method: 'POST',
+    headers: { 'x-forwarded-for': ip },
+  });
+
+test('telemetry cannot spend the money budget', () => {
+  resetRate();
+  // Well past what the money channel allows, all on telemetry.
+  for (let i = 0; i < 60; i++) assert.equal(withinRate(from('10.0.0.1'), 'telemetry'), true);
+  assert.equal(withinRate(from('10.0.0.1'), 'money'), true, 'the money path was starved');
+});
+
+test('nor can a conversation with the assistant', () => {
+  resetRate();
+  for (let i = 0; i < 30; i++) assert.equal(withinRate(from('10.0.0.2'), 'ai'), true);
+  assert.equal(withinRate(from('10.0.0.2'), 'ai'), false, 'the ai cap stopped applying');
+  assert.equal(withinRate(from('10.0.0.2'), 'money'), true, 'the money path was starved');
+});
+
+test('the money channel still has a cap of its own', () => {
+  resetRate();
+  for (let i = 0; i < 10; i++) assert.equal(withinRate(from('10.0.0.3'), 'money'), true);
+  assert.equal(withinRate(from('10.0.0.3'), 'money'), false);
+});
+
+test('one caller spending a channel does not refuse another caller', () => {
+  resetRate();
+  for (let i = 0; i < 10; i++) withinRate(from('10.0.0.4'), 'money');
+  assert.equal(withinRate(from('10.0.0.5'), 'money'), true);
+});
