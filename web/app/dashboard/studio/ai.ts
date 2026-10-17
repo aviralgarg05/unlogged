@@ -6,9 +6,9 @@
 // framework is built for.
 //
 // Three pieces here are unoccupied across the AG Studio entries surveyed in this hackathon:
-// `defaultToolCalls` seeding the agent before its first turn, a `kind: 'server'` tool so the
-// PayPal write never enters the browser bundle, and a telemetry observer feeding a published
-// evaluation rather than a console.
+// `defaultToolCalls` seeding the agent before its first turn, a money tool whose execution
+// lives in our own Next route so the PayPal write never enters the browser bundle, and a
+// telemetry observer feeding a published evaluation rather than a console.
 //
 // The adapter calls `${endpoint}/responses`, i.e. this app's proxy at app/api/ai/responses,
 // which holds the OpenAI key. Nothing secret is sent from the browser.

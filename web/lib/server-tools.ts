@@ -1,4 +1,4 @@
-// Execution for the tools declared `kind: 'server'`.
+// Execution for the one tool that moves money, on the server.
 //
 // Studio advertises those schemas and never runs them — that is what the kind means — so the
 // execution lives here, on the server, next to the only process that holds a PayPal credential.

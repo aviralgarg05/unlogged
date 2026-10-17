@@ -1,9 +1,19 @@
 // The tools the assistant may call.
 //
-// Three read-only client tools, and exactly one that moves money. The mutating one is
-// `kind: 'server'`: Studio advertises its schema and never executes it, so the call is run by
-// our own Next route against the Python service. A PayPal credential has no business in a
-// browser bundle, and this is the structural way to say so rather than a comment claiming it.
+// Three read-only client tools, and exactly one that moves money. The mutating one is executed
+// by our own Next route against the Python service, so a PayPal credential never enters a
+// browser bundle — the browser can only ask the server to run a named tool, and the route
+// validates the name and the arguments before anything reaches the money path.
+//
+// It was declared `kind: 'server'`, which was decorative. In `ag-studio@3.0.0` that kind
+// builds a tool with a schema and `execute: undefined` — the library advertises it to the
+// model and leaves execution to the host, and there is no hook anywhere in the bundle that
+// hands the call back. The host here never executed it: `/api/ai/tool` was written for
+// exactly this and nothing in the repository called it. So the one tool that moves money was
+// offered to the model and could not run, which on the headline AG Studio differentiator is
+// worse than not offering it. It is declared normally now and its `execute` is the
+// round-trip to that route. The credential boundary is where it always was — in the route,
+// not in the word.
 
 import type { AgAiParamsBuilder, AgAiTool, AgStudioApi } from 'ag-studio';
 
@@ -55,7 +65,6 @@ export function unloggedTools(api: Api): AgAiTool[] {
     // The only tool that changes what a client owes.
     api.defineAiTool({
       name: 'add_billable_work',
-      kind: 'server',
       description:
         'Itemise the named billable extras onto the live PayPal invoice. The invoice id, the ' +
         'payer link and the QR stay valid, and PayPal emails the client that it changed. Only ' +
@@ -66,6 +75,24 @@ export function unloggedTools(api: Api): AgAiTool[] {
           invoice_id: s.string(),
           event_ids: s.array(s.string()),
         }),
+      async execute(args, ctx) {
+        // Our own route, not the Python service: it holds the allowlist of tools the browser
+        // may ask for, and it is the only side of this that can reach a PayPal credential.
+        const res = await fetch('/api/ai/tool', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ name: 'add_billable_work', arguments: args }),
+        });
+        const body = (await res.json().catch(() => null)) as
+          | { ok?: boolean; data?: unknown; error?: string }
+          | null;
+        if (!res.ok || !body?.ok) {
+          // Surfaced, never swallowed. A refusal the model is not told about becomes a
+          // confident reply that the client's invoice changed when it did not.
+          return ctx.error(body?.error ?? `add_billable_work failed (${res.status})`);
+        }
+        return ctx.success(JSON.stringify(body.data), body.data);
+      },
     }),
   ];
 }

@@ -97,13 +97,17 @@ Written so a judge does not have to find any of this out by reading the source.
 - **Live mode is untested.** This PayPal account is registered in India, which is
   receive-and-withdraw only, so live-mode sending cannot be exercised. Sandbox accounts can be
   created in any country, which is what makes the cross-border case demonstrable at all.
-- **The `kind: 'server'` tool has not been exercised end to end.** `add_billable_work` is
-  declared to the model and its execution path (`web/lib/server-tools.ts`) is unit-tested in
-  four cases — unknown tool refused, malformed arguments refused before anything reaches the
-  money path, a well-formed call forwarded, a backend refusal surfaced rather than swallowed.
-  What has *not* happened is a real model emitting that call and the result flowing back into a
-  conversation, which has not been run. The declaration and the handler are both real; the
-  join between them is untested.
+- **The money tool could not run at all, and now can; a real model has still never called
+  it.** `add_billable_work` was declared `kind: 'server'`, which in `ag-studio@3.0.0` builds a
+  tool with a schema and `execute: undefined` — the library advertises it and leaves execution
+  to the host, and there is no hook in the bundle that hands the call back. The host never
+  executed it: `/api/ai/tool` exists for exactly this and nothing in the repository called it.
+  So the headline AG Studio differentiator was a money tool offered to a model with nothing to
+  run it. It is declared normally now and its `execute` is the round-trip to that route, with
+  a refusal surfaced to the model rather than swallowed; five tests cover the dispatch and
+  `web/lib/server-tools.ts` still covers the route. What is *still* untested is the last join:
+  a real model emitting the call in a conversation. That needs an OpenAI key and has not been
+  run.
 - **Docker Compose is the verified path; Render is not.** `docker compose up` was run with an
   empty env file — exactly what a fresh clone has — and both halves came up: the API healthy
   and reporting `paypal_configured: false`, the web half reaching it over the compose network,

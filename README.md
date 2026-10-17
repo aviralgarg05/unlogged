@@ -226,8 +226,12 @@ Four more things the surveyed entries leave untouched. A sixth agent owns the de
 product exists to make and hands layout work to four of AG's built-in agents through `delegateTo`.
 `defaultToolCalls` seeds it with the scope, the adjudications and the changes already made
 *before its first turn*, so its opening reply is a decision rather than a question. The one
-tool that moves money is `kind: 'server'` — Studio advertises the schema and never runs it, so
-the PayPal write happens in our own route and the credential never enters the bundle. And an
+tool that moves money executes through our own Next route, so the PayPal write never enters the
+browser bundle — the browser can only ask the server to run a named tool, and the route
+validates the name and the arguments first. It was declared `kind: 'server'`, which in
+`ag-studio@3.0.0` builds a tool with a schema and `execute: undefined`: advertised to the model,
+with execution left to the host and no hook that hands the call back. The host never ran it, so
+the tool could not. The boundary was always the route, not the word. And an
 `AgAiTelemetryObserver` reads `api.getState()` synchronously in-loop, where it sees the exact
 post-mutation state a call produced, then batches to the backend for scoring.
 
@@ -297,7 +301,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose | ✅ `docker compose up` run end to end with no `.env` at all — both images built, the web half reaches the API over the compose network, and the full apply flow replays *inside* the image to `USD 902.50` |
 | Render blueprint | ⏳ written, never deployed — see [HONESTY.md](docs/HONESTY.md) |
-| Tests | ✅ 245 Python (incl. a property test on the money path), 38 TypeScript |
+| Tests | ✅ 245 Python (incl. a property test on the money path), 43 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 
