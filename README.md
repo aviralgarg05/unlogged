@@ -281,7 +281,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | Keyless replay path | ✅ full flow runs with no credentials |
 | AI harness: custom agent, server tool, telemetry | ✅ built |
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
-| Docker Compose | ✅ API image built and inspected — carries `data/seed/`, no `.env` |
+| Docker Compose | ✅ `docker compose up` run end to end with no `.env` at all — both images built, the web half reaches the API over the compose network, and the full apply flow replays *inside* the image to `USD 902.50` |
 | Render blueprint | ⏳ written, never deployed — see [HONESTY.md](docs/HONESTY.md) |
 | Tests | ✅ 215 Python (incl. a property test on the money path), 28 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |

@@ -102,6 +102,14 @@ Written so a judge does not have to find any of this out by reading the source.
   What has *not* happened is a real model emitting that call and the result flowing back into a
   conversation, which has not been run. The declaration and the handler are both real; the
   join between them is untested.
+- **Docker Compose is the verified path; Render is not.** `docker compose up` was run with an
+  empty env file — exactly what a fresh clone has — and both halves came up: the API healthy
+  and reporting `paypal_configured: false`, the web half reaching it over the compose network,
+  the dashboard rendering the seeded ledger, and the documented apply flow replaying *inside*
+  the API image to `USD 902.50`. Both images were opened afterwards: no `.env` anywhere in
+  either, `data/seed/` present and nothing else under `data/`, and the only key-shaped string
+  in the web image is `sk-typefilterUnits` — SVG attribute names inside a `sharp` wasm binary.
+
 - **The Render blueprint has never been deployed.** `render.yaml` is written and its two
   services are the ones this repo runs locally, but no deploy has been made from it, so what
   it claims is a configuration rather than a result. It did carry a real defect until it was
