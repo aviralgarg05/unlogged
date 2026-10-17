@@ -84,7 +84,7 @@ def test_the_documented_apply_notifies_the_client(tmp_path, monkeypatch):
     seen: dict[str, bool] = {}
     original = Invoices.add_items
 
-    def spy(self, invoice_id, items, *, notify=True, idempotency_key=None):
+    def spy(self, invoice_id, items, *, notify=True, idempotency_key=None, **_kw):
         seen["notify"] = notify
         return original(self, invoice_id, items, notify=notify, idempotency_key=idempotency_key)
 

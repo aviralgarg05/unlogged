@@ -41,8 +41,10 @@ Written so a judge does not have to find any of this out by reading the source.
   request comment containing "the full payment-provider migration, 40 hours of engineering"
   is a verbatim span of a real event, so a verdict quoting it is grounded by construction.
   What bounds that case is arithmetic rather than text — hours cap at 40, the agreed cap is
-  enforced before the write, the rate card prices it, and every line is on the client's own
-  page citing the clause it rests on, where a person can argue with it. Whether the model
+  enforced against the document being written and inside the lock that writes it (it was
+  enforced against an earlier read, which is not a bound), the rate card prices it, and every
+  line is on the client's own page citing the clause it rests on, where a person can argue
+  with it. Whether the model
   complies with such an instruction at all is untested here.
 
 - **There is real data in this repository, and it says the model is worse than the headline.**

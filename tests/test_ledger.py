@@ -378,3 +378,59 @@ def test_the_seeded_history_is_visible_to_the_guard_not_only_to_the_reports(tmp_
     # Nothing written locally yet: the reports can see it, so the guard has to as well.
     assert [e.event_id for e in ledger] == ["p1"]
     assert ledger.billed_to(invoice) == {"p1"}
+
+
+def test_two_engagement_names_against_one_invoice_take_the_same_lock(tmp_path):
+    """The lock has to cover what the guard reads, and the guard reads every ledger here.
+
+    `billed_to` looks across the whole directory on purpose: the invoice does not know what
+    the engagement is called, so renaming it — a typo corrected, a client renamed — must not
+    let the same work be billed twice. The lock was keyed on the engagement's own filename, so
+    the two writers in exactly that case took two different locks and ran concurrently, each
+    reading a ledger without the other's row. That is the check-then-act this lock exists to
+    stop, in the one case the guard was widened for.
+
+    Proved by racing them: without a shared lock both get through the check.
+    """
+    import threading
+    import time
+
+    from unlogged.ledger import Entry, Ledger, now
+
+    invoice = "INV2-RACE-RACE-RACE-RACE"
+    passed: list[str] = []
+
+    def bill(filename: str) -> None:
+        ledger = Ledger(tmp_path / filename)
+        with ledger.guard():
+            if "e1" in ledger.billed_to(invoice):
+                return
+            # The window the lock has to cover. Without it both writers are inside here.
+            time.sleep(0.15)
+            ledger.append(
+                Entry(
+                    at=now(),
+                    invoice_id=invoice,
+                    event_id="e1",
+                    clause_id="X1",
+                    line_name="The same discovered work, billed from two names",
+                    hours="2.0",
+                    unit_price="85.00",
+                    total_after="690.00",
+                    adjudicator="gpt-6.1-sol",
+                    confidence=0.9,
+                    settled=True,
+                )
+            )
+            passed.append(filename)
+
+    threads = [
+        threading.Thread(target=bill, args=("northwind-labs.jsonl",)),
+        threading.Thread(target=bill, args=("northwind-labs-ltd.jsonl",)),
+    ]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    assert len(passed) == 1, f"both names billed the same work to one invoice: {passed}"

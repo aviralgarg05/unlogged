@@ -17,6 +17,7 @@ from unlogged.paypal.client import PayPalError
 from unlogged.paypal.invoices import (
     MAX_ITEMS,
     TERMINAL_STATUSES,
+    Refused,
     check_invoice_id,
     total_of,
 )
@@ -264,9 +265,19 @@ def _apply(s, eng, ledger, invoice_id, billable, by_id, judge):
             )
 
         try:
-            updated = inv.add_items(invoice_id, items, notify=True, idempotency_key=key)
-        except PayPalError as exc:
-            if exc.never_dispatched:
+            updated = inv.add_items(
+                invoice_id,
+                items,
+                notify=True,
+                idempotency_key=key,
+                # Against the document actually written, not the read this command took
+                # before it decided to write. See Invoices.add_items.
+                cap=eng.cap,
+            )
+        except (PayPalError, Refused) as exc:
+            # Refused means nothing reached PayPal, so the intent rows above have to be
+            # released or the work is blocked for good on an append-only record.
+            if isinstance(exc, Refused) or exc.never_dispatched:
                 for v, item in zip(billable, items, strict=True):
                     ledger.append(
                         Entry(

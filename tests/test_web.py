@@ -203,7 +203,9 @@ def test_two_simultaneous_applies_bill_the_work_once(tmp_path, monkeypatch):
         lambda self, _id, **_kw: {"status": "SENT", **state, "amount": {"value": "520.00"}},
     )
 
-    def slow_add(self, invoice_id, items, *, notify=True, idempotency_key=None):
+    # **_kw so this stub does not have to be edited every time the real signature gains an
+    # argument — and so a test about concurrency fails for concurrency reasons only.
+    def slow_add(self, invoice_id, items, *, notify=True, idempotency_key=None, **_kw):
         time.sleep(0.05)
         state["items"] = state["items"] + [i.to_paypal() for i in items]
         return {"items": state["items"], "amount": {"value": "775.00"}}

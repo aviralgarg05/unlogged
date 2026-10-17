@@ -158,3 +158,75 @@ def test_appending_never_loses_an_item(names: list[str]):
     sent = [i["name"] for i in put_body(c)["items"]]
     assert sent[0] == "Agreed scope"
     assert len(sent) == len(names) + 1
+
+
+# -- the cap, measured against the document that is written ---------------------------------
+
+
+class GrowingClient(FakeClient):
+    """A client whose invoice gains a line between one read and the next.
+
+    Not a contrivance. Between a caller's read and the write, the invoice can gain a line from
+    the other writer in a double-click, from the CLI running beside the service, or from a hand
+    edit in PayPal's own dashboard. The whole reason this project has a reconcile command is
+    that PayPal gives no ETag and accepts no If-Match, so this window cannot be closed — only
+    measured at the right moment.
+    """
+
+    def __init__(self, before: dict[str, Any], after: dict[str, Any]):
+        super().__init__(before)
+        self.after = after
+        self.reads = 0
+
+    def request(self, method, path, *, json_body=None, params=None, **kw) -> Any:
+        if method == "GET":
+            self.reads += 1
+            if self.reads > 1:
+                self.invoice = self.after
+        return super().request(method, path, json_body=json_body, params=params, **kw)
+
+
+def test_the_cap_is_measured_against_the_invoice_being_written_not_an_earlier_read():
+    """docs/HONESTY.md makes the cap the arithmetic bound on the case grounding cannot bound.
+
+    A bound computed from a read the caller took before it decided to write is not a bound.
+    Here the sequence is the real one: the caller reads (under the ceiling and happy to
+    proceed), the invoice gains a line from somewhere else, and the document `add_items`
+    actually PUTs is over. The cap is printed on the client's own page as a commitment.
+    """
+    from unlogged.paypal.invoices import Refused, total_of
+
+    under = {**invoice(), "amount": {"currency_code": "USD", "value": "520.00"}}
+    over = {**invoice(), "amount": {"currency_code": "USD", "value": "945.00"}}
+    c = GrowingClient(under, over)
+    inv = Invoices(c)
+    cap = Decimal("1200.00")
+    adding = [LineItem("Discovered work", Decimal("4"), Decimal("85.00"))]
+
+    # What the caller sees, and decides on: 520 + 340 = 860, comfortably inside the cap.
+    seen_by_caller = inv.get("INV2-TEST-0000-0000-0009")
+    assert total_of(seen_by_caller) + Decimal("340.00") < cap
+
+    # What is written: 945 + 340 = 1285, past a ceiling the client was told would hold.
+    with pytest.raises(Refused, match="exceed the agreed cap"):
+        inv.add_items("INV2-TEST-0000-0000-0009", adding, cap=cap)
+
+    assert not [call for call in c.calls if call["method"] == "PUT"], "it wrote anyway"
+
+
+def test_a_cap_that_is_not_reached_does_not_refuse():
+    c = FakeClient(invoice())
+    Invoices(c).add_items(
+        "INV2-TEST-0000-0000-0009",
+        [LineItem("Discovered work", Decimal("1"), Decimal("85.00"))],
+        cap=Decimal("1200.00"),
+    )
+    assert [call for call in c.calls if call["method"] == "PUT"]
+
+
+def test_a_refusal_is_a_value_error_so_existing_handlers_still_catch_it():
+    """`Refused` narrows ValueError rather than replacing it — the apply path needs to tell
+    "nothing was sent" from "something went wrong", and everything else should not care."""
+    from unlogged.paypal.invoices import Refused
+
+    assert issubclass(Refused, ValueError)

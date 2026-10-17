@@ -30,6 +30,17 @@ from typing import Any
 from unlogged.paypal.client import PayPalClient
 
 
+class Refused(ValueError):
+    """Refused before anything reached PayPal, so nothing was dispatched.
+
+    A `ValueError` subclass, so every existing handler still catches it. It exists because the
+    caller needs to know the difference: an apply writes intent rows to the ledger BEFORE the
+    write, and releases them with a void only when it can prove the call never left. That
+    proof was `PayPalError.never_dispatched`, which a ValueError is not — so a refusal raised
+    in here, after the intent rows, blocked that work permanently on an append-only record.
+    """
+
+
 def today() -> date:
     """Today as PayPal reads it, which is UTC and not where you are sitting.
 
@@ -259,6 +270,7 @@ class Invoices:
         *,
         notify: bool = True,
         idempotency_key: str | None = None,
+        cap: Decimal | None = None,
     ) -> dict[str, Any]:
         """Append line items to an invoice that has already been sent.
 
@@ -269,10 +281,17 @@ class Invoices:
 
         notify=True asks PayPal to email the client that the invoice changed. That is the
         consent step, and it is PayPal's own machinery rather than something we invented.
+
+        `cap` is the agreed ceiling, checked against the document this call is about to write
+        rather than one read earlier. A caller can check a cap before deciding to call — and
+        should, so the refusal is cheap and early — but a check against a read that is not the
+        one being written is not a bound. Between the two reads the invoice can gain a line
+        from another writer or a hand edit in PayPal's own UI, and the number that goes past
+        the ceiling is the one the client sees.
         """
         check_invoice_id(invoice_id)
         with _lock_for(invoice_id):
-            return self._add_items_locked(invoice_id, new_items, notify, idempotency_key)
+            return self._add_items_locked(invoice_id, new_items, notify, idempotency_key, cap)
 
     def _add_items_locked(
         self,
@@ -280,6 +299,7 @@ class Invoices:
         new_items: Iterable[LineItem],
         notify: bool,
         idempotency_key: str | None,
+        cap: Decimal | None = None,
     ) -> dict[str, Any]:
         new = list(new_items)
         current = self.get(invoice_id)
@@ -289,17 +309,29 @@ class Invoices:
         on_invoice = current.get("detail", {}).get("currency_code")
         wrong = sorted({i.currency for i in new if on_invoice and i.currency != on_invoice})
         if wrong:
-            raise ValueError(
+            raise Refused(
                 f"invoice {invoice_id} is in {on_invoice} and these lines are priced in "
                 f"{', '.join(wrong)}. PayPal does not convert and the client pays the number."
             )
 
         items = list(current.get("items", [])) + [i.to_paypal() for i in new]
         if len(items) > MAX_ITEMS:
-            raise ValueError(
+            raise Refused(
                 f"{len(items)} line items; PayPal accepts {MAX_ITEMS}. A long engagement has "
                 f"to consolidate billed extras rather than discovering this at the hundredth."
             )
+
+        # Against `current`, which is the document being written — not against a read the
+        # caller took before it decided to call. The cap is printed on the client's own page
+        # and docs/HONESTY.md makes it the arithmetic bound on the case the grounding check
+        # cannot bound with text, so it has to hold at the moment of the write.
+        if cap is not None:
+            projected = total_of(current) + sum((i.total for i in new), Decimal("0"))
+            if projected > cap:
+                raise Refused(
+                    f"{projected:.2f} would exceed the agreed cap of {cap:.2f} on invoice "
+                    f"{invoice_id}, measured against the invoice as it is now"
+                )
 
         upd = {k: v for k, v in current.items() if k not in READONLY + COMPUTED}
         upd["items"] = items

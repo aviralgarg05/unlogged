@@ -1619,3 +1619,45 @@ def test_nothing_in_the_product_deletes_a_line_or_cancels_an_invoice():
                 continue
             assert node.value != "DELETE", f"{path.name}:{node.lineno} issues a DELETE"
             assert "/cancel" not in node.value, f"{path.name}:{node.lineno} calls cancel"
+
+
+def test_a_refusal_inside_add_items_releases_the_work_rather_than_losing_it(tmp_path, monkeypatch):
+    """A refusal raised after the intent rows used to block that work permanently.
+
+    The intent rows go down before the write, because a guard recorded afterwards does not
+    exist during the window it covers. They are released by a void when the call provably
+    never left — and that proof was `PayPalError.never_dispatched`. The checks inside
+    `add_items` raise a plain `ValueError`, which is not a `PayPalError`, so a cap or a
+    currency refusal wrote no void: a line of real work gone from the bill, on an append-only
+    record, with no way back and nothing but `reconcile` listing it as attempted forever.
+
+    `Refused` names that case, and the apply path releases on it.
+    """
+    from fastapi.testclient import TestClient
+
+    from unlogged import web as web_mod
+    from unlogged.paypal.invoices import Invoices, Refused
+
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+    client = TestClient(web_mod.app)
+    invoice_id = (HERE / "fixtures" / "demo-invoice-id").read_text().strip()
+
+    def refuse(self, invoice_id, items, **_kw):
+        raise Refused("1285.00 would exceed the agreed cap of 1200.00")
+
+    monkeypatch.setattr(Invoices, "add_items", refuse)
+    refused = client.post("/api/apply", json={"invoice_id": invoice_id, "event_ids": ["e3", "e8"]})
+    assert refused.status_code == 422, refused.text
+    assert "cap" in refused.text
+
+    # The work is not lost: the guard no longer believes it was billed.
+    from unlogged.ledger import Ledger
+
+    assert Ledger(tmp_path / "eng-checkout-001.jsonl").billed_to(invoice_id) == set()
+
+    # And the real apply still goes through afterwards.
+    monkeypatch.undo()
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+    retried = client.post("/api/apply", json={"invoice_id": invoice_id, "event_ids": ["e3", "e8"]})
+    assert retried.status_code == 200, retried.text
+    assert retried.json()["total"] == "902.50"

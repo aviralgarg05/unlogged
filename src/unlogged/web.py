@@ -23,7 +23,7 @@ from unlogged.config import Settings
 from unlogged.ledger import Entry, Ledger, now
 from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.client import PayPalError
-from unlogged.paypal.invoices import MAX_ITEMS, total_of
+from unlogged.paypal.invoices import MAX_ITEMS, Refused, total_of
 from unlogged.paypal.webhooks import Webhooks, is_simulated
 from unlogged.query import parse_filter, parse_sort, window
 from unlogged.scope.baseline import KeywordBaseline
@@ -466,9 +466,24 @@ def _apply_locked(s, eng, ledger, req, chosen, by_id, arm) -> dict[str, Any]:
             )
 
         try:
-            updated = inv.add_items(req.invoice_id, items, notify=req.notify, idempotency_key=key)
-        except PayPalError as exc:
-            if exc.never_dispatched:
+            updated = inv.add_items(
+                req.invoice_id,
+                items,
+                notify=req.notify,
+                idempotency_key=key,
+                # Checked again inside, against the document actually written. The gate above
+                # runs against a read taken before the intent rows, and between the two the
+                # invoice can gain a line from another writer or a hand edit in PayPal's own
+                # UI — so the early one is the good error and this one is the bound.
+                cap=eng.cap,
+            )
+        except (PayPalError, Refused) as exc:
+            # `Refused` means nothing reached PayPal — it is raised by the checks inside
+            # add_items, before the request. It used to arrive here as a bare ValueError,
+            # which is not a PayPalError, so no void was written and the work was blocked for
+            # good on an append-only record: a line of real work lost from the bill with no
+            # way back, which is the exact consequence the comment above says was designed out.
+            if isinstance(exc, Refused) or exc.never_dispatched:
                 # Nothing was sent, so the intent rows above would block a legitimate retry
                 # for good. Released, on an append-only record, by saying so in a row.
                 for v, item in zip(chosen, items, strict=True):

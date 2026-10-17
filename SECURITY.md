@@ -31,9 +31,20 @@ relies on it. Reproduced live and filed upstream in [`docs/UPSTREAM.md`](docs/UP
 The guard that does work is an **append-only ledger** under an `fcntl` file lock — a file lock
 rather than a thread lock, because the CLI and the web service are separate processes against
 one engagement. The read, the repeat check and the write happen inside one exclusive hold, so
-two requests arriving together cannot both see an empty ledger and both pass. An intent row is
+two requests arriving together cannot both see an empty ledger and both pass. One lock for the
+directory, not one per engagement file: the guard deliberately reads every ledger there, because
+the invoice does not know what the engagement is called, and a lock narrower than what it reads
+is not a lock — two writers billing one invoice under two engagement names took different locks
+and both got through. An intent row is
 written *before* the PUT, because a guard recorded after the write does not exist during the
 window it has to cover, and is voided if the call provably never reached PayPal.
+
+The agreed cap is enforced against the document the write is about to replace, inside the same
+per-invoice lock — not against a read the caller took before it decided to write. Between those
+two reads an invoice can gain a line from the other half of a double-click, from the CLI running
+beside the service, or from a hand edit in PayPal's own dashboard, and the number that passes the
+ceiling is the one the client sees. A refusal raised there is a `Refused`, which says nothing was
+sent, so the intent rows are released rather than leaving real work unbillable for good.
 
 The resource carries no ETag and the update accepts no `If-Match`, so two writers that each
 read before either wrote lose one of the two lines with no error anywhere. Nothing can prevent

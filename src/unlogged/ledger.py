@@ -99,8 +99,16 @@ class Ledger:
         # file, which `_source` then preferred over the seed — so taking the lock was enough
         # to blank the page titled "Every line this system added to the live PayPal invoice",
         # on a fresh clone, before anything had been billed.
+        #
+        # One lock for the directory, not one per engagement file. The lock has to cover what
+        # the guard reads, and the guard reads every ledger here — deliberately, because the
+        # invoice does not know what the engagement is called. Keyed on the engagement's own
+        # filename, two writers billing one invoice under two engagement names took two
+        # different locks, ran concurrently, and both saw a ledger without the other's row:
+        # exactly the check-then-act this lock exists to stop, in the rename case the
+        # function below is written for.
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        handle = self.path.with_suffix(".lock").open("a+", encoding="utf-8")
+        handle = (self.path.parent / ".ledger.lock").open("a+", encoding="utf-8")
         try:
             fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
             yield
