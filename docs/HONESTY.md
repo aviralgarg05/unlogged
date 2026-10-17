@@ -121,6 +121,15 @@ Written so a judge does not have to find any of this out by reading the source.
 - **Telemetry has been round-tripped but not scored.** `/api/telemetry` accepts and summarises
   batches, and the observer is registered on the harness. No AgentUnit evaluation consumes it
   yet, because there are no runs to consume.
+- **The filter and sort pushdown is honoured, and was not.** The data source declared
+  `capabilities: { pagination, filter, sort }` — which tells AG Studio not to filter or sort
+  locally — while `getData` never read `options.sort` and flattened the filter into bare query
+  parameters the endpoint did not declare, so FastAPI dropped them. Filtering the Adjudications
+  grid returned every row with the filter chip showing. Both halves are implemented now and
+  tested end to end, and an operator the service cannot apply is refused rather than ignored.
+  What is worth stating: at eight rows the engine often holds the whole table and sorts it
+  itself rather than asking again, so the pushdown is best seen against the API directly.
+
 - **The evidence widget does not respect page filters.** It reads through `widgetApi.getData`
   when the saved report's field mapping resolves, and falls back to reading the backend directly
   when it does not. The card says which path it used rather than hiding it. The fallback exists

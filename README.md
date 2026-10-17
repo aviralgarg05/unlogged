@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 217 tests, no credentials needed
+uv run pytest -q                       # 240 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -204,9 +204,23 @@ cd web && npm install && npm run build && npm start    # another
 Built on PayPal's own [AG Studio boilerplate](https://github.com/paypaldev/hackathon-paypal-ag-grid-boilerplate),
 with one deliberate departure. The boilerplate hands AG Studio a fully-materialised array and
 lets the engine filter, sort and page it in the browser. `app/dashboard/studio/data.ts` instead
-declares `capabilities: { pagination, filter, sort }`, so the engine sends `paging`, the applied
-filter tree and the sort order down to `getData`, trusts the returned window as-is, and never
-re-filters locally. **The rows stay in the Python service.**
+declares `capabilities: { pagination, filter, sort }`, and **honours all three** — the filter
+tree goes over as a tree, the sort order with it, and the Python service answers with exactly
+that window. **The rows stay in the Python service.**
+
+Precisely: the engine pushes down when it asks for a window, which the library gates on there
+being a limit at all. At this fixture's eight rows it frequently holds the whole table already
+and answers a sort itself, which is the right thing to do and the same answer. So the honest
+way to see the pushdown is to ask the service directly:
+
+```bash
+curl -s 'localhost:8000/api/events?filter={"field":"source","operator":"equals","value":"slack"}' \
+  --get --data-urlencode 'sort=occurred_at:desc' | head -c 200
+```
+
+An operator the service cannot honour is **refused**, not quietly ignored: the engine has been
+told not to re-filter, so returning every row under a reader's filter would show them the wrong
+money with nothing to doubt. `tests/test_query.py` pins both halves.
 
 Four more things the surveyed entries leave untouched. A sixth agent owns the decision this
 product exists to make and hands layout work to four of AG's built-in agents through `delegateTo`.
@@ -283,7 +297,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose | ✅ `docker compose up` run end to end with no `.env` at all — both images built, the web half reaches the API over the compose network, and the full apply flow replays *inside* the image to `USD 902.50` |
 | Render blueprint | ⏳ written, never deployed — see [HONESTY.md](docs/HONESTY.md) |
-| Tests | ✅ 217 Python (incl. a property test on the money path), 33 TypeScript |
+| Tests | ✅ 240 Python (incl. a property test on the money path), 38 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

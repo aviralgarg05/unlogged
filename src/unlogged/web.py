@@ -25,6 +25,7 @@ from unlogged.paypal import Invoices, LineItem, PayPalClient
 from unlogged.paypal.client import PayPalError
 from unlogged.paypal.invoices import MAX_ITEMS, total_of
 from unlogged.paypal.webhooks import Webhooks, is_simulated
+from unlogged.query import parse_filter, parse_sort, window
 from unlogged.scope.baseline import KeywordBaseline
 from unlogged.scope.models import Engagement, WorkEvent, line_name, load_events
 
@@ -103,31 +104,59 @@ def read_engagement() -> dict[str, Any]:
 
 
 @app.get("/api/events")
-def read_events(page: int = 1, page_size: int = 50) -> dict[str, Any]:
-    """Paged, because the dashboard's data source pushes the window down to the server
-    rather than shipping every row to the browser."""
-    evs = events()
-    start = (page - 1) * page_size
-    window = evs[start : start + page_size]
-    return {
-        "total": len(evs),
-        "page": page,
-        "page_size": page_size,
-        "rows": [e.model_dump(mode="json") for e in window],
-    }
+def read_events(
+    page: int = 1,
+    page_size: int = 50,
+    filter: str | None = None,
+    sort: str | None = None,
+) -> dict[str, Any]:
+    """Paged, filtered and sorted here, because the data source says it is.
+
+    `filter` is the engine's tree as JSON and `sort` is `field:asc,other:desc`. Both were
+    declared as capabilities and neither was honoured: the filter arrived as bare query
+    parameters this signature did not have, so FastAPI dropped it, and no sort was ever sent.
+    An unsupported operator raises rather than returning unfiltered rows — AG Studio has been
+    told not to re-filter, so a reader would have no way to know.
+    """
+    return window(
+        [e.model_dump(mode="json") for e in events()],
+        filter_tree=parse_filter(filter),
+        sort=parse_sort(sort),
+        page=page,
+        page_size=page_size,
+    )
 
 
 @app.get("/api/verdicts")
-def read_verdicts() -> dict[str, Any]:
+def read_verdicts(
+    page: int = 1,
+    page_size: int = 50,
+    filter: str | None = None,
+    sort: str | None = None,
+) -> dict[str, Any]:
     s, e = settings(), engagement()
     evs = events()
     arm = adjudicator(e, s, evs)
     verdicts = arm.adjudicate(evs)
-    return {"arm": arm.name, "rows": [v.model_dump(mode="json") for v in verdicts]}
+    return {
+        "arm": arm.name,
+        **window(
+            [v.model_dump(mode="json") for v in verdicts],
+            filter_tree=parse_filter(filter),
+            sort=parse_sort(sort),
+            page=page,
+            page_size=page_size,
+        ),
+    }
 
 
 @app.get("/api/ledger")
-def read_ledger() -> dict[str, Any]:
+def read_ledger(
+    page: int = 1,
+    page_size: int = 50,
+    filter: str | None = None,
+    sort: str | None = None,
+) -> dict[str, Any]:
     led = Ledger(DATA / f"{engagement().id}.jsonl")
     # One row per billed line. The raw file holds the intent row written before the money
     # moves, the settled row after it, and a void where a write never left — bookkeeping that
@@ -135,10 +164,18 @@ def read_ledger() -> dict[str, Any]:
     # Under the lock: a reader that catches an apply between its intent rows and its settled
     # ones sees a half-written truth and draws it.
     with led.guard():
-        return {
-            "summary": led.summary(),
-            "rows": [e.model_dump(mode="json") for e in led.settled_lines()],
-        }
+        rows = [e.model_dump(mode="json") for e in led.settled_lines()]
+        summary = led.summary()
+    return {
+        "summary": summary,
+        **window(
+            rows,
+            filter_tree=parse_filter(filter),
+            sort=parse_sort(sort),
+            page=page,
+            page_size=page_size,
+        ),
+    }
 
 
 @app.get("/api/settlement/{capture_id}")

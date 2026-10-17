@@ -110,23 +110,32 @@ async function api<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-/** Translate Studio's filter tree into the query the backend understands. */
-function filterToQuery(filter: AgDataSourceGetOptions['filter']): string {
-  if (!filter) return '';
-  const parts: string[] = [];
-  const walk = (node: unknown): void => {
-    if (!node || typeof node !== 'object') return;
-    const n = node as Record<string, unknown>;
-    if (Array.isArray(n.conditions)) {
-      n.conditions.forEach(walk);
-      return;
-    }
-    if (typeof n.field === 'string' && n.value !== undefined) {
-      parts.push(`${encodeURIComponent(n.field)}=${encodeURIComponent(String(n.value))}`);
-    }
-  };
-  walk(filter);
-  return parts.length ? `&${parts.join('&')}` : '';
+/**
+ * The query string for one getData call: the window, the filter tree and the sort order.
+ *
+ * The filter goes over as one JSON parameter. It used to be flattened into bare
+ * `&field=value` pairs, which can carry neither the operator nor the shape of the tree — and
+ * the endpoint it was sent to did not declare those parameters, so FastAPI dropped them
+ * silently. The sort was never sent at all. Both are declared capabilities, and AG Studio's
+ * contract for declaring them is that it will not filter or sort locally, so what came back
+ * was every row with the reader's filter chip showing above it.
+ */
+export function queryFor(
+  options: AgDataSourceGetOptions | undefined,
+  offset: number,
+  limit: number,
+): string {
+  const params = new URLSearchParams({
+    page: String(Math.floor(offset / limit) + 1),
+    page_size: String(limit),
+  });
+  if (options?.filter) params.set('filter', JSON.stringify(options.filter));
+  const sort = (options?.sort ?? [])
+    .filter((s) => s && typeof s.field === 'string')
+    .map((s) => `${s.field}:${s.direction === 'desc' ? 'desc' : 'asc'}`)
+    .join(',');
+  if (sort) params.set('sort', sort);
+  return params.toString();
 }
 
 export function unloggedDataSource(
@@ -173,21 +182,15 @@ export function unloggedDataSource(
     ): Promise<AgRowDataSourceResponse> {
       const offset = options?.paging?.offset ?? 0;
       const limit = options?.paging?.pageLimit ?? PAGE_SIZE;
-
-      if (tableId === 'events') {
-        // The engine asks for a window; the backend returns exactly that window.
-        const page = Math.floor(offset / limit) + 1;
-        const body = await api<{ rows: Record<string, unknown>[] }>(
-          `/api/events?page=${page}&page_size=${limit}${filterToQuery(options?.filter)}`,
-        );
-        return { data: body.rows };
-      }
-      if (tableId === 'verdicts') {
-        const body = await api<{ rows: Record<string, unknown>[] }>('/api/verdicts');
-        return { data: body.rows.slice(offset, offset + limit) };
-      }
-      const body = await api<{ rows: Record<string, unknown>[] }>('/api/ledger');
-      return { data: body.rows.slice(offset, offset + limit) };
+      // One path for all three tables. Two of them used to fetch everything and slice in the
+      // browser while the source declared the rows never materialise here, and neither of
+      // them passed the filter or the sort on at all.
+      const path =
+        tableId === 'events' ? '/api/events' : tableId === 'verdicts' ? '/api/verdicts' : '/api/ledger';
+      const body = await api<{ rows: Record<string, unknown>[] }>(
+        `${path}?${queryFor(options, offset, limit)}`,
+      );
+      return { data: body.rows };
     },
   };
 }
