@@ -6,12 +6,12 @@ Written so a judge does not have to find any of this out by reading the source.
 
 | Claim | Evidence |
 |---|---|
-| An already-sent invoice can grow line items while its id, payer URL and QR stay valid | `$520.00 → $902.50` on 2026-10-15, reproducible offline from `cassettes/`. Re-run it live with `uv run scripts/verify.py --live` |
+| An already-sent invoice can grow line items while its id, payer URL and QR stay **identical** | `$520.00 → $902.50` on 2026-10-15, reproducible offline from `cassettes/`. Re-run it live with `uv run scripts/verify.py --live`. The link and the QR are captured before the write and compared after it: the payer URL is unchanged and the QR comes back **byte-identical**. PayPal's own documentation says nothing about either surviving an update, so this is measured rather than assumed |
 | Each added line appears by name on PayPal's hosted payer page | `docs/img/payer-before.jpg` and `payer-after.jpg` — invoice #0036 at $520.00 and at $902.50, same id, same URL, shot minutes apart. Reproduce with `scripts/verify.py --live` |
 | Every scope clause reaches the payer, labelled with the id its verdicts cite | `detail.terms_and_conditions` rendered under its own heading — `docs/img/payer-after.jpg`, directly below the two lines that cite `X1` |
 | Money paid outside PayPal can be recorded, and a later line does not discard it | `POST /invoices/{id}/payments`: $100.00 BANK_TRANSFER moves a $690.00 invoice to PARTIALLY_PAID with $590.00 due; a further item leaves $675.00 due with the payment intact. Two checks in `scripts/verify.py --live` |
 | A recipient-less invoice is legal | `invoice.required` is `["detail"]` only, confirmed against the published schema — and sent recipient-less live, 200 and `UNPAID`, on 2026-10-16 UTC |
-| Silent send lands on `UNPAID` with no email | `POST /{id}/send` with both notify flags false. **Only for an invoice dated today or earlier in UTC.** A future `invoice_date` makes the send scheduled: 202 and `SCHEDULED` with a recipient, 422 `MISSING_RECIPIENT_EMAIL` without one. Three cases in [`VERIFIED.md`](VERIFIED.md), filed upstream |
+| Silent send lands on `UNPAID` with no email | `POST /{id}/send` with both notify flags false. **Only for an invoice dated today or earlier in UTC.** A future `invoice_date` makes the send scheduled: 202 and `SCHEDULED` with a recipient, 422 `MISSING_RECIPIENT_EMAIL` without one. Three cases in [`VERIFIED.md`](VERIFIED.md), written up for upstream |
 | `early_payment_discount` is accepted with 201 and silently dropped | `scripts/repro_discount_defect.py`, four term/date combinations |
 | `POST /conditional-rules` returns 500 | Same script. The schema's only non-`links` property is `readOnly` |
 
@@ -117,6 +117,14 @@ Written so a judge does not have to find any of this out by reading the source.
   matches `sk-[A-Za-z0-9]{20,}` — `@img/sharp-wasm32`'s wasm binary, whose matches are SVG
   attribute names with the leading `ma` eaten by the pattern: `sk-typefilterUnits`,
   `sk-modeyChannelSelector`, `sk-borderspecularExponent`. One file, several strings, no key.
+
+- **The six upstream reports are written, not filed.** `docs/UPSTREAM.md` holds six defect
+  reports with reproductions, verbatim sandbox output and a suggested fix each, and every one
+  reproduces from this repository. None has been posted to `paypal/agent-toolkit`,
+  `paypal/PayPal-REST-API-issues`, APIMatic or AG Grid — there are no issues under this
+  account in any of those organisations. The README said "filed upstream" until this line was
+  written. Filing them is a decision about posting publicly under a real name, which is the
+  author's to make, not a thing the work needed.
 
 - **The Render blueprint has never been deployed.** `render.yaml` is written and its two
   services are the ones this repo runs locally, but no deploy has been made from it, so what

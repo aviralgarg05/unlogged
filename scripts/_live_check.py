@@ -34,6 +34,12 @@ def main() -> int:
             iid = created["id"]
             inv.send(iid, notify=False)
             before = total_of(inv.get(iid))
+            # Captured BEFORE the write, so the claim can be compared rather than asserted.
+            # The payer link and the QR are the whole promise — "same invoice, same link, same
+            # QR" — and the live run printed the link without ever checking it had not moved,
+            # while PayPal's own documentation says nothing about either surviving an update.
+            payer_before = inv.payer_url(iid)
+            qr_before = inv.qr_png(iid)
 
             inv.add_items(
                 iid,
@@ -70,6 +76,17 @@ def main() -> int:
                 "the QR still generates for the same invoice",
                 "PASS" if png[:4] == b"\x89PNG" else "FAIL",
                 f"{len(png)} byte PNG",
+            )
+            payer_after = inv.payer_url(iid)
+            emit(
+                "the payer link the client filed still resolves to this invoice",
+                "PASS" if payer_after == payer_before else "FAIL",
+                "unchanged" if payer_after == payer_before else f"{payer_before} -> {payer_after}",
+            )
+            emit(
+                "the QR is byte-identical to the one generated before the write",
+                "PASS" if png == qr_before else "FAIL",
+                "identical" if png == qr_before else f"{len(qr_before)} -> {len(png)} bytes",
             )
             # Money that arrived by bank transfer, recorded so the invoice stops asking for
             # it — and then a further discovered line written on top of it. If the write

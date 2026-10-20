@@ -41,7 +41,7 @@ uv run scripts/verify.py               # checks every claim in this README
 That script is the short version of everything below: it runs the tests, reproduces the
 evaluation to the cent, replays the full apply flow from recorded PayPal exchanges, and checks
 the submission requirements (LICENSE present, no key tracked, no key anywhere in the repo).
-16 checks keyless, 24 with sandbox credentials, about twenty seconds.
+16 checks keyless, 26 with sandbox credentials, about twenty seconds.
 
 With sandbox credentials, `uv run scripts/verify.py --live` also re-proves the central claim
 against PayPal on the day you run it — it creates a real invoice, grows it, records a bank
@@ -275,8 +275,13 @@ the file that implements it — so nothing has to be taken on trust.
 simulated, and what is not yet true — including that eight events is a smoke test rather than a
 benchmark, and that the fixture engagement was written for this repo.
 
-Six findings are filed upstream rather than kept as talking points, in
-[`docs/UPSTREAM.md`](docs/UPSTREAM.md): PayPal's documented discount path is accepted and not
+Six findings are **written up as upstream reports** — reproduction, evidence and a suggested
+fix each — rather than kept as talking points, in [`docs/UPSTREAM.md`](docs/UPSTREAM.md). Each
+is reproducible from this repository. **None has been posted to its project yet**: they are
+written to be filed, and are not filed, which is a difference worth stating in a document that
+asks to be trusted on everything else.
+
+The six: PayPal's documented discount path is accepted and not
 stored; `generate-qr-code` returns a base64 multipart envelope rather than an image; the
 generated Server SDK ships no Invoicing controller; a public AG Studio custom widget cannot
 declare `formatShape` at all; `PayPal-Request-Id` is accepted on an invoice PUT and ignored, so

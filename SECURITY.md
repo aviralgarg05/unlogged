@@ -26,7 +26,7 @@ agent toolkit sets on nothing — **and which PayPal ignores on an invoice `PUT`
 used to claim the header meant a retry could not add the same line twice. It does not: the
 identical write, sent twice under one key, took a sandbox invoice from $225.00 to $250.00. The
 header is still sent, because it costs nothing and may one day be honoured, but nothing here
-relies on it. Reproduced live and filed upstream in [`docs/UPSTREAM.md`](docs/UPSTREAM.md).
+relies on it. Reproduced live and written up in [`docs/UPSTREAM.md`](docs/UPSTREAM.md).
 
 The guard that does work is an **append-only ledger** under an `fcntl` file lock — a file lock
 rather than a thread lock, because the CLI and the web service are separate processes against

@@ -6,7 +6,7 @@ The repository is **private** and stays private until the last of these. Devpost
 public link; a private one is a mechanical fail regardless of what is in it.
 
 - [ ] `uv run scripts/verify.py` — 16 checks, all green, no credentials
-- [ ] `uv run scripts/verify.py --live` — 24 checks, re-proves the mechanism against PayPal on
+- [ ] `uv run scripts/verify.py --live` — 26 checks, re-proves the mechanism against PayPal on
       the day of submission, and prints a payer URL that can go straight in the write-up
 - [ ] Record the video. `docs/VIDEO.md` has the shot list. Presentation is one of five equally
       weighted criteria and is worth nothing unfilmed
@@ -55,10 +55,11 @@ Three undocumented behaviours cost a day each and are written up in `docs/VERIFI
 `amount.value` you just read; `generate-qr-code` returns `multipart/form-data`, not `image/png`;
 and exactly three top-level invoice properties are readOnly, not the six commonly assumed.
 
-## Six things filed upstream
+## Six things found on the platform and written up for upstream
 
 Each one was found by building on the platform, each is reproducible from the repo, and each is
-written up in `docs/UPSTREAM.md` rather than kept as a talking point:
+written up in `docs/UPSTREAM.md` rather than kept as a talking point. None has been posted to
+its project yet — written to be filed, not filed:
 
 1. **The documented discount path is accepted and not stored.** Created, sent, re-read fresh —
    four term/date combinations, absent every time, total never moving off the list price.
