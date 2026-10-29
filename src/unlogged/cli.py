@@ -19,6 +19,7 @@ from unlogged.paypal.invoices import (
     TERMINAL_STATUSES,
     Refused,
     check_invoice_id,
+    today,
     total_of,
 )
 from unlogged.scope.baseline import KeywordBaseline
@@ -79,11 +80,20 @@ def _adjudicator(eng: Engagement, settings: Settings, events: list[WorkEvent]):
 @app.command()
 def open_engagement(
     engagement: Path = typer.Option(..., help="Engagement JSON"),
-    invoice_date: str = typer.Option(..., help="YYYY-MM-DD"),
+    invoice_date: str = typer.Option("", help="YYYY-MM-DD. Defaults to today in UTC."),
 ) -> None:
-    """Issue the one invoice the client will keep for the whole engagement."""
+    """Issue the one invoice the client will keep for the whole engagement.
+
+    `invoice_date` defaults to today **in UTC**, which is the only value that does what a
+    caller means. PayPal reads the date in UTC and treats a future one as a scheduled
+    invoice: the send never reaches UNPAID, and without a recipient it is refused outright
+    with an error naming the wrong field. Typing a local date east of UTC before 05:30 IST
+    produced exactly that. The check is still there and still refuses; this just stops the
+    most common correct answer from having to be typed.
+    """
     s = Settings.from_env()
     eng = _engagement(engagement)
+    invoice_date = invoice_date or today().isoformat()
     with PayPalClient(s) as c:
         inv = Invoices(c)
         opening = [
@@ -108,7 +118,12 @@ def open_engagement(
         )
         iid = created["id"]
         inv.send(iid, notify=False)
-        typer.echo(json.dumps({"invoice_id": iid, "payer_url": inv.payer_url(iid)}, indent=2))
+        # Lines, not JSON. This is the command that hands over the link a client keeps for the
+        # whole engagement, and the one a demo opens on camera — and a wall of braces is the
+        # worst way to present the one string that matters. Nothing parses this output.
+        opened_at = sum((i.total for i in opening), Decimal("0"))
+        typer.echo(f"Invoice {iid} opened at {eng.currency} {opened_at:.2f}, dated {invoice_date}.")
+        typer.echo(f"Client's page: {inv.payer_url(iid)}")
 
 
 @app.command()

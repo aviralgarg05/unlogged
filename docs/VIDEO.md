@@ -7,6 +7,22 @@ to get through rewards brevity and nothing here needs the extra thirty seconds.
 Shot entirely on a laptop: two browser windows and a screen recorder. No location, no second
 person, no physical shoot.
 
+## Before you record
+
+```bash
+uv run scripts/rehearse.py
+```
+
+Runs the whole hero shot once against a throwaway invoice to prove it works today, then opens
+a **second fresh invoice** at `$520.00`, prints its payer URL to open in the right-hand window,
+and prints the exact command to run on camera.
+
+It exists because the climax cannot be filmed against `fixtures/demo-invoice-id`: that invoice
+is the one in the README's screenshots and has already been grown to `$902.50`, so the "before"
+is the "after", and applying again is refused `409 already billed` by a ledger that is correctly
+remembering. Both are the product working. Each run of the script gets its own invoice and its
+own ledger, so a second take is not refused — run it again between takes.
+
 ## The rule that governs every cut
 
 **The client's PayPal page is the only thing that proves anything.** Our own grid is where the
@@ -48,8 +64,18 @@ total is now `$902.50` and new lines have appeared, each naming where it came fr
 `PSP timeout handling and 3DS re-challenge (github 03 Oct)`. *"Same invoice. Same link. Same QR. PayPal added
 those lines, and PayPal emailed the client that it changed."*
 
-**2:05–2:20 — the client pays.**
-Pay it in the sandbox. The webhook lands, the row flips to PAID. Money arriving, on camera.
+**2:05–2:20 — the client pays, on PayPal's page.**
+Sign in as the sandbox buyer and pay the invoice. The payer page does the proving: amount due
+goes to zero and PayPal marks it paid, in PayPal's own typography. Nothing to narrate.
+
+*This beat was written as "the webhook lands, the row flips to PAID" and that is not
+filmable.* Nothing in the dashboard shows a payment status — `/webhook` verifies a delivery
+and appends it to `data/webhooks.jsonl`, and there is no row anywhere that turns PAID. PayPal
+also cannot reach a service on localhost, so a genuine delivery needs a tunnel, and the
+sandbox simulator's events are accepted as `simulated: true` rather than verified
+(`docs/HONESTY.md`). The only thing that would have been on screen is a JSON response, which
+the first edit rule below forbids. So the shot is the payer page, which is the stronger proof
+anyway and is the rule this whole list is built on.
 
 **2:20–2:30 — what it is.**
 *"Cross-border contractors bill through PayPal because that's the rail that reaches them. The

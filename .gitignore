@@ -26,3 +26,6 @@ web/.next/
 data/*
 !data/seed/
 docs/verification.json
+
+# Filming scratch: each take opens its own live sandbox invoice and its own ledger.
+.film/
