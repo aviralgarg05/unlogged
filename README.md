@@ -51,7 +51,7 @@ date in a README is worth less than a command.
 Or run the pieces directly:
 
 ```bash
-uv run pytest -q                       # 245 tests, no credentials needed
+uv run pytest -q                       # 246 tests, no credentials needed
 uv run unlogged discover \
   --engagement fixtures/engagement.json \
   --events fixtures/events.jsonl \
@@ -307,7 +307,7 @@ to find the divergence the API cannot prevent. Each one is reproducible from thi
 | APIMatic SDK: settlement breakdown | ✅ `payments.get_captured_payment` |
 | Docker Compose | ✅ `docker compose up` run end to end with no `.env` at all — both images built, the web half reaches the API over the compose network, and the full apply flow replays *inside* the image to `USD 902.50` |
 | Render blueprint | ⏳ written, never deployed — see [HONESTY.md](docs/HONESTY.md) |
-| Tests | ✅ 245 Python (incl. a property test on the money path), 47 TypeScript |
+| Tests | ✅ 246 Python (incl. a property test on the money path), 47 TypeScript |
 | Model adjudication | ✅ `gpt-6.1-sol`, 8/8 calls on the fixture, one hour estimate short, recorded so it replays keyless |
 | Evaluation against a real past engagement | ⏳ needs a real thread — see [HONESTY.md](docs/HONESTY.md) |
 

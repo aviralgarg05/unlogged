@@ -89,6 +89,30 @@ def health() -> dict[str, Any]:
     }
 
 
+def live_invoice_id() -> str | None:
+    """The invoice this engagement is actually billing to, right now.
+
+    An engagement has exactly one invoice — that is the whole premise — but nothing used to
+    say which, so the dashboard's apply button carried the id as a hardcoded constant in a
+    React component. That is wrong twice: it cannot follow a rename or a new billing period,
+    and it meant the button could only ever write to the invoice that was committed, which by
+    then had already been grown to its final total and answered 409.
+
+    Resolved in the order that respects whoever knows best: an explicit UNLOGGED_INVOICE_ID,
+    then whatever the ledger has most recently written to, then the committed demo id so a
+    fresh clone still has something to point at.
+    """
+    named = os.environ.get("UNLOGGED_INVOICE_ID", "").strip()
+    if named:
+        return named
+    ledger = Ledger(DATA / f"{engagement().id}.jsonl")
+    for entry in reversed(list(ledger)):
+        if entry.invoice_id:
+            return entry.invoice_id
+    demo = Path(__file__).resolve().parents[2] / "fixtures" / "demo-invoice-id"
+    return demo.read_text().strip() if demo.exists() else None
+
+
 @app.get("/api/engagement")
 def read_engagement() -> dict[str, Any]:
     e = engagement()
@@ -100,6 +124,9 @@ def read_engagement() -> dict[str, Any]:
         "opening_total": str(e.opening_total),
         "clauses": [c.model_dump() for c in e.clauses],
         "payer_note": e.payer_note(),
+        # Which invoice this engagement is billing to. The dashboard's apply button reads it
+        # from here rather than carrying a constant it cannot keep current.
+        "invoice_id": live_invoice_id(),
     }
 
 

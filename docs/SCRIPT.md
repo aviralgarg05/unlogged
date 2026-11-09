@@ -61,6 +61,62 @@ Those thirty seconds are the shots — don't talk over them. If it runs long, dr
 
 ---
 
+## Before you roll
+
+```bash
+uv run scripts/rehearse.py
+```
+
+It proves the whole take works against a throwaway invoice, then opens a fresh one and prints
+the two lines below with the id filled in. Run it again for every take — each gets its own
+invoice, so a second take is never refused as already billed.
+
+Then the two halves, in their own tabs. The service must be pointed at **this take's** invoice,
+or the dashboard's button writes to the committed demo invoice, which is already at its final
+total and answers 409:
+
+```bash
+UNLOGGED_DATA=".film/take" UNLOGGED_INVOICE_ID=INV2-DJNX-LHYE-QDV9-ASLR UNLOGGED_REPLAY=0 uv run uvicorn unlogged.web:app --port 8000
+```
+
+```bash
+cd web && npm start
+```
+
+**This take** — the only thing you open by hand:
+
+`https://www.sandbox.paypal.com/invoice/payerView/details/INV2-DJNX-LHYE-QDV9-ASLR?qr=1`
+
+You never type an invoice id anywhere. `rehearse.py` writes it into `.film/take/`, the service
+is told it on the command line above, and the dashboard asks the service.
+
+**Left window** — `http://localhost:3000/dashboard`, and a terminal in the repo with the font
+bumped up. **Right window** — the payer URL above. Open it once, before recording starts, and
+never touch the address bar again.
+
+### What you press, start to finish
+
+| When | What you do |
+|---|---|
+| 0:00 | Sidebar → **The thread**, and scroll |
+| 0:45 | Sidebar → **What was decided** |
+| 1:22 | Type `./demo eval` — the only typing in the whole video |
+| 1:45 | Tick the two **Billable extra** boxes → click **Add to the live invoice** |
+| 1:55 | Switch right, **refresh** the payer page |
+| 2:15 | Pay it as the sandbox buyer |
+| 2:30 | Type `./demo tests` |
+
+### Every link that appears on screen
+
+| What | Where |
+|---|---|
+| The client's invoice (this take) | the payer URL above |
+| Dashboard | `http://localhost:3000/dashboard` |
+| Repo, last frame | `https://github.com/aviralgarg05/unlogged` |
+| Sandbox buyer sign-in | `https://www.sandbox.paypal.com/` |
+
+---
+
 ## The same thing again, with the screen and the keys
 
 Same words. This column tells you where to be and what to press.
@@ -114,16 +170,16 @@ Let the two rows land before you say anything. Both run with no API key.
 
 ### 1:45 — money moves · one unbroken take, no cut
 
-Say the first line, run it, then switch right and **refresh — don't retype the URL**.
+On the evidence card, right: **tick the two `Billable extra` boxes**, then click **Add to the
+live invoice**. The card answers in green — *Invoice now USD 902.50*, with both line names.
+Then switch to the right window and **refresh — don't retype the URL**.
+
 No cut anywhere in this beat: a cut is where a judge assumes a trick.
 
-`./demo apply` prints the real four-line command before it runs, so nothing is hidden — then
-three lines of live traffic go past, ending `PUT /v2/invoicing/invoices/… 200`. Let those land.
-That frame is the proof none of this is mocked.
+This is the product's own button, not a script, which is worth far more on camera than a
+terminal. If you would rather not restart the service for a take, `./demo apply` does the same
+thing and prints the real command before it runs.
 
-```bash
-./demo apply
-```
 
 > But deciding isn't billing. This is the part nobody does.
 >

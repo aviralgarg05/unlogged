@@ -34,9 +34,16 @@ function unqualify(rows: Record<string, unknown>[]): Row[] {
   });
 }
 
-// The engagement's live sandbox invoice. One per engagement is the whole point, so it is a
-// constant rather than something the reader has to find and paste.
-const DEMO_INVOICE = 'INV2-DB9K-DK3X-WK8F-3E4N';
+// Which invoice this engagement bills to is the service's answer, not this file's. It used to
+// be a constant here — which meant the button could only ever write to the one id that was
+// committed, and once that invoice had been grown to its final total the button answered 409
+// and there was no way to point it anywhere else without editing a React component.
+async function liveInvoiceId(): Promise<string | null> {
+  const res = await fetch('/api/backend/api/engagement', { cache: 'no-store' });
+  if (!res.ok) return null;
+  const body = (await res.json()) as { invoice_id?: string | null };
+  return body.invoice_id ?? null;
+}
 
 const LABEL: Record<string, string> = {
   billable_extra: 'Billable extra',
@@ -125,11 +132,13 @@ export function EvidenceCard(params: AgWidgetParams<EvidenceState>) {
     setApplying(true);
     setFailure(null);
     try {
+      const invoiceId = await liveInvoiceId();
+      if (!invoiceId) throw new Error('the service did not name an invoice for this engagement');
       const res = await fetch('/api/backend/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          invoice_id: DEMO_INVOICE,
+          invoice_id: invoiceId,
           event_ids: [...picked],
           notify: true,
         }),

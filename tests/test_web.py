@@ -346,3 +346,52 @@ def test_a_stranger_cannot_reach_the_double_bill_guard_through_telemetry(tmp_pat
     assert ledger.billed_to(invoice) == {"e1"}, "telemetry released the double-bill guard"
     assert telemetry_path().parent != tmp_path, "telemetry is writing into the ledger directory"
     assert not list(tmp_path.glob("telemetry*")), "telemetry left a file among the ledgers"
+
+
+def test_the_engagement_names_the_invoice_it_bills_to(tmp_path, monkeypatch):
+    """The dashboard's apply button carried this id as a constant in a React component.
+
+    An engagement has exactly one invoice — that is the premise — but nothing said which, so
+    the button could only ever write to the id that happened to be committed. Once that
+    invoice had been grown to its final total it answered 409, and pointing the button
+    anywhere else meant editing the front end. The service answers it now, and the button
+    asks.
+    """
+    from pathlib import Path
+
+    from unlogged import web as web_mod
+    from unlogged.ledger import Entry, Ledger, now
+
+    # 1. An explicit id wins, which is how a filming take or a second period points it.
+    monkeypatch.setenv("UNLOGGED_INVOICE_ID", "INV2-AAAA-BBBB-CCCC-DDDD")
+    assert web_mod.live_invoice_id() == "INV2-AAAA-BBBB-CCCC-DDDD"
+
+    # 2. Otherwise whatever the ledger most recently billed.
+    monkeypatch.delenv("UNLOGGED_INVOICE_ID")
+    monkeypatch.setattr(web_mod, "DATA", tmp_path)
+    ledger = Ledger(tmp_path / f"{web_mod.engagement().id}.jsonl")
+    ledger.append(
+        Entry(
+            at=now(),
+            invoice_id="INV2-LEDG-LEDG-LEDG-LEDG",
+            event_id="e1",
+            clause_id="X1",
+            line_name="Work",
+            hours="1.0",
+            unit_price="85.00",
+            total_after="605.00",
+            adjudicator="gpt-6.1-sol",
+            confidence=0.9,
+            settled=True,
+        )
+    )
+    assert web_mod.live_invoice_id() == "INV2-LEDG-LEDG-LEDG-LEDG"
+
+    # 3. And a fresh clone with neither still has something to point at.
+    monkeypatch.setattr(web_mod, "DATA", tmp_path / "empty")
+    root = Path(__file__).resolve().parents[1]
+    committed = (root / "fixtures" / "demo-invoice-id").read_text().strip()
+    assert web_mod.live_invoice_id() == committed
+
+    # It reaches the dashboard through the endpoint the card reads.
+    assert client.get("/api/engagement").json()["invoice_id"] == committed

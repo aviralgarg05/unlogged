@@ -115,7 +115,11 @@ def main() -> int:
     print("Open this in the right-hand window and leave it open — it is the page the client")
     print("has had since day one, and the shot is worth nothing if it is reopened on camera:\n")
     print(f"  {film_url}\n")
-    print("Then, when the camera is rolling, this is the whole command:\n")
+    print("Point the service at this take, so the dashboard's own button writes to it:\n")
+    print(f'  UNLOGGED_DATA=".film/take" UNLOGGED_INVOICE_ID={film_id} \\')
+    print("    uv run uvicorn unlogged.web:app --port 8000\n")
+    print("Then, on camera, you click Add to the live invoice. No typing at all.")
+    print("If you would rather not restart the service, the terminal still works:\n")
     # Two words. The real one is four lines with two environment variables and a twenty-four
     # character invoice id, which is not something to type while talking, and is noise on
     # screen besides. `./demo` prints what it runs before it runs it, so nothing is hidden.
