@@ -83,6 +83,20 @@ UNLOGGED_DATA=".film/take" UNLOGGED_INVOICE_ID=INV2-DJNX-LHYE-QDV9-ASLR UNLOGGED
 cd web && npm start
 ```
 
+Then prepare the two tabs you will cut to, so nothing is typed with the camera on. Run each
+once and leave the output sitting there:
+
+```bash
+./demo eval
+```
+
+```bash
+./demo tests
+```
+
+Both are run from the repository — `cd "…/paypal hack/unlogged"` first if your prompt says
+`paypal hack`, which is one level up and where `./demo` does not exist.
+
 **This take** — the only thing you open by hand:
 
 `https://www.sandbox.paypal.com/invoice/payerView/details/INV2-DJNX-LHYE-QDV9-ASLR?qr=1`
@@ -96,15 +110,18 @@ never touch the address bar again.
 
 ### What you press, start to finish
 
+Nothing is typed on camera. Two terminal tabs are prepared before you roll and you only
+switch to them.
+
 | When | What you do |
 |---|---|
 | 0:00 | Sidebar → **The thread**, and scroll |
 | 0:45 | Sidebar → **What was decided** |
-| 1:22 | Type `./demo eval` — the only typing in the whole video |
+| 1:22 | Switch to the **ablation** tab — the two rows are already on it |
 | 1:45 | Tick the two **Billable extra** boxes → click **Add to the live invoice** |
 | 1:55 | Switch right, **refresh** the payer page |
 | 2:15 | Pay it as the sandbox buyer |
-| 2:30 | Type `./demo tests` |
+| 2:30 | Switch to the **tests** tab — already green |
 
 ### Every link that appears on screen
 
@@ -158,11 +175,15 @@ Dashboard → **What was decided**. Walk down three rows as you talk.
 
 ### 1:22 — the ablation
 
-Let the two rows land before you say anything. Both run with no API key.
+Switch to the **ablation** tab. It is already showing this, from a real run with no API key:
 
-```bash
-./demo eval
 ```
+                      accuracy  precision   recall   overbilled     missed
+   keyword-baseline      12%         0%       0%      $170.00    $425.00
+   gpt-6.1-sol          100%       100%     100%        $0.00      $0.00
+```
+
+Give it a beat before you speak. Point at the two columns you are about to say.
 
 > The cheap way is keyword matching. Zero precision, zero recall — it bills a hundred and
 > seventy it shouldn't and misses four twenty-five that was real. The model gets all three at a
@@ -198,7 +219,8 @@ talking — PayPal's page does the proving: amount due goes to zero.
 
 ### 2:30 — what it's built on, and what it's for
 
-Last frame, split: `./demo tests` green, beside `https://github.com/aviralgarg05/unlogged`.
+Last frame, split: the **tests** tab, already green at `246 passed`, beside
+`https://github.com/aviralgarg05/unlogged`.
 
 > Two things make that work: PayPal's invoicing API, where a sent invoice can grow in place —
 > that isn't documented, I found it and wrote it up — and a model that cites a clause before

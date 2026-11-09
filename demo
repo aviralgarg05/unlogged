@@ -27,7 +27,20 @@ case "${1:-}" in
          --events fixtures/events.jsonl
          --gold fixtures/gold.jsonl)
     say "${cmd[*]}"
-    PAYPAL_CLIENT_ID= PAYPAL_CLIENT_SECRET= OPENAI_API_KEY= "${cmd[@]}"
+    # The full report is 42 lines and the two rows that matter scroll off the top, which on
+    # camera means narrating a table nobody can see. Print the comparison, say where the rest
+    # is. Nothing is recomputed here — these are the lines the real run just produced.
+    out=$(PAYPAL_CLIENT_ID= PAYPAL_CLIENT_SECRET= OPENAI_API_KEY= "${cmd[@]}")
+    echo "$out" | awk -F'|' '
+      /^\| arm \|/        { header = 1; next }
+      /^\|---/            { next }
+      header && /^\| /    { printf "  %-18s %8s %10s %8s %12s %10s\n",
+                               $2, $3, $4, $5, $9, $10 }
+      header && !/^\| /   { exit }
+    ' | sed '1i\
+\
+                      accuracy  precision   recall   overbilled     missed'
+    printf '\n  Full report: evals/report.md\n\n'
     ;;
 
   apply)
