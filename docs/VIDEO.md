@@ -90,7 +90,21 @@ Last frame: the repo URL and `uv run pytest`, green.
 - **Nothing is claimed that is not visible.** No voiceover asserts anything the frame does not show.
 - **Record at 1080p**, upload unlisted first, make public before submitting.
 
-## Shoot by
+## What is left, and when
 
-Rehearse from **1 November**. Record by **8 November** — two days of slack before the Nov 10
-submission, which is itself two days before the Nov 12 deadline.
+The deadline is **12 November, 12:00pm PT**. This plan said record by 8 November; that has
+passed, so here is the real remaining order, shortest path first:
+
+1. **Record today.** `uv run scripts/rehearse.py` first — it opens the invoice the hero shot
+   needs and proves the whole take works before anything is recorded.
+2. **Upload unlisted.** Devpost needs a public URL, so make it public before pasting the link,
+   not after.
+3. **Make the repository public**, then open it in a logged-out window and check the README
+   images load. A private link is a mechanical fail whatever is behind it.
+4. **Re-run `uv run scripts/verify.py --live`** on the day you submit. It prints that day's
+   payer URL, which goes straight into the write-up — a date in a README is worth less than a
+   command, and that is this project's whole argument about itself.
+5. **Paste the link into Devpost** and check it from the submission preview.
+
+Everything above the line is the author's to do. The code is done: 245 Python tests, 47
+TypeScript, 16 keyless checks, 26 against the live sandbox, all green on 9 November.
