@@ -68,12 +68,14 @@ cd web && npm start                             # the dashboard  (leave running)
 box below. Re-run it for every take — each gets a fresh invoice, so a second take is never
 refused as already billed.
 
-**This take:**
+**This take** — the only thing you open by hand:
 
 | | |
 |---|---|
-| Payer URL | `https://www.sandbox.paypal.com/invoice/payerView/details/INV2-D5CU-H9MQ-P9TH-LZYQ?qr=1` |
-| Invoice id | `INV2-D5CU-H9MQ-P9TH-LZYQ` |
+| Payer URL | `https://www.sandbox.paypal.com/invoice/payerView/details/INV2-3967-4MDC-6XXS-5TVC?qr=1` |
+
+You never type an invoice id. `rehearse.py` writes it into `.film/take/`, and `./demo apply`
+reads it from there.
 
 **Left window** — terminal, font bumped up, and `http://localhost:3000/dashboard`.
 **Right window** — the payer URL above. Open it once, before recording starts, and never touch
@@ -132,8 +134,7 @@ Dashboard → **What was decided**. Walk down three rows as you say it.
 Let the two rows land before speaking. Both run with no API key.
 
 ```bash
-uv run unlogged evaluate --engagement fixtures/engagement.json \
-  --events fixtures/events.jsonl --gold fixtures/gold.jsonl
+./demo eval
 ```
 
 > The cheap way is keyword matching — zero precision, zero recall. It bills a hundred and seventy
@@ -145,10 +146,12 @@ uv run unlogged evaluate --engagement fixtures/engagement.json \
 Say the first line, run it, then switch right and **refresh — do not retype the URL**.
 No cut anywhere in this beat: a cut is where a judge assumes a trick.
 
+`./demo apply` prints the real four-line command before it runs it, so nothing is hidden —
+and then three lines of live PayPal traffic go past, ending `PUT /v2/invoicing/invoices/… 200`.
+Let those land. That frame is the proof that none of this is a mock.
+
 ```bash
-UNLOGGED_DATA=".film/take" UNLOGGED_REPLAY=0 UNLOGGED_RECORD= \
-  uv run unlogged discover --engagement fixtures/engagement.json \
-  --events fixtures/events.jsonl --invoice-id INV2-D5CU-H9MQ-P9TH-LZYQ --apply
+./demo apply
 ```
 
 > But deciding isn't billing. This is the part nobody does.
@@ -166,7 +169,7 @@ talking — PayPal's page does the proving: amount due goes to zero.
 
 ### 2:30 — what it is built on, and what it is for
 
-Last frame, split: `uv run pytest -q` green, beside `https://github.com/aviralgarg05/unlogged`.
+Last frame, split: `./demo tests` green, beside `https://github.com/aviralgarg05/unlogged`.
 
 > Two pieces: PayPal's Invoicing API, where a sent invoice grows in place — undocumented, and
 > written up in the repo — and a model that must cite a clause before anything reaches the bill.

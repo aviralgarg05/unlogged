@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Two words, for things that are four lines.
+#
+# The commands this runs are correct and unmemorable: environment variables, three flags and a
+# twenty-four character invoice id. That is not something to type while talking to a camera, and
+# on screen it reads as noise rather than as proof.
+#
+# So each one is a word here — and each PRINTS WHAT IT IS ABOUT TO RUN, in full, before running
+# it. A short command that hides the real one would look exactly like a trick, which is the one
+# thing this demo cannot afford.
+#
+#   ./demo eval     the ablation: keyword triage against the model, no API key
+#   ./demo apply    the money shot: itemise the extras onto this take's live invoice
+#   ./demo tests    the last frame
+#
+# `apply` reads this take's invoice id from .film/take/, which `scripts/rehearse.py` wrote.
+
+set -euo pipefail
+cd "$(dirname "$0")"
+
+say() { printf '\n\033[2m$ %s\033[0m\n\n' "$*"; }
+
+case "${1:-}" in
+  eval)
+    cmd=(uv run unlogged evaluate
+         --engagement fixtures/engagement.json
+         --events fixtures/events.jsonl
+         --gold fixtures/gold.jsonl)
+    say "${cmd[*]}"
+    PAYPAL_CLIENT_ID= PAYPAL_CLIENT_SECRET= OPENAI_API_KEY= "${cmd[@]}"
+    ;;
+
+  apply)
+    if [[ ! -f .film/take/invoice-id ]]; then
+      echo "No take is set up. Run:  uv run scripts/rehearse.py" >&2
+      exit 1
+    fi
+    id=$(<.film/take/invoice-id)
+    cmd=(uv run unlogged discover
+         --engagement fixtures/engagement.json
+         --events fixtures/events.jsonl
+         --invoice-id "$id"
+         --apply)
+    say "${cmd[*]}"
+    UNLOGGED_DATA=.film/take UNLOGGED_REPLAY=0 UNLOGGED_RECORD= "${cmd[@]}"
+    ;;
+
+  tests)
+    say "uv run pytest -q"
+    PAYPAL_CLIENT_ID= PAYPAL_CLIENT_SECRET= OPENAI_API_KEY= uv run pytest -q
+    ;;
+
+  *)
+    echo "usage: ./demo {eval|apply|tests}" >&2
+    exit 2
+    ;;
+esac

@@ -105,22 +105,21 @@ def main() -> int:
     shutil.rmtree(take, ignore_errors=True)
     take.mkdir(parents=True)
     film_id, film_url = open_invoice(take)
+    # Written down so `./demo apply` can find it. Nobody should be typing an invoice id with a
+    # camera running.
+    (take / "invoice-id").write_text(film_id + "\n")
+    (take / "payer-url").write_text(film_url + "\n")
 
     print("─" * 78)
     print("READY TO FILM\n")
     print("Open this in the right-hand window and leave it open — it is the page the client")
     print("has had since day one, and the shot is worth nothing if it is reopened on camera:\n")
     print(f"  {film_url}\n")
-    print("Then, when the camera is rolling, run this in the left-hand window:\n")
-    # Relative and quoted. The repository's own path contains a space ("paypal hack"), so an
-    # absolute unquoted path is a command that breaks the moment it is pasted — which on this
-    # script's one job means it breaks with the camera running.
-    where = take.relative_to(ROOT)
-    print(
-        f'  UNLOGGED_DATA="{where}" UNLOGGED_REPLAY=0 UNLOGGED_RECORD= \\\n'
-        f"    uv run unlogged discover --engagement fixtures/engagement.json \\\n"
-        f"    --events fixtures/events.jsonl --invoice-id {film_id} --apply\n"
-    )
+    print("Then, when the camera is rolling, this is the whole command:\n")
+    # Two words. The real one is four lines with two environment variables and a twenty-four
+    # character invoice id, which is not something to type while talking, and is noise on
+    # screen besides. `./demo` prints what it runs before it runs it, so nothing is hidden.
+    print("  ./demo apply\n")
     print("Refresh the payer page. $520.00 becomes $902.50, two named lines appear, and the")
     print("URL in the address bar never changed.\n")
     print("Another take: run this script again. Each one gets its own invoice and ledger, so a")
