@@ -269,7 +269,7 @@ the file that implements it — so nothing has to be taken on trust.
 | **Design** | `docker compose up` → `/dashboard` — rows fetched a page at a time and never materialised in the browser, a custom widget, and the one button that moves money | [`studio/data.ts`](web/app/dashboard/studio/data.ts), [`evidence-card.tsx`](web/app/dashboard/studio/widgets/evidence-card.tsx) |
 | **Potential Impact** | `uv run unlogged evaluate --engagement fixtures/engagement.json --events fixtures/events.jsonl --gold fixtures/gold.jsonl` — the naive pass leaves $425 of real work off the bill and bills $170 it should not | [`eval/harness.py`](src/unlogged/eval/harness.py), [`fixtures/gold.jsonl`](fixtures/gold.jsonl) |
 | **Innovation** | The same invoice id and QR at $520.00 and at $902.50, in the two images above | [`Invoices.add_items`](src/unlogged/paypal/invoices.py) |
-| **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page | — |
+| **Presentation** | [`docs/VIDEO.md`](docs/VIDEO.md) — the shot list, and the rule that every claim lands on PayPal's own page; [`docs/SCRIPT.md`](docs/SCRIPT.md) — the words, commands and links | — |
 
 **Read [`docs/HONESTY.md`](docs/HONESTY.md) before the rest.** It says what is verified, what is
 simulated, and what is not yet true — including that eight events is a smoke test rather than a

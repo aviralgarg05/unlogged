@@ -7,6 +7,10 @@ to get through rewards brevity and nothing here needs the extra thirty seconds.
 Shot entirely on a laptop: two browser windows and a screen recorder. No location, no second
 person, no physical shoot.
 
+**The words, the commands and every link are in [`SCRIPT.md`](SCRIPT.md)** — keep that one open
+on a second screen while recording. This file is the direction and the reasoning behind each
+cut, which is worth reading once and not during a take.
+
 ## Before you record
 
 ```bash
