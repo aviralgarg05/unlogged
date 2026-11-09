@@ -86,7 +86,9 @@ Last frame: the repo URL and `uv run pytest`, green.
 
 - **No JSON on screen.** Ever. If something can only be shown as JSON, it belongs in the README.
 - **The hero shot is one unbroken take.** Rehearse it until it runs clean rather than cutting.
-- **Works with the sound off.** A number going up, new named lines appearing, a row turning PAID.
+- **Works with the sound off.** A number going up, new named lines appearing, and PayPal's own
+  page showing the invoice paid. (This said "a row turning PAID" — there is no such row; see
+  the 2:05 beat.)
 - **Nothing is claimed that is not visible.** No voiceover asserts anything the frame does not show.
 - **Record at 1080p**, upload unlisted first, make public before submitting.
 
