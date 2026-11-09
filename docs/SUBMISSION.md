@@ -15,6 +15,22 @@ public link; a private one is a mechanical fail regardless of what is in it.
       the README images load
 - [ ] Paste the public link into Devpost and check it from the submission preview
 
+## Step 1 — Project overview
+
+**Project name** (60 max)
+
+```
+unlogged — bill the work you never wrote down
+```
+
+**Elevator pitch** (200 max, this is 184)
+
+```
+Finds the contract work you did but never billed for, and adds it to the PayPal invoice your client has had since day one. Same invoice id, same payer link, same QR — nothing reissued.
+```
+
+**Thumbnail** — [`docs/img/devpost-thumbnail.jpg`](img/devpost-thumbnail.jpg), 800×533, 3:2, 28 KB.
+
 ## Tagline
 
 The work you never wrote down is the work you never got paid for.
