@@ -1,154 +1,125 @@
 # Recording script
 
 Everything needed to record, in order. Keep this open on a second screen.
-Runs about **2:55**; the hard ceiling is 3:00. Direction and the reasoning behind each cut live in
-[`VIDEO.md`](VIDEO.md) — this file is what to open, what to run, and what to say.
+Runs about **2:58** as written, **2:42** without the payment beat; the ceiling is 3:00.
+Direction and the reasoning behind each cut live in [`VIDEO.md`](VIDEO.md) — this file is
+what to open, what to run, and what to say.
 
 ---
 
 ## Read this through once, out loud, before you record
 
-This is the whole narration as one piece. It is one argument, told forwards — each part hands
-off to the next, so if a line feels like it arrives from nowhere, that is the line to fix.
+The whole narration, as one piece. Say it the way you would explain it to another developer —
+it is written to be spoken, not read. If a line makes you change your voice to say it, that is
+the line to rewrite.
 
-> Hi, I'm Aviral. This is unlogged — it finds work you did and never wrote down, and puts it on
-> the invoice your client already has.
+> Hi, I'm Aviral. I built this thing called unlogged.
 >
-> Three weeks of work in a Slack thread. Somewhere in here is work I never billed for.
+> If you've done contract work you know this one. You agree a scope — then work turns up
+> anyway — and the parts that weren't in it never reach the bill.
 >
-> That one. *"Can you also just add the retry logic when the card declines?"* That took an
+> This is three weeks of my own thread. Somewhere in here is work I never got paid for.
+>
+> This one. *"Can you also just add the retry logic when the card declines?"* That cost me an
 > afternoon.
 >
-> And this is what we agreed. Clause X1 — retry and error-handling logic, not included. So that
+> And here's what we'd agreed. Clause X1 — retry and error handling, not included. So that
 > afternoon was extra. I never wrote it down, and the invoice still says five hundred and twenty.
-> The client has had this link since day one.
 >
-> So — read the thread against the agreement.
+> So that's what this does. It reads the thread against the agreement.
 >
-> The ask is a request, not work — money attaches when it's done. Three days later, the work:
-> PR 312, payment timeout and 3DS. It cites X1, which makes it billable. And this one only sounds
-> like a request. Phrasing, not work.
+> The ask is just a request — nothing's owed yet. Three days later, the work that did it:
+> PR 312. Points at that same clause, which makes it billable. And this one only sounds like a
+> request. Noise.
 >
-> Every row names its clause and quotes the sentence that decided it. So how often is it right?
+> Every row has to name its clause and quote the line that decided it.
 >
-> The cheap way is keyword matching — zero precision, zero recall. It bills a hundred and seventy
-> it shouldn't and misses four hundred and twenty-five that was real. The model gets all three at
-> a hundred. Eight events is a smoke test, not a benchmark; the repo says so.
+> Okay — but how often is it right?
+>
+> The cheap way is keyword matching. Zero precision, zero recall — it bills a hundred and
+> seventy it shouldn't and misses four twenty-five that was real. The model gets all three at a
+> hundred. And eight events is a smoke test, not a benchmark — the repo says so.
 >
 > But deciding isn't billing. This is the part nobody does.
 >
-> Same page — I haven't touched the address bar. Five twenty to nine hundred and two fifty. Two
-> new lines, each naming where it came from. Same id, same link, same QR. PayPal added them, and
-> emailed the client.
+> Same page — I haven't touched the address bar. Five twenty, now nine-oh-two fifty. Two new
+> lines, each saying where it came from. Same invoice, same link, same QR. PayPal emailed my
+> client.
 >
-> So the client opens the link they filed on day one, and pays it.
+> So the client opens the link they've had since day one, and pays it.
 >
-> Two pieces: PayPal's Invoicing API, where a sent invoice grows in place — undocumented, and
-> written up in the repo — and a model that must cite a clause before anything reaches the bill.
+> Two things make that work: PayPal's invoicing API, where a sent invoice can grow in place —
+> that isn't documented, I found it and wrote it up — and a model that cites a clause before
+> anything reaches the bill.
 >
-> Cross-border contractors bill through PayPal because that's the rail that reaches them. The
-> work they never wrote down is the work they never got paid for. This writes it down.
+> Contractors like me bill through PayPal because it's the rail that reaches us. The work we
+> never wrote down is the work we never got paid for. This writes it down.
 
-348 words — about **2:24 spoken** at a calm pace, plus roughly thirty seconds of
-scroll, the apply running, the refresh and the payment. That lands near **2:55**, inside the
-three-minute ceiling but not by much. Those thirty seconds are the shots — do not talk over
-them, and if you need to save time, the beat to lose is the payment.
-
----
-
-## Before you roll
-
-```bash
-uv run scripts/rehearse.py                      # proves the take works, opens this take's invoice
-uv run uvicorn unlogged.web:app --port 8000     # the service    (leave running)
-cd web && npm start                             # the dashboard  (leave running)
-```
-
-`rehearse.py` prints **this take's payer URL** and **this take's apply command**. Both go in the
-box below. Re-run it for every take — each gets a fresh invoice, so a second take is never
-refused as already billed.
-
-**This take** — the only thing you open by hand:
-
-| | |
-|---|---|
-| Payer URL | `https://www.sandbox.paypal.com/invoice/payerView/details/INV2-3967-4MDC-6XXS-5TVC?qr=1` |
-
-You never type an invoice id. `rehearse.py` writes it into `.film/take/`, and `./demo apply`
-reads it from there.
-
-**Left window** — terminal, font bumped up, and `http://localhost:3000/dashboard`.
-**Right window** — the payer URL above. Open it once, before recording starts, and never touch
-the address bar again. The whole hero shot rests on that.
-
-**Every link that appears on screen**
-
-| What | Where |
-|---|---|
-| The client's invoice (this take) | the payer URL above |
-| Dashboard | `http://localhost:3000/dashboard` |
-| Landing page | `http://localhost:3000/` |
-| Repo (last frame) | `https://github.com/aviralgarg05/unlogged` |
-| Sandbox buyer sign-in | `https://www.sandbox.paypal.com/` |
+359 words — about **2:28 spoken**, plus roughly thirty seconds of scroll, the apply
+running, the refresh and the payment. Lands near **3:03**, inside the three-minute ceiling.
+Those thirty seconds are the shots — don't talk over them. If it runs long, drop the payment.
 
 ---
 
 ## The same thing again, with the screen and the keys
 
-Same words as above. This column tells you where to be and what to press.
+Same words. This column tells you where to be and what to press.
 
-### 0:00 — who, what, and the thread
+### 0:00 — who you are, and the thread
 
-Face or dashboard, your call, then dashboard → **The thread**. Scroll slowly.
+You on camera for the first line if you want, then dashboard → **The thread**. Scroll slowly.
 
-> Hi, I'm Aviral. This is unlogged — it finds work you did and never wrote down, and puts it on
-> the invoice your client already has.
+> Hi, I'm Aviral. I built this thing called unlogged.
 >
-> Three weeks of work in a Slack thread. Somewhere in here is work I never billed for.
+> If you've done contract work you know this one. You agree a scope — then work turns up
+> anyway — and the parts that weren't in it never reach the bill.
 >
-> That one. *"Can you also just add the retry logic when the card declines?"* That took an
+> This is three weeks of my own thread. Somewhere in here is work I never got paid for.
+>
+> This one. *"Can you also just add the retry logic when the card declines?"* That cost me an
 > afternoon.
 
-### 0:22 — the agreement, and the invoice
+### 0:28 — the agreement, and the invoice
 
 Left: the scope clauses. Right: the payer page at **$520.00**.
 
-> And this is what we agreed. Clause X1 — retry and error-handling logic, not included. So that
+> And here's what we'd agreed. Clause X1 — retry and error handling, not included. So that
 > afternoon was extra. I never wrote it down, and the invoice still says five hundred and twenty.
-> The client has had this link since day one.
 
-### 0:40 — the adjudication
+### 0:45 — the adjudication
 
-Dashboard → **What was decided**. Walk down three rows as you say it.
+Dashboard → **What was decided**. Walk down three rows as you talk.
 
-> So — read the thread against the agreement.
+> So that's what this does. It reads the thread against the agreement.
 >
-> The ask is a request, not work — money attaches when it's done. Three days later, the work:
-> PR 312, payment timeout and 3DS. It cites X1, which makes it billable. And this one only sounds
-> like a request. Phrasing, not work.
+> The ask is just a request — nothing's owed yet. Three days later, the work that did it:
+> PR 312. Points at that same clause, which makes it billable. And this one only sounds like a
+> request. Noise.
 >
-> Every row names its clause and quotes the sentence that decided it. So how often is it right?
+> Every row has to name its clause and quote the line that decided it.
+>
+> Okay — but how often is it right?
 
-### 1:18 — the ablation
+### 1:22 — the ablation
 
-Let the two rows land before speaking. Both run with no API key.
+Let the two rows land before you say anything. Both run with no API key.
 
 ```bash
 ./demo eval
 ```
 
-> The cheap way is keyword matching — zero precision, zero recall. It bills a hundred and seventy
-> it shouldn't and misses four hundred and twenty-five that was real. The model gets all three at
-> a hundred. Eight events is a smoke test, not a benchmark; the repo says so.
+> The cheap way is keyword matching. Zero precision, zero recall — it bills a hundred and
+> seventy it shouldn't and misses four twenty-five that was real. The model gets all three at a
+> hundred. And eight events is a smoke test, not a benchmark — the repo says so.
 
-### 1:42 — money moves · one unbroken take, no cut
+### 1:45 — money moves · one unbroken take, no cut
 
-Say the first line, run it, then switch right and **refresh — do not retype the URL**.
+Say the first line, run it, then switch right and **refresh — don't retype the URL**.
 No cut anywhere in this beat: a cut is where a judge assumes a trick.
 
-`./demo apply` prints the real four-line command before it runs it, so nothing is hidden —
-and then three lines of live PayPal traffic go past, ending `PUT /v2/invoicing/invoices/… 200`.
-Let those land. That frame is the proof that none of this is a mock.
+`./demo apply` prints the real four-line command before it runs, so nothing is hidden — then
+three lines of live traffic go past, ending `PUT /v2/invoicing/invoices/… 200`. Let those land.
+That frame is the proof none of this is mocked.
 
 ```bash
 ./demo apply
@@ -156,26 +127,29 @@ Let those land. That frame is the proof that none of this is a mock.
 
 > But deciding isn't billing. This is the part nobody does.
 >
-> Same page — I haven't touched the address bar. Five twenty to nine hundred and two fifty. Two
-> new lines, each naming where it came from. Same id, same link, same QR. PayPal added them, and
-> emailed the client.
+> Same page — I haven't touched the address bar. Five twenty, now nine-oh-two fifty. Two new
+> lines, each saying where it came from. Same invoice, same link, same QR. PayPal emailed my
+> client.
 
 ### 2:15 — the client pays
 
 Sign in as the sandbox buyer at `https://www.sandbox.paypal.com/` and pay it. Then stop
 talking — PayPal's page does the proving: amount due goes to zero.
 
-> So the client opens the link they filed on day one, and pays it.
+*Running long? This is the beat to drop.*
 
-### 2:30 — what it is built on, and what it is for
+> So the client opens the link they've had since day one, and pays it.
+
+### 2:30 — what it's built on, and what it's for
 
 Last frame, split: `./demo tests` green, beside `https://github.com/aviralgarg05/unlogged`.
 
-> Two pieces: PayPal's Invoicing API, where a sent invoice grows in place — undocumented, and
-> written up in the repo — and a model that must cite a clause before anything reaches the bill.
+> Two things make that work: PayPal's invoicing API, where a sent invoice can grow in place —
+> that isn't documented, I found it and wrote it up — and a model that cites a clause before
+> anything reaches the bill.
 >
-> Cross-border contractors bill through PayPal because that's the rail that reaches them. The
-> work they never wrote down is the work they never got paid for. This writes it down.
+> Contractors like me bill through PayPal because it's the rail that reaches us. The work we
+> never wrote down is the work we never got paid for. This writes it down.
 
 ---
 
