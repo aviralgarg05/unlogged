@@ -82,6 +82,21 @@ Written so a judge does not have to find any of this out by reading the source.
   reading the work is a scope fitted to the answer. Any engagement in this repo whose clauses
   were written retrospectively is labelled here, in this file, by name.
 
+- **The demo invoice has drifted from its own screenshots, and the reason is the fifth upstream
+  finding.** `docs/img/payer-before.jpg` and `payer-after.jpg` show `INV2-DB9K-DK3X-WK8F-3E4N`
+  at `$520.00` and `$902.50`, which is what it held when they were shot on 2026-10-15. Today it
+  reads **$1,157.50 with four items**, because "PSP timeout handling and 3DS re-challenge"
+  appears twice. The ledger records one apply of that work — two intent rows and two settled
+  rows, nothing voided — so the second line did not come through this product's guard. It came
+  from the live experiment that established the fifth report in [`UPSTREAM.md`](UPSTREAM.md):
+  PayPal accepts `PayPal-Request-Id` on an invoice `PUT` and ignores it, so the identical write
+  applied twice.
+
+  Nothing in the repository hands a reader that live link — the evidence is the screenshots,
+  which were true when taken — and the id is not changed because 305 committed cassettes are
+  keyed to it. `scripts/verify.py --live` creates a fresh invoice and prints its payer URL, and
+  that is the link a write-up should carry.
+
 - **The seeded ledger is fixture data.** `data/seed/eng-checkout-001.jsonl` holds two lines
   from an invented earlier billing period, so the page titled "Every line this system added to
   the live PayPal invoice" is not blank on a fresh clone. They are labelled with a
